@@ -1,107 +1,72 @@
-import { useRef } from 'react';
-import { usePathname } from 'next/navigation';
+"use client"
 
-import { animateMobileMenu } from '@/animations';
+import { useState } from "react"
+import { usePathname } from "next/navigation"
 
-import { Availability, ThemeSwitcher } from '@/components';
-import { GridDiv } from '@/components/ui';
-import { ButtonBurger, ButtonClose } from '@/components/buttons';
+import { ButtonBurger } from "@/components/buttons"
 
-import { NavLink } from '@/types';
+import { NavLink } from "@/types"
 
 type NavLinksProps = {
- navLinks: NavLink[];
- transitionOnClick: (link: NavLink, mobileMenuRef?: HTMLDivElement) => void;
-};
+	navLinks: NavLink[]
+}
 
-export default function MenuMobile({
- navLinks,
- transitionOnClick,
-}: NavLinksProps) {
- const mobileMenuRef = useRef(null);
- const pathname = usePathname();
+export default function MenuMobile({ navLinks }: NavLinksProps) {
+	const [isOpen, setIsOpen] = useState(false)
+	const pathname = usePathname()
 
- return (
-  <>
-   {navLinks && (
-    <div className='block lg:hidden'>
-     <GridDiv
-      divClass='absolute max-w-full max-w-16 py-2 flex justify-end items-center bg-primary'
-      bottom={true}
-     >
-      {/* Burger Button */}
-      <ButtonBurger
-       action={(e) => {
-        if (mobileMenuRef.current) {
-         animateMobileMenu(mobileMenuRef.current);
-        }
-       }}
-      />
-     </GridDiv>
-     <aside
-      className='absolute top-0 w-full custom-min-h-screen p-8 bg-primary transition-transform -translate-y-full duration-300'
-      ref={mobileMenuRef}
-     >
-      {/* Close Button */}
-      <div className='absolute top-2 right-4'>
-       <ButtonClose
-        action={(e) => {
-         if (mobileMenuRef.current) {
-          animateMobileMenu(mobileMenuRef.current);
-         }
-        }}
-       />
-      </div>
+	const transitionOnClick = (link: NavLink, el: HTMLElement) => {
+		console.log(link)
+	}
 
-      {/* Nav Links */}
-      <nav className='flex flex-col border-solid border-b border-secondary mt-32 h-full'>
-       {navLinks.map((link) => {
-        return (
-         <GridDiv
-          bottom={true}
-          divClass={`relative max-h-32 min-h-32 flex justify-start items-start`}
-          key={link._key}
-         >
-          {/* Inactive Link */}
-          {(pathname === '/' && link.slug === '/') ||
-          pathname.includes(`/${link.slug}`) ? (
-           <span className='font-headline text-displaySmall uppercase text-colorFaded opacity-70'>
-            {link.label}
-           </span>
-          ) : (
-           // Active Link
-           <button
-            className='block'
-            onClick={() => {
-             if (mobileMenuRef.current)
-              transitionOnClick(link, mobileMenuRef.current);
-            }}
-           >
-            <span className='font-headline text-displaySmall uppercase text-secondary'>
-             {link.label}
-            </span>
-           </button>
-          )}
-         </GridDiv>
-        );
-       })}
-      </nav>
+	const toggleMobileMenu = () => {
+		setIsOpen(!isOpen)
+	}
 
-      {/* Theme Switcher */}
-      <GridDiv
-       divClass='col-span-full row-span-1 flex justify-end pt-4 pr-2 pb-10'
-       bottom={true}
-      >
-       <ThemeSwitcher variant='body' />
-      </GridDiv>
+	return (
+		<>
+			{navLinks && (
+				<div className='block lg:hidden'>
+					<div className='absolute top-4 right-4 flex justify-end items-center z-50'>
+						{/* Burger Button */}
+						<ButtonBurger action={toggleMobileMenu} isOpen={isOpen} />
+					</div>
 
-      {/* Availability / Contact */}
-      <div className='w-full flex justify-center mt-32'>
-       <Availability />
-      </div>
-     </aside>
-    </div>
-   )}
-  </>
- );
+					{/* Mobile Menu */}
+					<aside
+						className={`absolute top-0 left-0 w-screen min-h-svh p-8 bg-secondary transition-transform ${
+							isOpen ? "" : "-translate-y-full"
+						}`}
+					>
+						{/* Nav Links */}
+						<nav className='flex flex-col border-solid border-b border-secondary mt-32 h-full'>
+							{navLinks.map((link) => {
+								return (
+									<div
+										className={`relative h-32 flex justify-start items-start`}
+										key={link.label}
+									>
+										{/* Inactive Link */}
+										{(pathname === "/" && link.slug === "/") ||
+										pathname.includes(`/${link.slug}`) ? (
+											<span className='font-headline text-displaySmall text-primary'>
+												{link.label}
+											</span>
+										) : (
+											// Active Link
+											<button className='block' onClick={toggleMobileMenu}>
+												<span className='font-headline text-displaySmall text-primary'>
+													{link.label}
+												</span>
+											</button>
+										)}
+									</div>
+								)
+							})}
+						</nav>
+					</aside>
+				</div>
+			)}
+		</>
+	)
 }

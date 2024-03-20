@@ -19,7 +19,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body
-				className={`w-screen min-h-svh p-4 overflow-x-clip ${inter.className}`}
+				className={`w-screen min-h-svh p-4 overflow-x-clip bg-primary ${inter.className}`}
 			>
 				<Header />
 				{children}

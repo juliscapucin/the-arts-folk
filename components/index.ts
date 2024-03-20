@@ -1,3 +1,4 @@
-import Copyright from "./Copyright"
+import Copyright from "./copyright"
+import Intro from "./intro"
 
-export { Copyright }
+export { Copyright, Intro }

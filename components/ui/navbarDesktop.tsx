@@ -3,10 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import { NavbarLink } from "@/components/ui"
 
-type NavLink = {
-	label: string
-	slug: string
-}
+import { NavLink } from "@/types"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
@@ -25,7 +22,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 			{navLinks && (
 				<div className={"hidden lg:flex"}>
 					{/* Menu links */}
-					<nav className='w-full h-full hidden lg:flex justify-end items-center gap-8 mr-8'>
+					<nav className='w-full h-full hidden lg:flex justify-end items-center gap-8'>
 						{navLinks.map((link) => {
 							return (
 								<NavbarLink

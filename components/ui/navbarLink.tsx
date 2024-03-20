@@ -1,10 +1,8 @@
+import { NavLink } from "@/types"
 import Link from "next/link"
 
 type NavbarLinkProps = {
-	link: {
-		label: string
-		slug: string
-	}
+	link: NavLink
 	transitionOnClick: (link: any) => void
 	isActive: boolean
 }
