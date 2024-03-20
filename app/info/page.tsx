@@ -1,4 +1,4 @@
-import { ContactPage } from "@/components/pages"
+import { InfoPage } from "@/components/pages"
 
 const SocialLinks = [
 	{
@@ -16,5 +16,5 @@ const SocialLinks = [
 ]
 
 export default function Page() {
-	return <ContactPage socialLinks={SocialLinks} />
+	return <InfoPage socialLinks={SocialLinks} />
 }

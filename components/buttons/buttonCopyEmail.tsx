@@ -49,9 +49,8 @@ export default function ButtonCopyEmail({ email }: ButtonCopyEmailProps) {
 					</span>
 				</div>
 			)}
-			<button className='group overflow-hidden h-8' onClick={copyToClipboard}>
-				<div className='flex flex-col text-labelSmall group-hover:-translate-y-1/2 transition-transform duration-200'>
-					<span>Copy email address</span>
+			<button className='overflow-hidden h-8' onClick={copyToClipboard}>
+				<div className='flex flex-col text-labelSmall'>
 					<span>Copy email address</span>
 				</div>
 			</button>

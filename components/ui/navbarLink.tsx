@@ -19,7 +19,7 @@ export default function navbarLink({
 					e.preventDefault()
 					transitionOnClick(link)
 				}}
-				className={isActive ? "text-faded-30" : ""}
+				className={`uppercase ${isActive ? "text-faded-30" : ""}`}
 			>
 				{link.label}
 			</button>

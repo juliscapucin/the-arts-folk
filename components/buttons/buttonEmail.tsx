@@ -1,20 +1,14 @@
-import { useMemo, useRef } from "react"
+import { useRef } from "react"
 
 import { ButtonCopyEmail } from "@/components/buttons"
 
-type Props = {
-	availability?: string
-	variant?: string
-	modalOpen?: boolean
+type ButtonEmailProps = {
+	name: string
+	email: string
 }
 
-export default function ButtonEmail({
-	variant,
-	modalOpen,
-	availability,
-}: Props) {
+export default function ButtonEmail({ name, email }: ButtonEmailProps) {
 	const textRef = useRef(null)
-	const email = "hello@theartsfolk.com"
 
 	return (
 		<div className='flex flex-col justify-center items-center'>
@@ -22,10 +16,7 @@ export default function ButtonEmail({
 				href={`mailto:${email}`}
 				className='flex flex-col text-displaySmall md:group-hover:-translate-y-1/2 transition-transform duration-200'
 			>
-				<span ref={textRef} className='font-medium'>
-					Say Hi :)
-				</span>
-				<span className='font-medium'>Say Hi :)</span>
+				<span className='font-medium'>{name}</span>
 			</a>
 
 			<ButtonCopyEmail {...{ email }} />
