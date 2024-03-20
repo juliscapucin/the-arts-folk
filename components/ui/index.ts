@@ -1,4 +1,5 @@
 import Header from "./header"
-import Navbar from "./navbar"
+import NavbarDesktop from "./navbarDesktop"
+import NavbarLink from "./navbarLink"
 
-export { Header, Navbar }
+export { Header, NavbarDesktop, NavbarLink }
