@@ -1,4 +1,7 @@
 import Header from "./header"
-import Navbar from "./navbar"
+import NavbarDesktop from "./navbarDesktop"
+import NavbarMobile from "./navbarMobile"
+import NavbarLink from "./navbarLink"
+import NavbarSocials from "./navbarSocials"
 
-export { Header, Navbar }
+export { Header, NavbarDesktop, NavbarMobile, NavbarLink, NavbarSocials }
