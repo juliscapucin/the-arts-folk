@@ -1,44 +1,54 @@
 "use client"
 
-import { Container, Heading, NavbarSocials, Paragraph } from "@/components/ui"
+import { Container, Heading, Paragraph } from "@/components/ui"
 import { Copyright } from "@/components"
 import { ButtonEmail } from "@/components/buttons"
 
 type InfoPageProps = {
-	socialLinks: { title: string; url: string }[]
+	socialLinks?: { title: string; url: string }[]
 }
 
 export default function InfoPage({ socialLinks }: InfoPageProps) {
 	return (
-		<Container classes='lg:flex gap-32 justify-between items-center pt-32 lg:pt-0'>
+		<Container classes='relative pt-32 lg:pt-0 lg:flex flex-col justify-end'>
 			{/* For Accessibility + SEO */}
 			<Heading tag='h1' classes='lg:sr-only' variant='headline'>
 				Info
 			</Heading>
-			<div className='lg:w-2/5'>
-				<Paragraph>
-					The Arts Folk is an international photographic agency representing a
-					diverse network of storytellers.
-				</Paragraph>
-				<Paragraph>
-					Our Image-makers and directors operate as part of an interconnected
-					and progressive cultural community, who seek to spark dialogue amongst
-					curious minds.
-				</Paragraph>
-				<Paragraph>
-					We offer seamless production & casting services at the highest level
-					to create compelling visual content for Fashion, Beauty and Lifestyle
-					brands across Europe.
-				</Paragraph>
+			<div className='flex-1 lg:flex gap-32 justify-between items-center'>
+				{/* Text */}
+				<div className='lg:w-2/5'>
+					<Paragraph>
+						The Arts Folk is an international photographic agency representing a
+						diverse network of storytellers.
+					</Paragraph>
+					<Paragraph>
+						Our Image-makers and directors operate as part of an interconnected
+						and progressive cultural community, who seek to spark dialogue
+						amongst curious minds.
+					</Paragraph>
+					<Paragraph>
+						We offer seamless production & casting services at the highest level
+						to create compelling visual content for Fashion, Beauty and
+						Lifestyle brands across Europe.
+					</Paragraph>
+				</div>
+
+				{/* Email + Phone */}
+				<div className='lg:w-2/5 flex flex-col justify-center items-center gap-16'>
+					<ButtonEmail
+						name={"Ruby Khatun"}
+						email={"ruby@theartsfolk.com"}
+						phone={"+44 7506 620021"}
+					/>
+					<ButtonEmail
+						name={"Florian Pessenteiner"}
+						email={"florian@theartsfolk.com"}
+						phone={"+49 (0) 172 4585 976"}
+					/>
+				</div>
 			</div>
-			<div className='lg:w-2/5'>
-				<ButtonEmail name={"Ruby Khatun"} email={"ruby@theartsfolk.com"} />
-				<ButtonEmail
-					name={"Florian Pessenteiner"}
-					email={"florian@theartsfolk.com"}
-				/>
-				<Copyright />
-			</div>
+			<Copyright />
 		</Container>
 	)
 }
