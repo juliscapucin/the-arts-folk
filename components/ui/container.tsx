@@ -1,8 +1,15 @@
 import React from "react"
 
-export default function Container({ children }: { children: React.ReactNode }) {
+type ContainerProps = {
+	children: React.ReactNode
+	classes?: string
+}
+
+export default function Container({ children, classes }: ContainerProps) {
 	return (
-		<main className='h-[--container-height-mobile] lg:h-[--container-height-desktop] lg:px-[--padding-desktop] mx-[--padding-mobile] lg:mx-[--padding-desktop] bg-primary'>
+		<main
+			className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] px-[--padding-mobile] lg:px-[--padding-desktop] mx-[--padding-mobile] lg:mx-[--padding-desktop] bg-primary ${classes}`}
+		>
 			{children}
 		</main>
 	)
