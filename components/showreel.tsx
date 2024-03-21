@@ -50,7 +50,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 							src={`/photos/${image}`}
 							alt='image'
 							sizes='(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 50vw'
-							quality={50}
+							quality={70}
 							fill
 						/>
 					</div>
