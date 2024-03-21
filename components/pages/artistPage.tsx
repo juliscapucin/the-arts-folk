@@ -1,3 +1,5 @@
+import { Container } from "@/components/ui"
+
 export default function ArtistPage() {
-	return <div>Artist Page</div>
+	return <Container>Artist</Container>
 }

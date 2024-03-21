@@ -7,9 +7,17 @@ const config: Config = {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		container: {
+			center: true,
+			padding: {
+				DEFAULT: "var(--padding-mobile)",
+				lg: "var(--padding-desktop)",
+			},
+		},
 		colors: {
 			primary: "rgb(var(--color-primary) / <alpha-value>)",
 			secondary: "rgb(var(--color-secondary) / <alpha-value>)",
+			white: "rgb(var(--color-white))",
 			"faded-5": "rgba(var(--color-secondary-rgb), 0.05)",
 			"faded-10": "rgba(var(--color-secondary-rgb), 0.1)",
 			"faded-30": "rgba(var(--color-secondary-rgb), 0.3)",
