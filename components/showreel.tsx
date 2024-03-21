@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 
+import { CldImage } from "next-cloudinary"
+
 type ShowreelProps = {
 	showreelImages: string[]
 }
@@ -43,12 +45,12 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 			{showreelImages.map((image, index) => {
 				return (
 					<div className='absolute w-full h-full' key={`showreel-${index}`}>
-						<Image
+						<CldImage
 							className={`object-contain ${
 								slideIndex === index ? "opacity-100" : "opacity-0"
 							}`}
-							src={`/photos/${image}`}
-							alt='image'
+							src={`the-arts-folk/${image}`}
+							alt='photo'
 							sizes='(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 50vw'
 							quality={70}
 							fill
