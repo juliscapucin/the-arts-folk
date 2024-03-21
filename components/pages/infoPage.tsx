@@ -1,6 +1,6 @@
 "use client"
 
-import { Container, NavbarSocials } from "@/components/ui"
+import { Container, Heading, NavbarSocials } from "@/components/ui"
 import { Copyright } from "@/components"
 import { ButtonEmail } from "@/components/buttons"
 
@@ -11,6 +11,10 @@ type InfoPageProps = {
 export default function InfoPage({ socialLinks }: InfoPageProps) {
 	return (
 		<Container classes='flex gap-32 pt-32'>
+			{/* For Accessibility + SEO */}
+			<Heading tag='h1' classes='sr-only'>
+				Info
+			</Heading>
 			<div className='font-text tracking-wide'>
 				<p>
 					The Arts Folk, is an international photographic agency representing a

@@ -2,7 +2,7 @@ type HeadingProps = {
 	tag: string
 	classes?: string
 	children: string
-	variant: "display" | "headline" | "title"
+	variant?: "display" | "headline" | "title"
 }
 
 export default function Heading({

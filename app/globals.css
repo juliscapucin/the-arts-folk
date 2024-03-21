@@ -10,7 +10,7 @@
 		--color-primary: 249 246 238;
 		--color-secondary: 18 12 15;
 		--color-secondary-rgb: 18, 12, 15;
-		--color-focus: 154, 152, 152;
+		--color-focus: 180, 180, 180;
 		--color-white: 255 255 255;
 		--padding-mobile: 1rem;
 		--padding-desktop: 1rem;
@@ -71,8 +71,9 @@
 	/* KEYBOARD FOCUS */
 
 	*:focus-visible {
-		background-color: rgba(var(--color-secondary-rgb), 0.3);
-		outline: none;
+		background-color: rgba(var(--color-focus));
+		outline: 3px solid rgba(var(--color-focus));
+		outline-offset: -1px;
 	}
 }
 
