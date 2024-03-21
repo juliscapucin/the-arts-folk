@@ -12,16 +12,14 @@
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 154, 152, 152;
 		--color-white: 255 255 255;
-		--padding-mobile: 0.5rem;
+		--padding-mobile: 1rem;
 		--padding-desktop: 1rem;
-		--header-height-mobile: 2rem;
+		--header-height-mobile: 4rem;
 		--header-height-desktop: 4rem;
-		--showreel-height-mobile: calc(
-			100svh - var(--header-height-mobile) - calc(var(--padding-mobile) * 1)
-		);
-		--showreel-height-desktop: calc(
-			100svh - var(--header-height-desktop) - calc(var(--padding-desktop) * 1)
-		);
+		--showreel-height-mobile: calc(100svh - var(--header-height-mobile));
+		--showreel-height-desktop: calc(100svh - var(--header-height-desktop));
+		--container-height-mobile: calc(100svh - var(--header-height-mobile));
+		--container-height-desktop: calc(100svh - var(--header-height-desktop));
 	}
 
 	*::-webkit-scrollbar {

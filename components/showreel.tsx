@@ -38,7 +38,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	return (
 		<div
 			ref={showreelRef}
-			className='relative w-3/4 lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'
+			className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'
 		>
 			{showreelImages.map((image, index) => {
 				return (

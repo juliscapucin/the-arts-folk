@@ -8,7 +8,7 @@ export default function ButtonLogo() {
 		router.push("/")
 	}
 	return (
-		<button className='scale-75 origin-left' onClick={handleClick}>
+		<button className='scale-50 lg:scale-75 origin-left' onClick={handleClick}>
 			<Logo />
 		</button>
 	)
