@@ -16,6 +16,8 @@
 		--padding-desktop: 1rem;
 		--header-height-mobile: 4rem;
 		--header-height-desktop: 4rem;
+		--footer-height-mobile: 3rem;
+		--footer-height-desktop: 3rem;
 		--showreel-height-mobile: calc(100svh - var(--header-height-mobile));
 		--showreel-height-desktop: calc(100svh - var(--header-height-desktop));
 		--container-height-mobile: calc(100svh - var(--header-height-mobile));
