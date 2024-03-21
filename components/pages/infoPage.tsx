@@ -1,6 +1,6 @@
 "use client"
 
-import { Container, Heading, NavbarSocials } from "@/components/ui"
+import { Container, Heading, NavbarSocials, Paragraph } from "@/components/ui"
 import { Copyright } from "@/components"
 import { ButtonEmail } from "@/components/buttons"
 
@@ -10,28 +10,28 @@ type InfoPageProps = {
 
 export default function InfoPage({ socialLinks }: InfoPageProps) {
 	return (
-		<Container classes='flex gap-32 pt-32'>
+		<Container classes='lg:flex gap-32 justify-between items-center pt-32 lg:pt-0'>
 			{/* For Accessibility + SEO */}
-			<Heading tag='h1' classes='sr-only'>
+			<Heading tag='h1' classes='lg:sr-only' variant='headline'>
 				Info
 			</Heading>
-			<div className='font-text tracking-wide'>
-				<p>
-					The Arts Folk, is an international photographic agency representing a
+			<div className='lg:w-2/5'>
+				<Paragraph>
+					The Arts Folk is an international photographic agency representing a
 					diverse network of storytellers.
-				</p>
-				<p>
+				</Paragraph>
+				<Paragraph>
 					Our Image-makers and directors operate as part of an interconnected
 					and progressive cultural community, who seek to spark dialogue amongst
 					curious minds.
-				</p>
-				<p>
+				</Paragraph>
+				<Paragraph>
 					We offer seamless production & casting services at the highest level
-					tocreate compelling visual content for Fashion, Beauty and Lifestyle
+					to create compelling visual content for Fashion, Beauty and Lifestyle
 					brands across Europe.
-				</p>
+				</Paragraph>
 			</div>
-			<div>
+			<div className='lg:w-2/5'>
 				<ButtonEmail name={"Ruby Khatun"} email={"ruby@theartsfolk.com"} />
 				<ButtonEmail
 					name={"Florian Pessenteiner"}

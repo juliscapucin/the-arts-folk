@@ -8,7 +8,7 @@ type ContainerProps = {
 export default function Container({ children, classes }: ContainerProps) {
 	return (
 		<main
-			className={`h-[--container-height-mobile] lg:h-[--container-height-desktop] lg:px-[--padding-desktop] mx-[--padding-mobile] lg:mx-[--padding-desktop] bg-primary ${classes}`}
+			className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] px-[--padding-mobile] lg:px-[--padding-desktop] mx-[--padding-mobile] lg:mx-[--padding-desktop] bg-primary ${classes}`}
 		>
 			{children}
 		</main>
