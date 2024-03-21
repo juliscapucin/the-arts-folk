@@ -17,12 +17,12 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 		<div className='flex flex-col justify-center items-center gap-2'>
 			<a
 				href={`mailto:${email}`}
-				className='group flex flex-col justify-center items-center gap-2 text-titleLarge hover:opacity-50 transition-opacity duration-300'
+				className='group flex justify-center items-center gap-2 text-titleLarge hover:opacity-50 transition-opacity duration-300'
 			>
-				<Heading tag='h4' variant='title'>
+				<IconEmail />
+				<Heading tag='h4' variant='title' classes='leading-3'>
 					{name}
 				</Heading>
-				<IconEmail />
 			</a>
 			<span className='font-text text-bodyLarge'>{phone}</span>
 
