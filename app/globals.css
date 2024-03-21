@@ -18,10 +18,18 @@
 		--header-height-desktop: 4rem;
 		--footer-height-mobile: 3rem;
 		--footer-height-desktop: 3rem;
-		--showreel-height-mobile: calc(100svh - var(--header-height-mobile));
-		--showreel-height-desktop: calc(100svh - var(--header-height-desktop));
-		--container-height-mobile: calc(100svh - var(--header-height-mobile));
-		--container-height-desktop: calc(100svh - var(--header-height-desktop));
+		--showreel-height-mobile: calc(
+			100svh - var(--header-height-mobile) - var(--footer-height-mobile)
+		);
+		--showreel-height-desktop: calc(
+			100svh - var(--header-height-desktop) - var(--footer-height-desktop)
+		);
+		--container-height-mobile: calc(
+			100svh - var(--header-height-mobile) - var(--footer-height-mobile)
+		);
+		--container-height-desktop: calc(
+			100svh - var(--header-height-desktop) - var(--footer-height-desktop)
+		);
 	}
 
 	*::-webkit-scrollbar {
