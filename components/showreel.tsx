@@ -52,6 +52,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 							sizes='(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 50vw'
 							quality={70}
 							fill
+							priority={index === 0 || index === 1}
 						/>
 					</div>
 				)
