@@ -10,14 +10,31 @@ type InfoPageProps = {
 
 export default function InfoPage({ socialLinks }: InfoPageProps) {
 	return (
-		<Container>
-			<ButtonEmail name={"Ruby Khatun"} email={"ruby@theartsfolk.com"} />
-			<ButtonEmail
-				name={"Florian Pessenteiner"}
-				email={"florian@theartsfolk.com"}
-			/>
-			<NavbarSocials data={socialLinks} />
-			<Copyright />
+		<Container classes='flex gap-32 pt-32'>
+			<div className='font-text tracking-wide'>
+				<p>
+					The Arts Folk, is an international photographic agency representing a
+					diverse network of storytellers.
+				</p>
+				<p>
+					Our Image-makers and directors operate as part of an interconnected
+					and progressive cultural community, who seek to spark dialogue amongst
+					curious minds.
+				</p>
+				<p>
+					We offer seamless production & casting services at the highest level
+					tocreate compelling visual content for Fashion, Beauty and Lifestyle
+					brands across Europe.
+				</p>
+			</div>
+			<div>
+				<ButtonEmail name={"Ruby Khatun"} email={"ruby@theartsfolk.com"} />
+				<ButtonEmail
+					name={"Florian Pessenteiner"}
+					email={"florian@theartsfolk.com"}
+				/>
+				<Copyright />
+			</div>
 		</Container>
 	)
 }

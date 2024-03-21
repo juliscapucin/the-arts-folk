@@ -23,16 +23,17 @@ const config: Config = {
 			"faded-30": "rgba(var(--color-secondary-rgb), 0.3)",
 			"faded-70": "rgba(var(--color-secondary-rgb), 0.7)",
 		},
+		fontFamily: {
+			heading: "var(--font-primary), sans-serif",
+			text: "var(--font-secondary), sans-serif",
+		},
 		fontSize: {
-			displayLarge: "147px",
-			displayMedium: "103px",
-			displaySmall: "72px",
-			headlineLarge: "51px",
-			headlineMedium: "40px",
-			headlineSmall: "32px",
-			titleLarge: "22px",
-			titleMedium: "20px",
-			titleSmall: "18px",
+			headlineLarge: "36px",
+			headlineMedium: "32px",
+			headlineSmall: "28px",
+			titleLarge: "20px",
+			titleMedium: "18px",
+			titleSmall: "16px",
 			bodyLarge: "18px",
 			bodyMedium: "16px",
 			bodySmall: "14px",
@@ -46,10 +47,6 @@ const config: Config = {
 			},
 			maxWidth: {
 				desktop: "2000px",
-			},
-			fontFamily: {
-				headline: ["var(--font-primary) sans-serif"],
-				text: ["var(--font-secondary)"],
 			},
 			zIndex: {
 				5: "5",

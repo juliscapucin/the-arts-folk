@@ -1,15 +1,24 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
+
 import "./globals.css"
 import { Footer, Header } from "@/components/ui"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
 	title: "The Arts Folk",
 	description:
 		"we represent a diverse network of collaborators and storytellers, image-makers & directors.",
 }
+
+// Load custom font //
+const myFont = localFont({
+	variable: "--font-primary",
+	src: [
+		{
+			path: "../public/fonts/geometos-neue-extrabold.otf",
+		},
+	],
+})
 
 export default function RootLayout({
 	children,
@@ -19,7 +28,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body
-				className={`w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white ${inter.className}`}
+				className={`${myFont.className} w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white uppercase font-text font-thin`}
 			>
 				<Header />
 				{children}

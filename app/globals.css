@@ -1,4 +1,4 @@
-@import url("https://use.typekit.net/cbg5juo.css");
+@import url("https://use.typekit.net/xxu6xgk.css");
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 @layer base {
 	:root {
-		--font-secondary: "ff-real-text-pro", sans-serif;
+		--font-secondary: "canada-type-gibson", sans-serif;
 		--color-primary: 249 246 238;
 		--color-secondary: 18 12 15;
 		--color-secondary-rgb: 18, 12, 15;
@@ -85,7 +85,6 @@
 html,
 body {
 	-webkit-font-smoothing: antialiased;
-	transition: background-color 0.2s linear;
 }
 
 a {
@@ -96,19 +95,6 @@ a {
 
 a:hover {
 	color: var(--color-faded);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-span,
-button,
-a {
-	font-family: var(--font-primary) sans-serif;
-	overflow-wrap: break-word;
 }
 
 button {

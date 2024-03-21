@@ -1,6 +1,7 @@
 import { useRef } from "react"
 
 import { ButtonCopyEmail } from "@/components/buttons"
+import { Heading } from "@/components/ui"
 
 type ButtonEmailProps = {
 	name: string
@@ -16,7 +17,9 @@ export default function ButtonEmail({ name, email }: ButtonEmailProps) {
 				href={`mailto:${email}`}
 				className='flex flex-col text-displaySmall md:group-hover:-translate-y-1/2 transition-transform duration-200'
 			>
-				<span className='font-medium'>{name}</span>
+				<Heading tag='h4' variant='title'>
+					{name}
+				</Heading>
 			</a>
 
 			<ButtonCopyEmail {...{ email }} />

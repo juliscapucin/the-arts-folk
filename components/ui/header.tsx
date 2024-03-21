@@ -10,7 +10,7 @@ const NavLinks = [
 
 export default function Header() {
 	return (
-		<header className='w-full pt-2 px-5 lg:px-6 flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
+		<header className='w-full pt-2 px-5 lg:px-8 flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
 			<ButtonLogo />
 			<NavbarDesktop navLinks={NavLinks} />
 			<NavbarMobile navLinks={NavLinks} />
