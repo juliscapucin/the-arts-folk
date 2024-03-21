@@ -36,12 +36,15 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [slideIndex])
 
 	return (
-		<div ref={showreelRef} className='relative w-3/4 md:w-1/2 h-svh mx-auto'>
+		<div
+			ref={showreelRef}
+			className='relative w-3/4 lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'
+		>
 			{showreelImages.map((image, index) => {
 				return (
 					<div className='absolute w-full h-full' key={`showreel-${index}`}>
 						<Image
-							className={`object-cover ${
+							className={`object-contain ${
 								slideIndex === index ? "opacity-100" : "opacity-0"
 							}`}
 							src={`/photos/${image}`}

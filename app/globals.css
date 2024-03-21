@@ -11,6 +11,17 @@
 		--color-secondary: 18 12 15;
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 154, 152, 152;
+		--color-white: 255 255 255;
+		--padding-mobile: 0.5rem;
+		--padding-desktop: 1rem;
+		--header-height-mobile: 2rem;
+		--header-height-desktop: 4rem;
+		--showreel-height-mobile: calc(
+			100svh - var(--header-height-mobile) - calc(var(--padding-mobile) * 1)
+		);
+		--showreel-height-desktop: calc(
+			100svh - var(--header-height-desktop) - calc(var(--padding-desktop) * 1)
+		);
 	}
 
 	*::-webkit-scrollbar {
