@@ -44,7 +44,10 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		>
 			{showreelImages.map((image, index) => {
 				return (
-					<div className='absolute w-full h-full' key={`showreel-${index}`}>
+					<div
+						className='absolute w-full h-full z-10'
+						key={`showreel-${index}`}
+					>
 						<CldImage
 							className={`object-cover md:object-contain ${
 								slideIndex === index ? "opacity-100" : "opacity-0"

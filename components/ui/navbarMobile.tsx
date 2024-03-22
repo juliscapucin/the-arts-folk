@@ -27,37 +27,33 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 		<>
 			{navLinks && (
 				<div className='block lg:hidden'>
-					<div className='absolute top-4 right-4 flex justify-end items-center z-50'>
+					<div className='absolute top-4 right-4 flex justify-end items-center z-100'>
 						{/* Burger Button */}
 						<ButtonBurger action={toggleMobileMenu} isOpen={isOpen} />
 					</div>
 
 					{/* Mobile Menu */}
 					<aside
-						className={`absolute top-0 left-0 w-screen min-h-svh p-8 bg-secondary transition-transform ${
+						className={`absolute top-0 left-0 w-screen min-h-svh p-8 bg-secondary transition-transform z-80 ${
 							isOpen ? "" : "-translate-y-full"
 						}`}
 					>
 						{/* Nav Links */}
-						<nav className='flex flex-col border-solid border-b border-secondary mt-32 h-full'>
+						<nav className='flex flex-col gap-8 mt-32 h-svh'>
 							{navLinks.map((link) => {
 								return (
 									<div
-										className={`relative h-32 flex justify-start items-start`}
+										className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
 										key={link.title}
 									>
 										{/* Inactive Link */}
 										{(pathname === "/" && link.slug === "/") ||
 										pathname.includes(`/${link.slug}`) ? (
-											<span className='font-headline text-displaySmall text-primary'>
-												{link.title}
-											</span>
+											<span className='uppercase'>{link.title}</span>
 										) : (
 											// Active Link
 											<button className='block' onClick={toggleMobileMenu}>
-												<span className='font-headline text-displaySmall text-primary'>
-													{link.title}
-												</span>
+												<span className='uppercase'>{link.title}</span>
 											</button>
 										)}
 									</div>
