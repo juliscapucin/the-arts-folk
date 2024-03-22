@@ -60,8 +60,7 @@ export async function getInfoPage(): Promise<InfoPage> {
          name,
          email,
          phone
-       },
-      }
+      },
    }`
 	)
 }

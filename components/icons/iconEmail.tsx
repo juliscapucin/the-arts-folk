@@ -13,12 +13,12 @@ export default function IconEmail() {
 				width='20.5641'
 				height='13.8377'
 				stroke='black'
-				stroke-width='0.7'
+				strokeWidth='0.7'
 			/>
 			<path
 				d='M0.417358 0.495895L10.7598 10.3513L21.1022 0.495895'
 				stroke='black'
-				stroke-width='0.7'
+				strokeWidth='0.7'
 			/>
 		</svg>
 	)

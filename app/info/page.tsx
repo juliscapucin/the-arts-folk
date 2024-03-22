@@ -1,20 +1,12 @@
+import { notFound } from "next/navigation"
+
 import { InfoPage } from "@/components/pages"
+import { getInfoPage } from "@/sanity/sanity-queries"
 
-const SocialLinks = [
-	{
-		title: "Instagram",
-		url: "https://www.instagram.com/",
-	},
-	{
-		title: "Twitter",
-		url: "https://www.twitter.com/",
-	},
-	{
-		title: "Facebook",
-		url: "https://www.facebook.com/",
-	},
-]
+export default async function Page() {
+	const info = await getInfoPage()
 
-export default function Page() {
-	return <InfoPage socialLinks={SocialLinks} />
+	if (!info) return notFound()
+
+	return <InfoPage {...{ info }} />
 }
