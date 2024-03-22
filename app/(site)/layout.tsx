@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
-import "./globals.css"
+import "../globals.css"
 import { Footer, Header } from "@/components/ui"
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ const myFont = localFont({
 	variable: "--font-primary",
 	src: [
 		{
-			path: "../public/fonts/geometos-neue-extrabold.otf",
+			path: "../../public/fonts/geometos-neue-extrabold.otf",
 		},
 	],
 })

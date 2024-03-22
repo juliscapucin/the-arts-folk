@@ -21,17 +21,20 @@ export default function InfoPage({ info }: InfoPageProps) {
 			</Heading>
 			<div className='flex-1 lg:flex gap-32 justify-between items-center'>
 				{/* Text */}
-				<div className='lg:w-2/5'>
+				<div className='lg:w-2/5 font-text'>
 					<PortableText value={info.description} />
 				</div>
 
 				{/* Email + Phone */}
 				<div className='lg:w-2/5 flex flex-col justify-center items-center gap-16 my-24 lg:my-0'>
-					<ButtonEmail
-						name={info.contactInfo[0].name}
-						email={info.contactInfo[0].email}
-						phone={info.contactInfo[0].phone}
-					/>
+					{info.contactInfo.map((contact) => (
+						<ButtonEmail
+							key={contact.name}
+							name={contact.name}
+							email={contact.email}
+							phone={contact.phone}
+						/>
+					))}
 				</div>
 			</div>
 			<Copyright />
