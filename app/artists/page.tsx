@@ -1,20 +1,7 @@
 import { ArtistsPage } from "@/components/pages"
+import { getArtists } from "@/sanity/sanity-queries"
 
-const Artists = [
-	{
-		name: "Instagram",
-		slug: "artist1",
-	},
-	{
-		name: "Twitter",
-		slug: "artist2",
-	},
-	{
-		name: "Facebook",
-		slug: "artistjj",
-	},
-]
-
-export default function Page() {
-	return <ArtistsPage artists={Artists} />
+export default async function Page() {
+	const artists = await getArtists()
+	return <ArtistsPage artists={artists} />
 }

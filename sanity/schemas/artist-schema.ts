@@ -48,12 +48,10 @@ const artistSchema = {
 		},
 		{
 			name: "category",
-			title: "Category",
+			title: "Categories",
+			description: "Select the categories associated with this artist.",
 			type: "array",
-			of: [{ type: "string" }],
-			options: {
-				layout: "tags",
-			},
+			of: [{ type: "reference", to: [{ type: "categories" }] }],
 		},
 		{
 			name: "copy1",

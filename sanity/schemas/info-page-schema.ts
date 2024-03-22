@@ -13,7 +13,13 @@ const infoPageSchema = {
 			title: "Description",
 			type: "text",
 		},
-		{ name: "slug", title: "Slug", type: "slug" },
+		{
+			name: "headerLink",
+			title: "Header Link",
+			description: "Select a header link to associate with this page.",
+			type: "reference",
+			to: [{ type: "header" }], // Ensure this type matches the name of your headerNavSchema
+		},
 		{
 			name: "contactInfo",
 			title: "Contact Info",
