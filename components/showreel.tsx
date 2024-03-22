@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 
 import { CldImage } from "next-cloudinary"
 
