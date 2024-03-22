@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { ButtonBurger } from "@/components/buttons"
 
@@ -14,9 +14,11 @@ type NavbarMobileProps = {
 export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const pathname = usePathname()
+	const router = useRouter()
 
-	const transitionOnClick = (link: NavLink, el: HTMLElement) => {
-		console.log(link)
+	const transitionOnClick = (link: NavLink) => {
+		toggleMobileMenu()
+		router.push(link.slug)
 	}
 
 	const toggleMobileMenu = () => {
@@ -26,7 +28,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 	return (
 		<>
 			{navLinks && (
-				<div className='block lg:hidden'>
+				<div className='block lg:hidden overflow-clip'>
 					<div className='absolute top-4 right-4 flex justify-end items-center z-100'>
 						{/* Burger Button */}
 						<ButtonBurger action={toggleMobileMenu} isOpen={isOpen} />
@@ -34,7 +36,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 
 					{/* Mobile Menu */}
 					<aside
-						className={`absolute top-0 left-0 w-screen min-h-svh p-8 bg-secondary transition-transform z-80 ${
+						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform z-80 overflow-clip ${
 							isOpen ? "" : "-translate-y-full"
 						}`}
 					>
@@ -49,10 +51,13 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 										{/* Inactive Link */}
 										{(pathname === "/" && link.slug === "/") ||
 										pathname.includes(`/${link.slug}`) ? (
-											<span className='uppercase'>{link.title}</span>
+											<span className='uppercase opacity-50'>{link.title}</span>
 										) : (
 											// Active Link
-											<button className='block' onClick={toggleMobileMenu}>
+											<button
+												className='block'
+												onClick={() => transitionOnClick(link)}
+											>
 												<span className='uppercase'>{link.title}</span>
 											</button>
 										)}
