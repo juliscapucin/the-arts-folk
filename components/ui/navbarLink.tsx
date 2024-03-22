@@ -23,7 +23,7 @@ export default function navbarLink({
 					isActive ? "text-faded-30" : ""
 				}`}
 			>
-				{link.label}
+				{link.title}
 			</button>
 		</Link>
 	)

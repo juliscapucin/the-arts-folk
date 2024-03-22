@@ -19,7 +19,7 @@ export default function DefaultPage({ pageData }: PageProps) {
 			</Heading>
 			<div className='flex-1 lg:flex gap-32 justify-between items-center'>
 				{/* Text */}
-				<div className='lg:w-2/5 font-text'>
+				<div className='lg:w-2/5 [&>p]:font-text [&>h4]:text-titleLarge'>
 					<PortableText value={pageData.content} />
 				</div>
 			</div>

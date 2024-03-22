@@ -1,6 +1,6 @@
 import { createClient, groq } from "next-sanity"
 import clientConfig from "./config/client-config"
-import { Artist, InfoPage, Page } from "@/types"
+import { Artist, InfoPage, NavLink, Page } from "@/types"
 
 const client = createClient(clientConfig)
 
@@ -75,15 +75,12 @@ export async function getInfoPage(): Promise<InfoPage> {
 	)
 }
 
-export async function getHeaderNavLinks() {
+export async function getHeaderNavLinks(): Promise<NavLink[]> {
 	return client.fetch(
-		groq`*[_type == "navigation" && title == "Header Links"][0] {
-         items[] {
-            title,
-            "slug": slug.current,
-            _key,
-            order
-          }
-   }`
+		groq`*[_type == "header"]|order(order) {
+         title,
+         "slug": slug.current,
+         order
+       }`
 	)
 }
