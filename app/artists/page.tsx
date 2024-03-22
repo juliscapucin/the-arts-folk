@@ -11,7 +11,7 @@ const Artists = [
 	},
 	{
 		name: "Facebook",
-		slug: "artist3",
+		slug: "artistjj",
 	},
 ]
 

@@ -16,9 +16,9 @@ export default function Layout({ children, customFont }: LayoutProps) {
 			<body
 				className={`${customFont} w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white uppercase font-text font-thin`}
 			>
-				{!pathname.includes("/admin") && <Header />}
+				<Header />
 				{children}
-				{!pathname.includes("/admin") && <Footer />}
+				<Footer />
 			</body>
 		</html>
 	)

@@ -4,11 +4,6 @@ const artistSchema = {
 	type: "document",
 	fields: [
 		{
-			title: "Release Date",
-			name: "releaseDate",
-			type: "date",
-		},
-		{
 			name: "name",
 			title: "Name",
 			type: "string",
@@ -23,8 +18,8 @@ const artistSchema = {
 			},
 		},
 		{
-			name: "description",
-			title: "Description",
+			name: "subtitle",
+			title: "Subtitle",
 			type: "text",
 		},
 		{
@@ -61,31 +56,18 @@ const artistSchema = {
 			},
 		},
 		{
-			name: "content1",
-			title: "Content 1",
+			name: "copy1",
+			title: "Copy 1",
 			type: "array",
 			of: [{ type: "block" }],
 		},
 		{
-			name: "content2",
-			title: "Content 2",
+			name: "copy2",
+			title: "Copy 2",
 			type: "array",
 			of: [{ type: "block" }],
 		},
 	],
-	orderings: [
-		{
-			title: "Release Date, New",
-			name: "releaseDateDesc",
-			by: [{ field: "releaseDate", direction: "desc" }],
-		},
-	],
-	preview: {
-		select: {
-			title: "title",
-			media: "coverImage",
-		},
-	},
 }
 
 export default artistSchema

@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import "./globals.css"
-import { Footer, Header, Layout } from "@/components/ui"
+import { Footer, Header } from "@/components/ui"
 
 export const metadata: Metadata = {
 	title: "The Arts Folk",
@@ -25,5 +25,15 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	return <Layout customFont={myFont.className}>{children}</Layout>
+	return (
+		<html lang='en'>
+			<body
+				className={`${myFont.className} w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white uppercase font-text font-thin`}
+			>
+				<Header />
+				{children}
+				<Footer />
+			</body>
+		</html>
+	)
 }
