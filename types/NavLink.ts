@@ -1,5 +1,5 @@
 export type NavLink = {
-	label: string
-	slug?: string
-	url?: string
+	title: string
+	slug: string
+	order: number
 }

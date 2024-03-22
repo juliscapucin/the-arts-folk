@@ -44,19 +44,19 @@ export default function MenuMobile({ navLinks }: NavLinksProps) {
 								return (
 									<div
 										className={`relative h-32 flex justify-start items-start`}
-										key={link.label}
+										key={link.title}
 									>
 										{/* Inactive Link */}
 										{(pathname === "/" && link.slug === "/") ||
 										pathname.includes(`/${link.slug}`) ? (
 											<span className='font-headline text-displaySmall text-primary'>
-												{link.label}
+												{link.title}
 											</span>
 										) : (
 											// Active Link
 											<button className='block' onClick={toggleMobileMenu}>
 												<span className='font-headline text-displaySmall text-primary'>
-													{link.label}
+													{link.title}
 												</span>
 											</button>
 										)}

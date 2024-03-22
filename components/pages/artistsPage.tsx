@@ -8,5 +8,11 @@ type ArtistsPageProps = {
 }
 
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
-	return <Container>Artists</Container>
+	return (
+		<Container>
+			{artists.map((artist) => {
+				return <div key={artist.name}>{artist.name}</div>
+			})}
+		</Container>
+	)
 }
