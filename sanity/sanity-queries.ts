@@ -1,9 +1,10 @@
 import { createClient, groq } from "next-sanity"
 import clientConfig from "./config/client-config"
+import { Artist, InfoPage } from "@/types"
 
 const client = createClient(clientConfig)
 
-export async function getArtists() {
+export async function getArtists(): Promise<Artist[]> {
 	return client.fetch(
 		groq`*[_type == "artist"]{
       _id,
@@ -18,7 +19,7 @@ export async function getArtists() {
 	)
 }
 
-export async function getArtist(slug: string) {
+export async function getArtist(slug: string): Promise<Artist> {
 	return client.fetch(
 		groq`*[_type == "artist" && slug.current == $slug][0]{
       _id,
@@ -49,13 +50,18 @@ export async function getArtist(slug: string) {
 	)
 }
 
-export async function getInfoPage() {
+export async function getInfoPage(): Promise<InfoPage> {
 	return client.fetch(
 		groq`*[_type == "infoPage"][0] {
       title,
       "headerLink": header->slug.current,
       description,
-      contactInfo
+      contactInfo[]{
+         name,
+         email,
+         phone
+       },
+      }
    }`
 	)
 }

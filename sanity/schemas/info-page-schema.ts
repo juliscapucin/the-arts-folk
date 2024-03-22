@@ -11,7 +11,8 @@ const infoPageSchema = {
 		{
 			name: "description",
 			title: "Description",
-			type: "text",
+			type: "array",
+			of: [{ type: "block" }],
 		},
 		{
 			name: "headerLink",

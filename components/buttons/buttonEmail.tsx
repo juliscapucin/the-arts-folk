@@ -18,6 +18,7 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 			<a
 				href={`mailto:${email}`}
 				className='group flex justify-center items-center gap-2 text-titleLarge hover:opacity-50 transition-opacity duration-300'
+				rel='noopener noreferrer'
 			>
 				<IconEmail />
 				<Heading tag='h4' variant='title' classes='leading-3'>

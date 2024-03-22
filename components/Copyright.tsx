@@ -6,7 +6,11 @@ export default function Copyright() {
 			<span>The Arts Folk ©{year}</span>
 			<span>
 				Website by{" "}
-				<a href='https://juliscapucin.com' target='_blank'>
+				<a
+					href='https://juliscapucin.com'
+					target='_blank'
+					rel='noopener noreferrer'
+				>
 					JuliScapucin
 				</a>
 			</span>
