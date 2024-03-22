@@ -7,11 +7,11 @@ import { ButtonBurger } from "@/components/buttons"
 
 import { NavLink } from "@/types"
 
-type NavLinksProps = {
+type NavbarMobileProps = {
 	navLinks: NavLink[]
 }
 
-export default function MenuMobile({ navLinks }: NavLinksProps) {
+export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const pathname = usePathname()
 

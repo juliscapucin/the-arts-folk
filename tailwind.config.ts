@@ -29,7 +29,7 @@ const config: Config = {
 			text: "var(--font-secondary), sans-serif",
 		},
 		fontSize: {
-			headlineLarge: "36px",
+			headlineLarge: ["36px", "1"],
 			headlineMedium: "32px",
 			headlineSmall: "28px",
 			titleLarge: "20px",

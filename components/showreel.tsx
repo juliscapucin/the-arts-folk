@@ -46,12 +46,12 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				return (
 					<div className='absolute w-full h-full' key={`showreel-${index}`}>
 						<CldImage
-							className={`object-contain ${
+							className={`object-cover md:object-contain ${
 								slideIndex === index ? "opacity-100" : "opacity-0"
 							}`}
 							src={`the-arts-folk/${image}`}
 							alt='photo'
-							sizes='(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 50vw'
+							sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
 							quality={70}
 							fill
 							priority={index === 0 || index === 1}

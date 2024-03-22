@@ -65,7 +65,7 @@ export async function getInfoPage(): Promise<InfoPage> {
 		groq`*[_type == "infoPage"][0] {
       title,
       "headerLink": header->slug.current,
-      description,
+      content,
       contactInfo[]{
          name,
          email,
