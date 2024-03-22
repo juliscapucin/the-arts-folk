@@ -11,7 +11,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	return (
 		<Container>
 			{artists.map((artist) => {
-				return <div>{artist.name}</div>
+				return <div key={artist.name}>{artist.name}</div>
 			})}
 		</Container>
 	)

@@ -1,6 +1,6 @@
 import { createClient, groq } from "next-sanity"
 import clientConfig from "./config/client-config"
-import { Artist, InfoPage } from "@/types"
+import { Artist, InfoPage, Page } from "@/types"
 
 const client = createClient(clientConfig)
 
@@ -47,6 +47,16 @@ export async function getArtist(slug: string): Promise<Artist> {
        },
    }`,
 		{ slug }
+	)
+}
+
+export async function getPages(): Promise<Page> {
+	return client.fetch(
+		groq`*[_type == "page"][0] {
+      title,
+      "headerLink": header->slug.current,
+      content,
+   }`
 	)
 }
 
