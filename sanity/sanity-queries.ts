@@ -50,13 +50,13 @@ export async function getArtist(slug: string): Promise<Artist> {
 	)
 }
 
-export async function getPages(): Promise<Page> {
+export async function getPage(slug: string): Promise<Page> {
 	return client.fetch(
-		groq`*[_type == "page"][0] {
+		groq`*[_type == "page" && headerLink._ref in *[_type == "header" && slug.current == $slug]._id][0] {
       title,
-      "headerLink": header->slug.current,
       content,
-   }`
+   }`,
+		{ slug }
 	)
 }
 

@@ -4,9 +4,9 @@ import { InfoPage } from "@/components/pages"
 import { getInfoPage } from "@/sanity/sanity-queries"
 
 export default async function Page() {
-	const info = await getInfoPage()
+	const infoData = await getInfoPage()
 
-	if (!info) return notFound()
+	if (!infoData) return notFound()
 
-	return <InfoPage {...{ info }} />
+	return <InfoPage {...{ infoData }} />
 }
