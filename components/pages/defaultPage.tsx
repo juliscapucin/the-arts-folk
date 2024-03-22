@@ -38,7 +38,7 @@ export default function DefaultPage({
 			</Heading>
 			<div className='flex-1 lg:flex gap-32 justify-between items-center'>
 				{/* Text */}
-				<div className='lg:w-2/5 [&>p]:font-text [&>h4, &>h3]:text-titleLarge [&>h2]:text-headlineLarge'>
+				<div className='lg:w-2/5 [&>p]:font-text [&>p]:font-extralight [&>h4, &>h3]:text-titleLarge [&>h2]:text-headlineLarge'>
 					<PortableText value={pageData.content} />
 				</div>
 				{children}

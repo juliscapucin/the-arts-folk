@@ -10,6 +10,7 @@ export default function Copyright() {
 					href='https://juliscapucin.com'
 					target='_blank'
 					rel='noopener noreferrer'
+					aria-label='Website By Juli Scapucin'
 				>
 					JuliScapucin
 				</a>

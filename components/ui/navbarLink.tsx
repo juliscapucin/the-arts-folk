@@ -19,7 +19,7 @@ export default function navbarLink({
 					e.preventDefault()
 					transitionOnClick(link)
 				}}
-				className={`uppercase font-text text-bodyLarge tracking-wider ${
+				className={`uppercase font-text font-extralight text-bodyLarge tracking-wider ${
 					isActive ? "text-faded-30" : ""
 				}`}
 			>
