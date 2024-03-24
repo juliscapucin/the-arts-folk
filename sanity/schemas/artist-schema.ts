@@ -1,3 +1,5 @@
+import CloudinaryUpload from "@/sanity/components/cloudinaryUpload"
+
 const artistSchema = {
 	name: "artist",
 	title: "Artists",
@@ -45,6 +47,11 @@ const artistSchema = {
 			title: "Images",
 			type: "array",
 			of: [{ type: "string" }],
+		},
+		{
+			type: "cloudinary.asset",
+			name: "image",
+			description: "This asset is served from Cloudinary",
 		},
 		{
 			name: "category",

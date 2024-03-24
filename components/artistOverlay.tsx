@@ -29,7 +29,7 @@ export default function ArtistOverlay() {
 							/>
 						</div>
 					</div>
-					<div className='relative w-[110%] lg:w-[50%] h-1/2 top:64'>
+					<div className='relative w-[110%] lg:w-[50%] h-1/2'>
 						<CldImage
 							className={`object-contain`}
 							src='the-arts-folk/horizontal.jpg'
