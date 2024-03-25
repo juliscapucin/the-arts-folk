@@ -5,11 +5,7 @@ import { Artist, InfoPage, NavLink, Page } from "@/types"
 const client = createClient(clientConfig)
 
 export async function getShowreel(): Promise<any> {
-	return client.fetch(
-		groq`*[_type == "showreel"]{
-      images,
-   }`
-	)
+	return client.fetch(groq`*[title == "Showreel Home"][0].images`)
 }
 
 export async function getArtists(): Promise<Artist[]> {

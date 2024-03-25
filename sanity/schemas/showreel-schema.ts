@@ -4,8 +4,8 @@ const showreelSchema = {
 	type: "document",
 	fields: [
 		{
-			name: "name",
-			title: "Name",
+			name: "title",
+			title: "Title",
 			type: "string",
 		},
 		{
