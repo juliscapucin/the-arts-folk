@@ -4,11 +4,9 @@ import { HomePage } from "@/components/pages"
 import { getShowreel } from "@/sanity/sanity-queries"
 
 export default async function Home() {
-	const infoData = await getShowreel()
+	const showreelImages = await getShowreel()
 
-	console.log(infoData)
+	if (!showreelImages) return notFound()
 
-	if (!infoData) return notFound()
-
-	return <HomePage />
+	return <HomePage showreelImages={showreelImages} />
 }
