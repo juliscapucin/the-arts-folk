@@ -34,6 +34,13 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 								onMouseEnter={() => handleMouseEnter(artist.name)}
 							>
 								{artist.name}
+								<span
+									className={`block mt-2 font-text uppercase text-labelLarge transition-opacity ${
+										isHovered === artist.name ? "" : "opacity-0"
+									}`}
+								>
+									Coming soon
+								</span>
 							</button>
 						</>
 					)

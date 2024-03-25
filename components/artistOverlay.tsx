@@ -15,7 +15,7 @@ export default function ArtistOverlay({
 		<>
 			{/* DESKTOP */}
 			<div
-				className={`flex fixed -top-[--header-height-mobile] left-0 w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 ${
+				className={`flex fixed top-0 left-auto w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 ${
 					isVisible ? "" : "opacity-0"
 				}`}
 			>
