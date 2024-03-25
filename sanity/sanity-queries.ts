@@ -14,10 +14,7 @@ export async function getArtists(): Promise<Artist[]> {
       _id,
       name,
       "slug": slug.current,
-      coverImage{
-         fileName,
-         alt,
-       },
+      images,
       category,
    }`
 	)

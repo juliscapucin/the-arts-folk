@@ -18,19 +18,24 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
-			<ArtistOverlay />
 			<section className='absolute w-full lg:space-y-32 py-16 z-20'>
 				{artists.map((artist) => {
 					return (
-						<button
-							className={`block mx-auto h-96 lg:h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-300 ${
-								isHovered === artist.name ? "" : "opacity-20"
-							}`}
-							key={artist.name}
-							onMouseEnter={() => handleMouseEnter(artist.name)}
-						>
-							{artist.name}
-						</button>
+						<>
+							<ArtistOverlay
+								images={artist.images}
+								isVisible={isHovered === artist.name}
+							/>
+							<button
+								className={`block mx-auto h-96 lg:h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-300 ${
+									isHovered === artist.name ? "" : "opacity-20"
+								}`}
+								key={artist.name}
+								onMouseEnter={() => handleMouseEnter(artist.name)}
+							>
+								{artist.name}
+							</button>
+						</>
 					)
 				})}
 			</section>
