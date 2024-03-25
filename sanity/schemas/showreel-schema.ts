@@ -9,15 +9,15 @@ const showreelSchema = {
 			type: "string",
 		},
 		{
-			name: "showreelImage",
-			title: "Showreel Image",
-			type: "cloudinary.asset",
-		},
-		{
-			name: "alt",
-			title: "Alt Text",
-			type: "string",
-			description: "Please describe the image for screen readers",
+			name: "images",
+			title: "Images",
+			type: "array",
+			description: "These images are served from Cloudinary",
+			of: [
+				{
+					type: "cloudinary.asset",
+				},
+			],
 		},
 	],
 }

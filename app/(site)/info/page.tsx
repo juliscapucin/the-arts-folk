@@ -8,5 +8,5 @@ export default async function Page() {
 
 	if (!infoData) return notFound()
 
-	return <InfoPage {...{ infoData }} />
+	return <InfoPage infoData={infoData} />
 }

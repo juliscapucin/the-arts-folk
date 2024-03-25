@@ -23,34 +23,15 @@ const artistSchema = {
 			type: "text",
 		},
 		{
-			name: "coverImage",
-			title: "Cover Image",
-			type: "document",
-			fields: [
+			name: "images",
+			title: "Images",
+			type: "array",
+			description: "These images are served from Cloudinary",
+			of: [
 				{
 					type: "cloudinary.asset",
-					name: "image",
-					description: "This image is served from Cloudinary",
-				},
-				{
-					name: "alt",
-					type: "string",
-					title: "Alt text",
-					description: "Please describe the image for screen readers",
 				},
 			],
-		},
-		{ name: "artistWebsite", title: "Artist website", type: "url" },
-		// {
-		// 	name: "images",
-		// 	title: "Images",
-		// 	type: "array",
-		// 	of: [{ type: "string" }],
-		// },
-		{
-			type: "cloudinary.asset",
-			name: "image",
-			description: "This asset is served from Cloudinary",
 		},
 		{
 			name: "category",
@@ -59,6 +40,7 @@ const artistSchema = {
 			type: "array",
 			of: [{ type: "reference", to: [{ type: "categories" }] }],
 		},
+		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{
 			name: "copy1",
 			title: "Copy 1",
