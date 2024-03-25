@@ -18,13 +18,14 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
-			<section className='absolute w-full lg:space-y-32 py-16 z-20'>
-				{artists.map((artist) => {
+			<section className='absolute w-full lg:space-y-32 py-[25svh] z-20'>
+				{artists.map((artist, index) => {
 					return (
 						<>
 							<ArtistOverlay
 								images={artist.images}
 								isVisible={isHovered === artist.name}
+								isFirst={index === 0}
 							/>
 							<button
 								className={`block mx-auto h-96 lg:h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-300 ${

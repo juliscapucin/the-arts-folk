@@ -12,8 +12,10 @@
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 180, 180, 180;
 		--color-white: 255 255 255;
-		--padding-mobile: 1rem;
-		--padding-desktop: 1rem;
+		--margin-mobile: 1rem;
+		--margin-desktop: 1rem;
+		--padding-mobile: 2rem;
+		--padding-desktop: 2rem;
 		--header-height-mobile: 4rem;
 		--header-height-desktop: 4rem;
 		--footer-height-mobile: 3rem;
