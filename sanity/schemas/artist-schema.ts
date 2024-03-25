@@ -1,5 +1,3 @@
-import CloudinaryUpload from "@/sanity/components/cloudinaryUpload"
-
 const artistSchema = {
 	name: "artist",
 	title: "Artists",
@@ -30,24 +28,25 @@ const artistSchema = {
 			type: "document",
 			fields: [
 				{
-					name: "fileName",
-					type: "string",
-					title: "Cloudinary File Name",
+					type: "cloudinary.asset",
+					name: "image",
+					description: "This image is served from Cloudinary",
 				},
 				{
 					name: "alt",
 					type: "string",
 					title: "Alt text",
+					description: "Please describe the image for screen readers",
 				},
 			],
 		},
-		{ name: "url", title: "URL", type: "url" },
-		{
-			name: "images",
-			title: "Images",
-			type: "array",
-			of: [{ type: "string" }],
-		},
+		{ name: "artistWebsite", title: "Artist website", type: "url" },
+		// {
+		// 	name: "images",
+		// 	title: "Images",
+		// 	type: "array",
+		// 	of: [{ type: "string" }],
+		// },
 		{
 			type: "cloudinary.asset",
 			name: "image",

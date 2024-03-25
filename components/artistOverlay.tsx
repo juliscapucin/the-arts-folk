@@ -6,7 +6,7 @@ export default function ArtistOverlay() {
 			{/* DESKTOP */}
 			<div className='flex fixed w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none'>
 				{/* LEFT */}
-				<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-4'>
+				{/* <div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-4'>
 					<div className='relative flex flex-col lg:flex-row w-full h-full lg:h-1/2 gap-4'>
 						<div className='relative w-[80%] lg:w-[50%] h-full self-end'>
 							<CldImage
@@ -39,10 +39,10 @@ export default function ArtistOverlay() {
 							fill
 						/>
 					</div>
-				</div>
+				</div> */}
 
 				{/* RIGHT */}
-				<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
+				{/* <div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
 					<div className='relative w-[80%] lg:w-[50%] h-1/2'>
 						<CldImage
 							className={`object-contain`}
@@ -63,7 +63,7 @@ export default function ArtistOverlay() {
 							fill
 						/>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</>
 	)

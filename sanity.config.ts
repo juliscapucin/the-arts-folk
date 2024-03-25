@@ -11,10 +11,9 @@ import {
 
 export default defineConfig({
 	title: "The Arts Folk",
-
 	projectId: "fqgs6dmb",
 	dataset: "production",
-	apiVersion: "2024-03-21",
+	apiVersion: "2022-06-30",
 	basePath: "/admin",
 	plugins: [
 		structureTool(),
@@ -22,10 +21,10 @@ export default defineConfig({
 		cloudinarySchemaPlugin(),
 	],
 	schema: { types: schemas },
-	form: {
-		image: {
-			assetSources: () => [cloudinaryImageSource],
-			directUploads: false,
-		},
-	},
+	// form: {
+	// 	image: {
+	// 		assetSources: () => [cloudinaryImageSource],
+	// 		directUploads: false,
+	// 	},
+	// },
 })

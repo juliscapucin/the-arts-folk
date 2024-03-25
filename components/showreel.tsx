@@ -47,7 +47,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 						className='absolute w-full h-full z-10'
 						key={`showreel-${index}`}
 					>
-						<CldImage
+						{/* <CldImage
 							className={`object-cover md:object-contain ${
 								slideIndex === index ? "opacity-100" : "opacity-0"
 							}`}
@@ -57,7 +57,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 							quality={70}
 							fill
 							priority={index === 0 || index === 1}
-						/>
+						/> */}
 					</div>
 				)
 			})}

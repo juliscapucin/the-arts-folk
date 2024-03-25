@@ -3,6 +3,7 @@ import categorySchema from "./category-schema"
 import headerNavSchema from "./header-nav-schema"
 import infoPageSchema from "./info-page-schema"
 import pageSchema from "./page-schema"
+import showreelSchema from "./showreel-schema"
 
 const schemas = [
 	artistSchema,
@@ -10,6 +11,7 @@ const schemas = [
 	headerNavSchema,
 	infoPageSchema,
 	pageSchema,
+	showreelSchema,
 ]
 
 export default schemas
