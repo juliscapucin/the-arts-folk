@@ -37,7 +37,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		ctx.add(() => {
 			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 			// Create an infinite vertical loop
-			setLoop((prev) =>
+			setLoop(
 				infiniteVerticalLoop(items, {
 					repeat: -1,
 					draggable: true,
@@ -49,26 +49,24 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			)
 
 			// Set up an Observer for user input.
-			// Observer.create({
-			// 	target: sectionRef.current,
-			// 	type: "pointer,touch,wheel",
-			// 	wheelSpeed: -1,
-			// 	onChange: (self) => {
-			// 		let calculatedTimeScale =
-			// 			Math.abs(self.deltaX) > Math.abs(self.deltaY)
-			// 				? -self.deltaX
-			// 				: -self.deltaY
-			// 		const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
-			// 		const MAX_TIME_SCALE = 1
-			// 		let finalTimeScale = Math.min(
-			// 			Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-			// 			MAX_TIME_SCALE
-			// 		)
-			// 		loop.timeScale(finalTimeScale)
-			// 	},
-			// })
-
-			// Expose the slow animation control for external use.
+			Observer.create({
+				target: sectionRef.current,
+				type: "pointer,touch,wheel",
+				wheelSpeed: -1,
+				onChange: (self) => {
+					let calculatedTimeScale =
+						Math.abs(self.deltaX) > Math.abs(self.deltaY)
+							? -self.deltaX
+							: -self.deltaY
+					const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
+					const MAX_TIME_SCALE = 3
+					let finalTimeScale = Math.min(
+						Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+						MAX_TIME_SCALE
+					)
+					loop && loop.timeScale(finalTimeScale)
+				},
+			})
 		}, sectionRef.current)
 
 		return () => ctx.revert()
@@ -78,10 +76,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		if (!loop) return
 
 		if (isHovered === "") {
-			console.log("resume")
 			loop.resume()
 		} else {
-			console.log("pause")
 			loop.pause()
 		}
 	}, [isHovered, loop])
