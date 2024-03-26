@@ -16,6 +16,7 @@ type ArtistsPageProps = {
 
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
+	const [loop, setLoop] = useState<gsap.core.Timeline | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	let ctx = gsap.context(() => {})
 
@@ -36,58 +37,54 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		ctx.add(() => {
 			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 			// Create an infinite vertical loop
-			const loop = infiniteVerticalLoop(items, {
-				repeat: -1,
-				draggable: true,
-				speed: 0.5,
-				inertia: true,
-				paused: false,
-				center: true,
-			})
-
-			// Initially stop the loop.
-			loop.timeScale(0)
-
-			// Slow down to timeScale 1 over 2 seconds.
-			const slow = gsap.to(loop, {
-				timeScale: 1,
-				duration: 2,
-			})
+			setLoop((prev) =>
+				infiniteVerticalLoop(items, {
+					repeat: -1,
+					draggable: true,
+					speed: 0.5,
+					inertia: true,
+					paused: true,
+					center: true,
+				})
+			)
 
 			// Set up an Observer for user input.
-			Observer.create({
-				target: sectionRef.current,
-				type: "pointer,touch,wheel",
-				wheelSpeed: -1,
-				onChange: (self) => {
-					let calculatedTimeScale =
-						Math.abs(self.deltaX) > Math.abs(self.deltaY)
-							? -self.deltaX
-							: -self.deltaY
-					const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
-					const MAX_TIME_SCALE = 1
-					let finalTimeScale = Math.min(
-						Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-						MAX_TIME_SCALE
-					)
-					loop.timeScale(finalTimeScale)
-				},
-			})
+			// Observer.create({
+			// 	target: sectionRef.current,
+			// 	type: "pointer,touch,wheel",
+			// 	wheelSpeed: -1,
+			// 	onChange: (self) => {
+			// 		let calculatedTimeScale =
+			// 			Math.abs(self.deltaX) > Math.abs(self.deltaY)
+			// 				? -self.deltaX
+			// 				: -self.deltaY
+			// 		const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
+			// 		const MAX_TIME_SCALE = 1
+			// 		let finalTimeScale = Math.min(
+			// 			Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+			// 			MAX_TIME_SCALE
+			// 		)
+			// 		loop.timeScale(finalTimeScale)
+			// 	},
+			// })
 
 			// Expose the slow animation control for external use.
-			return { slow }
 		}, sectionRef.current)
 
 		return () => ctx.revert()
 	}, [])
 
 	useEffect(() => {
+		if (!loop) return
+
 		if (isHovered === "") {
-			ctx.slow?.resume()
+			console.log("resume")
+			loop.resume()
 		} else {
-			ctx.slow?.pause()
+			console.log("pause")
+			loop.pause()
 		}
-	}, [isHovered])
+	}, [isHovered, loop])
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
@@ -100,15 +97,12 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					/>
 				)
 			})}
-			<section
-				ref={sectionRef}
-				className='absolute w-full lg:space-y-16 py-8 z-20'
-			>
+			<section ref={sectionRef} className='absolute w-full z-20'>
 				{artists.map((artist) => {
 					return (
 						<div className='gsap-scroll-item relative' key={artist.name}>
 							<button
-								className={`gsap-scroll-button block mx-auto h-64 lg:h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+								className={`gsap-scroll-button block mx-auto h-64 lg:h-64 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered
