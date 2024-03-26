@@ -5,11 +5,11 @@ interface LoopConfig {
 	paddingRight?: string
 	paddingBottom?: string
 	reversed?: any
-	snap: number | number[] | boolean
+	snap?: number | number[] | boolean
 	speed: number
 	repeat: number
 	paused: boolean
-	center: boolean
+	center?: boolean
 	draggable: boolean
 	inertia: boolean
 	enterAnimation?: (
