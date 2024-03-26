@@ -29,6 +29,9 @@ const config: Config = {
 			text: "var(--font-secondary), sans-serif",
 		},
 		fontSize: {
+			displayLarge: ["52px", "1"],
+			displayMedium: ["45px", "1"],
+			displaySmall: ["40px", "1"],
 			headlineLarge: ["36px", "1"],
 			headlineMedium: ["32px", "1"],
 			headlineSmall: ["28px", "1"],
@@ -38,9 +41,9 @@ const config: Config = {
 			bodyLarge: "18px",
 			bodyMedium: "16px",
 			bodySmall: "14px",
-			labelLarge: "14px",
-			labelMedium: "12px",
-			labelSmall: "10px",
+			labelLarge: "16px",
+			labelMedium: "14px",
+			labelSmall: "12px",
 		},
 		extend: {
 			animation: {

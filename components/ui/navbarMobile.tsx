@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 import { ButtonBurger } from "@/components/buttons"
 
-import { NavLink } from "@/types"
+import type { NavLink } from "@/types"
 
 type NavbarMobileProps = {
 	navLinks: NavLink[]
@@ -41,7 +41,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 						}`}
 					>
 						{/* Nav Links */}
-						<nav className='flex flex-col gap-8 mt-32 h-svh'>
+						<nav className='flex flex-col gap-24 mt-64 h-svh'>
 							{navLinks.map((link) => {
 								return (
 									<div

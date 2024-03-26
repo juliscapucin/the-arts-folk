@@ -16,23 +16,31 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered(name)
 	}
 
+	const handleMouseLeave = () => {
+		setIsHovered("")
+	}
+
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
-			<section className='absolute w-full lg:space-y-32 py-[25svh] z-20'>
-				{artists.map((artist, index) => {
+			<section className='absolute w-full lg:space-y-16 py-32 z-20'>
+				{artists.map((artist) => {
 					return (
-						<>
+						<div className='relative'>
 							<ArtistOverlay
 								images={artist.images}
 								isVisible={isHovered === artist.name}
-								isFirst={index === 0}
 							/>
 							<button
-								className={`block mx-auto h-96 lg:h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-300 ${
-									isHovered === artist.name ? "" : "opacity-20"
+								className={`block mx-auto h-64 lg:h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+									isHovered === artist.name
+										? ""
+										: isHovered
+										? "opacity-20 z-100"
+										: ""
 								}`}
 								key={artist.name}
 								onMouseEnter={() => handleMouseEnter(artist.name)}
+								onMouseLeave={handleMouseLeave}
 							>
 								{artist.name}
 								<span
@@ -43,7 +51,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 									Coming soon
 								</span>
 							</button>
-						</>
+						</div>
 					)
 				})}
 			</section>

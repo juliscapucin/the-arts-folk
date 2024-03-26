@@ -9,8 +9,8 @@ export default function ButtonBurger({ action, isOpen }: ButtonBurgerProps) {
 	return (
 		<button onClick={action} aria-label='open menu'>
 			<div
-				className={`h-16 w-16 flex flex-col justify-center items-center relative ${
-					isOpen ? "" : "gap-4"
+				className={`h-12 w-12 flex flex-col justify-center items-center relative ${
+					isOpen ? "" : "gap-3"
 				}`}
 			>
 				<div

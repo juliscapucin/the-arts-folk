@@ -1,6 +1,6 @@
 import { createClient, groq } from "next-sanity"
-import clientConfig from "./config/client-config"
-import { Artist, InfoPage, NavLink, Page } from "@/types"
+import clientConfig from "@/sanity/config/client-config"
+import type { Artist, InfoPage, NavLink, Page } from "@/types"
 
 const client = createClient(clientConfig)
 
@@ -10,7 +10,7 @@ export async function getShowreel(): Promise<any> {
 
 export async function getArtists(): Promise<Artist[]> {
 	return client.fetch(
-		groq`*[_type == "artist"]{
+		groq`*[_type == "artist"] | order(name asc){
       _id,
       name,
       "slug": slug.current,

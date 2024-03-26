@@ -1,4 +1,4 @@
-import { CloudinaryImage } from "@/types"
+import type { CloudinaryImage } from "@/types"
 
 export type Artist = {
 	name: string

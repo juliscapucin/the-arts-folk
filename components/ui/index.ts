@@ -7,7 +7,6 @@ import NavbarMobile from "./navbarMobile"
 import NavbarLink from "./navbarLink"
 import NavbarSocials from "./navbarSocials"
 import Paragraph from "./paragraph"
-import Layout from "./layout"
 
 export {
 	Container,
@@ -19,5 +18,4 @@ export {
 	NavbarLink,
 	NavbarSocials,
 	Paragraph,
-	Layout,
 }

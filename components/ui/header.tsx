@@ -2,7 +2,7 @@
 
 import { NavbarDesktop, NavbarMobile } from "@/components/ui"
 import { ButtonLogo } from "@/components/buttons"
-import { NavLink } from "@/types"
+import type { NavLink } from "@/types"
 
 type HeaderProps = {
 	navLinks: NavLink[]

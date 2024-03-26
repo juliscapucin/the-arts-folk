@@ -2,7 +2,7 @@
 
 import { Showreel } from "@/components"
 import { Container } from "@/components/ui"
-import { CloudinaryImage } from "@/types"
+import type { CloudinaryImage } from "@/types"
 
 type HomePageProps = {
 	showreelImages: CloudinaryImage[]

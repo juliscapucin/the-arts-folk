@@ -2,9 +2,8 @@
 
 import { DefaultPage } from "@/components/pages"
 import { ButtonEmail } from "@/components/buttons"
-import { Heading } from "@/components/ui"
 
-import { InfoPage } from "@/types"
+import type { InfoPage } from "@/types"
 
 type InfoPageProps = {
 	infoData: InfoPage

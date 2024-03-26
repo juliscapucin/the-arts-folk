@@ -34,6 +34,17 @@ const artistSchema = {
 			],
 		},
 		{
+			name: "scrapbookImages",
+			title: "Scrapbook Images",
+			type: "array",
+			description: "These images are served from Cloudinary",
+			of: [
+				{
+					type: "cloudinary.asset",
+				},
+			],
+		},
+		{
 			name: "category",
 			title: "Categories",
 			description: "Select the categories associated with this artist.",

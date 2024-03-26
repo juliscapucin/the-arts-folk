@@ -1,5 +1,6 @@
-import { NavLink } from "@/types"
 import Link from "next/link"
+
+import type { NavLink } from "@/types"
 
 type NavbarLinkProps = {
 	link: NavLink

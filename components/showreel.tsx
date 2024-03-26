@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { CldImage } from "next-cloudinary"
 
-import { CloudinaryImage } from "@/types"
+import type { CloudinaryImage } from "@/types"
 
 type ShowreelProps = {
 	showreelImages: CloudinaryImage[]

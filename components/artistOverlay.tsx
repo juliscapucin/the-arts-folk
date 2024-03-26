@@ -1,25 +1,23 @@
 import { CldImage } from "next-cloudinary"
 
-import { CloudinaryImage } from "@/types"
+import type { CloudinaryImage } from "@/types"
 
 type ArtistOverlayProps = {
 	images: CloudinaryImage[]
 	isVisible: boolean
-	isFirst?: boolean
 }
 
 export default function ArtistOverlay({
 	images,
 	isVisible,
-	isFirst,
 }: ArtistOverlayProps) {
 	return (
 		<>
 			{/* DESKTOP */}
 			<div
-				className={`flex fixed left-auto w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 ${
-					isVisible ? "" : "opacity-0"
-				} ${isFirst ? "top-0" : "-top-[--header-height-desktop]"}`}
+				className={`flex fixed top-[--header-height-desktop] left-auto w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 ${
+					isVisible ? "-z-5" : "opacity-0"
+				}`}
 			>
 				{/* LEFT */}
 				<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-4'>
