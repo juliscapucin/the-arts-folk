@@ -12,6 +12,7 @@
     "@portabletext/react": "^3.0.15",
     "@sanity/ui": "^2.0.12",
     "cloudinary": "^2.0.3",
+    "gsap": "^3.12.5",
     "next": "14.1.4",
     "next-cloudinary": "^6.3.0",
     "next-sanity": "^8.5.0",
@@ -19,7 +20,7 @@
     "react-dom": "^18.2.0",
     "sanity": "^3.35.2",
     "sanity-plugin-cloudinary": "^1.1.2",
-    "styled-components": "^6"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@types/node": "^20",
