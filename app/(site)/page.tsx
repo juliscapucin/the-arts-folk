@@ -1,5 +1,12 @@
-import { HomePage } from "@/components/pages"
+import { notFound } from "next/navigation"
 
-export default function Home() {
-	return <HomePage />
+import { HomePage } from "@/components/pages"
+import { getShowreel } from "@/sanity/sanity-queries"
+
+export default async function Home() {
+	const showreelImages = await getShowreel()
+
+	if (!showreelImages) return notFound()
+
+	return <HomePage showreelImages={showreelImages} />
 }

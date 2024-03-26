@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 
-import { Artist } from "@/types"
+import type { Artist } from "@/types"
 
 // import { getArtist, getArtists } from "@/lib"
 import { ArtistPage } from "@/components/pages"

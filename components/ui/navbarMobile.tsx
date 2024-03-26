@@ -1,22 +1,24 @@
 "use client"
 
 import { useState } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { ButtonBurger } from "@/components/buttons"
 
-import { NavLink } from "@/types"
+import type { NavLink } from "@/types"
 
-type NavLinksProps = {
+type NavbarMobileProps = {
 	navLinks: NavLink[]
 }
 
-export default function MenuMobile({ navLinks }: NavLinksProps) {
+export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const pathname = usePathname()
+	const router = useRouter()
 
-	const transitionOnClick = (link: NavLink, el: HTMLElement) => {
-		console.log(link)
+	const transitionOnClick = (link: NavLink) => {
+		toggleMobileMenu()
+		router.push(link.slug)
 	}
 
 	const toggleMobileMenu = () => {
@@ -26,38 +28,37 @@ export default function MenuMobile({ navLinks }: NavLinksProps) {
 	return (
 		<>
 			{navLinks && (
-				<div className='block lg:hidden'>
-					<div className='absolute top-4 right-4 flex justify-end items-center z-50'>
+				<div className='block lg:hidden overflow-clip'>
+					<div className='absolute top-4 right-4 flex justify-end items-center z-100'>
 						{/* Burger Button */}
 						<ButtonBurger action={toggleMobileMenu} isOpen={isOpen} />
 					</div>
 
 					{/* Mobile Menu */}
 					<aside
-						className={`absolute top-0 left-0 w-screen min-h-svh p-8 bg-secondary transition-transform ${
+						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform z-80 overflow-clip ${
 							isOpen ? "" : "-translate-y-full"
 						}`}
 					>
 						{/* Nav Links */}
-						<nav className='flex flex-col border-solid border-b border-secondary mt-32 h-full'>
+						<nav className='flex flex-col gap-24 mt-64 h-svh'>
 							{navLinks.map((link) => {
 								return (
 									<div
-										className={`relative h-32 flex justify-start items-start`}
+										className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
 										key={link.title}
 									>
 										{/* Inactive Link */}
 										{(pathname === "/" && link.slug === "/") ||
 										pathname.includes(`/${link.slug}`) ? (
-											<span className='font-headline text-displaySmall text-primary'>
-												{link.title}
-											</span>
+											<span className='uppercase opacity-50'>{link.title}</span>
 										) : (
 											// Active Link
-											<button className='block' onClick={toggleMobileMenu}>
-												<span className='font-headline text-displaySmall text-primary'>
-													{link.title}
-												</span>
+											<button
+												className='block'
+												onClick={() => transitionOnClick(link)}
+											>
+												<span className='uppercase'>{link.title}</span>
 											</button>
 										)}
 									</div>

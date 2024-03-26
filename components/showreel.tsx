@@ -1,19 +1,18 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
-
 import { CldImage } from "next-cloudinary"
 
+import type { CloudinaryImage } from "@/types"
+
 type ShowreelProps = {
-	showreelImages: string[]
+	showreelImages: CloudinaryImage[]
 }
 
 const delay = 1000
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
-	const showreelRef = useRef<HTMLDivElement | null>(null)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const resetTimeout = () => {
@@ -38,21 +37,21 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [slideIndex])
 
 	return (
-		<div
-			ref={showreelRef}
-			className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'
-		>
+		<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'>
 			{showreelImages.map((image, index) => {
 				return (
-					<div className='absolute w-full h-full' key={`showreel-${index}`}>
+					<div
+						className='absolute w-full h-full z-10'
+						key={`showreel-${index}`}
+					>
 						<CldImage
-							className={`object-contain ${
+							className={`object-cover md:object-contain bg-primary ${
 								slideIndex === index ? "opacity-100" : "opacity-0"
 							}`}
-							src={`the-arts-folk/${image}`}
+							src={image.url}
 							alt='photo'
-							sizes='(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 50vw'
-							quality={70}
+							sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
+							quality={50}
 							fill
 							priority={index === 0 || index === 1}
 						/>

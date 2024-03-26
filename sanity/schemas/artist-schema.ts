@@ -23,28 +23,26 @@ const artistSchema = {
 			type: "text",
 		},
 		{
-			name: "coverImage",
-			title: "Cover Image",
-			type: "document",
-			fields: [
-				{
-					name: "fileName",
-					type: "string",
-					title: "Cloudinary File Name",
-				},
-				{
-					name: "alt",
-					type: "string",
-					title: "Alt text",
-				},
-			],
-		},
-		{ name: "url", title: "URL", type: "url" },
-		{
 			name: "images",
 			title: "Images",
 			type: "array",
-			of: [{ type: "string" }],
+			description: "These images are served from Cloudinary",
+			of: [
+				{
+					type: "cloudinary.asset",
+				},
+			],
+		},
+		{
+			name: "scrapbookImages",
+			title: "Scrapbook Images",
+			type: "array",
+			description: "These images are served from Cloudinary",
+			of: [
+				{
+					type: "cloudinary.asset",
+				},
+			],
 		},
 		{
 			name: "category",
@@ -53,6 +51,7 @@ const artistSchema = {
 			type: "array",
 			of: [{ type: "reference", to: [{ type: "categories" }] }],
 		},
+		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{
 			name: "copy1",
 			title: "Copy 1",

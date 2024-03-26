@@ -11,8 +11,6 @@ const fallbackNavLinks = [
 export default async function HeaderServer() {
 	const navLinks = await getHeaderNavLinks()
 
-	console.log(navLinks)
-
 	if (!navLinks || navLinks.length === 0)
 		return <Header {...{ navLinks: fallbackNavLinks }} />
 

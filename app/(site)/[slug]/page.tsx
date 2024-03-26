@@ -9,5 +9,5 @@ export default async function page({ params }: { params: { slug: string } }) {
 
 	if (!pageData) return notFound()
 
-	return <DefaultPage {...{ pageData }} />
+	return <DefaultPage pageData={pageData} />
 }

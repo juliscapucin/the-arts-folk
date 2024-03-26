@@ -1,19 +1,20 @@
 import { createClient, groq } from "next-sanity"
-import clientConfig from "./config/client-config"
-import { Artist, InfoPage, NavLink, Page } from "@/types"
+import clientConfig from "@/sanity/config/client-config"
+import type { Artist, InfoPage, NavLink, Page } from "@/types"
 
 const client = createClient(clientConfig)
 
+export async function getShowreel(): Promise<any> {
+	return client.fetch(groq`*[title == "Showreel Home"][0].images`)
+}
+
 export async function getArtists(): Promise<Artist[]> {
 	return client.fetch(
-		groq`*[_type == "artist"]{
+		groq`*[_type == "artist"] | order(name asc){
       _id,
       name,
       "slug": slug.current,
-      coverImage{
-         fileName,
-         alt,
-       },
+      images,
       category,
    }`
 	)
@@ -31,7 +32,6 @@ export async function getArtist(slug: string): Promise<Artist> {
          alt,
        },
       url,
-      images,
       "category": categories[]->title,
       "copy1": copy1[]{
          children[0]{
@@ -65,7 +65,7 @@ export async function getInfoPage(): Promise<InfoPage> {
 		groq`*[_type == "infoPage"][0] {
       title,
       "headerLink": header->slug.current,
-      description,
+      content,
       contactInfo[]{
          name,
          email,

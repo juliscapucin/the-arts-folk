@@ -12,8 +12,10 @@
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 180, 180, 180;
 		--color-white: 255 255 255;
-		--padding-mobile: 1rem;
-		--padding-desktop: 1rem;
+		--margin-mobile: 1rem;
+		--margin-desktop: 1rem;
+		--padding-mobile: 2rem;
+		--padding-desktop: 2rem;
 		--header-height-mobile: 4rem;
 		--header-height-desktop: 4rem;
 		--footer-height-mobile: 3rem;
@@ -89,13 +91,29 @@ body {
 }
 
 a {
+	display: inline-block;
+	position: relative;
+	overflow-x: clip;
 	text-decoration: none;
 	color: var(--color-secondary);
 	transition: color 0.2s linear;
 }
 
-a:hover {
-	color: var(--color-faded);
+a::after {
+	content: "";
+	position: absolute;
+	z-index: 50;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background-color: rgb(var(--color-secondary-rgb), 1);
+	transition: transform 0.3s;
+	transform: translateX(-100%);
+}
+
+a:hover::after {
+	transform: translateX(0);
 }
 
 button {

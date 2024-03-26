@@ -15,17 +15,19 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 
 	return (
 		<div className='flex flex-col justify-center items-center gap-2'>
-			<a
-				href={`mailto:${email}`}
-				className='group flex justify-center items-center gap-2 text-titleLarge hover:opacity-50 transition-opacity duration-300'
-				rel='noopener noreferrer'
-			>
+			<div className='flex gap-2 items-center'>
 				<IconEmail />
-				<Heading tag='h4' variant='title' classes='leading-3'>
-					{name}
-				</Heading>
-			</a>
-			<span className='font-text text-bodyLarge'>{phone}</span>
+				<a
+					href={`mailto:${email}`}
+					className='text-titleLarge'
+					rel='noopener noreferrer'
+				>
+					<Heading tag='h4' variant='title' classes='leading-3'>
+						{name}
+					</Heading>
+				</a>
+			</div>
+			<span className='font-text text-bodyLarge font-extralight'>{phone}</span>
 
 			{/* <ButtonCopyEmail {...{ email }} /> */}
 		</div>

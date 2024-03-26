@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import { NavbarLink } from "@/components/ui"
 
-import { NavLink } from "@/types"
+import type { NavLink } from "@/types"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
