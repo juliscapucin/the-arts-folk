@@ -9,6 +9,7 @@ import { Container } from "@/components/ui"
 import { ArtistOverlay } from "@/components"
 
 import { infiniteVerticalLoop } from "@/helpers"
+import Link from "next/link"
 
 type ArtistsPageProps = {
 	artists: Artist[]
@@ -93,12 +94,17 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					/>
 				)
 			})}
-			<section ref={sectionRef} className='absolute w-full z-20'>
+			<section
+				ref={sectionRef}
+				className='absolute w-full z-20 text-center space-y-32 pt-32'
+			>
 				{artists.map((artist) => {
 					return (
 						<div className='gsap-scroll-item relative' key={artist.name}>
-							<button
-								className={`gsap-scroll-button block mx-auto h-64 lg:h-64 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+							<a
+								href={artist.artistWebsite ? artist.artistWebsite : "#"}
+								target='_blank'
+								className={`gsap-scroll-button w-fit text-center h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered
@@ -111,13 +117,20 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 							>
 								{artist.name}
 								<span
-									className={`block mt-2 font-text uppercase text-labelLarge transition-opacity ${
+									className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
+										isHovered === artist.name ? "" : "opacity-0"
+									}`}
+								>
+									{artist.description}
+								</span>
+								<span
+									className={`block mt-2 font-text uppercase text-labelMedium transition-opacity ${
 										isHovered === artist.name ? "" : "opacity-0"
 									}`}
 								>
 									Coming soon
 								</span>
-							</button>
+							</a>
 						</div>
 					)
 				})}

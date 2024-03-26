@@ -14,8 +14,10 @@ export async function getArtists(): Promise<Artist[]> {
       _id,
       name,
       "slug": slug.current,
+      description,
       images,
       category,
+      artistWebsite
    }`
 	)
 }

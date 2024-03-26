@@ -18,6 +18,11 @@ const artistSchema = {
 			},
 		},
 		{
+			name: "description",
+			title: "Description",
+			type: "string",
+		},
+		{
 			name: "subtitle",
 			title: "Subtitle",
 			type: "text",
