@@ -124,11 +124,14 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			>
 				{artists.map((artist) => {
 					return (
-						<div className='gsap-scroll-item relative' key={artist.name}>
+						<div
+							className='gsap-scroll-item relative text-center'
+							key={artist.name}
+						>
 							<a
 								href={artist.artistWebsite ? artist.artistWebsite : "#"}
 								target='_blank'
-								className={`gsap-scroll-button w-fit min-w-[500px] text-center h-24 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+								className={`gsap-scroll-button w-fit inline-block text-center h-24 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered
