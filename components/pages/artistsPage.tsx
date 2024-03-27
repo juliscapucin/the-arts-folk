@@ -109,12 +109,13 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
-			{artists.map((artist) => {
+			{artists.map((artist, index) => {
 				return (
 					<ArtistOverlay
 						key={`${artist.name}-overlay`}
 						images={artist.images}
 						isVisible={isHovered === artist.name}
+						index={index}
 					/>
 				)
 			})}
@@ -151,7 +152,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 									{artist.description}
 								</span>
 								<span
-									className={`block mt-2 font-text uppercase text-labelMedium transition-opacity ${
+									className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
 										isHovered === artist.name ? "" : "opacity-0"
 									}`}
 								>
