@@ -1,5 +1,5 @@
-import { Container } from "@/components/ui"
+import { notFound } from "next/navigation"
 
 export default function ArtistPage() {
-	return <Container hasPadding={true}>Artist</Container>
+	return notFound()
 }
