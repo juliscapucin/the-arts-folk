@@ -103,7 +103,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				return (
 					<ArtistOverlay
 						key={`${artist.name}-overlay`}
-						images={artist.images}
+						images={artist.scrapbookImages}
 						isVisible={isHovered === artist.name}
 						index={index}
 					/>
@@ -119,7 +119,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 							<a
 								href={artist.artistWebsite ? artist.artistWebsite : "#"}
 								target='_blank'
-								className={`gsap-scroll-button w-fit inline-block text-center h-24 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+								className={`gsap-scroll-button w-fit inline-block p-8 h-40 min-w-[500px] text-center text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered

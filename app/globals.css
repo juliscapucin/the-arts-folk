@@ -8,6 +8,7 @@
 	:root {
 		--font-secondary: "canada-type-gibson", sans-serif;
 		--color-primary: 249 246 238;
+		--color-primary-rgb: 249, 246, 238;
 		--color-secondary: 18 12 15;
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 180, 180, 180;
@@ -118,4 +119,39 @@ a:hover::after {
 
 button {
 	cursor: pointer;
+}
+
+/* Border in corners */
+.corner-border {
+	padding: 1em;
+	border: 1px solid;
+	position: relative;
+}
+
+.corner-border::before,
+.corner-border::after {
+	content: "";
+	display: block;
+	position: absolute;
+	background: rgb(var(--color-primary-rgb), 1);
+}
+
+.corner-border::before {
+	top: -2px;
+	bottom: -2px;
+	left: 0.5em;
+	right: 0.5em;
+}
+
+.corner-border::after {
+	left: -2px;
+	right: -2px;
+	top: 0.5em;
+	bottom: 0.5em;
+}
+
+/* // you need this to move the text in front of the ::after overlay */
+.corner-border.corner-content {
+	position: relative;
+	z-index: 1;
 }
