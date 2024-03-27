@@ -54,8 +54,12 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 		yPercents: any[] = [],
 		curIndex = 0,
 		center = config.center,
-		clone = (obj: { [x: string]: any }) => {
-			let result = {},
+		totalHeight: number,
+		timeOffset = 0,
+		timeWrap: (arg0: number) => gsap.Position | undefined,
+		proxy: any
+	const clone = (obj: { [key: string]: any }) => {
+			let result: { [key: string]: any } = {}, // Explicitly type 'result' here
 				p
 			for (p in obj) {
 				result[p] = obj[p]
@@ -72,14 +76,13 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 							? config.snap
 							: 1
 				  ),
-		timeOffset = 0,
-		container = items[0].parentNode as HTMLElement,
-		// container =
-		// 	center === true
-		// 		? items[0].parentNode
-		// 		: gsap.utils.toArray(center)[0] || items[0].parentNode,
-		totalHeight: number,
-		getTotalHeight = () => {
+		container = items[0].parentNode as HTMLElement
+	// container =
+	// 	center === true
+	// 		? items[0].parentNode
+	// 		: gsap.utils.toArray(center)[0] || items[0].parentNode,
+
+	const getTotalHeight = () => {
 			return (
 				items[length - 1].offsetTop +
 				(yPercents[length - 1] / 100) * heights[length - 1] -
@@ -113,7 +116,6 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 			})
 			totalHeight = getTotalHeight()
 		},
-		timeWrap: (arg0: number) => gsap.Position | undefined,
 		populateOffsets = () => {
 			if (!container) return
 			const containerElement = container as HTMLElement // Cast 'container' to HTMLElement type
@@ -193,7 +195,9 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 					isAtEnd =
 						anim &&
 						tl.duration() -
-							timeWrap(times[i] - Math.min(eachDuration, anim.duration())) <
+							Number(
+								timeWrap(times[i] - Math.min(eachDuration, anim.duration()))
+							) <
 							eachDuration - 0.05
 				anim && tl.add(anim, isAtEnd ? 0 : timeWrap(times[i] - anim.duration()))
 				anim = leaveAnimation && leaveAnimation(item, eachDuration, i)
@@ -212,15 +216,15 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 			deep && tl.draggable
 				? tl.time(times[curIndex], true)
 				: tl.progress(progress, true)
-		},
-		proxy
+		}
+
 	gsap.set(items, { y: 0 })
 	populateHeights()
 	populateTimeline()
 	populateOffsets()
 	customAnimations()
 	window.addEventListener("resize", () => refresh(true))
-	function toIndex(index, vars) {
+	function toIndex(index: number, vars: any) {
 		vars = clone(vars)
 		Math.abs(index - curIndex) > length / 2 &&
 			(index += index > curIndex ? -length : length) // always go in the shortest direction
@@ -243,32 +247,33 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 		return tl.tweenTo(time, vars)
 	}
 	tl.elements = items
-	tl.next = (vars) => toIndex(curIndex + 1, vars)
-	tl.previous = (vars) => toIndex(curIndex - 1, vars)
+	tl.next = (vars: any) => toIndex(curIndex + 1, vars)
+	tl.previous = (vars: any) => toIndex(curIndex - 1, vars)
 	tl.current = () => curIndex
-	tl.toIndex = (index, vars) => toIndex(index, vars)
-	tl.closestIndex = (setCurrent) => {
+	tl.toIndex = (index: number, vars: any) => toIndex(index, vars)
+	tl.closestIndex = (setCurrent: any) => {
 		let index = getClosest(times, tl.time(), tl.duration())
-		setCurrent && (curIndex = index)
+		setCurrent && index && (curIndex = index)
 		return index
 	}
 	tl.times = times
 	tl.progress(1, true).progress(0, true) // pre-render for performance
-	if (config.reversed) {
+	if (config.reversed && tl.vars.onReverseComplete) {
 		tl.vars.onReverseComplete()
 		tl.reverse()
 	}
 	if (config.draggable && typeof Draggable === "function") {
 		proxy = document.createElement("div")
+		const align = () => {
+			tl.progress(
+				wrap(startProgress + (draggable.startY - draggable.y) * ratio)
+			)
+		}
 		let wrap = gsap.utils.wrap(0, 1),
-			ratio,
-			startProgress,
-			draggable,
+			ratio: any,
+			startProgress: any,
+			draggable: any,
 			dragSnap,
-			align = () =>
-				tl.progress(
-					wrap(startProgress + (draggable.startY - draggable.y) * ratio)
-				),
 			syncIndex = () => tl.closestIndex(true)
 		typeof InertiaPlugin === "undefined" &&
 			console.warn(
@@ -280,7 +285,7 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 			onPressInit() {
 				gsap.killTweensOf(tl)
 				startProgress = tl.progress()
-				refresh()
+				refresh(false)
 				ratio = 1 / totalHeight
 				gsap.set(proxy, { y: startProgress / -ratio })
 			},
@@ -290,8 +295,14 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 			snap: (value) => {
 				let time = -(value * ratio) * tl.duration(),
 					wrappedTime = timeWrap(time),
-					snapTime = times[getClosest(times, wrappedTime, tl.duration())],
-					dif = snapTime - wrappedTime
+					closestIndex = getClosest(
+						times,
+						// TODO: made changes here that might break functionality
+						wrappedTime ? Number(wrappedTime) : 0,
+						tl.duration()
+					),
+					snapTime = times[closestIndex ? closestIndex : 0],
+					dif = snapTime - Number(wrappedTime)
 				Math.abs(dif) > tl.duration() / 2 &&
 					(dif += dif < 0 ? tl.duration() : -tl.duration())
 				return (time + dif) / tl.duration() / -ratio
