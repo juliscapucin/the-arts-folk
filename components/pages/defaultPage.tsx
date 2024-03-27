@@ -5,7 +5,7 @@ import { PortableText } from "@portabletext/react"
 import { Container, Heading } from "@/components/ui"
 
 import type { Page } from "@/types"
-import { Copyright } from "@/components"
+// import { Copyright } from "@/components"
 
 type PageProps = {
 	children?: React.ReactNode
@@ -42,7 +42,7 @@ export default function DefaultPage({
 				</div>
 				{children}
 			</div>
-			{hasCopyright && <Copyright />}
+			{/* {hasCopyright && <Copyright />} */}
 		</Container>
 	)
 }
