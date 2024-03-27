@@ -36,12 +36,31 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 
 					{/* Mobile Menu */}
 					<aside
-						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform z-80 overflow-clip ${
+						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform duration-300 z-80 overflow-clip ${
 							isOpen ? "" : "-translate-y-full"
 						}`}
 					>
 						{/* Nav Links */}
 						<nav className='flex flex-col gap-24 mt-64 h-svh'>
+							<div
+								className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
+								key={"home-link"}
+							>
+								{/* Inactive Link */}
+								{pathname === "/" ? (
+									<span className='uppercase opacity-50'>Home</span>
+								) : (
+									// Active Link
+									<button
+										className='block'
+										onClick={() =>
+											transitionOnClick({ slug: "/", title: "Home", order: 0 })
+										}
+									>
+										<span className='uppercase'>Home</span>
+									</button>
+								)}
+							</div>
 							{navLinks.map((link) => {
 								return (
 									<div
