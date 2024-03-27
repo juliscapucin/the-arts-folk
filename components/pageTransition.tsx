@@ -16,9 +16,7 @@ export const PageTransition = forwardRef(function PageTransition(
 	return (
 		<div
 			ref={ref}
-			className='absolute top-0 left-0 bg-primary w-screen h-svh z-100 pointer-events-none'
-		>
-			<div className='w-screen h-svh bg-faded-5'></div>
-		</div>
+			className='absolute top-0 left-0 bg-white w-screen h-svh z-100 pointer-events-none'
+		></div>
 	)
 })

@@ -58,6 +58,7 @@ const config: Config = {
 				15: "15",
 				80: "80",
 				100: "100",
+				150: "150",
 			},
 			letterSpacing: { tightest: "-.075em" },
 		},

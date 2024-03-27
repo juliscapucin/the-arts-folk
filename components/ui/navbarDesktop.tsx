@@ -1,12 +1,13 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
 import gsap from "gsap"
 
-import { NavbarLink } from "@/components/ui"
 import { PageTransition } from "@/components"
+import { ButtonLogo } from "@/components/buttons"
+import { NavbarLink } from "@/components/ui"
 
 import type { NavLink } from "@/types"
 
@@ -22,12 +23,12 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 
 	const transitionOnClick = (link: any) => {
 		ctx.add(() => {
-			gsap.set(pageTransitionRef.current, { opacity: 1, yPercent: 100 })
+			gsap.set(pageTransitionRef.current, { yPercent: 100 })
 
 			gsap.to(pageTransitionRef.current, {
 				yPercent: 0,
 				duration: 0.5,
-				ease: "power4.inOut",
+				ease: "power4.out",
 				onComplete: () => {
 					router.push(`/${link.slug}`)
 				},
@@ -39,12 +40,17 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 		if (!pageTransitionRef.current) return
 
 		ctx.add(() => {
-			gsap.to(pageTransitionRef.current, { opacity: 0, duration: 1.5 })
+			gsap.to(pageTransitionRef.current, {
+				yPercent: -100,
+				duration: 0.8,
+				ease: "power4.out",
+			})
 		})
 	}, [pathname])
 
 	return (
 		<>
+			<ButtonLogo handleClick={() => transitionOnClick({ slug: "/" })} />
 			<PageTransition ref={pageTransitionRef} />
 			{navLinks && (
 				<div className={"hidden lg:flex"}>
