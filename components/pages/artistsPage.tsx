@@ -32,8 +32,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	useLayoutEffect(() => {
 		if (!sectionRef.current) return
 
-		gsap.registerPlugin(Observer)
-
 		// This context ensures that animations are scoped to the component and cleaned up when the component unmounts.
 		ctx.add(() => {
 			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
@@ -44,34 +42,60 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					draggable: true,
 					speed: 0.5,
 					inertia: true,
-					paused: true,
+					paused: false,
 					center: true,
 				})
 			)
 
-			// Set up an Observer for user input.
-			Observer.create({
-				target: sectionRef.current,
-				type: "pointer,touch,wheel",
-				wheelSpeed: -1,
-				onChange: (self) => {
-					let calculatedTimeScale =
-						Math.abs(self.deltaX) > Math.abs(self.deltaY)
-							? -self.deltaX
-							: -self.deltaY
-					const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
-					const MAX_TIME_SCALE = 3
-					let finalTimeScale = Math.min(
-						Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-						MAX_TIME_SCALE
-					)
-					loop && loop.timeScale(finalTimeScale)
-				},
-			})
+			// const loop = infiniteVerticalLoop(items, {
+			// 	repeat: -1,
+			// 	draggable: true,
+			// 	speed: 0.5,
+			// 	inertia: true,
+			// 	center: true,
+			// 	paused: false,
+			// })
+
+			// loop && loop.timeScale(0.5)
 		}, sectionRef.current)
 
 		return () => ctx.revert()
 	}, [])
+
+	useLayoutEffect(() => {
+		gsap.registerPlugin(Observer)
+
+		Observer.create({
+			target: sectionRef.current,
+			type: "pointer,touch,wheel",
+			wheelSpeed: -1,
+			onChange: (self) => {
+				let calculatedTimeScale =
+					Math.abs(self.deltaX) > Math.abs(self.deltaY)
+						? -self.deltaX
+						: -self.deltaY
+
+				const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
+				const MAX_TIME_SCALE = 50
+
+				let desiredTimeScale = Math.min(
+					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+					MAX_TIME_SCALE
+				)
+
+				console.log(loop)
+
+				// Set the loop's timeScale to the calculated value
+				loop && loop.timeScale(desiredTimeScale)
+
+				gsap.killTweensOf(loop, { timeScale: true })
+				gsap.to(loop, {
+					duration: 2, // Adjust the duration to control the deceleration speed.
+					timeScale: 0.5, // Target timeScale to smoothly reduce to.
+				})
+			},
+		})
+	}, [loop])
 
 	useEffect(() => {
 		if (!loop) return
@@ -81,7 +105,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		} else {
 			loop.pause()
 		}
-	}, [isHovered, loop])
+	}, [isHovered])
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
@@ -96,7 +120,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			})}
 			<section
 				ref={sectionRef}
-				className='absolute w-full z-20 text-center space-y-32 pt-32'
+				className='absolute w-full z-20 text-center space-y-24 pt-32'
 			>
 				{artists.map((artist) => {
 					return (
@@ -104,7 +128,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 							<a
 								href={artist.artistWebsite ? artist.artistWebsite : "#"}
 								target='_blank'
-								className={`gsap-scroll-button w-fit text-center h-32 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+								className={`gsap-scroll-button w-fit min-w-[500px] text-center h-24 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered
