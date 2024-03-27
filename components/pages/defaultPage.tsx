@@ -30,7 +30,7 @@ export default function DefaultPage({
 		>
 			<div className='flex-1 lg:flex gap-32 justify-between items-start mt-16 lg:mt-32'>
 				{/* Text */}
-				<div className='lg:w-2/5 [&>p]:font-text [&>p]:font-extralight [&>h4, &>h3]:text-titleLarge [&>h2]:text-headlineLarge xl:w-1/3'>
+				<div className='lg:w-2/5 [&>p]:font-text [&>p]:font-extralight [&>p>a]:font-normal [&>h4, &>h3]:text-titleLarge [&>h2]:text-headlineLarge xl:w-1/3'>
 					<Heading tag='h1' classes='mb-8' variant='display'>
 						{pageData.title}
 					</Heading>

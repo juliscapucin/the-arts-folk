@@ -7,8 +7,6 @@ export default async function page({ params }: { params: { slug: string } }) {
 	const { slug } = params
 	const pageData = await getPage(slug)
 
-	console.log(slug)
-
 	if (!pageData) return notFound()
 
 	return <DefaultPage pageData={pageData} />
