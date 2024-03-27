@@ -46,9 +46,7 @@ export default function ArtistOverlay({
 		<div
 			className={`flex ${
 				index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-			} fixed top-[--header-height-desktop] left-auto w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 ${
-				isVisible ? "z-5" : ""
-			}`}
+			} fixed top-[--header-height-desktop] left-auto w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 z-100`}
 		>
 			{/* LEFT */}
 			<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-4'>

@@ -53,7 +53,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 			<ButtonLogo handleClick={() => transitionOnClick({ slug: "/" })} />
 			<PageTransition ref={pageTransitionRef} />
 			{navLinks && (
-				<div className={"hidden lg:flex"}>
+				<div className='hidden lg:flex z-150'>
 					{/* Menu links */}
 					<nav className='w-full h-full hidden lg:flex justify-end items-center gap-24'>
 						{navLinks.map((link) => {
