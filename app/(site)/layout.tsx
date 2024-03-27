@@ -4,6 +4,7 @@ import localFont from "next/font/local"
 import "../globals.css"
 import { Footer, Header } from "@/components/ui"
 import { HeaderServer } from "@/components/server-components"
+import { PageTransition } from "@/components"
 
 export const metadata: Metadata = {
 	title: "The Arts Folk",
