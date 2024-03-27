@@ -59,8 +59,12 @@ const config: Config = {
 				80: "80",
 				100: "100",
 				150: "150",
+				intro: "200",
 			},
 			letterSpacing: { tightest: "-.075em" },
+			scale: {
+				200: "2",
+			},
 		},
 	},
 	plugins: [],
