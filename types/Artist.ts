@@ -4,6 +4,6 @@ export type Artist = {
 	name: string
 	slug: string
 	description: string
-	images: CloudinaryImage[]
+	scrapbookImages: CloudinaryImage[]
 	artistWebsite: string
 }

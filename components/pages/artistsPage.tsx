@@ -46,17 +46,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					center: true,
 				})
 			)
-
-			// const loop = infiniteVerticalLoop(items, {
-			// 	repeat: -1,
-			// 	draggable: true,
-			// 	speed: 0.5,
-			// 	inertia: true,
-			// 	center: true,
-			// 	paused: false,
-			// })
-
-			// loop && loop.timeScale(0.5)
 		}, sectionRef.current)
 
 		return () => ctx.revert()
@@ -83,16 +72,17 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					MAX_TIME_SCALE
 				)
 
-				console.log(loop)
+				if (loop) {
+					// Set the loop's timeScale to the calculated value
 
-				// Set the loop's timeScale to the calculated value
-				loop && loop.timeScale(desiredTimeScale)
+					loop.timeScale(desiredTimeScale)
 
-				gsap.killTweensOf(loop, { timeScale: true })
-				gsap.to(loop, {
-					duration: 2, // Adjust the duration to control the deceleration speed.
-					timeScale: 0.5, // Target timeScale to smoothly reduce to.
-				})
+					gsap.killTweensOf(loop, { timeScale: true })
+					gsap.to(loop, {
+						duration: 2, // Adjust the duration to control the deceleration speed.
+						timeScale: 0.5, // Target timeScale to smoothly reduce to.
+					})
+				}
 			},
 		})
 	}, [loop])
@@ -113,7 +103,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				return (
 					<ArtistOverlay
 						key={`${artist.name}-overlay`}
-						images={artist.images}
+						images={artist.scrapbookImages}
 						isVisible={isHovered === artist.name}
 						index={index}
 					/>
@@ -121,22 +111,19 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			})}
 			<section
 				ref={sectionRef}
-				className='absolute w-full z-20 text-center space-y-24 pt-32'
+				className='absolute w-full text-center space-y-24 pt-32'
 			>
 				{artists.map((artist) => {
 					return (
-						<div
-							className='gsap-scroll-item relative text-center'
-							key={artist.name}
-						>
+						<div className='gsap-scroll-item text-center' key={artist.name}>
 							<a
 								href={artist.artistWebsite ? artist.artistWebsite : "#"}
 								target='_blank'
-								className={`gsap-scroll-button w-fit inline-block text-center h-24 text-headlineSmall md:text-headlineMedium lg:text-headlineLarge transition-opacity duration-500 ${
+								className={`gsap-scroll-button w-fit inline-block p-8 h-32 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered
-										? "opacity-20 z-100"
+										? "opacity-10 -z-5"
 										: ""
 								}`}
 								key={artist.name}

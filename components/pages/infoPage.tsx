@@ -13,7 +13,7 @@ export default function InfoPage({ infoData }: InfoPageProps) {
 	return (
 		<DefaultPage hasCopyright={true} pageData={infoData}>
 			{/* Email + Phone */}
-			<div className='lg:w-2/5 flex flex-col justify-center items-center gap-16 my-24 lg:my-0'>
+			<div className='lg:w-2/5 flex flex-col justify-center items-center gap-16 my-24 lg:my-0 h-full w-full whitespace-nowrap'>
 				{infoData.contactInfo.map((contact) => (
 					<ButtonEmail
 						key={contact.name}

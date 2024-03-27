@@ -28,17 +28,6 @@ const artistSchema = {
 			type: "text",
 		},
 		{
-			name: "images",
-			title: "Images",
-			type: "array",
-			description: "These images are served from Cloudinary",
-			of: [
-				{
-					type: "cloudinary.asset",
-				},
-			],
-		},
-		{
 			name: "scrapbookImages",
 			title: "Scrapbook Images",
 			type: "array",

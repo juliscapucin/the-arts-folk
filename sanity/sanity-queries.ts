@@ -15,7 +15,7 @@ export async function getArtists(): Promise<Artist[]> {
       name,
       "slug": slug.current,
       description,
-      images,
+      scrapbookImages,
       category,
       artistWebsite
    }`

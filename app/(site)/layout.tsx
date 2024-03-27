@@ -2,8 +2,9 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import "../globals.css"
-import { Footer, Header } from "@/components/ui"
+import { Footer } from "@/components/ui"
 import { HeaderServer } from "@/components/server-components"
+import { Intro } from "@/components"
 
 export const metadata: Metadata = {
 	title: "The Arts Folk",
@@ -31,6 +32,7 @@ export default function RootLayout({
 			<body
 				className={`${myFont.className} w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white uppercase font-text font-thin`}
 			>
+				<Intro />
 				<HeaderServer />
 				{children}
 				<Footer />

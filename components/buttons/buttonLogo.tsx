@@ -1,14 +1,19 @@
-import { useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
+
 import { Logo } from "@/components/svgs"
 
-export default function ButtonLogo() {
-	const router = useRouter()
+type ButtonLogoProps = {
+	handleClick: () => void
+}
 
-	const handleClick = () => {
-		router.push("/")
-	}
+export default function ButtonLogo({ handleClick }: ButtonLogoProps) {
+	const pathname = usePathname()
+
 	return (
-		<button className='scale-50 lg:scale-75 origin-left' onClick={handleClick}>
+		<button
+			className='scale-50 lg:scale-75 origin-left z-150'
+			onClick={pathname === "/" ? undefined : handleClick}
+		>
 			<Logo />
 		</button>
 	)
