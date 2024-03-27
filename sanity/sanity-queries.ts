@@ -92,6 +92,7 @@ export async function getFooterNavLinks(): Promise<NavLink[]> {
 		groq`*[_type == "footer"]|order(order) {
          title,
          url,
+         "slug": slug.current,
          order
        }`
 	)

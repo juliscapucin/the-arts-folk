@@ -1,17 +1,18 @@
 import Link from "next/link"
+import { Container } from "@/components/ui"
 
 export default function NotFound() {
 	return (
-		<section className='flex flex-col justify-center items-center'>
+		<Container classes='flex flex-col justify-center items-center gap-8'>
 			<h1 className='text-headlineSmall md:text-headlineMedium lg:text-headlineLarge'>
-				Not Found
+				Page Not Found
 			</h1>
-			<span className='text-titleSmall md:text-titleLarge mt-16'>
+			<span className='font-text text-titleSmall md:text-titleLarge'>
 				Could not find the page requested
 			</span>
-			<Link className='text-titleSmall md:text-titleLarge mt-32' href='/'>
+			<Link className='text-titleSmall md:text-titleLarge mt-2' href='/'>
 				Return to Home
 			</Link>
-		</section>
+		</Container>
 	)
 }
