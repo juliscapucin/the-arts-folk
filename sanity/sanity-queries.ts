@@ -14,8 +14,10 @@ export async function getArtists(): Promise<Artist[]> {
       _id,
       name,
       "slug": slug.current,
+      description,
       images,
       category,
+      artistWebsite
    }`
 	)
 }
@@ -52,10 +54,10 @@ export async function getArtist(slug: string): Promise<Artist> {
 
 export async function getPage(slug: string): Promise<Page> {
 	return client.fetch(
-		groq`*[_type == "page" && headerLink._ref in *[_type == "header" && slug.current == $slug]._id][0] {
-      title,
-      content,
-   }`,
+		groq`*[_type == "page" && (headerLink._ref in *[_type == "header" && slug.current == $slug]._id || slug.current == $slug)][0] {
+           title,
+           content,
+       }`,
 		{ slug }
 	)
 }
@@ -79,6 +81,17 @@ export async function getHeaderNavLinks(): Promise<NavLink[]> {
 	return client.fetch(
 		groq`*[_type == "header"]|order(order) {
          title,
+         "slug": slug.current,
+         order
+       }`
+	)
+}
+
+export async function getFooterNavLinks(): Promise<NavLink[]> {
+	return client.fetch(
+		groq`*[_type == "footer"]|order(order) {
+         title,
+         url,
          "slug": slug.current,
          order
        }`

@@ -2,7 +2,7 @@ export default function Copyright() {
 	const year = new Date().getFullYear()
 
 	return (
-		<div className='py-4 flex flex-col items-end text-bodySmall font-text'>
+		<div className='py-4 flex flex-col items-end text-labelSmall font-text'>
 			<span>The Arts Folk ©{year}</span>
 			<span>
 				Website by{" "}
