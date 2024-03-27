@@ -25,12 +25,14 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 					<nav className='w-full h-full hidden lg:flex justify-end items-center gap-24'>
 						{navLinks.map((link) => {
 							return (
-								<NavbarLink
-									key={link.slug}
-									link={link}
-									isActive={pathname.includes(`/${link.slug}`) ? true : false}
-									transitionOnClick={transitionOnClick}
-								/>
+								link.slug && (
+									<NavbarLink
+										key={link.slug}
+										link={link}
+										isActive={pathname.includes(`/${link.slug}`) ? true : false}
+										transitionOnClick={transitionOnClick}
+									/>
+								)
 							)
 						})}
 					</nav>

@@ -86,3 +86,13 @@ export async function getHeaderNavLinks(): Promise<NavLink[]> {
        }`
 	)
 }
+
+export async function getFooterNavLinks(): Promise<NavLink[]> {
+	return client.fetch(
+		groq`*[_type == "footer"]|order(order) {
+         title,
+         url,
+         order
+       }`
+	)
+}
