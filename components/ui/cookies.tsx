@@ -22,7 +22,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 		let ctx = gsap.context(() => {
 			gsap.to(overlayRef.current, {
-				y: isOverlayOpen ? 0 : "-100%",
+				y: isOverlayOpen ? 0 : "-105.6%",
 				duration: 0.5,
 				ease: "power2.out",
 			})
@@ -37,12 +37,12 @@ export default function Cookies({ cookieData }: CookiesProps) {
 	return (
 		<>
 			<Container
-				classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 flex items-end justify-center z-100 overflow-clip pointer-events-none bg-secondary'
+				classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-100 overflow-clip pointer-events-none'
 				bgColor='transparent'
 				isDiv={true}
 				hasPadding={false}
 			>
-				<div className='space-x-4 bg-secondary text-primary p-8 pointer-events-auto'>
+				<div className='space-x-4 bg-secondary text-primary p-4 pointer-events-auto'>
 					<Link href='/' passHref legacyBehavior>
 						<button
 							onClick={(e) => {
@@ -60,17 +60,17 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 			{/* Cookie Policy overlay */}
 			<Container
-				classes='bg-faded-30 absolute top-[--container-height-mobile + --header-height-mobile] lg:top-[--container-height-desktop + --header-height-desktop] left-0 h-[--container-height-mobile] lg:h-[--container-height-desktop] z-80'
+				classes='absolute top-[--container-height-mobile + --header-height-mobile] lg:top-[--container-height-desktop + --header-height-desktop] left-0 h-[--container-height-mobile] lg:h-[--container-height-desktop] z-80'
 				isDiv={true}
 				hasPadding={false}
 				bgColor='transparent'
 			>
 				<div
 					ref={overlayRef}
-					className='w-full px-8 bg-primary overflow-y-scroll'
+					className='w-full px-8 bg-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
 				>
 					<div className='custom-rich-text'>
-						<Heading tag='h1' variant='headline' classes='mb-16'>
+						<Heading tag='h1' variant='headline' classes='mb-16 mt-16 lg:mt-32'>
 							{cookieData.title}
 						</Heading>
 						<PortableText value={cookieData.content} />
