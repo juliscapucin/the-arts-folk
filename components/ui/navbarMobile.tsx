@@ -41,7 +41,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 						}`}
 					>
 						{/* Nav Links */}
-						<nav className='flex flex-col gap-24 mt-64 h-svh'>
+						<nav className='flex flex-col gap-24 h-svh items-center justify-center'>
 							<div
 								className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
 								key={"home-link"}

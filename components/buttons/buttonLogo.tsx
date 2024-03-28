@@ -11,7 +11,7 @@ export default function ButtonLogo({ handleClick }: ButtonLogoProps) {
 
 	return (
 		<button
-			className='scale-50 lg:scale-75 origin-left z-150'
+			className='scale-50 lg:scale-75 origin-left z-80'
 			onClick={pathname === "/" ? undefined : handleClick}
 		>
 			<Logo />
