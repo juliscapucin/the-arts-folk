@@ -1,6 +1,7 @@
 "use client"
 
 import { useLayoutEffect, useRef } from "react"
+import { usePathname } from "next/navigation"
 
 import gsap from "gsap"
 import { Flip } from "gsap/Flip"
@@ -8,6 +9,10 @@ import { Flip } from "gsap/Flip"
 import { Logo } from "@/components/svgs"
 
 export default function Intro() {
+	const pathname = usePathname()
+
+	if (pathname !== "/") return null
+
 	const logoRef = useRef<SVGSVGElement | null>(null)
 	const headerRef = useRef<HTMLDivElement | null>(null)
 	const bgRef = useRef<HTMLDivElement | null>(null)
@@ -27,7 +32,7 @@ export default function Intro() {
 				let isMobile = context.conditions?.isMobile ?? false
 
 				gsap.set("path", { autoAlpha: 0 })
-				gsap.set(logoElement, { scale: isMobile ? 1 : 2 })
+				gsap.set(logoElement, { scale: isMobile ? 1 : 2.5 })
 
 				gsap.to("path", {
 					autoAlpha: 1,
@@ -35,32 +40,7 @@ export default function Intro() {
 					duration: 0.5,
 					ease: "power4.in",
 					onComplete: () => {
-						const state = Flip.getState(logoElement) // Capture the first state (F)
-						headerRef.current?.appendChild(logoElement)
-
-						gsap.set(logoElement, {
-							scale: isMobile ? 0.5 : 0.75,
-							transformOrigin: "left",
-						})
-
-						// Use Flip.from to animate from the first state to the last state
-						Flip.from(state, {
-							scale: true,
-							duration: 0.3,
-							ease: "power4.Out",
-							absolute: true,
-							delay: 0.3,
-							onComplete: () => {
-								gsap.to(bgRef.current, {
-									yPercent: -100,
-									duration: 0.5,
-									ease: "power4.inOut",
-									onComplete: () => {
-										containerRef.current?.remove()
-									},
-								})
-							},
-						})
+						bgRef.current?.remove()
 					},
 				})
 			},
@@ -72,8 +52,70 @@ export default function Intro() {
 		}
 	}, [])
 
+	// useLayoutEffect(() => {
+	// 	const logoElement = logoRef.current
+	// 	if (!logoElement || !headerRef.current) return
+
+	// 	gsap.registerPlugin(Flip)
+
+	// 	let mm = gsap.matchMedia()
+
+	// 	mm.add(
+	// 		{ isMobile: "(max-width: 800px)", isDesktop: "(min-width: 801px)" },
+	// 		(context) => {
+	// 			let isMobile = context.conditions?.isMobile ?? false
+
+	// 			gsap.set("path", { autoAlpha: 0 })
+	// 			gsap.set(logoElement, { scale: isMobile ? 1 : 2 })
+
+	// 			gsap.to("path", {
+	// 				autoAlpha: 1,
+	// 				stagger: 0.05,
+	// 				duration: 0.5,
+	// 				ease: "power4.in",
+	// 				onComplete: () => {
+	// 					const state = Flip.getState(logoElement) // Capture the first state (F)
+	// 					headerRef.current?.appendChild(logoElement)
+
+	// 					gsap.set(logoElement, {
+	// 						scale: isMobile ? 0.5 : 0.75,
+	// 						transformOrigin: "left",
+	// 					})
+
+	// 					// Use Flip.from to animate from the first state to the last state
+	// 					Flip.from(state, {
+	// 						scale: true,
+	// 						duration: 0.3,
+	// 						ease: "power4.Out",
+	// 						absolute: true,
+	// 						delay: 0.3,
+	// 						onComplete: () => {
+	// 							gsap.to(bgRef.current, {
+	// 								yPercent: -100,
+	// 								duration: 0.5,
+	// 								ease: "power4.inOut",
+	// 								onComplete: () => {
+	// 									containerRef.current?.remove()
+	// 								},
+	// 							})
+	// 						},
+	// 					})
+	// 				},
+	// 			})
+	// 		},
+	// 		logoElement
+	// 	)
+
+	// 	return () => {
+	// 		mm.revert()
+	// 	}
+	// }, [])
+
 	return (
-		<div ref={containerRef} className='fixed w-screen h-svh z-intro'>
+		<div
+			ref={containerRef}
+			className='fixed w-screen h-svh z-intro pointer-events-none'
+		>
 			<div
 				ref={bgRef}
 				className='gsap-bg fixed w-screen h-svh z-intro bg-white'
