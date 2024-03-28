@@ -5,6 +5,7 @@ type ContainerProps = {
 	classes?: string
 	hasPadding?: boolean
 	bgColor?: string
+	isDiv?: boolean
 }
 
 export default function Container({
@@ -12,14 +13,17 @@ export default function Container({
 	classes,
 	hasPadding,
 	bgColor,
+	isDiv,
 }: ContainerProps) {
+	const HtmlTag = isDiv ? "div" : "main"
+
 	return (
-		<main
-			className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] mx-[--margin-mobile] lg:mx-[--margin-desktop] w-full max-w-desktop ${classes} ${
+		<HtmlTag
+			className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] mx-[--margin-mobile] lg:mx-[--margin-desktop] max-w-desktop ${classes} ${
 				hasPadding ? "px-[--padding-mobile] lg:px-[padding-desktop]" : ""
 			} ${bgColor ? bgColor : "bg-primary"}`}
 		>
 			{children}
-		</main>
+		</HtmlTag>
 	)
 }
