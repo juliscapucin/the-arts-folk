@@ -4,10 +4,7 @@ import schemas from "./sanity/schemas"
 import {
 	cloudinaryAssetSourcePlugin,
 	cloudinarySchemaPlugin,
-	cloudinaryImageSource,
 } from "sanity-plugin-cloudinary"
-
-// import { visionTool } from '@sanity/vision';
 
 export default defineConfig({
 	title: "The Arts Folk",
@@ -21,10 +18,4 @@ export default defineConfig({
 		cloudinarySchemaPlugin(),
 	],
 	schema: { types: schemas },
-	// form: {
-	// 	image: {
-	// 		assetSources: () => [cloudinaryImageSource],
-	// 		directUploads: false,
-	// 	},
-	// },
 })
