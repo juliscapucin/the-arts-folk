@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { PortableText } from "@portabletext/react"
 
@@ -18,13 +18,33 @@ type CookiesProps = {
 export default function Cookies({ cookieData }: CookiesProps) {
 	const { cookie, setCookie, updateCookie } = useCookieStorage()
 	const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+	const cookieRef = useRef<HTMLDivElement>(null)
 	const overlayRef = useRef<HTMLDivElement>(null)
+
+	useLayoutEffect(() => {
+		if (!cookieRef.current || cookie === "true") return
+		gsap.to(cookieRef.current, {
+			xPercent: -100,
+			duration: 0.2,
+			ease: "power4.out",
+			delay: 2.7,
+		})
+	}, [])
 
 	if (cookie === "true") return null
 
 	const okButtonHandler = (cookie: string) => {
 		updateCookie(cookie)
-		setCookie(cookie)
+
+		if (!cookieRef.current) return
+		gsap.to(cookieRef.current, {
+			xPercent: 100,
+			duration: 0.2,
+			ease: "power4.in",
+			onComplete: () => {
+				setCookie(cookie)
+			},
+		})
 	}
 
 	const transitionOnClick = () => {
@@ -56,7 +76,10 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						isDiv={true}
 						hasPadding={false}
 					>
-						<div className='space-x-4 bg-secondary text-primary p-4 pointer-events-auto'>
+						<div
+							ref={cookieRef}
+							className='translate-x-full space-x-4 bg-secondary text-primary p-4 pointer-events-auto'
+						>
 							<Link href='/' passHref legacyBehavior>
 								<button
 									onClick={(e) => {
