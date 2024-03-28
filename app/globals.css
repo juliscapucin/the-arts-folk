@@ -91,7 +91,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-/* a {
+.underlined-link {
 	display: inline-block;
 	position: relative;
 	overflow-x: clip;
@@ -100,58 +100,34 @@ body {
 	transition: color 0.2s linear;
 }
 
-a::after {
+.underlined-link::after {
 	content: "";
 	position: absolute;
 	z-index: 50;
-	bottom: 0;
+	bottom: 2px;
 	left: 0;
 	width: 100%;
 	height: 1px;
-	background-color: rgb(var(--color-secondary-rgb), 1);
+	background-color: currentColor;
 	transition: transform 0.3s;
-	transform: translateX(-100%);
+	transform: translateX(0);
 }
 
-a:hover::after {
-	transform: translateX(0);
-} */
+.underlined-link:hover::after {
+	opacity: 0.5;
+	transform: translateX(100%);
+}
+
+a,
+button {
+	transition: opacity 0.3s linear;
+}
+
+a:hover,
+button:hover {
+	opacity: 0.5;
+}
 
 button {
 	cursor: pointer;
-}
-
-/* Border in corners */
-.corner-border {
-	padding: 1em;
-	border: 1px solid;
-	position: relative;
-}
-
-.corner-border::before,
-.corner-border::after {
-	content: "";
-	display: block;
-	position: absolute;
-	background: rgb(var(--color-primary-rgb), 1);
-}
-
-.corner-border::before {
-	top: -2px;
-	bottom: -2px;
-	left: 0.5em;
-	right: 0.5em;
-}
-
-.corner-border::after {
-	left: -2px;
-	right: -2px;
-	top: 0.5em;
-	bottom: 0.5em;
-}
-
-/* // you need this to move the text in front of the ::after overlay */
-.corner-border.corner-content {
-	position: relative;
-	z-index: 1;
 }
