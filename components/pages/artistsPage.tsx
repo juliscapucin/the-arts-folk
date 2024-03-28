@@ -65,7 +65,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 						: -self.deltaY
 
 				const MIN_TIME_SCALE = 0 // Define minimum and maximum time scale values
-				const MAX_TIME_SCALE = 50
+				const MAX_TIME_SCALE = 30
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),

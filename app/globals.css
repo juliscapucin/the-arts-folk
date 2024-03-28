@@ -144,7 +144,7 @@ body {
 	transform: translateX(100%);
 }
 
-a,
+/* a,
 button {
 	transition: opacity 0.3s linear;
 }
@@ -152,7 +152,7 @@ button {
 a:hover,
 button:hover {
 	opacity: 0.5;
-}
+} */
 
 button {
 	cursor: pointer;
