@@ -26,7 +26,7 @@ export default function navbarLink({
 							e.preventDefault()
 							transitionOnClick(link)
 						}}
-						className='uppercase font-text font-extralight text-bodyLarge tracking-wider hover:text-faded-30 transition-colors duration-500 select-none'
+						className='uppercase font-text font-extralight text-bodyLarge tracking-wider select-none'
 					>
 						{link.title}
 					</button>

@@ -1,14 +1,18 @@
-"use client"
-
 import { NavbarDesktop, NavbarMobile } from "@/components/ui"
-import { ButtonLogo } from "@/components/buttons"
 import type { NavLink } from "@/types"
 
-type HeaderProps = {
-	navLinks: NavLink[]
-}
+import { getHeaderNavLinks } from "@/sanity/sanity-queries"
 
-export default function Header({ navLinks }: HeaderProps) {
+const fallbackNavLinks = [
+	{ title: "Artists", slug: "artists", order: 1 },
+	{ title: "Info", slug: "info", order: 2 },
+]
+
+export default async function Header() {
+	let navLinks = await getHeaderNavLinks()
+
+	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
+
 	return (
 		<header className='w-full pt-2 px-5 lg:px-8 flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
 			<NavbarDesktop navLinks={navLinks} />
