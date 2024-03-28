@@ -21,8 +21,10 @@ export default function Cookies({ cookieData }: CookiesProps) {
 	const cookieRef = useRef<HTMLDivElement>(null)
 	const overlayRef = useRef<HTMLDivElement>(null)
 
+	// Cookie button
 	useLayoutEffect(() => {
 		if (!cookieRef.current || cookie === "true") return
+		gsap.set(overlayRef.current, { yPercent: 100 })
 		gsap.to(cookieRef.current, {
 			xPercent: -100,
 			duration: 0.2,
@@ -47,18 +49,20 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		})
 	}
 
-	const transitionOnClick = () => {
+	// Cookie Policy overlay
+	const toggleOverlay = () => {
 		if (!overlayRef.current) return
+
+		const isOpen = !isOverlayOpen
 
 		let ctx = gsap.context(() => {
 			gsap.to(overlayRef.current, {
-				y: isOverlayOpen ? 0 : "-105.6%",
+				yPercent: isOpen ? 0 : 100,
 				duration: 0.5,
 				ease: "power2.out",
+				onComplete: () => setIsOverlayOpen(isOpen),
 			})
 		}, overlayRef)
-
-		setIsOverlayOpen(!isOverlayOpen)
 
 		return () => {
 			ctx.revert()
@@ -70,6 +74,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 			cookieData &&
 			cookie !== "true" && (
 				<>
+					{/* Cookie button */}
 					<Container
 						classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-100 overflow-clip pointer-events-none'
 						bgColor='transparent'
@@ -84,7 +89,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 								<button
 									onClick={(e) => {
 										e.preventDefault()
-										transitionOnClick()
+										toggleOverlay()
 									}}
 									className='underlined-link uppercase font-text font-extralight text-bodyMedium tracking-wider text-primary select-none'
 								>
@@ -97,7 +102,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes='absolute top-[--container-height-mobile + --header-height-mobile] lg:top-[--container-height-desktop + --header-height-desktop] left-0 h-[--container-height-mobile] lg:h-[--container-height-desktop] z-80'
+						classes='absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip'
 						isDiv={true}
 						hasPadding={false}
 						bgColor='transparent'
