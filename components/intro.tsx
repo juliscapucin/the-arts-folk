@@ -74,13 +74,16 @@ export default function Intro() {
 
 	return (
 		<div ref={containerRef} className='fixed w-screen h-svh z-intro'>
-			<div ref={bgRef} className='fixed w-screen h-svh z-intro bg-white'></div>
+			<div
+				ref={bgRef}
+				className='gsap-bg fixed w-screen h-svh z-intro bg-white'
+			></div>
 			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center z-intro'>
-				<Logo classes='' ref={logoRef} animate={true} />
+				<Logo classes='gsap-logo' ref={logoRef} animate={true} />
 			</div>
 			<div
 				ref={headerRef}
-				className='fixed top-0 left-4 lg:left-8 pt-2 flex justify-start items-end w-screen h-[--header-height-mobile] lg:h-[--header-height-desktop] z-intro'
+				className='gsap-header fixed top-0 left-4 lg:left-8 pt-2 flex justify-start items-end w-screen max-w-desktop h-[--header-height-mobile] lg:h-[--header-height-desktop] z-intro'
 			></div>
 		</div>
 	)
