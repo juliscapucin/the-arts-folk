@@ -78,6 +78,29 @@
 		outline: 3px solid rgba(var(--color-focus));
 		outline-offset: -1px;
 	}
+
+	/* RICH TEXT */
+	/* .custom-rich-text {
+		@apply [&>p]:font-text [&>p]:font-extralight [&>p>a]:font-normal [&>h4, &>h3]:text-titleLarge [&>h2]:text-headlineLarge;
+	} */
+
+	.custom-rich-text p {
+		@apply font-text font-extralight;
+	}
+
+	.custom-rich-text h1,
+	.custom-rich-text h2 {
+		@apply text-headlineLarge;
+	}
+
+	.custom-rich-text h3,
+	.custom-rich-text h4 {
+		@apply text-titleLarge;
+	}
+
+	.custom-rich-text a {
+		@apply font-normal;
+	}
 }
 
 * {

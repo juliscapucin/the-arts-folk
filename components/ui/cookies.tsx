@@ -1,7 +1,8 @@
 "use client"
 
-import { PortableText } from "@portabletext/react"
+import { useRef, useState } from "react"
 import Link from "next/link"
+import { PortableText } from "@portabletext/react"
 
 import gsap from "gsap"
 
@@ -13,16 +14,35 @@ type CookiesProps = {
 }
 
 export default function Cookies({ cookieData }: CookiesProps) {
-	const transitionOnClick = () => {}
+	const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+	const overlayRef = useRef<HTMLDivElement>(null)
+
+	const transitionOnClick = () => {
+		if (!overlayRef.current) return
+
+		let ctx = gsap.context(() => {
+			gsap.to(overlayRef.current, {
+				y: isOverlayOpen ? 0 : "-100%",
+				duration: 0.5,
+				ease: "power2.out",
+			})
+		}, overlayRef)
+
+		setIsOverlayOpen(!isOverlayOpen)
+
+		return () => {
+			ctx.revert()
+		}
+	}
 	return (
 		<>
 			<Container
-				classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 flex items-end justify-center z-100'
+				classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 flex items-end justify-center z-100 overflow-clip pointer-events-none bg-secondary'
 				bgColor='transparent'
 				isDiv={true}
 				hasPadding={false}
 			>
-				<div className='space-x-4 bg-secondary text-primary p-8'>
+				<div className='space-x-4 bg-secondary text-primary p-8 pointer-events-auto'>
 					<Link href='/' passHref legacyBehavior>
 						<button
 							onClick={(e) => {
@@ -40,15 +60,21 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 			{/* Cookie Policy overlay */}
 			<Container
-				classes='absolute top-[--header-height-mobile] left-0 h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll z-100'
+				classes='bg-faded-30 absolute top-[--container-height-mobile + --header-height-mobile] lg:top-[--container-height-desktop + --header-height-desktop] left-0 h-[--container-height-mobile] lg:h-[--container-height-desktop] z-80'
 				isDiv={true}
 				hasPadding={false}
+				bgColor='transparent'
 			>
-				<div className='md:w-1/2 xl:w-1/3 mt-16 px-8 lg:mt-32 [&>p]:font-text [&>p]:font-extralight [&>p>a]:font-normal [&>h4, &>h3]:text-titleLarge [&>h2]:text-headlineLarge'>
-					<Heading tag='h1' variant='headline' classes='mb-16'>
-						{cookieData.title}
-					</Heading>
-					<PortableText value={cookieData.content} />
+				<div
+					ref={overlayRef}
+					className='w-full px-8 bg-primary overflow-y-scroll'
+				>
+					<div className='custom-rich-text'>
+						<Heading tag='h1' variant='headline' classes='mb-16'>
+							{cookieData.title}
+						</Heading>
+						<PortableText value={cookieData.content} />
+					</div>
 				</div>
 			</Container>
 		</>
