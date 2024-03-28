@@ -1,4 +1,5 @@
 import Container from "./container"
+import Cookies from "./cookies"
 import Footer from "./footer"
 import Header from "./header"
 import Heading from "./heading"
@@ -10,6 +11,7 @@ import Paragraph from "./paragraph"
 
 export {
 	Container,
+	Cookies,
 	Footer,
 	Header,
 	Heading,
