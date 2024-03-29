@@ -43,7 +43,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					speed: 0,
 					inertia: true,
 					paused: false,
-					center: true,
 				})
 			)
 		}, sectionRef.current)
@@ -52,7 +51,12 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	}, [])
 
 	useLayoutEffect(() => {
+		if (!loop) return
 		gsap.registerPlugin(Observer)
+
+		let slow = gsap.to(loop, { timeScale: 0, duration: 0.5 })
+		// make the loop stopped initially.
+		loop.timeScale(0)
 
 		Observer.create({
 			target: sectionRef.current,
@@ -64,25 +68,17 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 						? -self.deltaX
 						: -self.deltaY
 
-				const MIN_TIME_SCALE = 0 // Define minimum and maximum time scale values
-				const MAX_TIME_SCALE = 30
+				const MIN_TIME_SCALE = 0
+				const MAX_TIME_SCALE = calculatedTimeScale > 0 ? 10 : -10
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
 					MAX_TIME_SCALE
 				)
 
-				if (loop) {
-					// Set the loop's timeScale to the calculated value
-
-					loop.timeScale(desiredTimeScale)
-
-					gsap.killTweensOf(loop, { timeScale: true })
-					gsap.to(loop, {
-						duration: 2, // Adjust the duration to control the deceleration speed.
-						timeScale: 0, // Target timeScale to smoothly reduce to.
-					})
-				}
+				// Set the loop's timeScale to the desired value
+				loop.timeScale(desiredTimeScale)
+				slow.invalidate().restart() // now decelerate
 			},
 		})
 	}, [loop])
