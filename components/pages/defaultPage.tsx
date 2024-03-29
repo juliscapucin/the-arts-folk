@@ -25,13 +25,13 @@ export default function DefaultPage({
 }: PageProps) {
 	return (
 		<Container
-			classes='relative lg:pt-0 lg:flex flex-col justify-end'
+			classes='relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 			hasPadding={true}
 		>
 			<div className='relative flex-1 lg:flex gap-32 justify-between lg:items-center h-full'>
 				{/* Text */}
 				<div className='custom-rich-text custom-rich-text-page mt-16 lg:mt-0'>
-					<Heading tag='h1' classes='lg:sr-only mb-8' variant='display'>
+					<Heading tag='h1' classes='lg:sr-only mb-8' variant='headline'>
 						{pageData.title}
 					</Heading>
 					<PortableText value={pageData.content} />

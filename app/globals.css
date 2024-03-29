@@ -91,7 +91,6 @@
 		@apply font-text font-extralight text-bodySmall lg:text-bodyLarge;
 	}
 
-	.custom-rich-text h1,
 	.custom-rich-text h2 {
 		@apply text-headlineLarge;
 	}

@@ -1,3 +1,5 @@
+import IconArrow from "./iconArrow"
 import IconEmail from "./iconEmail"
+import IconScroll from "./iconScroll"
 
-export { IconEmail }
+export { IconArrow, IconEmail, IconScroll }
