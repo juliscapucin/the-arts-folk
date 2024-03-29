@@ -116,12 +116,15 @@ export default function Intro() {
 			ref={containerRef}
 			className='fixed w-screen h-svh z-intro pointer-events-none'
 		>
-			<div
+			{/* <div
 				ref={bgRef}
 				className='gsap-bg fixed w-screen h-svh z-intro bg-white'
-			></div>
+			></div> */}
 			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center z-intro'>
-				<Logo classes='gsap-logo' ref={logoRef} animate={true} />
+				{/* <Logo classes='gsap-logo' ref={logoRef} animate={true} /> */}
+				<h1 className='text-[10vw] text-primary mix-blend-multiply'>
+					ARTS FOLK
+				</h1>
 			</div>
 			<div
 				ref={headerRef}

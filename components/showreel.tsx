@@ -38,6 +38,12 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 
 	return (
 		<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'>
+			<div className='absolute w-full h-full flex items-center justify-center z-100'>
+				<h1 className='text-[14vw] md:text-[11vw] xl:text-[5.5vw] text-primary mix-blend-luminosity text-nowrap'>
+					ARTS FOLK.
+				</h1>
+			</div>
+
 			{showreelImages.map((image, index) => {
 				return (
 					<div
