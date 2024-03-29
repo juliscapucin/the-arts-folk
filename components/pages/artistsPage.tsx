@@ -1,17 +1,18 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
-import { Artist } from "@/types/Artist"
-import { Container } from "@/components/ui"
 import { ArtistOverlay } from "@/components"
+import { IconScroll } from "@/components/icons"
+import { Container } from "@/components/ui"
 
 import { infiniteVerticalLoop } from "@/helpers"
-import { useWindowDimensions } from "@/hooks"
+
+import { Artist } from "@/types/Artist"
 
 type ArtistsPageProps = {
 	artists: Artist[]
@@ -105,6 +106,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
+			{/* Artist Overlay */}
 			{artists.map((artist, index) => {
 				return (
 					<ArtistOverlay
@@ -115,7 +117,14 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					/>
 				)
 			})}
-			<section ref={sectionRef} className='absolute w-full text-center'>
+
+			{/* Icon Scroll */}
+			<div className='fixed mx-auto w-screen max-w-desktop h-[--container-height-mobile] lg:max-h-[--container-height-desktop] flex items-center justify-end'>
+				<IconScroll />
+			</div>
+
+			{/* Artists Menu */}
+			<section ref={sectionRef} className='w-full text-center'>
 				{artists.map((artist) => {
 					return (
 						<div className='gsap-scroll-item text-center' key={artist.name}>
