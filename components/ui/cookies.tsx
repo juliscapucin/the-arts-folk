@@ -6,6 +6,7 @@ import { PortableText } from "@portabletext/react"
 
 import gsap from "gsap"
 
+import { ButtonClose } from "@/components/buttons"
 import { Container, Heading } from "@/components/ui"
 import { useCookieStorage } from "@/hooks"
 
@@ -111,6 +112,10 @@ export default function Cookies({ cookieData }: CookiesProps) {
 							ref={overlayRef}
 							className='w-full px-8 bg-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
 						>
+							<ButtonClose
+								classes='absolute top-8 right-4'
+								action={toggleOverlay}
+							/>
 							<div className='custom-rich-text'>
 								<Heading
 									tag='h1'
