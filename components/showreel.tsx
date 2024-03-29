@@ -51,7 +51,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 							key={`showreel-${index}`}
 						>
 							<CldImage
-								className={`object-cover md:object-contain bg-primary ${
+								className={`object-cover md:object-contain bg-primary transition-opacity duration-200 ${
 									slideIndex === index ? "opacity-100" : "opacity-0"
 								}`}
 								src={image.url}
