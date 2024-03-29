@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react"
 import { CldImage } from "next-cloudinary"
 
+import { Logo } from "@/components/svgs"
+
 import type { CloudinaryImage } from "@/types"
 
 type ShowreelProps = {
@@ -37,33 +39,32 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [slideIndex])
 
 	return (
-		<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'>
-			<div className='absolute w-full h-full flex items-center justify-center z-100'>
-				<h1 className='text-[14vw] md:text-[11vw] xl:text-[5.5vw] text-primary mix-blend-luminosity text-nowrap'>
-					ARTS FOLK.
-				</h1>
+		<>
+			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center scale-200 z-20'>
+				<Logo />
 			</div>
-
-			{showreelImages.map((image, index) => {
-				return (
-					<div
-						className='absolute w-full h-full z-10'
-						key={`showreel-${index}`}
-					>
-						<CldImage
-							className={`object-cover md:object-contain bg-primary ${
-								slideIndex === index ? "opacity-100" : "opacity-0"
-							}`}
-							src={image.url}
-							alt='photo'
-							sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
-							quality={50}
-							fill
-							priority={index === 0 || index === 1}
-						/>
-					</div>
-				)
-			})}
-		</div>
+			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'>
+				{showreelImages.map((image, index) => {
+					return (
+						<div
+							className='absolute w-full h-full z-10'
+							key={`showreel-${index}`}
+						>
+							<CldImage
+								className={`object-cover md:object-contain bg-primary ${
+									slideIndex === index ? "opacity-100" : "opacity-0"
+								}`}
+								src={image.url}
+								alt='photo'
+								sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
+								quality={50}
+								fill
+								priority={index === 0 || index === 1}
+							/>
+						</div>
+					)
+				})}
+			</div>
+		</>
 	)
 }

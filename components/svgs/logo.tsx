@@ -10,7 +10,7 @@ type LogoProps = {
 const Logo = forwardRef<SVGSVGElement, LogoProps>(
 	({ classes, animate }, ref) => {
 		const strokeWidth = "0rem"
-		const color = "white"
+		const color = "black"
 
 		return (
 			<svg
@@ -46,7 +46,6 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(
 					fill={color}
 					stroke='white'
 					strokeWidth={strokeWidth}
-					style={{ mixBlendMode: "difference" }}
 				/>
 				{/* R */}
 				<path
@@ -55,7 +54,6 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(
 					fill={color}
 					stroke='white'
 					strokeWidth={strokeWidth}
-					style={{ mixBlendMode: "difference" }}
 				/>
 				{/* T */}
 				<path
@@ -64,7 +62,6 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(
 					fill={color}
 					stroke='white'
 					strokeWidth={strokeWidth}
-					style={{ mixBlendMode: "difference" }}
 				/>
 				{/* S */}
 				<path
@@ -73,7 +70,6 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(
 					fill={color}
 					stroke='white'
 					strokeWidth={strokeWidth}
-					style={{ mixBlendMode: "difference" }}
 				/>
 
 				{/* F */}
