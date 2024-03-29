@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { PortableText } from "@portabletext/react"
 
@@ -69,6 +69,20 @@ export default function Cookies({ cookieData }: CookiesProps) {
 			ctx.revert()
 		}
 	}
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				toggleOverlay()
+			}
+		}
+
+		window.addEventListener("keydown", handleKeyDown)
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown)
+		}
+	}, [toggleOverlay]) // Depend on `toggleOverlay` since it's used inside the effect
 
 	{
 		return (
