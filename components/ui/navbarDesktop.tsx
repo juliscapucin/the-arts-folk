@@ -23,12 +23,12 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 
 	const transitionOnClick = (link: any) => {
 		ctx.add(() => {
-			gsap.set(pageTransitionRef.current, { yPercent: 100 })
+			gsap.set(pageTransitionRef.current, { yPercent: -100 })
 
 			gsap.to(pageTransitionRef.current, {
 				yPercent: 0,
-				duration: 0.5,
-				ease: "power4.out",
+				duration: 0.2,
+				ease: "linear",
 				onComplete: () => {
 					router.push(`/${link.slug}`)
 				},
@@ -41,9 +41,9 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 
 		ctx.add(() => {
 			gsap.to(pageTransitionRef.current, {
-				yPercent: -100,
-				duration: 0.8,
-				ease: "power4.out",
+				yPercent: 100,
+				duration: 0.4,
+				ease: "linear",
 			})
 		})
 	}, [pathname])

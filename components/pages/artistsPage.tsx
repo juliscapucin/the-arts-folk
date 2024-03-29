@@ -87,7 +87,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	useLayoutEffect(() => {
 		if (!sectionRef.current) return
 
-		createLoop()
+		ctx.add(() => {
+			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
+			gsap.from(items, {
+				yPercent: -100,
+				opacity: 0,
+				stagger: 0.05,
+				duration: 0.3,
+				onComplete: () => {
+					createLoop()
+				},
+			})
+		}, sectionRef.current)
 
 		return () => ctx.revert()
 	}, [])
