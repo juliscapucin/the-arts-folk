@@ -14,7 +14,7 @@ export default async function Header() {
 	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
 
 	return (
-		<header className='w-full pt-2 px-5 lg:px-8 flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
+		<header className='max-w-screen pt-2 mx-[--margin-mobile] lg:mx-[--margin-desktop] flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
 			<NavbarDesktop navLinks={navLinks} />
 			<NavbarMobile navLinks={navLinks} />
 		</header>
