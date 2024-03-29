@@ -130,7 +130,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						bgColor='transparent'
 					>
 						<ButtonClose
-							classes={`fixed top-[--header-height-mobile] left-0 w-full max-w-desktop mt-4 flex justify-end z-100 ${
+							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-20 max-w-desktop mt-4 flex justify-end z-100 ${
 								isOverlayOpen ? "opacity-100" : "opacity-0"
 							}`}
 							action={toggleOverlay}
