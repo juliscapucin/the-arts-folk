@@ -40,7 +40,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				infiniteVerticalLoop(items, {
 					repeat: -1,
 					draggable: true,
-					speed: 0.5,
+					speed: 0,
 					inertia: true,
 					paused: false,
 					center: true,
@@ -64,8 +64,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 						? -self.deltaX
 						: -self.deltaY
 
-				const MIN_TIME_SCALE = 1 // Define minimum and maximum time scale values
-				const MAX_TIME_SCALE = 50
+				const MIN_TIME_SCALE = 0 // Define minimum and maximum time scale values
+				const MAX_TIME_SCALE = 30
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
@@ -80,22 +80,22 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					gsap.killTweensOf(loop, { timeScale: true })
 					gsap.to(loop, {
 						duration: 2, // Adjust the duration to control the deceleration speed.
-						timeScale: 0.5, // Target timeScale to smoothly reduce to.
+						timeScale: 0, // Target timeScale to smoothly reduce to.
 					})
 				}
 			},
 		})
 	}, [loop])
 
-	useEffect(() => {
-		if (!loop) return
+	// useEffect(() => {
+	// 	if (!loop) return
 
-		if (isHovered === "") {
-			loop.resume()
-		} else {
-			loop.pause()
-		}
-	}, [isHovered])
+	// 	if (isHovered === "") {
+	// 		loop.resume()
+	// 	} else {
+	// 		loop.pause()
+	// 	}
+	// }, [isHovered])
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
@@ -109,17 +109,14 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					/>
 				)
 			})}
-			<section
-				ref={sectionRef}
-				className='absolute w-full text-center space-y-24 pt-32'
-			>
+			<section ref={sectionRef} className='absolute w-full text-center'>
 				{artists.map((artist) => {
 					return (
 						<div className='gsap-scroll-item text-center' key={artist.name}>
 							<a
 								href={artist.artistWebsite ? artist.artistWebsite : "#"}
 								target='_blank'
-								className={`gsap-scroll-button w-fit inline-block p-8 h-32 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
+								className={`gsap-scroll-button w-fit inline-block p-8 h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 									isHovered === artist.name
 										? ""
 										: isHovered

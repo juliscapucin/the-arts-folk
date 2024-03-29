@@ -10,7 +10,7 @@ export default async function Footer() {
 				navLinks.map((link) => {
 					return link.url ? (
 						<a
-							className='underlined-link'
+							className=''
 							key={`${link.title}-footer`}
 							href={link.url}
 							target='_blank'
@@ -20,7 +20,7 @@ export default async function Footer() {
 						</a>
 					) : (
 						<Link
-							className='underlined-link'
+							className=''
 							key={`${link.title}-footer`}
 							href={`/${link.slug}`}
 						>

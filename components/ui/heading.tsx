@@ -2,7 +2,7 @@ type HeadingProps = {
 	tag: string
 	classes?: string
 	children: string
-	variant?: "display" | "headline" | "title"
+	variant?: "display" | "headline" | "title" | "body"
 }
 
 export default function Heading({
@@ -25,6 +25,9 @@ export default function Heading({
 			break
 		case "title":
 			headingStyles = "text-titleSmall md:text-titleMedium lg:text-titleLarge"
+			break
+		case "body":
+			headingStyles = "text-bodySmall md:text-bodyMedium lg:text-bodyLarge"
 			break
 		default:
 			headingStyles =

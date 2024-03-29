@@ -1,11 +1,12 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { PortableText } from "@portabletext/react"
 
 import gsap from "gsap"
 
+import { ButtonClose } from "@/components/buttons"
 import { Container, Heading } from "@/components/ui"
 import { useCookieStorage } from "@/hooks"
 
@@ -33,22 +34,6 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		})
 	}, [])
 
-	if (cookie === "true") return null
-
-	const okButtonHandler = (cookie: string) => {
-		updateCookie(cookie)
-
-		if (!cookieRef.current) return
-		gsap.to(cookieRef.current, {
-			xPercent: 100,
-			duration: 0.2,
-			ease: "power4.in",
-			onComplete: () => {
-				setCookie(cookie)
-			},
-		})
-	}
-
 	// Cookie Policy overlay
 	const toggleOverlay = () => {
 		if (!overlayRef.current) return
@@ -67,6 +52,36 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		return () => {
 			ctx.revert()
 		}
+	}
+
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				toggleOverlay()
+			}
+		}
+
+		window.addEventListener("keydown", handleKeyDown)
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown)
+		}
+	}, [toggleOverlay])
+
+	if (cookie === "true") return null
+
+	const okButtonHandler = (cookie: string) => {
+		updateCookie(cookie)
+
+		if (!cookieRef.current) return
+		gsap.to(cookieRef.current, {
+			xPercent: 100,
+			duration: 0.2,
+			ease: "power4.in",
+			onComplete: () => {
+				setCookie(cookie)
+			},
+		})
 	}
 
 	{
@@ -102,7 +117,9 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes='absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip'
+						classes={`absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip ${
+							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
+						}`}
 						isDiv={true}
 						hasPadding={false}
 						bgColor='transparent'
@@ -111,6 +128,10 @@ export default function Cookies({ cookieData }: CookiesProps) {
 							ref={overlayRef}
 							className='w-full px-8 bg-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
 						>
+							<ButtonClose
+								classes='absolute top-8 right-4'
+								action={toggleOverlay}
+							/>
 							<div className='custom-rich-text'>
 								<Heading
 									tag='h1'

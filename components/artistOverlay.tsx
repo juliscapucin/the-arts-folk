@@ -26,7 +26,7 @@ const ArtistOverlayImage = ({
 			}`}
 		>
 			<CldImage
-				className={`object-contain`}
+				className={`object-contain p-4`}
 				src={url}
 				alt='photo'
 				sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'

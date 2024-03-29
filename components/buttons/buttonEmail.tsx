@@ -22,12 +22,12 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 					className='text-titleLarge'
 					rel='noopener noreferrer'
 				>
-					<Heading tag='h4' variant='title' classes='leading-3'>
+					<Heading tag='h4' variant='body' classes='leading-3'>
 						{name}
 					</Heading>
 				</a>
 			</div>
-			<span className='font-text text-bodyLarge font-extralight'>{phone}</span>
+			<span className='font-text text-bodyMedium font-extralight'>{phone}</span>
 
 			{/* <ButtonCopyEmail {...{ email }} /> */}
 		</div>
