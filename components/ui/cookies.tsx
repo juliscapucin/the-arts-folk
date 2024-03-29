@@ -34,22 +34,6 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		})
 	}, [])
 
-	if (cookie === "true") return null
-
-	const okButtonHandler = (cookie: string) => {
-		updateCookie(cookie)
-
-		if (!cookieRef.current) return
-		gsap.to(cookieRef.current, {
-			xPercent: 100,
-			duration: 0.2,
-			ease: "power4.in",
-			onComplete: () => {
-				setCookie(cookie)
-			},
-		})
-	}
-
 	// Cookie Policy overlay
 	const toggleOverlay = () => {
 		if (!overlayRef.current) return
@@ -82,7 +66,23 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		return () => {
 			window.removeEventListener("keydown", handleKeyDown)
 		}
-	}, [toggleOverlay]) // Depend on `toggleOverlay` since it's used inside the effect
+	}, [toggleOverlay])
+
+	if (cookie === "true") return null
+
+	const okButtonHandler = (cookie: string) => {
+		updateCookie(cookie)
+
+		if (!cookieRef.current) return
+		gsap.to(cookieRef.current, {
+			xPercent: 100,
+			duration: 0.2,
+			ease: "power4.in",
+			onComplete: () => {
+				setCookie(cookie)
+			},
+		})
+	}
 
 	{
 		return (
@@ -117,7 +117,9 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes='absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip'
+						classes={`absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip ${
+							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
+						}`}
 						isDiv={true}
 						hasPadding={false}
 						bgColor='transparent'
