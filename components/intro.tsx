@@ -38,9 +38,19 @@ export default function Intro() {
 					stagger: 0.08,
 					duration: 0.8,
 					ease: "power4.in",
+					onComplete: () => {
+						pathname !== "/" &&
+							gsap.to("path", {
+								autoAlpha: 0,
+								stagger: 0.03,
+								duration: 0.3,
+								ease: "power4.in",
+							})
+					},
 				}).to(".gsap-bg", {
 					yPercent: -100,
-					duration: 0.5,
+					duration: 0.8,
+					delay: 0.5,
 					ease: "power4.inOut",
 					onComplete: () => {
 						containerElement.remove()
