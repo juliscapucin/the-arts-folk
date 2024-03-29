@@ -30,7 +30,7 @@ export default function DefaultPage({
 		>
 			<div className='relative flex-1 lg:flex gap-32 justify-between lg:items-center h-full'>
 				{/* Text */}
-				<div className='custom-rich-text mt-16 lg:mt-0'>
+				<div className='custom-rich-text custom-rich-text-page mt-16 lg:mt-0'>
 					<Heading tag='h1' classes='lg:sr-only mb-8' variant='display'>
 						{pageData.title}
 					</Heading>

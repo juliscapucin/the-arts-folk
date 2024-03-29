@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import Link from "next/link"
+
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
@@ -9,7 +11,7 @@ import { Container } from "@/components/ui"
 import { ArtistOverlay } from "@/components"
 
 import { infiniteVerticalLoop } from "@/helpers"
-import Link from "next/link"
+import { useWindowDimensions } from "@/hooks"
 
 type ArtistsPageProps = {
 	artists: Artist[]
@@ -17,7 +19,6 @@ type ArtistsPageProps = {
 
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
-	const [loop, setLoop] = useState<gsap.core.Timeline | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	let ctx = gsap.context(() => {})
 
@@ -29,73 +30,78 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	useLayoutEffect(() => {
+	const createLoop = () => {
 		if (!sectionRef.current) return
+		gsap.registerPlugin(Observer)
 
-		// This context ensures that animations are scoped to the component and cleaned up when the component unmounts.
 		ctx.add(() => {
 			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 			// Create an infinite vertical loop
-			setLoop(
-				infiniteVerticalLoop(items, {
-					repeat: -1,
-					draggable: true,
-					speed: 0,
-					inertia: true,
-					paused: false,
-					center: true,
-				})
-			)
+
+			const loop = infiniteVerticalLoop(items, {
+				repeat: -1,
+				draggable: true,
+				speed: 0,
+				inertia: true,
+				paused: false,
+			})
+			// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 0.5 seconds (or whatever)
+			let slow = gsap.to(loop, { timeScale: 0, duration: 2 })
+			// make the loop stopped initially.
+			loop.timeScale(0)
+
+			Observer.create({
+				target: sectionRef.current,
+				type: "pointer,touch,wheel",
+				wheelSpeed: -1,
+				// onChange: (self) => {
+				// 	loop.timeScale(
+				// 		Math.abs(self.deltaX) > Math.abs(self.deltaY)
+				// 			? -self.deltaX
+				// 			: -self.deltaY
+				// 	) // whichever direction is bigger
+				// 	slow.invalidate().restart() // now decelerate
+				// },
+				onChange: (self) => {
+					let calculatedTimeScale =
+						Math.abs(self.deltaX) > Math.abs(self.deltaY)
+							? -self.deltaX
+							: -self.deltaY
+
+					const MIN_TIME_SCALE = 0
+					const MAX_TIME_SCALE = calculatedTimeScale > 0 ? 10 : -10
+
+					let desiredTimeScale = Math.min(
+						Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+						MAX_TIME_SCALE
+					)
+
+					// Set the loop's timeScale to the desired value
+					loop.timeScale(desiredTimeScale)
+					slow.invalidate().restart() // now decelerate
+				},
+			})
+		}, sectionRef.current)
+	}
+
+	useLayoutEffect(() => {
+		if (!sectionRef.current) return
+
+		ctx.add(() => {
+			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
+			gsap.from(items, {
+				yPercent: -100,
+				opacity: 0,
+				stagger: 0.07,
+				duration: 0.5,
+				onComplete: () => {
+					createLoop()
+				},
+			})
 		}, sectionRef.current)
 
 		return () => ctx.revert()
 	}, [])
-
-	useLayoutEffect(() => {
-		gsap.registerPlugin(Observer)
-
-		Observer.create({
-			target: sectionRef.current,
-			type: "pointer,touch,wheel",
-			wheelSpeed: -1,
-			onChange: (self) => {
-				let calculatedTimeScale =
-					Math.abs(self.deltaX) > Math.abs(self.deltaY)
-						? -self.deltaX
-						: -self.deltaY
-
-				const MIN_TIME_SCALE = 0 // Define minimum and maximum time scale values
-				const MAX_TIME_SCALE = 30
-
-				let desiredTimeScale = Math.min(
-					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-					MAX_TIME_SCALE
-				)
-
-				if (loop) {
-					// Set the loop's timeScale to the calculated value
-
-					loop.timeScale(desiredTimeScale)
-
-					gsap.killTweensOf(loop, { timeScale: true })
-					gsap.to(loop, {
-						duration: 2, // Adjust the duration to control the deceleration speed.
-						timeScale: 0, // Target timeScale to smoothly reduce to.
-					})
-				}
-			},
-		})
-	}, [loop])
-
-	// useEffect(() => {
-	// 	if (!loop) return
-
-	// 	if (isHovered === "") {
-	// 		loop.resume()
-	// 	} else {
-	// 		loop.pause()
-	// 	}
-	// }, [isHovered])
 
 	return (
 		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>

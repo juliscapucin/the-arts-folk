@@ -1,9 +1,6 @@
 "use client"
 
-import { useLayoutEffect, forwardRef } from "react"
-import { usePathname } from "next/navigation"
-
-import gsap from "gsap"
+import { forwardRef } from "react"
 
 type PageTransitionProps = {
 	exit?: boolean

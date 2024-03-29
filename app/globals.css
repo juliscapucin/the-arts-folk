@@ -16,9 +16,9 @@
 		--color-focus: 180, 180, 180;
 		--color-white: 255 255 255;
 		--margin-mobile: 1rem;
-		--margin-desktop: 1rem;
-		--padding-mobile: 2rem;
-		--padding-desktop: 2rem;
+		--margin-desktop: 2rem;
+		--padding-mobile: 0;
+		--padding-desktop: 0;
 		--header-height-mobile: 4rem;
 		--header-height-desktop: 4rem;
 		--footer-height-mobile: 3rem;
@@ -38,15 +38,15 @@
 	}
 
 	*::-webkit-scrollbar {
-		width: 2px;
-		height: 2px;
+		width: 6px;
+		height: 6px;
 	}
 	*::-webkit-scrollbar-track {
 		background-color: rgba(var(--color-primary-rgb), 0.2);
 		-webkit-box-shadow: none;
 	}
 	*::-webkit-scrollbar-thumb {
-		background-color: rgb(var(--color-primary-rgb), 1);
+		background-color: rgb(var(--color-primary-rgb), 0.2);
 		width: 1rem;
 		height: 1rem;
 		-webkit-box-shadow: none;
@@ -83,7 +83,7 @@
 
 	/* RICH TEXT */
 
-	.custom-rich-text {
+	.custom-rich-text-page {
 		@apply md:w-1/2 xl:w-1/3;
 	}
 

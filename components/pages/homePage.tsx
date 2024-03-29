@@ -10,7 +10,7 @@ type HomePageProps = {
 
 export default function HomePage({ showreelImages }: HomePageProps) {
 	return (
-		<Container>
+		<Container hasPadding={false}>
 			<Showreel {...{ showreelImages }} />
 		</Container>
 	)
