@@ -14,6 +14,8 @@ export default function Heading({
 	const Tag = tag as keyof JSX.IntrinsicElements
 	let headingStyles = ""
 
+	console.log(variant)
+
 	switch (variant) {
 		case "display":
 			headingStyles =
@@ -35,11 +37,13 @@ export default function Heading({
 			break
 	}
 
+	console.log(headingStyles)
+
 	return (
 		<Tag
-			className={`font-heading ${
-				classes ? classes : ""
-			} ${headingStyles} leading-none`}
+			className={`font-heading leading-none ${
+				classes && classes
+			} ${headingStyles}`}
 		>
 			{children}
 		</Tag>
