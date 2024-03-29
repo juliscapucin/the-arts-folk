@@ -91,14 +91,14 @@ export default function Cookies({ cookieData }: CookiesProps) {
 				<>
 					{/* Cookie button */}
 					<Container
-						classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-100 overflow-clip pointer-events-none'
-						bgColor='transparent'
+						classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
+						bgColor={isOverlayOpen ? "bg-primary/80" : "transparent"}
 						isDiv={true}
 						hasPadding={false}
 					>
 						<div
 							ref={cookieRef}
-							className='translate-x-full space-x-4 bg-secondary text-primary p-4 pointer-events-auto'
+							className='translate-x-full space-x-4 bg-secondary text-primary px-3 py-2 pointer-events-auto'
 						>
 							<Link href='/' passHref legacyBehavior>
 								<button
@@ -106,12 +106,17 @@ export default function Cookies({ cookieData }: CookiesProps) {
 										e.preventDefault()
 										toggleOverlay()
 									}}
-									className='underlined-link uppercase font-text font-extralight text-bodyMedium tracking-wider text-primary select-none'
+									className='underlined-link uppercase font-text font-extralight text-bodySmall tracking-wider text-primary select-none'
 								>
 									This site uses cookies
 								</button>
 							</Link>
-							<button onClick={() => okButtonHandler("true")}>OK</button>
+							<button
+								className='text-bodySmall'
+								onClick={() => okButtonHandler("true")}
+							>
+								OK
+							</button>
 						</div>
 					</Container>
 
@@ -124,19 +129,23 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						hasPadding={false}
 						bgColor='transparent'
 					>
+						<ButtonClose
+							classes={`fixed top-[--header-height-mobile] left-0 w-full max-w-desktop mt-4 flex justify-end z-100 ${
+								isOverlayOpen ? "opacity-100" : "opacity-0"
+							}`}
+							action={toggleOverlay}
+							color='primary'
+						/>
+
 						<div
 							ref={overlayRef}
-							className='w-full px-8 bg-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
+							className='w-2/5 ml-auto bg-secondary text-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
 						>
-							<ButtonClose
-								classes='absolute top-8 right-4'
-								action={toggleOverlay}
-							/>
-							<div className='custom-rich-text'>
+							<div className='custom-rich-text px-12'>
 								<Heading
 									tag='h1'
 									variant='headline'
-									classes='mb-16 mt-16 lg:mt-32'
+									classes='mb-16 mt-12 lg:mt-16'
 								>
 									{cookieData.title}
 								</Heading>

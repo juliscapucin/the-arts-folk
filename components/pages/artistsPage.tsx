@@ -92,8 +92,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			gsap.from(items, {
 				yPercent: -100,
 				opacity: 0,
-				stagger: 0.05,
-				duration: 0.3,
+				stagger: 0.07,
+				duration: 0.5,
 				onComplete: () => {
 					createLoop()
 				},

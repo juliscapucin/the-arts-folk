@@ -40,7 +40,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 
 	return (
 		<>
-			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center scale-200 z-20'>
+			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center lg:scale-200 z-20'>
 				<Logo />
 			</div>
 			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'>
