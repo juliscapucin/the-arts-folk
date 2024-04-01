@@ -65,7 +65,13 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 						: -self.deltaY
 
 				const MIN_TIME_SCALE = 0
-				const MAX_TIME_SCALE = calculatedTimeScale > 0 ? 10 : -10
+				const MAX_TIME_SCALE = isMobile
+					? calculatedTimeScale > 0
+						? 5
+						: -5
+					: calculatedTimeScale > 0
+					? 10
+					: -10
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
