@@ -33,7 +33,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	const createScrollLoop = (media: boolean) => {
+	const createScrollLoop = (isMobile: boolean) => {
 		if (!sectionRef.current) return
 		gsap.registerPlugin(Observer)
 
@@ -52,31 +52,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		let slow = gsap.to(loop, { timeScale: 0, duration: 2 })
 		// make the loop stopped initially.
 		loop.timeScale(0)
-
-		const getViewportPosition = (element: HTMLElement) => {
-			const rect = element.getBoundingClientRect()
-			const viewportHeight =
-				window.innerHeight || document.documentElement.clientHeight
-			const elementTop = rect.top
-			const elementBottom = rect.bottom
-			const screenMiddle = viewportHeight / 2
-			return {
-				isMiddle:
-					Math.abs(elementTop) < screenMiddle &&
-					Math.abs(elementBottom) > screenMiddle,
-			}
-		}
-
-		loop.eventCallback("onUpdate", () => {
-			items.forEach((item, i) => {
-				const position = getViewportPosition(item)
-				console.log(`Item ${i} position:`, position.isMiddle)
-
-				position.isMiddle &&
-					item.dataset.name &&
-					setIsHovered(item.dataset.name)
-			})
-		})
 
 		Observer.create({
 			target: sectionRef.current,
@@ -101,6 +76,33 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				slow.invalidate().restart() // now decelerate
 			},
 		})
+
+		if (isMobile) {
+			const getViewportPosition = (element: HTMLElement) => {
+				const rect = element.getBoundingClientRect()
+				const viewportHeight =
+					window.innerHeight || document.documentElement.clientHeight
+				const elementTop = rect.top
+				const elementBottom = rect.bottom
+				const screenMiddle = viewportHeight / 2
+				return {
+					isMiddle:
+						Math.abs(elementTop) < screenMiddle &&
+						Math.abs(elementBottom) > screenMiddle,
+				}
+			}
+
+			loop.eventCallback("onUpdate", () => {
+				items.forEach((item, i) => {
+					const position = getViewportPosition(item)
+					console.log(`Item ${i} position:`, position.isMiddle)
+
+					position.isMiddle &&
+						item.dataset.name &&
+						setIsHovered(item.dataset.name)
+				})
+			})
+		}
 	}
 
 	useLayoutEffect(() => {
