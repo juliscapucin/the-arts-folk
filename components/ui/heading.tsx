@@ -14,8 +14,6 @@ export default function Heading({
 	const Tag = tag as keyof JSX.IntrinsicElements
 	let headingStyles = ""
 
-	console.log(variant)
-
 	switch (variant) {
 		case "display":
 			headingStyles =
@@ -36,8 +34,6 @@ export default function Heading({
 				"text-displaySmall md:text-displayMedium lg:text-displayLarge"
 			break
 	}
-
-	console.log(headingStyles)
 
 	return (
 		<Tag

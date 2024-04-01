@@ -6,18 +6,21 @@ type ArtistOverlayProps = {
 	images: CloudinaryImage[]
 	isVisible: boolean
 	index: number
+	artistName: string
 }
 
 type ArtistOverlayImageProps = {
 	url: string
 	isVisible: boolean
 	classes?: string
+	artistName: string
 }
 
 const ArtistOverlayImage = ({
 	url,
 	isVisible,
 	classes,
+	artistName,
 }: ArtistOverlayImageProps) => {
 	return (
 		<div
@@ -28,7 +31,7 @@ const ArtistOverlayImage = ({
 			<CldImage
 				className={`object-contain p-4`}
 				src={url}
-				alt='photo'
+				alt={`Photo by ${artistName}`}
 				sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'
 				quality={50}
 				fill
@@ -41,6 +44,7 @@ export default function ArtistOverlay({
 	images,
 	isVisible,
 	index,
+	artistName,
 }: ArtistOverlayProps) {
 	return (
 		<div
@@ -55,12 +59,14 @@ export default function ArtistOverlay({
 						url={images[0].url}
 						classes='h-full self-end'
 						isVisible={isVisible}
+						artistName={artistName}
 					/>
 
 					<ArtistOverlayImage
 						url={images[1].url}
 						classes='h-full lg:top-32 delay-75'
 						isVisible={isVisible}
+						artistName={artistName}
 					/>
 				</div>
 
@@ -68,6 +74,7 @@ export default function ArtistOverlay({
 					url={images[2].url}
 					classes='h-1/2 delay-100'
 					isVisible={isVisible}
+					artistName={artistName}
 				/>
 			</div>
 
@@ -77,12 +84,14 @@ export default function ArtistOverlay({
 					url={images[3] ? images[3].url : images[0].url}
 					classes='h-1/2 delay-150'
 					isVisible={isVisible}
+					artistName={artistName}
 				/>
 
 				<ArtistOverlayImage
 					url={images[4] ? images[4].url : images[1].url}
 					classes='h-1/2 self-end delay-200'
 					isVisible={isVisible}
+					artistName={artistName}
 				/>
 			</div>
 		</div>

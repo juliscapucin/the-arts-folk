@@ -7,6 +7,7 @@ import gsap from "gsap"
 import { Flip } from "gsap/Flip"
 
 import { Logo } from "@/components/svgs"
+import { GSAPQueries } from "@/utils"
 
 export default function Intro() {
 	const pathname = usePathname()
@@ -24,7 +25,7 @@ export default function Intro() {
 		let mm = gsap.matchMedia()
 
 		mm.add(
-			{ isMobile: "(max-width: 800px)", isDesktop: "(min-width: 801px)" },
+			GSAPQueries,
 			(context) => {
 				let isMobile = context.conditions?.isMobile ?? false
 
