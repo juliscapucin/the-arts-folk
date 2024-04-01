@@ -21,6 +21,7 @@ type ArtistsPageProps = {
 
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
+	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 	let mm = gsap.matchMedia()
@@ -74,6 +75,9 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				// Set the loop's timeScale to the desired value
 				loop.timeScale(desiredTimeScale)
 				slow.invalidate().restart() // now decelerate
+
+				setIsScrollTipVisible(false)
+				console.log("hi")
 			},
 		})
 
@@ -95,7 +99,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			loop.eventCallback("onUpdate", () => {
 				items.forEach((item, i) => {
 					const position = getViewportPosition(item)
-					console.log(`Item ${i} position:`, position.isMiddle)
 
 					position.isMiddle &&
 						item.dataset.name &&
@@ -131,70 +134,75 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	}, [])
 
 	return (
-		<Container
-			ref={containerRef}
-			classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
-		>
-			{/* Artist Overlay */}
-			{artists.map((artist, index) => {
-				return (
-					<ArtistOverlay
-						key={`${artist.name}-overlay`}
-						images={artist.scrapbookImages}
-						isVisible={isHovered === artist.name}
-						index={index}
-					/>
-				)
-			})}
-
+		<>
 			{/* Icon Scroll */}
-			<div className='fixed mx-auto w-screen max-w-desktop h-[--container-height-mobile] lg:max-h-[--container-height-desktop] flex items-center justify-end'>
+			<div
+				className={`absolute mx-auto top-0 right-2 h-screen flex items-center transition-opacity duration-500 delay-300 z-100 ${
+					isScrollTipVisible ? "" : "opacity-0"
+				}`}
+			>
 				<IconScroll />
 			</div>
-
-			{/* Artists Menu */}
-			<section ref={sectionRef} className='w-full text-center'>
-				{artists.map((artist) => {
+			<Container
+				ref={containerRef}
+				classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+			>
+				{/* Artist Overlay */}
+				{artists.map((artist, index) => {
 					return (
-						<div
-							className='gsap-scroll-item text-center'
-							key={artist.name}
-							data-name={artist.name}
-						>
-							<a
-								href={artist.artistWebsite ? artist.artistWebsite : "#"}
-								target='_blank'
-								className={`gsap-scroll-button w-fit inline-block p-8 h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
-									isHovered === artist.name
-										? ""
-										: isHovered
-										? "opacity-10 -z-5"
-										: ""
-								}`}
-								key={artist.name}
-								onMouseEnter={() => handleMouseEnter(artist.name)}
-								onMouseLeave={handleMouseLeave}
-							>
-								{artist.name}
-								<span
-									className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
-										isHovered === artist.name ? "" : "opacity-0"
-									}`}
-								>
-									{artist.description}
-								</span>
-								<span
-									className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
-										isHovered === artist.name ? "" : "opacity-0"
-									}`}
-								>
-									Coming soon
-								</span>
-							</a>
-						</div>
+						<ArtistOverlay
+							key={`${artist.name}-overlay`}
+							images={artist.scrapbookImages}
+							isVisible={isHovered === artist.name}
+							index={index}
+						/>
 					)
 				})}
-			</section>
-		</Container>
+
+				{/* Artists Menu */}
+				<section ref={sectionRef} className='w-full text-center'>
+					{artists.map((artist) => {
+						return (
+							<div
+								className='gsap-scroll-item text-center'
+								key={artist.name}
+								data-name={artist.name}
+							>
+								<a
+									href={artist.artistWebsite ? artist.artistWebsite : "#"}
+									target='_blank'
+									className={`gsap-scroll-button w-fit inline-block p-8 h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
+										isHovered === artist.name
+											? ""
+											: isHovered
+											? "opacity-10 -z-5"
+											: ""
+									}`}
+									key={artist.name}
+									onMouseEnter={() => handleMouseEnter(artist.name)}
+									onMouseLeave={handleMouseLeave}
+								>
+									{artist.name}
+									<span
+										className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
+											isHovered === artist.name ? "" : "opacity-0"
+										}`}
+									>
+										{artist.description}
+									</span>
+									<span
+										className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
+											isHovered === artist.name ? "" : "opacity-0"
+										}`}
+									>
+										Coming soon
+									</span>
+								</a>
+							</div>
+						)
+					})}
+				</section>
+			</Container>
+		</>
 	)
 }
