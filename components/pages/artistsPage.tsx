@@ -5,13 +5,13 @@ import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 import { ArtistOverlay } from "@/components"
 import { IconScroll } from "@/components/icons"
 import { Container } from "@/components/ui"
 
 import { infiniteVerticalLoop } from "@/helpers"
+import { GSAPQueries } from "@/utils"
 
 import { Artist } from "@/types/Artist"
 
@@ -108,10 +108,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	useLayoutEffect(() => {
 		if (!sectionRef.current || !containerRef.current) return
 
-		gsap.registerPlugin(ScrollTrigger)
-
 		mm.add(
-			{ isMobile: "(max-width: 800px)", isDesktop: "(min-width: 801px)" },
+			GSAPQueries,
 			(context) => {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
