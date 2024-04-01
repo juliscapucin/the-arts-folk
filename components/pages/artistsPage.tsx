@@ -77,7 +77,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				slow.invalidate().restart() // now decelerate
 
 				setIsScrollTipVisible(false)
-				console.log("hi")
 			},
 		})
 
@@ -155,6 +154,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 							images={artist.scrapbookImages}
 							isVisible={isHovered === artist.name}
 							index={index}
+							artistName={artist.name}
 						/>
 					)
 				})}
