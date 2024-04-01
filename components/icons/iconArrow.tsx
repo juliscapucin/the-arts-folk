@@ -15,12 +15,12 @@ export default function IconArrow({ classes }: IconArrowProps) {
 				<path
 					d='M1.00501 25.5474L14.4637 38.3723L27.9223 25.5474'
 					stroke='black'
-					stroke-width='0.910912'
+					strokeWidth='0.910912'
 				/>
 				<path
 					d='M14.4637 0.281792V37.9342'
 					stroke='black'
-					stroke-width='0.910912'
+					strokeWidth='0.910912'
 				/>
 			</svg>
 		</div>

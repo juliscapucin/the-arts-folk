@@ -1,4 +1,5 @@
 import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 interface LoopConfig {
 	onChange?: any
@@ -223,6 +224,7 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 	populateTimeline()
 	populateOffsets()
 	customAnimations()
+
 	window.addEventListener("resize", () => refresh(true))
 	function toIndex(index: number, vars: any) {
 		vars = clone(vars)
@@ -314,5 +316,6 @@ export function infiniteVerticalLoop(items: HTMLElement[], config: LoopConfig) {
 	}
 	tl.closestIndex(true)
 	onChange && onChange(items[curIndex], curIndex)
+
 	return tl
 }

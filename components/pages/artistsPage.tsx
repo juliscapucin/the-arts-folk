@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 import { ArtistOverlay } from "@/components"
 import { IconScroll } from "@/components/icons"
@@ -21,7 +22,8 @@ type ArtistsPageProps = {
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const sectionRef = useRef<HTMLDivElement>(null)
-	let ctx = gsap.context(() => {})
+	const containerRef = useRef<HTMLDivElement>(null)
+	let mm = gsap.matchMedia()
 
 	const handleMouseEnter = (name: string) => {
 		setIsHovered(name)
@@ -31,81 +33,108 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	const createLoop = () => {
+	const createScrollLoop = (media: boolean) => {
 		if (!sectionRef.current) return
 		gsap.registerPlugin(Observer)
 
-		ctx.add(() => {
-			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
-			// Create an infinite vertical loop
+		const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 
-			const loop = infiniteVerticalLoop(items, {
-				repeat: -1,
-				draggable: true,
-				speed: 0,
-				inertia: true,
-				paused: false,
+		// Create an infinite vertical loop
+		const loop = infiniteVerticalLoop(items, {
+			repeat: -1,
+			draggable: true,
+			speed: 0,
+			inertia: true,
+			paused: false,
+		})
+
+		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 0.5 seconds (or whatever)
+		let slow = gsap.to(loop, { timeScale: 0, duration: 2 })
+		// make the loop stopped initially.
+		loop.timeScale(0)
+
+		const getViewportPosition = (element: HTMLElement) => {
+			const rect = element.getBoundingClientRect()
+			const viewportHeight =
+				window.innerHeight || document.documentElement.clientHeight
+			const elementTop = rect.top
+			const elementBottom = rect.bottom
+			const screenMiddle = viewportHeight / 2
+			return {
+				isMiddle:
+					Math.abs(elementTop) < screenMiddle &&
+					Math.abs(elementBottom) > screenMiddle,
+			}
+		}
+
+		loop.eventCallback("onUpdate", () => {
+			items.forEach((item, i) => {
+				const position = getViewportPosition(item)
+				console.log(`Item ${i} position:`, position.isMiddle)
+
+				position.isMiddle &&
+					item.dataset.name &&
+					setIsHovered(item.dataset.name)
 			})
-			// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 0.5 seconds (or whatever)
-			let slow = gsap.to(loop, { timeScale: 0, duration: 2 })
-			// make the loop stopped initially.
-			loop.timeScale(0)
+		})
 
-			Observer.create({
-				target: sectionRef.current,
-				type: "pointer,touch,wheel",
-				wheelSpeed: -1,
-				// onChange: (self) => {
-				// 	loop.timeScale(
-				// 		Math.abs(self.deltaX) > Math.abs(self.deltaY)
-				// 			? -self.deltaX
-				// 			: -self.deltaY
-				// 	) // whichever direction is bigger
-				// 	slow.invalidate().restart() // now decelerate
-				// },
-				onChange: (self) => {
-					let calculatedTimeScale =
-						Math.abs(self.deltaX) > Math.abs(self.deltaY)
-							? -self.deltaX
-							: -self.deltaY
+		Observer.create({
+			target: sectionRef.current,
+			type: "pointer,touch,wheel",
+			wheelSpeed: -1,
+			onChange: (self) => {
+				let calculatedTimeScale =
+					Math.abs(self.deltaX) > Math.abs(self.deltaY)
+						? -self.deltaX
+						: -self.deltaY
 
-					const MIN_TIME_SCALE = 0
-					const MAX_TIME_SCALE = calculatedTimeScale > 0 ? 10 : -10
+				const MIN_TIME_SCALE = 0
+				const MAX_TIME_SCALE = calculatedTimeScale > 0 ? 10 : -10
 
-					let desiredTimeScale = Math.min(
-						Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-						MAX_TIME_SCALE
-					)
+				let desiredTimeScale = Math.min(
+					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+					MAX_TIME_SCALE
+				)
 
-					// Set the loop's timeScale to the desired value
-					loop.timeScale(desiredTimeScale)
-					slow.invalidate().restart() // now decelerate
-				},
-			})
-		}, sectionRef.current)
+				// Set the loop's timeScale to the desired value
+				loop.timeScale(desiredTimeScale)
+				slow.invalidate().restart() // now decelerate
+			},
+		})
 	}
 
 	useLayoutEffect(() => {
-		if (!sectionRef.current) return
+		if (!sectionRef.current || !containerRef.current) return
 
-		ctx.add(() => {
-			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
-			gsap.from(items, {
-				yPercent: -100,
-				opacity: 0,
-				stagger: 0.07,
-				duration: 0.5,
-				onComplete: () => {
-					createLoop()
-				},
-			})
-		}, sectionRef.current)
+		gsap.registerPlugin(ScrollTrigger)
 
-		return () => ctx.revert()
+		mm.add(
+			{ isMobile: "(max-width: 800px)", isDesktop: "(min-width: 801px)" },
+			(context) => {
+				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
+				let isMobile = context.conditions?.isMobile ?? false
+
+				gsap.from(items, {
+					yPercent: -100,
+					opacity: 0,
+					stagger: 0.07,
+					duration: 0.5,
+					onComplete: () => {
+						createScrollLoop(isMobile)
+					},
+				})
+			},
+			containerRef.current
+		)
+
+		return () => mm.revert()
 	}, [])
 
 	return (
-		<Container classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'>
+		<Container
+			ref={containerRef}
+			classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+		>
 			{/* Artist Overlay */}
 			{artists.map((artist, index) => {
 				return (
@@ -127,7 +156,11 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			<section ref={sectionRef} className='w-full text-center'>
 				{artists.map((artist) => {
 					return (
-						<div className='gsap-scroll-item text-center' key={artist.name}>
+						<div
+							className='gsap-scroll-item text-center'
+							key={artist.name}
+							data-name={artist.name}
+						>
 							<a
 								href={artist.artistWebsite ? artist.artistWebsite : "#"}
 								target='_blank'
