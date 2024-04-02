@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 
 import gsap from "gsap"
@@ -22,6 +22,7 @@ type ArtistsPageProps = {
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
+	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 	let mm = gsap.matchMedia()
@@ -139,6 +140,24 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			mm.revert()
 		}
 	}, [])
+
+	// Reload the page on window resize
+	useEffect(() => {
+		function handleResize() {
+			resizeTimeout.current && clearTimeout(resizeTimeout.current) // Clear previous timeout
+
+			resizeTimeout.current = setTimeout(() => {
+				window.location.reload()
+				console.log("reload")
+			}, 500)
+		}
+
+		window.addEventListener("resize", handleResize)
+
+		return () => {
+			window.removeEventListener("resize", handleResize)
+		}
+	}, [resizeTimeout])
 
 	return (
 		<>
