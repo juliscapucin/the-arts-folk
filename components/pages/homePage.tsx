@@ -1,7 +1,10 @@
 "use client"
 
+import { Suspense } from "react"
+
 import { Showreel } from "@/components"
 import { Container } from "@/components/ui"
+
 import type { CloudinaryImage } from "@/types"
 
 type HomePageProps = {
@@ -11,7 +14,9 @@ type HomePageProps = {
 export default function HomePage({ showreelImages }: HomePageProps) {
 	return (
 		<Container hasPadding={false}>
-			<Showreel {...{ showreelImages }} />
+			<Suspense>
+				<Showreel {...{ showreelImages }} />
+			</Suspense>
 		</Container>
 	)
 }

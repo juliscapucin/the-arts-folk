@@ -18,6 +18,7 @@ export default function ButtonLogo({ handleClick }: ButtonLogoProps) {
 				<button
 					className='scale-50 lg:scale-75 origin-left min-w-[50%] z-80'
 					onClick={pathname === "/" ? undefined : handleClick}
+					aria-label='Home'
 				>
 					{pathname !== "/" && <Logo />}
 				</button>

@@ -22,7 +22,7 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 					className='text-titleLarge'
 					rel='noopener noreferrer'
 				>
-					<Heading tag='h4' variant='body'>
+					<Heading tag='h2' variant='body'>
 						{name}
 					</Heading>
 				</a>
