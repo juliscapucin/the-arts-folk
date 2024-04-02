@@ -50,10 +50,12 @@ export default function ArtistOverlay({
 		<div
 			className={`flex ${
 				index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-			} fixed top-[--header-height-desktop] left-auto w-full pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500`}
+			} fixed top-[--header-height-desktop] left-auto w-full py-8 pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 z-80 mix-blend-multiply ${
+				isVisible ? "" : "opacity-0"
+			}`}
 		>
 			{/* LEFT */}
-			<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-4'>
+			<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-2 md:gap-4'>
 				<div className='relative flex flex-col lg:flex-row w-full h-full lg:h-1/2 gap-4'>
 					<ArtistOverlayImage
 						url={images[0].url}

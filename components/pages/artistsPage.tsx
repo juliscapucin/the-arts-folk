@@ -186,10 +186,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					)
 				})}
 
+				{/* Gradients */}
+				<div
+					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-16 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
+				></div>
+				<div
+					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent z-50`}
+				></div>
+
 				{/* Artists Menu */}
 				<section
 					ref={sectionRef}
-					className='w-full text-center space-y-16 lg:space-y-2 py-8 lg:py-1'
+					className='w-full text-center space-y-16 lg:space-y-3 pt-16 lg:pt-6'
 				>
 					{artists.map((artist) => {
 						return (
