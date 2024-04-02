@@ -88,7 +88,7 @@
 	}
 
 	.custom-rich-text p {
-		@apply font-text font-extralight text-bodySmall lg:text-bodyLarge;
+		@apply font-text font-extralight text-bodySmall lg:text-bodyLarge mb-0;
 	}
 
 	.custom-rich-text h2 {
@@ -102,6 +102,10 @@
 
 	.custom-rich-text a {
 		@apply font-normal;
+	}
+
+	p {
+		@apply mb-0;
 	}
 }
 

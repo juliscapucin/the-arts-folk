@@ -1,59 +1,29 @@
 "use client"
 
-import { useLayoutEffect, useRef } from "react"
-import { usePathname, useRouter } from "next/navigation"
-
-import gsap from "gsap"
-
-import { PageTransition } from "@/components"
 import { ButtonLogo } from "@/components/buttons"
 import { NavbarLink } from "@/components/ui"
 
 import type { NavLink } from "@/types"
+import { usePathname } from "next/navigation"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
+	transitionOnClick: (link: NavLink) => void
 }
 
-export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
+export default function NavbarDesktop({
+	navLinks,
+	transitionOnClick,
+}: NavbarDesktopProps) {
 	const pathname = usePathname()
-	const router = useRouter()
-	const pageTransitionRef = useRef(null)
-	let ctx = gsap.context(() => {})
-
-	// On page Exit
-	const transitionOnClick = (link: any) => {
-		ctx.add(() => {
-			gsap.set(pageTransitionRef.current, { yPercent: -100 })
-
-			gsap.to(pageTransitionRef.current, {
-				yPercent: 0,
-				duration: 0.3,
-				ease: "linear",
-				onComplete: () => {
-					router.push(`/${link.slug}`)
-				},
-			})
-		})
-	}
-
-	// On page Enter
-	useLayoutEffect(() => {
-		if (!pageTransitionRef.current) return
-
-		ctx.add(() => {
-			gsap.to(pageTransitionRef.current, {
-				yPercent: 100,
-				duration: 0.5,
-				ease: "linear",
-			})
-		})
-	}, [pathname])
 
 	return (
 		<>
-			<ButtonLogo handleClick={() => transitionOnClick({ slug: "/" })} />
-			<PageTransition ref={pageTransitionRef} />
+			<ButtonLogo
+				handleClick={() =>
+					transitionOnClick({ slug: "/", title: "Home", order: 1 })
+				}
+			/>
 			{navLinks && (
 				<div className='hidden lg:flex z-150'>
 					{/* Menu links */}

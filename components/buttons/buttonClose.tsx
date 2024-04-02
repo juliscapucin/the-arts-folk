@@ -3,7 +3,7 @@ import { MouseEventHandler } from "react"
 interface ButtonCloseProps {
 	action: MouseEventHandler<HTMLButtonElement>
 	classes?: string
-	color?: "primary" | "secondary"
+	color?: "primary" | "secondary" | "transparent"
 }
 
 export default function ButtonClose({
@@ -20,13 +20,16 @@ export default function ButtonClose({
 		case "secondary":
 			bgColor = "bg-secondary"
 			break
+		case "transparent":
+			bgColor = "bg-transparent"
+			break
 		default:
 			bgColor = "bg-secondary"
 			break
 	}
 	return (
 		<button
-			className={`hover:opacity-50 transition-all ${classes}`}
+			className={`hover:opacity-50 transition-all duration-500 ${classes}`}
 			onClick={action}
 			aria-label='close cookie window'
 		>

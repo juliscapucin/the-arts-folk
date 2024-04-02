@@ -1,22 +1,62 @@
+"use client"
+
+import { useLayoutEffect, useRef } from "react"
+import { usePathname, useRouter } from "next/navigation"
+
+import gsap from "gsap"
+
+import { PageTransition } from "@/components"
 import { NavbarDesktop, NavbarMobile } from "@/components/ui"
-import type { NavLink } from "@/types"
+import { NavLink } from "@/types"
 
-import { getHeaderNavLinks } from "@/sanity/sanity-queries"
+type HeaderProps = {
+	navLinks: NavLink[]
+}
 
-const fallbackNavLinks = [
-	{ title: "Artists", slug: "artists", order: 1 },
-	{ title: "Info", slug: "info", order: 2 },
-]
+export default function Header({ navLinks }: HeaderProps) {
+	const pathname = usePathname()
+	const router = useRouter()
+	const pageTransitionRef = useRef(null)
+	let ctx = gsap.context(() => {})
 
-export default async function Header() {
-	let navLinks = await getHeaderNavLinks()
+	// On page Exit
+	const transitionOnClick = (link: any) => {
+		ctx.add(() => {
+			gsap.set(pageTransitionRef.current, { yPercent: -100 })
 
-	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
+			gsap.to(pageTransitionRef.current, {
+				yPercent: 0,
+				duration: 0.3,
+				ease: "linear",
+				onComplete: () => {
+					router.push(`/${link.slug}`)
+				},
+			})
+		})
+	}
+
+	// On page Enter
+	useLayoutEffect(() => {
+		if (!pageTransitionRef.current) return
+
+		// gsap.set(pageTransitionRef.current, { yPercent: 0 })
+
+		ctx.add(() => {
+			gsap.to(pageTransitionRef.current, {
+				yPercent: 100,
+				duration: 0.4,
+				ease: "linear",
+			})
+		})
+	}, [pathname])
 
 	return (
-		<header className='max-w-screen pt-2 mx-[--margin-mobile] lg:mx-[--margin-desktop] flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
-			<NavbarDesktop navLinks={navLinks} />
-			<NavbarMobile navLinks={navLinks} />
-		</header>
+		<>
+			<PageTransition ref={pageTransitionRef} />
+			<header className='max-w-screen pt-2 mx-[--margin-mobile] lg:mx-[--margin-desktop] flex justify-between items-end h-[--header-height-mobile] lg:h-[--header-height-desktop] bg-white'>
+				<NavbarDesktop {...{ navLinks, transitionOnClick }} />
+				<NavbarMobile navLinks={navLinks} />
+			</header>
+		</>
 	)
 }

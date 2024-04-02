@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 
 import gsap from "gsap"
@@ -22,6 +22,7 @@ type ArtistsPageProps = {
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
+	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 	let mm = gsap.matchMedia()
@@ -67,11 +68,11 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const MIN_TIME_SCALE = 0
 				const MAX_TIME_SCALE = isMobile
 					? calculatedTimeScale > 0
-						? 5
-						: -5
+						? 3
+						: -3
 					: calculatedTimeScale > 0
-					? 10
-					: -10
+					? 8
+					: -8
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
@@ -135,8 +136,28 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			containerRef.current
 		)
 
-		return () => mm.revert()
+		return () => {
+			mm.revert()
+		}
 	}, [])
+
+	// Reload the page on window resize
+	useEffect(() => {
+		function handleResize() {
+			resizeTimeout.current && clearTimeout(resizeTimeout.current) // Clear previous timeout
+
+			resizeTimeout.current = setTimeout(() => {
+				window.location.reload()
+				console.log("reload")
+			}, 500)
+		}
+
+		window.addEventListener("resize", handleResize)
+
+		return () => {
+			window.removeEventListener("resize", handleResize)
+		}
+	}, [resizeTimeout])
 
 	return (
 		<>
@@ -166,7 +187,10 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				})}
 
 				{/* Artists Menu */}
-				<section ref={sectionRef} className='w-full text-center'>
+				<section
+					ref={sectionRef}
+					className='w-full text-center space-y-16 lg:space-y-2 py-8 lg:py-1'
+				>
 					{artists.map((artist) => {
 						return (
 							<div

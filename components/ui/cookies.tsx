@@ -40,12 +40,14 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 		const isOpen = !isOverlayOpen
 
+		setIsOverlayOpen(isOpen)
+
 		let ctx = gsap.context(() => {
 			gsap.to(overlayRef.current, {
-				yPercent: isOpen ? 0 : 100,
-				duration: 0.5,
+				yPercent: isOpen ? 0 : 101,
+				duration: 0.4,
 				ease: "power2.out",
-				onComplete: () => setIsOverlayOpen(isOpen),
+				// onComplete: () => setIsOverlayOpen(isOpen),
 			})
 		}, overlayRef)
 
@@ -92,7 +94,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 					{/* Cookie button */}
 					<Container
 						classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
-						bgColor={isOverlayOpen ? "bg-primary/80" : "transparent"}
+						bgColor={isOverlayOpen ? "md:bg-primary/80" : "transparent"}
 						isDiv={true}
 						hasPadding={false}
 					>
@@ -122,7 +124,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes={`absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip ${
+						classes={`absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-clip z-80 ${
 							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
 						}`}
 						isDiv={true}
@@ -130,22 +132,34 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						bgColor='transparent'
 					>
 						<ButtonClose
-							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-20 max-w-desktop mt-4 flex justify-end z-100 ${
-								isOverlayOpen ? "opacity-100" : "opacity-0"
-							}`}
+							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-12 lg:pr-20 max-w-desktop mt-4 flex justify-end z-100`}
 							action={toggleOverlay}
-							color='primary'
+							color={isOverlayOpen ? "primary" : "transparent"}
 						/>
+
+						{/* Gradients */}
+						<div
+							className={`absolute top-0 right-2 w-[98%] md:w-[74%] lg:w-[39%] h-16 ml-auto bg-gradient-to-b from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
+								isOverlayOpen
+									? "transition-opacity duration-300 delay-300"
+									: "opacity-0"
+							}`}
+						></div>
+						<div
+							className={`absolute bottom-0 right-2 w-[98%] md:w-[74%] lg:w-[39%] h-16 ml-auto bg-gradient-to-t from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
+								isOverlayOpen ? "" : "opacity-0"
+							}`}
+						></div>
 
 						<div
 							ref={overlayRef}
-							className='w-2/5 ml-auto bg-secondary text-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
+							className='w-full md:w-3/4 lg:w-2/5 ml-auto bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 						>
-							<div className='custom-rich-text px-12'>
+							<div className='custom-rich-text px-4 lg:px-12 pb-12'>
 								<Heading
 									tag='h1'
 									variant='headline'
-									classes='mb-16 mt-12 lg:mt-16'
+									classes='mb-16 mt-24 lg:mt-16'
 								>
 									{cookieData.title}
 								</Heading>

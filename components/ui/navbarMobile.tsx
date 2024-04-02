@@ -17,8 +17,8 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 	const router = useRouter()
 
 	const transitionOnClick = (link: NavLink) => {
-		toggleMobileMenu()
 		link.slug && router.push(link.slug)
+		toggleMobileMenu()
 	}
 
 	const toggleMobileMenu = () => {
@@ -36,7 +36,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 
 					{/* Mobile Menu */}
 					<aside
-						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform duration-300 z-80 overflow-clip ${
+						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform duration-300 delay-200 z-80 overflow-clip ${
 							isOpen ? "" : "-translate-y-full"
 						}`}
 					>
