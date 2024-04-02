@@ -25,7 +25,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 	// Cookie button
 	useLayoutEffect(() => {
 		if (!cookieRef.current || cookie === "true") return
-		gsap.set(overlayRef.current, { yPercent: 101 })
+		gsap.set(overlayRef.current, { yPercent: 120 })
 		gsap.to(cookieRef.current, {
 			xPercent: -100,
 			duration: 0.2,
@@ -44,7 +44,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 		let ctx = gsap.context(() => {
 			gsap.to(overlayRef.current, {
-				yPercent: isOpen ? 0 : 101,
+				yPercent: isOpen ? 0 : 120,
 				duration: 0.4,
 				ease: "power2.out",
 				// onComplete: () => setIsOverlayOpen(isOpen),
