@@ -15,7 +15,7 @@ const Logo = forwardRef<SVGSVGElement, LogoProps>(
 		return (
 			<svg
 				ref={ref}
-				className={`mix-blend-difference ${classes}`}
+				className={`${classes ? classes : ""}`}
 				width='369'
 				height='58'
 				viewBox='0 0 369 58'

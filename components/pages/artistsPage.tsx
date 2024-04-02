@@ -67,11 +67,11 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const MIN_TIME_SCALE = 0
 				const MAX_TIME_SCALE = isMobile
 					? calculatedTimeScale > 0
-						? 5
-						: -5
+						? 3
+						: -3
 					: calculatedTimeScale > 0
-					? 10
-					: -10
+					? 8
+					: -8
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
@@ -135,7 +135,9 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			containerRef.current
 		)
 
-		return () => mm.revert()
+		return () => {
+			mm.revert()
+		}
 	}, [])
 
 	return (
@@ -166,7 +168,10 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				})}
 
 				{/* Artists Menu */}
-				<section ref={sectionRef} className='w-full text-center'>
+				<section
+					ref={sectionRef}
+					className='w-full text-center space-y-16 lg:space-y-2 py-8 lg:py-1'
+				>
 					{artists.map((artist) => {
 						return (
 							<div

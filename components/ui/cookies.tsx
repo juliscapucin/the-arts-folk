@@ -42,7 +42,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 		let ctx = gsap.context(() => {
 			gsap.to(overlayRef.current, {
-				yPercent: isOpen ? 0 : 100,
+				yPercent: isOpen ? -90 : 100,
 				duration: 0.5,
 				ease: "power2.out",
 				onComplete: () => setIsOverlayOpen(isOpen),
@@ -122,7 +122,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes={`absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 overflow-clip ${
+						classes={`absolute top-[--container-height-mobile] lg:top-[--header-height-desktop] left-0 h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] z-80 ${
 							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
 						}`}
 						isDiv={true}
@@ -139,7 +139,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 						<div
 							ref={overlayRef}
-							className='w-2/5 ml-auto bg-secondary text-primary h-[--container-height-mobile] lg:h-[--container-height-desktop] overflow-y-scroll'
+							className='w-full lg:w-2/5 ml-auto bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 						>
 							<div className='custom-rich-text px-12'>
 								<Heading
