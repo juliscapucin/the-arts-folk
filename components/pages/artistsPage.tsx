@@ -68,8 +68,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const MIN_TIME_SCALE = 0
 				const MAX_TIME_SCALE = isMobile
 					? calculatedTimeScale > 0
-						? 3
-						: -3
+						? 5
+						: -5
 					: calculatedTimeScale > 0
 					? 8
 					: -8

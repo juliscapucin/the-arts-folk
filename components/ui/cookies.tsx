@@ -25,7 +25,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 	// Cookie button
 	useLayoutEffect(() => {
 		if (!cookieRef.current || cookie === "true") return
-		gsap.set(overlayRef.current, { yPercent: 100 })
+		gsap.set(overlayRef.current, { yPercent: 101 })
 		gsap.to(cookieRef.current, {
 			xPercent: -100,
 			duration: 0.2,
@@ -151,6 +151,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 							}`}
 						></div>
 
+						{/* Overlay Content */}
 						<div
 							ref={overlayRef}
 							className='w-full md:w-3/4 lg:w-2/5 ml-auto bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
