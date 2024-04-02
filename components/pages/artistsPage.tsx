@@ -212,8 +212,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 									className={`gsap-scroll-button w-fit inline-block p-8 h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 										isHovered === artist.name
 											? ""
-											: isHovered
-											? "opacity-10 -z-5"
+											: isHovered // If another artist is hovered at all
+											? "opacity-10 -z-5 pointer-events-none lg:pointer-events-auto"
 											: ""
 									}`}
 									key={artist.name}
