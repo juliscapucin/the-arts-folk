@@ -56,7 +56,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 								}`}
 								src={image.url}
 								alt='photo'
-								sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
+								sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw'
 								quality={50}
 								fill
 								priority={index === 0 || index === 1}

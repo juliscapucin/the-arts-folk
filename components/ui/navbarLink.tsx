@@ -16,7 +16,7 @@ export default function navbarLink({
 	return (
 		<>
 			{isActive ? (
-				<span className='uppercase font-text font-extralight text-bodyLarge tracking-wider text-faded-30 select-none'>
+				<span className='uppercase font-text font-extralight text-bodyLarge tracking-wider text-faded-50 select-none'>
 					{link.title}
 				</span>
 			) : (
