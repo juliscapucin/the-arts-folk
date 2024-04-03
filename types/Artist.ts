@@ -1,9 +1,9 @@
-import type { CloudinaryImage } from "@/types"
+import type { ScrapbookImage } from "@/types"
 
 export type Artist = {
 	name: string
 	slug: string
 	description: string
-	scrapbookImages: CloudinaryImage[]
+	scrapbookImages: ScrapbookImage[]
 	artistWebsite: string
 }

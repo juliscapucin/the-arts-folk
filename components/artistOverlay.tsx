@@ -1,9 +1,13 @@
+"use client"
+
 import { CldImage } from "next-cloudinary"
 
-import type { CloudinaryImage } from "@/types"
+import ReactPlayer from "react-player/vimeo"
+
+import type { ScrapbookImage } from "@/types"
 
 type ArtistOverlayProps = {
-	images: CloudinaryImage[]
+	images: ScrapbookImage[]
 	isVisible: boolean
 	index: number
 	artistName: string
@@ -28,14 +32,27 @@ const ArtistOverlayImage = ({
 				isVisible ? "" : "opacity-0"
 			}`}
 		>
-			<CldImage
-				className={`object-contain p-4`}
-				src={url}
-				alt={`Photo by ${artistName}`}
-				sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'
-				quality={50}
-				fill
-			/>
+			{url.includes("vimeo") ? (
+				<ReactPlayer
+					url={url}
+					playing
+					playsinline
+					width='100%'
+					height='100%'
+					controls={false}
+					muted={true}
+					loop={true}
+				/>
+			) : (
+				<CldImage
+					className={`object-contain p-4`}
+					src={url}
+					alt={`Photo by ${artistName}`}
+					sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'
+					quality={50}
+					fill
+				/>
+			)}
 		</div>
 	)
 }
@@ -50,7 +67,7 @@ export default function ArtistOverlay({
 		<div
 			className={`flex ${
 				index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-			} fixed top-[--header-height-desktop] left-auto w-full py-8 pr-8 lg:p-8 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 z-80 mix-blend-multiply ${
+			} fixed top-[--header-height-desktop] left-auto w-full py-8 pr-8 lg:pr-20 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 z-80 mix-blend-multiply ${
 				isVisible ? "" : "opacity-0"
 			}`}
 		>

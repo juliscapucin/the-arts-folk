@@ -1,3 +1,5 @@
+import { Rule } from "sanity"
+
 const artistSchema = {
 	name: "artist",
 	title: "Artists",
@@ -31,10 +33,28 @@ const artistSchema = {
 			name: "scrapbookImages",
 			title: "Scrapbook Images",
 			type: "array",
-			description: "These images are served from Cloudinary",
+			description: "These images are served from Cloudinary or Vimeo",
 			of: [
 				{
 					type: "cloudinary.asset",
+				},
+				{
+					type: "object",
+					name: "vimeoUrl",
+					title: "Vimeo Video URL",
+					fields: [
+						{
+							name: "url",
+							title: "URL",
+							type: "url",
+							description: "Enter the Vimeo video URL",
+							validation: (Rule: Rule) =>
+								Rule.uri({
+									scheme: ["https"],
+									allowRelative: false,
+								}),
+						},
+					],
 				},
 			],
 		},
