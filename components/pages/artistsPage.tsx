@@ -123,6 +123,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
 
+				// Artists names entrance animation
 				gsap.from(items, {
 					yPercent: -100,
 					opacity: 0,
