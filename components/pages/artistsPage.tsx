@@ -44,21 +44,17 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		// Create an infinite vertical loop
 		const loop = infiniteVerticalLoop(items, {
 			repeat: -1,
-			draggable: false,
-			speed: 0,
-			inertia: true,
-			paused: false,
 		})
 
-		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 0.5 seconds (or whatever)
-		let slow = gsap.to(loop, { timeScale: 0, duration: 3 })
+		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
+		let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
 		// make the loop stopped initially.
 		loop.timeScale(0)
 
 		Observer.create({
 			target: sectionRef.current,
 			type: "touch,scroll,wheel",
-			wheelSpeed: -0.5,
+			wheelSpeed: -1,
 			onChange: (self) => {
 				let calculatedTimeScale =
 					Math.abs(self.deltaX) > Math.abs(self.deltaY)

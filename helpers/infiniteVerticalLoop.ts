@@ -1,5 +1,4 @@
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 interface LoopConfig {
 	onChange?: any
@@ -7,12 +6,12 @@ interface LoopConfig {
 	paddingBottom?: string
 	reversed?: any
 	snap?: number | number[] | boolean
-	speed: number
+	speed?: number
 	repeat: number
-	paused: boolean
+	paused?: boolean
 	center?: boolean
-	draggable: boolean
-	inertia: boolean
+	draggable?: boolean
+	inertia?: boolean
 	enterAnimation?: (
 		item: any,
 		maxDuration: number,
