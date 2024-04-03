@@ -44,7 +44,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		// Create an infinite vertical loop
 		const loop = infiniteVerticalLoop(items, {
 			repeat: -1,
-			draggable: true,
+			draggable: false,
 			speed: 0,
 			inertia: true,
 			paused: false,
@@ -57,7 +57,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 		Observer.create({
 			target: sectionRef.current,
-			type: "pointer,touch,wheel",
+			type: "scroll,wheel",
 			wheelSpeed: -0.5,
 			onChange: (self) => {
 				let calculatedTimeScale =
@@ -68,8 +68,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const MIN_TIME_SCALE = 0
 				const MAX_TIME_SCALE = isMobile
 					? calculatedTimeScale > 0
-						? 5
-						: -5
+						? 3
+						: -3
 					: calculatedTimeScale > 0
 					? 5
 					: -5
