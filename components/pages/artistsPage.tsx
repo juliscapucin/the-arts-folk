@@ -1,6 +1,12 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react"
 import Link from "next/link"
 
 import gsap from "gsap"
@@ -35,7 +41,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	const createScrollLoop = (isMobile: boolean) => {
+	const createScrollLoop = useCallback((isMobile: boolean) => {
 		if (!sectionRef.current) return
 		gsap.registerPlugin(Observer)
 
@@ -53,13 +59,10 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 		Observer.create({
 			target: sectionRef.current,
-			type: "touch,scroll,wheel",
+			type: "touch,wheel",
 			wheelSpeed: -1,
 			onChange: (self) => {
-				let calculatedTimeScale =
-					Math.abs(self.deltaX) > Math.abs(self.deltaY)
-						? -self.deltaX
-						: -self.deltaY
+				let calculatedTimeScale = -self.deltaY
 
 				const MIN_TIME_SCALE = 0
 				const MAX_TIME_SCALE = isMobile
@@ -79,7 +82,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				loop.timeScale(desiredTimeScale)
 				slow.invalidate().restart() // now decelerate
 
-				setIsScrollTipVisible(false)
+				isScrollTipVisible && setIsScrollTipVisible(false)
 			},
 		})
 
@@ -108,7 +111,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				})
 			})
 		}
-	}
+	}, [])
 
 	useLayoutEffect(() => {
 		if (!sectionRef.current || !containerRef.current) return
@@ -194,7 +197,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				{/* Artists Menu */}
 				<section
 					ref={sectionRef}
-					className='w-full text-center space-y-16 lg:space-y-3 pt-16 lg:pt-6'
+					className='w-full text-center space-y-24 lg:space-y-16 pt-16 lg:pt-6'
 				>
 					{artists.map((artist) => {
 						return (
