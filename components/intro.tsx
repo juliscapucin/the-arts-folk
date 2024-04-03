@@ -11,9 +11,6 @@ import { GSAPQueries } from "@/utils"
 
 export default function Intro() {
 	const pathname = usePathname()
-
-	// if (pathname !== "/") return null
-
 	const containerRef = useRef<HTMLDivElement | null>(null)
 
 	useLayoutEffect(() => {
@@ -65,6 +62,8 @@ export default function Intro() {
 			mm.revert()
 		}
 	}, [])
+
+	if (pathname !== "/") return <div></div>
 
 	return (
 		<div

@@ -51,14 +51,14 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		})
 
 		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 0.5 seconds (or whatever)
-		let slow = gsap.to(loop, { timeScale: 0, duration: 2 })
+		let slow = gsap.to(loop, { timeScale: 0, duration: 3 })
 		// make the loop stopped initially.
 		loop.timeScale(0)
 
 		Observer.create({
 			target: sectionRef.current,
 			type: "pointer,touch,wheel",
-			wheelSpeed: -1,
+			wheelSpeed: -0.5,
 			onChange: (self) => {
 				let calculatedTimeScale =
 					Math.abs(self.deltaX) > Math.abs(self.deltaY)
@@ -71,8 +71,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 						? 5
 						: -5
 					: calculatedTimeScale > 0
-					? 8
-					: -8
+					? 5
+					: -5
 
 				let desiredTimeScale = Math.min(
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),

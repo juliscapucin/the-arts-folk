@@ -59,14 +59,14 @@ export default function ArtistOverlay({
 				<div className='relative flex flex-col lg:flex-row w-full h-full lg:h-1/2 gap-4'>
 					<ArtistOverlayImage
 						url={images[0].url}
-						classes='h-full self-end'
+						classes={`h-full self-end ${isVisible && "delay-200"}`}
 						isVisible={isVisible}
 						artistName={artistName}
 					/>
 
 					<ArtistOverlayImage
 						url={images[1].url}
-						classes='h-full lg:top-32 delay-75'
+						classes={`h-full lg:top-32 ${isVisible && "delay-300"}`}
 						isVisible={isVisible}
 						artistName={artistName}
 					/>
@@ -74,7 +74,7 @@ export default function ArtistOverlay({
 
 				<ArtistOverlayImage
 					url={images[2].url}
-					classes='h-1/2 delay-100'
+					classes={`h-1/2 ${isVisible && "delay-500"}`}
 					isVisible={isVisible}
 					artistName={artistName}
 				/>
@@ -84,14 +84,14 @@ export default function ArtistOverlay({
 			<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
 				<ArtistOverlayImage
 					url={images[3] ? images[3].url : images[0].url}
-					classes='h-1/2 delay-150'
+					classes={`h-1/2 ${isVisible && "delay-200"}`}
 					isVisible={isVisible}
 					artistName={artistName}
 				/>
 
 				<ArtistOverlayImage
 					url={images[4] ? images[4].url : images[1].url}
-					classes='h-1/2 self-end delay-200'
+					classes={`h-1/2 self-end ${isVisible && "delay-300"}`}
 					isVisible={isVisible}
 					artistName={artistName}
 				/>
