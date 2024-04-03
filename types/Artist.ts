@@ -1,6 +1,4 @@
-import type { CloudinaryImage } from "@/types"
-
-type ScrapbookImage = CloudinaryImage | { url: string }
+import type { ScrapbookImage } from "@/types"
 
 export type Artist = {
 	name: string
