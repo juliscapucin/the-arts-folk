@@ -44,7 +44,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		// Create an infinite vertical loop
 		const loop = infiniteVerticalLoop(items, {
 			repeat: -1,
-			draggable: true,
+			draggable: false,
 			speed: 0,
 			inertia: true,
 			paused: false,
