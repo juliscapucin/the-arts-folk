@@ -64,22 +64,22 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			onChange: (self) => {
 				let calculatedTimeScale = -self.deltaY
 
-				const MIN_TIME_SCALE = 0
-				const MAX_TIME_SCALE = isMobile
-					? calculatedTimeScale > 0
-						? 3
-						: -3
-					: calculatedTimeScale > 0
-					? 5
-					: -5
+				// const MIN_TIME_SCALE = 0
+				// const MAX_TIME_SCALE = isMobile
+				// 	? calculatedTimeScale > 0
+				// 		? 3
+				// 		: -3
+				// 	: calculatedTimeScale > 0
+				// 	? 5
+				// 	: -5
 
-				let desiredTimeScale = Math.min(
-					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-					MAX_TIME_SCALE
-				)
+				// let desiredTimeScale = Math.min(
+				// 	Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+				// 	MAX_TIME_SCALE
+				// )
 
 				// Set the loop's timeScale to the desired value
-				loop.timeScale(desiredTimeScale)
+				loop.timeScale(calculatedTimeScale)
 				slow.invalidate().restart() // now decelerate
 
 				isScrollTipVisible && setIsScrollTipVisible(false)
@@ -197,7 +197,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				{/* Artists Menu */}
 				<section
 					ref={sectionRef}
-					className='w-full text-center space-y-24 lg:space-y-16 pt-16 lg:pt-6'
+					className='w-full text-center space-y-24 lg:space-y-12 pt-24 lg:pt-12'
 				>
 					{artists.map((artist) => {
 						return (
