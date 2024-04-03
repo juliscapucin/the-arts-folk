@@ -79,8 +79,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					MAX_TIME_SCALE
 				)
 
-				console.log(desiredTimeScale)
-
 				// Set the loop's timeScale to the desired value
 				loop.timeScale(desiredTimeScale)
 				slow.invalidate().restart() // now decelerate

@@ -32,28 +32,27 @@ const ArtistOverlayImage = ({
 				isVisible ? "" : "opacity-0"
 			}`}
 		>
-			{url.includes("vimeo") ? (
-				// <ReactPlayer
-				// 	url={url}
-				// 	playing
-				// 	playsinline
-				// 	width='100%'
-				// 	height='100%'
-				// 	controls={false}
-				// 	muted={true}
-				// 	loop={true}
-				// />
-				<div>hi</div>
-			) : (
-				<CldImage
-					className={`object-contain p-4`}
-					src={url}
-					alt={`Photo by ${artistName}`}
-					sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'
-					quality={50}
-					fill
+			{/* {url.includes("vimeo") ? (
+				<ReactPlayer
+					url={url}
+					playing
+					playsinline
+					width='100%'
+					height='100%'
+					controls={false}
+					muted={true}
+					loop={true}
 				/>
-			)}
+			) : ( */}
+			<CldImage
+				className={`object-contain p-4`}
+				src={url}
+				alt={`Photo by ${artistName}`}
+				sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'
+				quality={50}
+				fill
+			/>
+			{/* )} */}
 		</div>
 	)
 }
@@ -101,14 +100,14 @@ export default function ArtistOverlay({
 			{/* RIGHT */}
 			<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
 				<ArtistOverlayImage
-					url={images[3] ? images[3].url : images[0].url}
+					url={images[3].url}
 					classes={`h-1/2 ${isVisible && "delay-200"}`}
 					isVisible={isVisible}
 					artistName={artistName}
 				/>
 
 				<ArtistOverlayImage
-					url={images[4] ? images[4].url : images[1].url}
+					url={images[4].url}
 					classes={`h-1/2 self-end ${isVisible && "delay-300"}`}
 					isVisible={isVisible}
 					artistName={artistName}
