@@ -43,24 +43,23 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center lg:scale-200 z-20'>
 				<Logo />
 			</div>
-			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto'>
+			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto overflow-clip'>
 				{showreelImages.map((image, index) => {
 					return (
-						<div
-							className='absolute w-full h-full z-10'
-							key={`showreel-${index}`}
-						>
+						<div className={`absolute w-full h-full`} key={`showreel-${index}`}>
 							<CldImage
-								className={`object-cover md:object-contain bg-primary transition-opacity duration-200 ${
-									slideIndex === index ? "opacity-100" : "opacity-0"
+								className={`object-cover md:object-contain transition-opacity duration-300 ${
+									slideIndex === index ? "opacity-100 z-5" : "opacity-10 z-0"
 								}`}
 								src={image.url}
-								alt='photo'
+								alt='Showreel image'
 								sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw'
 								quality={50}
 								fill
-								priority={index === 0 || index === 1}
+								priority={index <= 9 ? true : false}
 							/>
+							{/* This was needed for LCP performance optimization */}
+							<div className={`absolute w-screen h-full bg-primary z-0`}></div>
 						</div>
 					)
 				})}

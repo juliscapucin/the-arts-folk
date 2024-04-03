@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
-import { getPage, getHeaderNavLinks } from "@/sanity/sanity-queries"
+import { getHeaderNavLinks } from "@/sanity/sanity-queries"
+export const revalidate = 300
 
 import "../globals.css"
-import { Cookies, Header, Footer } from "@/components/ui"
+import { Header, Footer } from "@/components/ui"
+import { CookiesServer } from "@/components/server"
 import { Intro } from "@/components"
 
 const fallbackNavLinks = [
@@ -15,7 +17,7 @@ const fallbackNavLinks = [
 export const metadata: Metadata = {
 	title: "The Arts Folk",
 	description:
-		"we represent a diverse network of collaborators and storytellers, image-makers & directors.",
+		"We represent a diverse network of collaborators and storytellers, image-makers & directors.",
 }
 
 // Load custom font //
@@ -26,6 +28,7 @@ const myFont = localFont({
 			path: "../../public/fonts/geometos-neue-extrabold.otf",
 		},
 	],
+	display: "swap",
 })
 
 export default async function RootLayout({
@@ -33,7 +36,6 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	const cookieData = await getPage("terms-and-privacy")
 	let navLinks = await getHeaderNavLinks()
 
 	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
@@ -47,7 +49,7 @@ export default async function RootLayout({
 				<Header navLinks={navLinks} />
 				{children}
 				<Footer />
-				<Cookies cookieData={cookieData} />
+				<CookiesServer />
 			</body>
 		</html>
 	)
