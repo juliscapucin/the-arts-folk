@@ -33,16 +33,17 @@ const ArtistOverlayImage = ({
 			}`}
 		>
 			{url.includes("vimeo") ? (
-				<ReactPlayer
-					url={url}
-					playing
-					playsinline
-					width='100%'
-					height='100%'
-					controls={false}
-					muted={true}
-					loop={true}
-				/>
+				// <ReactPlayer
+				// 	url={url}
+				// 	playing
+				// 	playsinline
+				// 	width='100%'
+				// 	height='100%'
+				// 	controls={false}
+				// 	muted={true}
+				// 	loop={true}
+				// />
+				<div>hi</div>
 			) : (
 				<CldImage
 					className={`object-contain p-4`}

@@ -68,8 +68,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const MIN_TIME_SCALE = 0
 				const MAX_TIME_SCALE = isMobile
 					? calculatedTimeScale > 0
-						? 3
-						: -3
+						? 1.5
+						: -1.5
 					: calculatedTimeScale > 0
 					? 5
 					: -5
@@ -78,6 +78,8 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
 					MAX_TIME_SCALE
 				)
+
+				console.log(desiredTimeScale)
 
 				// Set the loop's timeScale to the desired value
 				loop.timeScale(desiredTimeScale)
