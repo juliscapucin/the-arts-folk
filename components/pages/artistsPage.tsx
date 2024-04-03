@@ -28,6 +28,7 @@ type ArtistsPageProps = {
 export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
+	const [isScrolling, setIsScrolling] = useState(false)
 	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -57,35 +58,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		// make the loop stopped initially.
 		loop.timeScale(0)
 
-		Observer.create({
-			target: sectionRef.current,
-			type: "touch,wheel",
-			wheelSpeed: -1,
-			onChange: (self) => {
-				let calculatedTimeScale = -self.deltaY
-
-				// const MIN_TIME_SCALE = 0
-				// const MAX_TIME_SCALE = isMobile
-				// 	? calculatedTimeScale > 0
-				// 		? 3
-				// 		: -3
-				// 	: calculatedTimeScale > 0
-				// 	? 5
-				// 	: -5
-
-				// let desiredTimeScale = Math.min(
-				// 	Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-				// 	MAX_TIME_SCALE
-				// )
-
-				// Set the loop's timeScale to the desired value
-				loop.timeScale(calculatedTimeScale)
-				slow.invalidate().restart() // now decelerate
-
-				isScrollTipVisible && setIsScrollTipVisible(false)
-			},
-		})
-
+		// Check if the element is in the middle of the viewport
 		if (isMobile) {
 			const getViewportPosition = (element: HTMLElement) => {
 				const rect = element.getBoundingClientRect()
@@ -111,6 +84,46 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				})
 			})
 		}
+
+		// Create an observer to detect touch and wheel events
+		Observer.create({
+			target: sectionRef.current,
+			type: "pointer,touch,wheel",
+			wheelSpeed: -1,
+			onStop: (self) => {
+				console.log("stop")
+
+				setIsScrolling(false)
+			},
+			onChangeY: (self) => {
+				let calculatedTimeScale = -self.deltaY
+
+				setIsScrolling(true)
+
+				// console.log("on change")
+				// console.log(self.deltaY)
+
+				// const MIN_TIME_SCALE = 0
+				// const MAX_TIME_SCALE = isMobile
+				// 	? calculatedTimeScale > 0
+				// 		? 3
+				// 		: -3
+				// 	: calculatedTimeScale > 0
+				// 	? 5
+				// 	: -5
+
+				// let desiredTimeScale = Math.min(
+				// 	Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
+				// 	MAX_TIME_SCALE
+				// )
+
+				// Set the loop's timeScale to the desired value
+				loop.timeScale(calculatedTimeScale)
+				slow.invalidate().restart() // now decelerate
+
+				isScrollTipVisible && setIsScrollTipVisible(false)
+			},
+		})
 	}, [])
 
 	useLayoutEffect(() => {
@@ -179,7 +192,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 						<ArtistOverlay
 							key={`${artist.name}-overlay`}
 							images={artist.scrapbookImages}
-							isVisible={isHovered === artist.name}
+							isVisible={isHovered === artist.name && !isScrolling}
 							index={index}
 							artistName={artist.name}
 						/>
@@ -197,7 +210,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				{/* Artists Menu */}
 				<section
 					ref={sectionRef}
-					className='w-full text-center space-y-24 lg:space-y-12 pt-24 lg:pt-12'
+					className='w-full text-center space-y-12 pt-12'
 				>
 					{artists.map((artist) => {
 						return (
@@ -209,7 +222,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 								<a
 									href={artist.artistWebsite ? artist.artistWebsite : "#"}
 									target='_blank'
-									className={`gsap-scroll-button w-fit inline-block p-8 h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
+									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 										isHovered === artist.name
 											? ""
 											: isHovered // If another artist is hovered at all
