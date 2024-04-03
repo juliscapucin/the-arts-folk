@@ -57,7 +57,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 		Observer.create({
 			target: sectionRef.current,
-			type: "scroll,wheel",
+			type: "touch,scroll,wheel",
 			wheelSpeed: -0.5,
 			onChange: (self) => {
 				let calculatedTimeScale =
