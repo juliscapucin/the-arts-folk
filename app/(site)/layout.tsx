@@ -30,7 +30,6 @@ export async function generateMetadata() {
 		title: page.metadataTitle || metadataFallback.title,
 		description: page.metadataDescription || metadataFallback.description,
 		keywords: page.metadataKeywords || metadataFallback.keywords,
-		openGraph: metadataFallback.openGraph,
 	}
 }
 
