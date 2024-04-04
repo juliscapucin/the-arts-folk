@@ -93,7 +93,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 				<>
 					{/* Cookie button */}
 					<Container
-						classes='absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
+						classes='background-white absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
 						bgColor={isOverlayOpen ? "md:bg-primary/80" : "transparent"}
 						isDiv={true}
 						hasPadding={false}
@@ -124,7 +124,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes={`absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-clip z-80 ${
+						classes={`absolute w-full top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-clip z-80 ${
 							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
 						}`}
 						isDiv={true}
@@ -154,7 +154,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						{/* Overlay Content */}
 						<div
 							ref={overlayRef}
-							className='w-full md:w-3/4 lg:w-2/5 ml-auto bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+							className='w-full md:w-3/4 lg:w-2/5 ml-auto mr-0 bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 						>
 							<div className='custom-rich-text px-4 lg:px-12 pb-12'>
 								<Heading
