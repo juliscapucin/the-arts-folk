@@ -15,6 +15,12 @@ const pageSchema = {
 			type: "string",
 		},
 		{
+			name: "metadataKeywords",
+			title: "Metadata Keywords",
+			type: "array",
+			of: [{ type: "string" }],
+		},
+		{
 			name: "slug",
 			title: "Slug",
 			type: "slug",

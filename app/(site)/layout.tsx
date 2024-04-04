@@ -10,6 +10,7 @@ import { CookiesServer } from "@/components/server"
 import { Intro } from "@/components"
 
 import { getPage } from "@/sanity/sanity-queries"
+import { metadataFallback } from "@/utils"
 
 const fallbackNavLinks = [
 	{ title: "Artists", slug: "artists", order: 1 },
@@ -21,16 +22,13 @@ export async function generateMetadata() {
 	const page = await pageData
 
 	if (!page) {
-		return {
-			title: "The Arts Folk",
-			description:
-				"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
-		}
+		return metadataFallback
 	}
 
 	return {
-		title: page.metadataTitle,
-		description: page.metadataDescription,
+		title: page.metadataTitle || metadataFallback.title,
+		description: page.metadataDescription || metadataFallback.description,
+		keywords: page.metadataKeywords || metadataFallback.keywords,
 	}
 }
 

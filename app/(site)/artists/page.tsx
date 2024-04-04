@@ -2,20 +2,20 @@ import { ArtistsPage } from "@/components/pages"
 import { getArtists, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
+import { metadataFallback } from "@/utils"
+
 export async function generateMetadata() {
 	const pageData = getPage("artists")
 	const page = await pageData
 
 	if (!page) {
-		return {
-			title: "The Arts Folk",
-			description: "Photographic, Production & Casting Agency",
-		}
+		return metadataFallback
 	}
 
 	return {
-		title: page.metadataTitle,
-		description: page.metadataDescription,
+		title: page.metadataTitle || metadataFallback.title,
+		description: page.metadataDescription || metadataFallback.description,
+		keywords: page.metadataKeywords || metadataFallback.keywords,
 	}
 }
 

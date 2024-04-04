@@ -1,22 +1,22 @@
 import { notFound } from "next/navigation"
 
 import { InfoPage } from "@/components/pages"
-import { getInfoPage, getPage } from "@/sanity/sanity-queries"
+import { getInfoPage } from "@/sanity/sanity-queries"
+
+import { metadataFallback } from "@/utils"
 
 export async function generateMetadata() {
 	const pageData = getInfoPage()
 	const page = await pageData
 
 	if (!page) {
-		return {
-			title: "The Arts Folk",
-			description: "Photographic, Production & Casting Agency",
-		}
+		return metadataFallback
 	}
 
 	return {
-		title: page.metadataTitle,
-		description: page.metadataDescription,
+		title: page.metadataTitle || metadataFallback.title,
+		description: page.metadataDescription || metadataFallback.description,
+		keywords: page.metadataKeywords || metadataFallback.keywords,
 	}
 }
 
