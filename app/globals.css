@@ -88,16 +88,20 @@
 	}
 
 	.custom-rich-text p {
-		@apply font-text font-extralight text-bodySmall lg:text-bodyLarge mb-0;
+		@apply font-text font-extralight text-bodySmall lg:text-bodyLarge mb-8;
+	}
+
+	.custom-rich-text p:last-of-type {
+		@apply mb-0;
 	}
 
 	.custom-rich-text h2 {
-		@apply text-headlineLarge;
+		@apply text-titleSmall md:text-titleMedium lg:text-titleLarge;
 	}
 
 	.custom-rich-text h3,
 	.custom-rich-text h4 {
-		@apply text-titleLarge;
+		@apply text-bodySmall md:text-bodyMedium lg:text-bodyLarge;
 	}
 
 	.custom-rich-text a {
