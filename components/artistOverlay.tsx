@@ -48,8 +48,8 @@ const ArtistOverlayImage = ({
 				className={`object-contain p-4`}
 				src={url}
 				alt={`Photo by ${artistName}`}
-				sizes='(max-width: 768px) 50vw, (max-width: 1200px) 40vw, 40vw'
-				quality={50}
+				sizes='(max-width: 768px) 40vw, (max-width: 1200px) 20vw, 20vw'
+				quality={40}
 				fill
 			/>
 			{/* )} */}

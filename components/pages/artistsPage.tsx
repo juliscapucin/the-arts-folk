@@ -42,6 +42,20 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
+	const getViewportPosition = useCallback((element: HTMLElement) => {
+		const rect = element.getBoundingClientRect()
+		const viewportHeight =
+			window.innerHeight || document.documentElement.clientHeight
+		const elementTop = rect.top
+		const elementBottom = rect.bottom
+		const screenMiddle = viewportHeight / 2
+		return {
+			isMiddle:
+				Math.abs(elementTop) < screenMiddle &&
+				Math.abs(elementBottom) > screenMiddle,
+		}
+	}, [])
+
 	const createScrollLoop = useCallback((isMobile: boolean) => {
 		if (!sectionRef.current) return
 		gsap.registerPlugin(Observer)
@@ -58,45 +72,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		// make the loop stopped initially.
 		loop.timeScale(0)
 
-		// Check if the element is in the middle of the viewport
-		if (isMobile) {
-			const getViewportPosition = (element: HTMLElement) => {
-				const rect = element.getBoundingClientRect()
-				const viewportHeight =
-					window.innerHeight || document.documentElement.clientHeight
-				const elementTop = rect.top
-				const elementBottom = rect.bottom
-				const screenMiddle = viewportHeight / 2
-				return {
-					isMiddle:
-						Math.abs(elementTop) < screenMiddle &&
-						Math.abs(elementBottom) > screenMiddle,
-				}
-			}
-
-			loop.eventCallback("onUpdate", () => {
-				items.forEach((item, i) => {
-					const position = getViewportPosition(item)
-
-					position.isMiddle &&
-						item.dataset.name &&
-						setIsHovered(item.dataset.name)
-				})
-			})
-		}
-
 		// Create an observer to detect touch and wheel events
 		Observer.create({
 			target: sectionRef.current,
 			type: "pointer,touch,wheel",
 			wheelSpeed: -1,
-			onStop: (self) => {
-				console.log("stop")
-
+			onStop: () => {
 				setIsScrolling(false)
 			},
 			onChangeY: (self) => {
 				let calculatedTimeScale = -self.deltaY
+
+				console.log(self.velocityY)
 
 				setIsScrolling(true)
 
@@ -119,7 +106,21 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 				// Set the loop's timeScale to the desired value
 				loop.timeScale(calculatedTimeScale)
-				slow.invalidate().restart() // now decelerate
+
+				// Check if the element is in the middle of the viewport if the user is not scrolling fast
+				if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
+					loop.eventCallback("onUpdate", () => {
+						items.forEach((item) => {
+							const position = getViewportPosition(item)
+							position.isMiddle &&
+								item.dataset.name &&
+								setIsHovered(item.dataset.name)
+						})
+					})
+				}
+
+				// Decelerate
+				slow.invalidate().restart()
 
 				isScrollTipVisible && setIsScrollTipVisible(false)
 			},
@@ -135,12 +136,12 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
 
-				// Artists names entrance animation
+				// Artist names entrance animation
 				gsap.from(items, {
 					yPercent: -100,
 					opacity: 0,
 					stagger: 0.07,
-					duration: 0.5,
+					duration: 0.6,
 					onComplete: () => {
 						createScrollLoop(isMobile)
 					},
@@ -161,7 +162,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 			resizeTimeout.current = setTimeout(() => {
 				window.location.reload()
-				console.log("reload")
 			}, 500)
 		}
 
@@ -208,10 +208,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				></div>
 
 				{/* Artists Menu */}
-				<section
-					ref={sectionRef}
-					className='w-full text-center space-y-12 pt-12'
-				>
+				<section ref={sectionRef} className='w-full text-center space-y-8 pt-8'>
 					{artists.map((artist) => {
 						return (
 							<div
