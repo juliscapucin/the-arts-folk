@@ -9,7 +9,10 @@ export async function generateMetadata({ params: { slug } }: MetadataParams) {
 	const page = await pageData
 
 	if (!page) {
-		return { title: "Page Not Found", description: "Page not found" }
+		return {
+			title: "The Arts Folk",
+			description: "Photographic, Production & Casting Agency",
+		}
 	}
 
 	return {
