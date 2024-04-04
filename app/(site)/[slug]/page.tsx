@@ -5,7 +5,12 @@ import { getPage } from "@/sanity/sanity-queries"
 
 import { MetadataParams } from "@/types"
 
-export async function generateMetadata({ params: { slug } }: MetadataParams) {
+export async function generateMetadata({
+	params,
+}: {
+	params: { slug: string }
+}) {
+	const { slug } = params
 	const pageData = getPage(slug)
 	const page = await pageData
 

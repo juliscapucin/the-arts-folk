@@ -3,10 +3,8 @@ import { notFound } from "next/navigation"
 import { InfoPage } from "@/components/pages"
 import { getInfoPage, getPage } from "@/sanity/sanity-queries"
 
-import { MetadataParams } from "@/types"
-
-export async function generateMetadata({ params: { slug } }: MetadataParams) {
-	const pageData = getPage(slug)
+export async function generateMetadata() {
+	const pageData = getInfoPage()
 	const page = await pageData
 
 	if (!page) {
