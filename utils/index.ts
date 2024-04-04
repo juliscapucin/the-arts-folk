@@ -28,18 +28,7 @@ export const metadataFallback = {
 			url: "/apple-touch-icon-precomposed.png",
 		},
 	},
-	// openGraph: {
-	// 	title: "The Arts Folk",
-	// 	description:
-	// 		"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
-	// 	siteName: "The Arts Folk",
-	// 	images: [
-	// 		{
-	// 			url: "https://dev.theartsfolk.com/_next/static/media/opengraph-image.62da8378.png",
-	// 			width: 2400,
-	// 			height: 1260,
-	// 			alt: "The Arts Folk",
-	// 		},
-	// 	],
-	// },
+	openGraph: {
+		images: "/_next/static/media/opengraph-image.62da8378.png",
+	},
 }
