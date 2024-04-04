@@ -9,15 +9,29 @@ import { Header, Footer } from "@/components/ui"
 import { CookiesServer } from "@/components/server"
 import { Intro } from "@/components"
 
+import { getPage } from "@/sanity/sanity-queries"
+
 const fallbackNavLinks = [
 	{ title: "Artists", slug: "artists", order: 1 },
 	{ title: "Info", slug: "info", order: 2 },
 ]
 
-export const metadata: Metadata = {
-	title: "The Arts Folk",
-	description:
-		"We represent a diverse network of collaborators and storytellers, image-makers & directors.",
+export async function generateMetadata() {
+	const pageData = getPage("home")
+	const page = await pageData
+
+	if (!page) {
+		return {
+			title: "The Arts Folk",
+			description:
+				"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
+		}
+	}
+
+	return {
+		title: page.title,
+		description: `${page.metadataDescription}`,
+	}
 }
 
 // Load custom font //
