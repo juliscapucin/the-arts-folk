@@ -132,7 +132,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						bgColor='transparent'
 					>
 						<ButtonClose
-							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-12 lg:pr-20 max-w-desktop mt-4 flex justify-end z-100`}
+							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-12 lg:pr-12 max-w-desktop mt-4 flex justify-end z-100`}
 							action={toggleOverlay}
 							color={isOverlayOpen ? "primary" : "transparent"}
 						/>
@@ -154,9 +154,9 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						{/* Overlay Content */}
 						<div
 							ref={overlayRef}
-							className='w-full md:w-3/4 lg:w-2/5 ml-auto mr-0 bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+							className='relative w-full md:w-3/4 lg:w-2/5 ml-auto mr-0 bg-secondary text-primary h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 						>
-							<div className='custom-rich-text px-4 lg:px-12 pb-12'>
+							<div className='custom-rich-text w-full px-4 lg:px-12 pb-12'>
 								<Heading
 									tag='h1'
 									variant='headline'
