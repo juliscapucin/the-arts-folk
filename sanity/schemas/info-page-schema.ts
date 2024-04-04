@@ -15,6 +15,12 @@ const infoPageSchema = {
 			type: "string",
 		},
 		{
+			name: "metadataKeywords",
+			title: "Metadata Keywords",
+			type: "array",
+			of: [{ type: "string" }],
+		},
+		{
 			name: "content",
 			title: "Content",
 			type: "array",

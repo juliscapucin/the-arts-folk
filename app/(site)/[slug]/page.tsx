@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { DefaultPage } from "@/components/pages"
 import { getPage } from "@/sanity/sanity-queries"
 
-import { MetadataParams } from "@/types"
+import { metadataFallback } from "@/utils"
 
 export async function generateMetadata({
 	params,
@@ -15,15 +15,13 @@ export async function generateMetadata({
 	const page = await pageData
 
 	if (!page) {
-		return {
-			title: "The Arts Folk",
-			description: "Photographic, Production & Casting Agency",
-		}
+		return metadataFallback
 	}
 
 	return {
-		title: page.metadataTitle,
-		description: page.metadataDescription,
+		title: page.metadataTitle || metadataFallback.title,
+		description: page.metadataDescription || metadataFallback.description,
+		keywords: page.metadataKeywords || metadataFallback.keywords,
 	}
 }
 

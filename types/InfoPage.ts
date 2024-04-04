@@ -1,10 +1,6 @@
-import { PortableTextBlock } from "sanity"
+import { Page } from "@/types"
 
-export type InfoPage = {
-	title: string
-	metadataTitle: string
-	metadataDescription: string
-	content: PortableTextBlock[]
+export type InfoPage = Page & {
 	contactInfo: {
 		name: string
 		email: string

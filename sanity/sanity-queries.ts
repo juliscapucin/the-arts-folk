@@ -58,6 +58,7 @@ export async function getPage(slug: string): Promise<Page> {
            title,
            metadataTitle,
            metadataDescription,
+           metadataKeywords,
            content,
        }`,
 		{ slug }
@@ -70,6 +71,7 @@ export async function getInfoPage(): Promise<InfoPage> {
       title,
       metadataTitle,
       metadataDescription,
+      metadataKeywords,
       "headerLink": header->slug.current,
       content,
       contactInfo[]{
