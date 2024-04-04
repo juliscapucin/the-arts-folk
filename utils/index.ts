@@ -3,8 +3,6 @@ export const GSAPQueries = {
 	isDesktop: "(min-width: 801px)",
 }
 
-import ogImage from "../public/opengraph-image.png"
-
 export const metadataFallback = {
 	metadataBase: new URL("https://dev.theartsfolk.com"),
 	title: "The Arts Folk",
@@ -31,20 +29,24 @@ export const metadataFallback = {
 		},
 	},
 	openGraph: {
+		title: "Next.js",
+		description: "The React Framework for the Web",
+		url: "https://dev.theartsfolk.com",
+		siteName: "Next.js",
 		images: [
 			{
-				url: ogImage.src,
-				width: ogImage.width,
-				height: ogImage.height,
+				url: "https://dev.theartsfolk.com/_next/static/media/opengraph-image.62da8378.png",
+				width: 2400,
+				height: 1260,
 			},
 		],
 	},
 	twitter: {
 		images: [
 			{
-				url: ogImage.src,
-				width: ogImage.width,
-				height: ogImage.height,
+				url: "https://dev.theartsfolk.com/_next/static/media/opengraph-image.62da8378.png",
+				width: 2400,
+				height: 1260,
 			},
 		],
 	},
