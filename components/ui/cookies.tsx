@@ -58,7 +58,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape") {
+			if (e.key === "Escape" && isOverlayOpen) {
 				toggleOverlay()
 			}
 		}

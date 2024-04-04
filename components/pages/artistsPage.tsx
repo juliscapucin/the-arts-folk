@@ -91,8 +91,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			type: "pointer,touch,wheel",
 			wheelSpeed: -1,
 			onStop: (self) => {
-				console.log("stop")
-
 				setIsScrolling(false)
 			},
 			onChangeY: (self) => {
