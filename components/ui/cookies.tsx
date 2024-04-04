@@ -124,7 +124,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<Container
-						classes={`absolute w-full top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-clip z-80 ${
+						classes={`absolute w-full top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 pr-8 h-svh max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-clip z-80 ${
 							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
 						}`}
 						isDiv={true}
@@ -139,14 +139,14 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 						{/* Gradients */}
 						<div
-							className={`absolute top-0 right-2 w-[98%] md:w-[74%] lg:w-[39%] h-16 ml-auto bg-gradient-to-b from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
+							className={`absolute top-0 right-10 w-[98%] md:w-[70%] lg:w-[38%] h-16 ml-auto bg-gradient-to-b from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
 								isOverlayOpen
 									? "transition-opacity duration-300 delay-300"
 									: "opacity-0"
 							}`}
 						></div>
 						<div
-							className={`absolute bottom-0 right-2 w-[98%] md:w-[74%] lg:w-[39%] h-16 ml-auto bg-gradient-to-t from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
+							className={`absolute bottom-0 right-10 w-[98%] md:w-[70%] lg:w-[38%] h-16 ml-auto bg-gradient-to-t from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
 								isOverlayOpen ? "" : "opacity-0"
 							}`}
 						></div>

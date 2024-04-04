@@ -16,22 +16,30 @@ type PageProps = {
 		email: string
 		phone: string
 	}[]
+	isCentered?: boolean
 }
 
 export default function DefaultPage({
 	pageData,
 	children,
 	hasCopyright,
+	isCentered,
 }: PageProps) {
 	return (
 		<Container
-			classes='relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+			classes={`relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll ${
+				!isCentered && "lg:pt-24 lg:pb-64"
+			}`}
 			hasPadding={true}
 		>
-			<div className='relative flex-1 lg:flex gap-32 justify-between lg:items-center h-full'>
+			<div
+				className={`relative flex-1 lg:flex gap-32 justify-between min-h-full ${
+					isCentered && "lg:items-center"
+				}`}
+			>
 				{/* Text */}
 				<div className='custom-rich-text custom-rich-text-page mt-16 lg:mt-0'>
-					<Heading tag='h1' classes='lg:sr-only mb-8' variant='headline'>
+					<Heading tag='h1' classes='sr-only mb-8' variant='headline'>
 						{pageData.title}
 					</Heading>
 					<PortableText value={pageData.content} />

@@ -11,7 +11,7 @@ type InfoPageProps = {
 
 export default function InfoPage({ infoData }: InfoPageProps) {
 	return (
-		<DefaultPage hasCopyright={true} pageData={infoData}>
+		<DefaultPage hasCopyright={true} pageData={infoData} isCentered={true}>
 			{/* Email + Phone */}
 			<div className='lg:w-2/5 flex flex-col justify-center items-center gap-16 my-16 lg:my-0 h-full w-full whitespace-nowrap'>
 				{infoData.contactInfo.map((contact) => (
