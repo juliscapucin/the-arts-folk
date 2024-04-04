@@ -7,5 +7,24 @@ export const metadataFallback = {
 	title: "The Arts Folk",
 	description:
 		"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
-	keywords: "Photography, Production, Casting, Agency",
+	keywords: [
+		"Photography",
+		"Production",
+		"Casting",
+		"Agency",
+		"Artists",
+		"Storytellers",
+		"Image-makers",
+		"Directors",
+		"Photographers",
+	],
+	icons: {
+		icon: "/icon.png",
+		shortcut: "/shortcut-icon.png",
+		apple: "/apple-icon.png",
+		other: {
+			rel: "apple-touch-icon-precomposed",
+			url: "/apple-touch-icon-precomposed.png",
+		},
+	},
 }
