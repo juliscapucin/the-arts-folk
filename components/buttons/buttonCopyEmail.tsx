@@ -1,5 +1,4 @@
 import { useState, useRef, useLayoutEffect } from "react"
-// import gsap from 'gsap';
 
 type ButtonCopyEmailProps = {
 	email: string
@@ -20,22 +19,6 @@ export default function ButtonCopyEmail({ email }: ButtonCopyEmailProps) {
 				console.error("Failed to copy email address: ", err)
 			})
 	}
-
-	//  useLayoutEffect(() => {
-	//   if (!showCopyFeedback) return;
-
-	//   let ctx = gsap.context(() => {});
-
-	//   ctx.add(() => {
-	//    gsap.fromTo(
-	//     labelRef.current,
-	//     { opacity: 0, y: 20 },
-	//     { opacity: 1, y: 0, duration: 0.1, ease: 'power1.out' }
-	//    );
-	//   });
-
-	//   return () => ctx.revert();
-	//  }, [showCopyFeedback]);
 
 	return (
 		<div className='relative h-16 mt-8'>

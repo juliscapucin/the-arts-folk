@@ -83,12 +83,9 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			onChangeY: (self) => {
 				let calculatedTimeScale = -self.deltaY
 
-				console.log(self.velocityY)
-
 				setIsScrolling(true)
 
-				// console.log("on change")
-				// console.log(self.deltaY)
+				// TODO // clean this up
 
 				// const MIN_TIME_SCALE = 0
 				// const MAX_TIME_SCALE = isMobile

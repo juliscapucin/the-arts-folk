@@ -63,7 +63,7 @@ export default function Intro() {
 		}
 	}, [])
 
-	if (pathname !== "/") return <div></div>
+	// if (pathname !== "/") return <div></div>
 
 	return (
 		<div
