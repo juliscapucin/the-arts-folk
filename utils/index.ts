@@ -4,6 +4,7 @@ export const GSAPQueries = {
 }
 
 export const metadataFallback = {
+	metadataBase: new URL("https://theartsfolk.com"),
 	title: "The Arts Folk",
 	description:
 		"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
@@ -26,5 +27,8 @@ export const metadataFallback = {
 			rel: "apple-touch-icon-precomposed",
 			url: "/apple-touch-icon-precomposed.png",
 		},
+	},
+	openGraph: {
+		images: "/theartsfolk.png",
 	},
 }
