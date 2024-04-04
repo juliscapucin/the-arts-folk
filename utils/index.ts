@@ -3,8 +3,10 @@ export const GSAPQueries = {
 	isDesktop: "(min-width: 801px)",
 }
 
+import ogImage from "./opengraph-image.png"
+
 export const metadataFallback = {
-	metadataBase: new URL("https://dev.theartsfolk.com"),
+	// metadataBase: new URL("https://dev.theartsfolk.com"),
 	title: "The Arts Folk",
 	description:
 		"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
@@ -28,4 +30,22 @@ export const metadataFallback = {
 			url: "/apple-touch-icon-precomposed.png",
 		},
 	},
+	// openGraph: {
+	// 	images: [
+	// 		{
+	// 			url: ogImage.src,
+	// 			width: ogImage.width,
+	// 			height: ogImage.height,
+	// 		},
+	// 	],
+	// },
+	// twitter: {
+	// 	images: [
+	// 		{
+	// 			url: ogImage.src,
+	// 			width: ogImage.width,
+	// 			height: ogImage.height,
+	// 		},
+	// 	],
+	// },
 }
