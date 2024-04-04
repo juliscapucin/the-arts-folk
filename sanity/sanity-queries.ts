@@ -54,7 +54,7 @@ export async function getArtist(slug: string): Promise<Artist> {
 
 export async function getPage(slug: string): Promise<Page> {
 	return client.fetch(
-		groq`*[_type == "page" && (headerLink._ref in *[_type == "header" && slug.current == $slug]._id || slug.current == $slug)][0] {
+		groq`*[_type == "pages" && (headerLink._ref in *[_type == "header" && slug.current == $slug]._id || slug.current == $slug)][0] {
            title,
            content,
        }`,

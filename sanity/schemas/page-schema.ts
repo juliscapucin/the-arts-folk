@@ -1,11 +1,16 @@
 const pageSchema = {
-	name: "page",
-	title: "Page",
+	name: "pages",
+	title: "Pages",
 	type: "document",
 	fields: [
 		{
 			name: "title",
 			title: "Title",
+			type: "string",
+		},
+		{
+			name: "metadataDescription",
+			title: "Metadata Description",
 			type: "string",
 		},
 		{
