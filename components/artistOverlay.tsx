@@ -32,7 +32,7 @@ const ArtistOverlayImage = ({
 				isVisible ? "" : "opacity-0"
 			}`}
 		>
-			{/* {url.includes("vimeo") ? (
+			{url.includes("vimeo") ? (
 				<ReactPlayer
 					url={url}
 					playing
@@ -43,16 +43,16 @@ const ArtistOverlayImage = ({
 					muted={true}
 					loop={true}
 				/>
-			) : ( */}
-			<CldImage
-				className={`object-contain p-4`}
-				src={url}
-				alt={`Photo by ${artistName}`}
-				sizes='(max-width: 768px) 40vw, (max-width: 1200px) 20vw, 20vw'
-				quality={40}
-				fill
-			/>
-			{/* )} */}
+			) : (
+				<CldImage
+					className={`object-contain p-4`}
+					src={url}
+					alt={`Photo by ${artistName}`}
+					sizes='(max-width: 768px) 40vw, (max-width: 1200px) 20vw, 20vw'
+					quality={40}
+					fill
+				/>
+			)}
 		</div>
 	)
 }
