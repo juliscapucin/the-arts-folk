@@ -2,10 +2,8 @@ import { ArtistsPage } from "@/components/pages"
 import { getArtists, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
-import { MetadataParams } from "@/types"
-
-export async function generateMetadata({ params: { slug } }: MetadataParams) {
-	const pageData = getPage(slug)
+export async function generateMetadata() {
+	const pageData = getPage("artists")
 	const page = await pageData
 
 	if (!page) {

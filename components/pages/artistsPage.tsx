@@ -85,22 +85,6 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 				setIsScrolling(true)
 
-				// TODO // clean this up
-
-				// const MIN_TIME_SCALE = 0
-				// const MAX_TIME_SCALE = isMobile
-				// 	? calculatedTimeScale > 0
-				// 		? 3
-				// 		: -3
-				// 	: calculatedTimeScale > 0
-				// 	? 5
-				// 	: -5
-
-				// let desiredTimeScale = Math.min(
-				// 	Math.max(MIN_TIME_SCALE, Math.abs(calculatedTimeScale)),
-				// 	MAX_TIME_SCALE
-				// )
-
 				// Set the loop's timeScale to the desired value
 				loop.timeScale(calculatedTimeScale)
 
