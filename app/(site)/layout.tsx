@@ -29,8 +29,8 @@ export async function generateMetadata() {
 	}
 
 	return {
-		title: page.title,
-		description: `${page.metadataDescription}`,
+		title: page.metadataTitle,
+		description: page.metadataDescription,
 	}
 }
 
