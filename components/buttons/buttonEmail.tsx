@@ -1,6 +1,5 @@
 import { useRef } from "react"
 
-import { ButtonCopyEmail } from "@/components/buttons"
 import { Heading } from "@/components/ui"
 import { IconEmail } from "@/components/icons"
 
@@ -28,8 +27,6 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 				</a>
 			</div>
 			<span className='font-text text-bodyMedium font-extralight'>{phone}</span>
-
-			{/* <ButtonCopyEmail {...{ email }} /> */}
 		</div>
 	)
 }
