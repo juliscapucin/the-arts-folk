@@ -1,6 +1,22 @@
 import { ArtistsPage } from "@/components/pages"
-import { getArtists } from "@/sanity/sanity-queries"
+import { getArtists, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
+
+import { MetadataParams } from "@/types"
+
+export async function generateMetadata({ params: { slug } }: MetadataParams) {
+	const pageData = getPage(slug)
+	const page = await pageData
+
+	if (!page) {
+		return { title: "Page Not Found", description: "Page not found" }
+	}
+
+	return {
+		title: page.title,
+		description: `${page.metadataDescription}`,
+	}
+}
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
