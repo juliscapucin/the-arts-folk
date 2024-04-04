@@ -8,6 +8,7 @@ const pageSchema = {
 			title: "Title",
 			type: "string",
 		},
+		{ name: "metadataTitle", title: "Metadata Title", type: "string" },
 		{
 			name: "metadataDescription",
 			title: "Metadata Description",

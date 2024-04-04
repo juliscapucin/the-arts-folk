@@ -56,6 +56,8 @@ export async function getPage(slug: string): Promise<Page> {
 	return client.fetch(
 		groq`*[_type == "pages" && (headerLink._ref in *[_type == "header" && slug.current == $slug]._id || slug.current == $slug)][0] {
            title,
+           metadataTitle,
+           metadataDescription,
            content,
        }`,
 		{ slug }
@@ -66,6 +68,8 @@ export async function getInfoPage(): Promise<InfoPage> {
 	return client.fetch(
 		groq`*[_type == "infoPage"][0] {
       title,
+      metadataTitle,
+      metadataDescription,
       "headerLink": header->slug.current,
       content,
       contactInfo[]{

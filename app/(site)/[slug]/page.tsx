@@ -17,8 +17,8 @@ export async function generateMetadata({ params: { slug } }: MetadataParams) {
 	}
 
 	return {
-		title: page.title,
-		description: `${page.metadataDescription}`,
+		title: page.metadataTitle,
+		description: page.metadataDescription,
 	}
 }
 
