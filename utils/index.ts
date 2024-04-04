@@ -4,6 +4,7 @@ export const GSAPQueries = {
 }
 
 export const metadataFallback = {
+	metadataBase: new URL("https://dev.theartsfolk.com"),
 	title: "The Arts Folk",
 	description:
 		"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
