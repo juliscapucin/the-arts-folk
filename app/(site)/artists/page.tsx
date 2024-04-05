@@ -13,6 +13,7 @@ export async function generateMetadata() {
 	}
 
 	return {
+		metadataBase: metadataFallback.metadataBase,
 		title: page.metadataTitle || metadataFallback.title,
 		description: page.metadataDescription || metadataFallback.description,
 		keywords: page.metadataKeywords || metadataFallback.keywords,
