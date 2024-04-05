@@ -1,7 +1,7 @@
 export const domain =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:3000"
-		: "https://dev.theartsfolk.com"
+		: "https://theartsfolk.com"
 
 export const GSAPQueries = {
 	isMobile: "(max-width: 800px)",
@@ -9,7 +9,7 @@ export const GSAPQueries = {
 }
 
 export const metadataFallback = {
-	metadataBase: new URL("https://dev.theartsfolk.com"),
+	metadataBase: new URL("https://theartsfolk.com"),
 	title: "The Arts Folk",
 	description:
 		"Photographic, Production & Casting Agency. We represent a diverse network of collaborators and storytellers, image-makers & directors.",
