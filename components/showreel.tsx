@@ -56,7 +56,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 								sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw'
 								quality={50}
 								fill
-								priority={index <= 9 ? true : false}
+								priority={index <= 5 ? true : false}
 							/>
 							{/* This was needed for LCP performance optimization */}
 							<div className={`absolute w-screen h-full bg-primary z-0`}></div>

@@ -2,7 +2,11 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import { getHeaderNavLinks } from "@/sanity/sanity-queries"
-export const revalidate = 300
+
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic"
+
+// export const revalidate = 300
 
 import "../globals.css"
 import { Header, Footer } from "@/components/ui"
