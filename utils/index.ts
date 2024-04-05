@@ -1,3 +1,8 @@
+export const domain =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:3000"
+		: "https://dev.theartsfolk.com"
+
 export const GSAPQueries = {
 	isMobile: "(max-width: 800px)",
 	isDesktop: "(min-width: 801px)",
