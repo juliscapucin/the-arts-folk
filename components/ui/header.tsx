@@ -1,7 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-
 import { NavbarDesktop, NavbarMobile } from "@/components/ui"
 import { NavLink } from "@/types"
 
@@ -12,7 +10,6 @@ type HeaderProps = {
 }
 
 export default function Header({ navLinks }: HeaderProps) {
-	const router = useRouter()
 	const { transitionOnClick } = usePageContext()
 
 	return (

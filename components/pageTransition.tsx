@@ -5,17 +5,13 @@ import gsap from "gsap"
 import { usePageContext } from "@/context"
 import { useLayoutEffect } from "react"
 
-type PageTransitionProps = {
-	exit?: boolean
-}
-
-export const PageTransition = ({ exit }: PageTransitionProps) => {
+export const PageTransition = () => {
 	const { pageTransitionRef } = usePageContext()
 	let ctx = gsap.context(() => {})
 
 	// On page Enter
 	useLayoutEffect(() => {
-		if (!pageTransitionRef) return
+		if (!pageTransitionRef.current) return
 
 		// gsap.set(pageTransitionRef, { yPercent: 0 })
 

@@ -44,10 +44,15 @@ export const PageContextProvider = ({
 		// 	animateMobileMenu(mobileMenuRef)
 		// }
 
-		ctx.add(() => {
-			gsap.set(pageTransitionRef, { yPercent: -100 })
+		console.log("context")
+		console.log(link.slug)
 
-			gsap.to(pageTransitionRef, {
+		if (!pageTransitionRef.current) return
+
+		ctx.add(() => {
+			gsap.set(pageTransitionRef.current, { yPercent: -100 })
+
+			gsap.to(pageTransitionRef.current, {
 				yPercent: 0,
 				duration: 0.3,
 				ease: "linear",
