@@ -12,7 +12,7 @@ import Link from "next/link"
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
-import { ArtistOverlay } from "@/components"
+import { ArtistOverlay, CategoryFilter } from "@/components"
 import { IconScroll } from "@/components/icons"
 import { Container } from "@/components/ui"
 
@@ -29,6 +29,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const [isScrolling, setIsScrolling] = useState(false)
+	const [activeCategory, setActiveCategory] = useState("all")
 	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -163,6 +164,11 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			>
 				<IconScroll />
 			</div>
+			{/* Category Filter */}
+			<CategoryFilter
+				activeCategory={activeCategory}
+				setActiveCategory={setActiveCategory}
+			/>
 			<Container
 				ref={containerRef}
 				classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
@@ -182,7 +188,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 				{/* Gradients */}
 				<div
-					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-16 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
+					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-40 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
 				></div>
 				<div
 					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent z-50`}
@@ -219,13 +225,13 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 									>
 										{artist.description}
 									</span>
-									<span
+									{/* <span
 										className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
 											isHovered === artist.name ? "" : "opacity-0"
 										}`}
 									>
 										Coming soon
-									</span>
+									</span> */}
 								</a>
 							</div>
 						)
