@@ -3,6 +3,9 @@ export default function Copyright() {
 
 	return (
 		<div className='py-4 flex flex-col items-end text-labelSmall font-text'>
+			<a href='/impressum' className='mb-4 underline hover:text-faded-50'>
+				Impressum
+			</a>
 			<span>The Arts Folk ©{year}</span>
 			<span>
 				Website by{" "}

@@ -1,4 +1,7 @@
+"use client"
+
 import { forwardRef } from "react"
+import { PageTransition } from "@/components"
 
 type ContainerProps = {
 	children: React.ReactNode
@@ -16,14 +19,17 @@ const Container = forwardRef(
 		const HtmlTag = isDiv ? "div" : "main"
 
 		return (
-			<HtmlTag
-				ref={ref}
-				className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] mx-[--margin-mobile] lg:mx-[--margin-desktop] max-w-desktop ${classes} ${
-					hasPadding ? "px-[--padding-mobile] lg:px-[padding-desktop]" : ""
-				} ${bgColor ? bgColor : "bg-primary"}`}
-			>
-				{children}
-			</HtmlTag>
+			<>
+				<PageTransition />
+				<HtmlTag
+					ref={ref}
+					className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] mx-[--margin-mobile] lg:mx-[--margin-desktop] max-w-desktop ${classes} ${
+						hasPadding ? "px-[--padding-mobile] lg:px-[padding-desktop]" : ""
+					} ${bgColor ? bgColor : "bg-primary"}`}
+				>
+					{children}
+				</HtmlTag>
+			</>
 		)
 	}
 )
