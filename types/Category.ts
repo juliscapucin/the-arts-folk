@@ -1,3 +1,4 @@
 export type Category = {
-	_ref: string
+	title: string
+	_id: string
 }

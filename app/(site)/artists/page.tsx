@@ -27,9 +27,7 @@ export default async function Page() {
 	const artists = await getArtists()
 	const categories = await getCategories()
 
-	console.log(categories)
-
 	if (!artists) return notFound()
 
-	return <ArtistsPage artists={artists} />
+	return <ArtistsPage artists={artists} categories={categories} />
 }
