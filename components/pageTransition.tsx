@@ -2,15 +2,19 @@
 
 import gsap from "gsap"
 
+import { usePathname } from "next/navigation"
 import { usePageContext } from "@/context"
 import { useLayoutEffect } from "react"
+import path from "path"
 
 export const PageTransition = () => {
+	const pathname = usePathname()
 	const { pageTransitionRef } = usePageContext()
 	let ctx = gsap.context(() => {})
 
 	// On page Enter
 	useLayoutEffect(() => {
+		console.log("enter", pageTransitionRef.current)
 		if (!pageTransitionRef.current) return
 
 		// gsap.set(pageTransitionRef, { yPercent: 0 })
@@ -22,7 +26,7 @@ export const PageTransition = () => {
 				ease: "linear",
 			})
 		})
-	}, [])
+	}, [pathname])
 
 	return (
 		<div
