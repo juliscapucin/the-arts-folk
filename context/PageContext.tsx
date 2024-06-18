@@ -16,7 +16,7 @@ import { NavLink } from "@/types"
 // TYPE
 interface ContextProps {
 	pageTransitionRef: React.MutableRefObject<HTMLDivElement | null>
-	transitionOnClick: (link: NavLink) => void
+	transitionOnClick: (link: NavLink | string) => void
 }
 
 // CREATE CONTEXT
@@ -39,13 +39,10 @@ export const PageContextProvider = ({
 
 	// On page Exit
 	const transitionOnClick = (link: any) => {
-		// Toggle mobile menu
+		// TODO: Toggle mobile menu
 		// if (mobileMenuRef) {
 		// 	animateMobileMenu(mobileMenuRef)
 		// }
-
-		console.log("context")
-		console.log(link.slug)
 
 		if (!pageTransitionRef.current) return
 
@@ -57,7 +54,7 @@ export const PageContextProvider = ({
 				duration: 0.3,
 				ease: "linear",
 				onComplete: () => {
-					router.push(`/${link.slug}`)
+					router.push(link.slug ? `/${link.slug}` : `/${link}`)
 				},
 			})
 		})
