@@ -1,5 +1,5 @@
 import { ArtistsPage } from "@/components/pages"
-import { getArtists, getPage } from "@/sanity/sanity-queries"
+import { getArtists, getCategories, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
 import { metadataFallback } from "@/utils"
@@ -25,6 +25,9 @@ export const dynamic = "force-dynamic"
 
 export default async function Page() {
 	const artists = await getArtists()
+	const categories = await getCategories()
+
+	console.log(categories)
 
 	if (!artists) return notFound()
 

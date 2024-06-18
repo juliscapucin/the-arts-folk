@@ -7,7 +7,6 @@ import {
 	useRef,
 	useState,
 } from "react"
-import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
@@ -30,6 +29,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const [isScrolling, setIsScrolling] = useState(false)
 	const [activeCategory, setActiveCategory] = useState("all")
+	const [allCategories, setAllCategories] = useState<string[]>([])
 	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -154,6 +154,13 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		}
 	}, [resizeTimeout])
 
+	// useEffect(() => {
+	// 	const allCategories = artists.map((artist) => artist.category).flat()
+	// 	const categoryRef = new Set(allCategories.map((category) => category._ref))
+
+	// 	setAllCategories(["all", ...categoryRef])
+	// }, [])
+
 	return (
 		<>
 			{/* Icon Scroll */}
@@ -166,6 +173,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			</div>
 			{/* Category Filter */}
 			<CategoryFilter
+				categories={allCategories}
 				activeCategory={activeCategory}
 				setActiveCategory={setActiveCategory}
 			/>
@@ -219,19 +227,12 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 								>
 									{artist.name}
 									<span
-										className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
+										className={`block mt-2 font-text uppercase text-labelLarge font-medium transition-opacity ${
 											isHovered === artist.name ? "" : "opacity-0"
 										}`}
 									>
 										{artist.description}
 									</span>
-									{/* <span
-										className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
-											isHovered === artist.name ? "" : "opacity-0"
-										}`}
-									>
-										Coming soon
-									</span> */}
 								</a>
 							</div>
 						)
