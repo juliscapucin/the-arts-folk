@@ -7,28 +7,30 @@ import {
 	useRef,
 	useState,
 } from "react"
-import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
-import { ArtistOverlay } from "@/components"
+import { ArtistOverlay, CategoryFilter } from "@/components"
 import { IconScroll } from "@/components/icons"
 import { Container } from "@/components/ui"
 
 import { infiniteVerticalLoop } from "@/helpers"
 import { GSAPQueries } from "@/utils"
 
-import { Artist } from "@/types/Artist"
+import { Artist, Category } from "@/types"
 
 type ArtistsPageProps = {
 	artists: Artist[]
+	categories: Category[]
 }
 
-export default function ArtistsPage({ artists }: ArtistsPageProps) {
+export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const [isScrolling, setIsScrolling] = useState(false)
+	const [activeCategory, setActiveCategory] = useState("all")
+	const [filteredArtists, setFilteredArtists] = useState<Artist[]>([])
 	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -42,71 +44,79 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	const getViewportPosition = useCallback((element: HTMLElement) => {
-		const rect = element.getBoundingClientRect()
-		const viewportHeight =
-			window.innerHeight || document.documentElement.clientHeight
-		const elementTop = rect.top
-		const elementBottom = rect.bottom
-		const screenMiddle = viewportHeight / 2
-		return {
-			isMiddle:
-				Math.abs(elementTop) < screenMiddle &&
-				Math.abs(elementBottom) > screenMiddle,
-		}
-	}, [])
+	const getViewportPosition = useCallback(
+		(element: HTMLElement) => {
+			if (filteredArtists.length < 4) return { isMiddle: false }
 
-	const createScrollLoop = useCallback((isMobile: boolean) => {
-		if (!sectionRef.current) return
-		gsap.registerPlugin(Observer)
+			const rect = element.getBoundingClientRect()
+			const viewportHeight =
+				window.innerHeight || document.documentElement.clientHeight
+			const elementTop = rect.top
+			const elementBottom = rect.bottom
+			const screenMiddle = viewportHeight / 2
+			return {
+				isMiddle:
+					Math.abs(elementTop) < screenMiddle &&
+					Math.abs(elementBottom) > screenMiddle,
+			}
+		},
+		[filteredArtists]
+	)
 
-		const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
+	const createScrollLoop = useCallback(
+		(isMobile: boolean) => {
+			if (!sectionRef.current || filteredArtists.length < 4) return
+			gsap.registerPlugin(Observer)
 
-		// Create an infinite vertical loop
-		const loop = infiniteVerticalLoop(items, {
-			repeat: -1,
-		})
+			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 
-		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
-		let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
-		// make the loop stopped initially.
-		loop.timeScale(0)
+			// Create an infinite vertical loop
+			const loop = infiniteVerticalLoop(items, {
+				repeat: -1,
+			})
 
-		// Create an observer to detect touch and wheel events
-		Observer.create({
-			target: sectionRef.current,
-			type: "pointer,touch,wheel",
-			wheelSpeed: -1,
-			onStop: () => {
-				setIsScrolling(false)
-			},
-			onChangeY: (self) => {
-				let calculatedTimeScale = -self.deltaY
+			// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
+			let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
+			// make the loop stopped initially.
+			loop.timeScale(0)
 
-				setIsScrolling(true)
+			// Create an observer to detect touch and wheel events
+			Observer.create({
+				target: sectionRef.current,
+				type: "pointer,touch,wheel",
+				wheelSpeed: -1,
+				onStop: () => {
+					setIsScrolling(false)
+				},
+				onChangeY: (self) => {
+					let calculatedTimeScale = -self.deltaY
 
-				// Set the loop's timeScale to the desired value
-				loop.timeScale(calculatedTimeScale)
+					setIsScrolling(true)
 
-				// Check if the element is in the middle of the viewport if the user is not scrolling fast
-				if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
-					loop.eventCallback("onUpdate", () => {
-						items.forEach((item) => {
-							const position = getViewportPosition(item)
-							position.isMiddle &&
-								item.dataset.name &&
-								setIsHovered(item.dataset.name)
+					// Set the loop's timeScale to the desired value
+					loop.timeScale(calculatedTimeScale)
+
+					// Check if the element is in the middle of the viewport if the user is not scrolling fast
+					if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
+						loop.eventCallback("onUpdate", () => {
+							items.forEach((item) => {
+								const position = getViewportPosition(item)
+								position.isMiddle &&
+									item.dataset.name &&
+									setIsHovered(item.dataset.name)
+							})
 						})
-					})
-				}
+					}
 
-				// Decelerate
-				slow.invalidate().restart()
+					// Decelerate
+					slow.invalidate().restart()
 
-				isScrollTipVisible && setIsScrollTipVisible(false)
-			},
-		})
-	}, [])
+					isScrollTipVisible && setIsScrollTipVisible(false)
+				},
+			})
+		},
+		[filteredArtists]
+	)
 
 	useLayoutEffect(() => {
 		if (!sectionRef.current || !containerRef.current) return
@@ -116,6 +126,23 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			(context) => {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
+
+				if (filteredArtists.length < 4) {
+					gsap.fromTo(
+						items,
+						{
+							yPercent: -100,
+							opacity: 0,
+						},
+						{
+							yPercent: 110,
+							opacity: 1,
+							stagger: 0.07,
+							duration: 0.6,
+						}
+					)
+					return
+				}
 
 				// Artist names entrance animation
 				gsap.from(items, {
@@ -134,7 +161,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		return () => {
 			mm.revert()
 		}
-	}, [])
+	}, [filteredArtists])
 
 	// Reload the page on window resize
 	useEffect(() => {
@@ -153,6 +180,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		}
 	}, [resizeTimeout])
 
+	useEffect(() => {
+		if (activeCategory === "all") setFilteredArtists(artists)
+		else {
+			const filteredArtitsts = artists.filter((artist) => {
+				return artist.category.some(
+					(category) => category._ref === activeCategory
+				)
+			})
+			setFilteredArtists(filteredArtitsts)
+		}
+	}, [activeCategory])
+
 	return (
 		<>
 			{/* Icon Scroll */}
@@ -163,12 +202,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			>
 				<IconScroll />
 			</div>
+			{/* Category Filter */}
+			<CategoryFilter
+				categories={categories}
+				activeCategory={activeCategory}
+				setActiveCategory={setActiveCategory}
+			/>
 			<Container
 				ref={containerRef}
 				classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 			>
 				{/* Artist Overlay */}
-				{artists.map((artist, index) => {
+				{filteredArtists.map((artist, index) => {
 					return (
 						<ArtistOverlay
 							key={`${artist.name}-overlay`}
@@ -182,7 +227,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 				{/* Gradients */}
 				<div
-					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-16 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
+					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-40 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
 				></div>
 				<div
 					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent z-50`}
@@ -190,7 +235,7 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 
 				{/* Artists Menu */}
 				<section ref={sectionRef} className='w-full text-center space-y-8 pt-8'>
-					{artists.map((artist) => {
+					{filteredArtists.map((artist) => {
 						return (
 							<div
 								className='gsap-scroll-item text-center'
@@ -213,18 +258,11 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 								>
 									{artist.name}
 									<span
-										className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
+										className={`block mt-2 font-text uppercase text-labelLarge font-medium transition-opacity ${
 											isHovered === artist.name ? "" : "opacity-0"
 										}`}
 									>
 										{artist.description}
-									</span>
-									<span
-										className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
-											isHovered === artist.name ? "" : "opacity-0"
-										}`}
-									>
-										Coming soon
 									</span>
 								</a>
 							</div>
