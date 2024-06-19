@@ -39,8 +39,8 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [slideIndex])
 
 	return (
-		<>
-			<div className='fixed top-0 left-0 w-screen h-svh flex justify-center items-center lg:scale-200 z-20 pointer-events-none'>
+		<div className='pt-[--header-height-desktop]'>
+			<div className='fixed left-0 top-0 w-screen h-svh flex justify-center items-center lg:scale-200 z-20 pointer-events-none'>
 				<Logo />
 			</div>
 			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto overflow-clip'>
@@ -64,6 +64,6 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 					)
 				})}
 			</div>
-		</>
+		</div>
 	)
 }

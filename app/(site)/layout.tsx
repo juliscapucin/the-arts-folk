@@ -60,7 +60,7 @@ export default async function RootLayout({
 	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
 
 	return (
-		<html lang='en' className='overflow-clip'>
+		<html lang='en' className='overflow-y-auto overflow-x-clip'>
 			<PageContextProvider>
 				<body
 					className={`${myFont.className} relative w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white uppercase font-text font-thin`}
