@@ -3,6 +3,10 @@
 import { useState, useEffect, useRef } from "react"
 import { CldImage } from "next-cloudinary"
 
+import gsap from "gsap"
+import ScrollTrigger from "gsap/ScrollTrigger"
+import Flip from "gsap/Flip"
+
 import { Logo } from "@/components/svgs"
 
 import type { CloudinaryImage } from "@/types"
@@ -15,6 +19,10 @@ const delay = 1000
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
+	const [logoClasses, setLogoClasses] = useState("scale-200")
+	const logoRef = useRef<HTMLDivElement | null>(null)
+	const logoHeaderRef = useRef<HTMLDivElement | null>(null)
+	const logoShowreelRef = useRef<HTMLDivElement | null>(null)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const resetTimeout = () => {
@@ -38,10 +46,70 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		}
 	}, [slideIndex])
 
+	useEffect(() => {
+		if (!logoRef.current || !logoHeaderRef.current || !logoShowreelRef.current)
+			return
+		gsap.registerPlugin(ScrollTrigger, Flip)
+
+		const element = logoRef.current
+		const logoHeader = logoHeaderRef.current
+		const logoShowreel = logoShowreelRef.current
+
+		let ctx = gsap.context(() => {
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: element,
+					start: "top top",
+					end: "bottom 20%",
+					scrub: true,
+					toggleActions: "play none none reverse",
+				},
+			})
+
+			ScrollTrigger.create({
+				trigger: element,
+				start: "top+=200 top",
+				end: "bottom 20%",
+				onEnter: () => {
+					const state = Flip.getState(element)
+					setLogoClasses("scale-75")
+					logoHeader.appendChild(element)
+					Flip.from(state, {
+						duration: 0.5,
+						ease: "power1.inOut",
+					})
+				},
+				onLeaveBack: () => {
+					const state = Flip.getState(element)
+					setLogoClasses("scale-200")
+					logoShowreel.appendChild(element)
+					Flip.from(state, {
+						duration: 0.5,
+						ease: "power4.inOut",
+					})
+				},
+			})
+		})
+
+		return () => ctx.revert()
+	}, [logoRef])
+
 	return (
 		<div className='pt-[--header-height-desktop]'>
-			<div className='fixed left-0 top-0 w-screen h-svh flex justify-center items-center lg:scale-200 z-20 pointer-events-none'>
-				<Logo />
+			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 px-[--margin-mobile] lg:px-[--margin-desktop] flex justify-start items-end z-150 pointer-events-none'>
+				<div className='w-full max-w-desktop mx-auto'>
+					<div ref={logoHeaderRef} className='h-full'></div>
+				</div>
+			</div>
+			<div
+				ref={logoShowreelRef}
+				className='fixed left-0 top-0 w-screen h-svh flex justify-center items-center z-150 pointer-events-none'
+			>
+				<div ref={logoRef} className=''>
+					<Logo
+						classes={`transition-transform duration-300 ease-in ${logoClasses}`}
+					/>
+				</div>
 			</div>
 			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto overflow-clip'>
 				{showreelImages.map((image, index) => {
