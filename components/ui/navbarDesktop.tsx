@@ -17,7 +17,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 	const { transitionOnClick } = usePageContext()
 
 	return (
-		<div className='w-full h-[--header-height-desktop] max-w-desktop mx-auto flex justify-between items-end'>
+		<div className='w-full h-[--header-height-desktop] max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-between items-end'>
 			<ButtonLogo
 				handleClick={() =>
 					transitionOnClick({ slug: "/", title: "Home", order: 1 })

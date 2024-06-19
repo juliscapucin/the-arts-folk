@@ -31,6 +31,19 @@ export async function getCategories(): Promise<Category[]> {
 	)
 }
 
+export async function getAllNews(): Promise<News[]> {
+	return client.fetch(
+		groq`*[_type == "news"]{
+      _id,
+      "slug": slug.current,
+      title,
+      subtitle,
+      releaseDate,
+      images,
+   }`
+	)
+}
+
 export async function getNews(slug: string): Promise<News> {
 	return client.fetch(
 		groq`*[_type == "news" && slug.current == $slug][0]{
