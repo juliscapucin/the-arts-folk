@@ -19,7 +19,7 @@ const delay = 1000
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
-	const [logoClasses, setLogoClasses] = useState("scale-200")
+	const [logoClasses, setLogoClasses] = useState("sm:scale-150 lg:scale-200")
 	const logoRef = useRef<HTMLDivElement | null>(null)
 	const logoHeaderRef = useRef<HTMLDivElement | null>(null)
 	const logoShowreelRef = useRef<HTMLDivElement | null>(null)
@@ -56,23 +56,13 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		const logoShowreel = logoShowreelRef.current
 
 		let ctx = gsap.context(() => {
-			const tl = gsap.timeline({
-				scrollTrigger: {
-					trigger: element,
-					start: "top top",
-					end: "bottom 20%",
-					scrub: true,
-					toggleActions: "play none none reverse",
-				},
-			})
-
 			ScrollTrigger.create({
 				trigger: element,
-				start: "top+=200 top",
+				start: "top+=100 top",
 				end: "bottom 20%",
 				onEnter: () => {
 					const state = Flip.getState(element)
-					setLogoClasses("scale-75")
+					setLogoClasses("origin-left scale-50 md:scale-75")
 					logoHeader.appendChild(element)
 					Flip.from(state, {
 						duration: 0.5,
@@ -81,7 +71,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				},
 				onLeaveBack: () => {
 					const state = Flip.getState(element)
-					setLogoClasses("scale-200")
+					setLogoClasses("sm:scale-150 lg:scale-200")
 					logoShowreel.appendChild(element)
 					Flip.from(state, {
 						duration: 0.5,
