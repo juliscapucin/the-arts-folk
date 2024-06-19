@@ -3,7 +3,6 @@
 import { Suspense } from "react"
 
 import { News, Showreel } from "@/components"
-import { Container } from "@/components/ui"
 
 import type { CloudinaryImage } from "@/types"
 

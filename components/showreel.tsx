@@ -75,7 +75,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 					logoShowreel.appendChild(element)
 					Flip.from(state, {
 						duration: 0.5,
-						ease: "power4.inOut",
+						ease: "power1.inOut",
 					})
 				},
 			})
