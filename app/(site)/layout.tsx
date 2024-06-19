@@ -39,8 +39,8 @@ export async function generateMetadata() {
 	}
 }
 
-// Load custom font //
-const myFont = localFont({
+// Load custom fonts //
+const displayFont = localFont({
 	variable: "--font-primary",
 	src: [
 		{
@@ -63,7 +63,7 @@ export default async function RootLayout({
 		<html lang='en' className='overflow-y-scroll overflow-x-clip'>
 			<PageContextProvider>
 				<body
-					className={`${myFont.className} relative w-screen max-w-desktop min-h-svh mx-auto px-[--margin-mobile] md:px-[--margin-desktop] overflow-x-clip bg-white uppercase font-text font-thin`}
+					className={`${displayFont.className} relative w-screen max-w-desktop min-h-svh mx-auto px-[--margin-mobile] md:px-[--margin-desktop] overflow-x-clip bg-white uppercase font-text font-thin`}
 				>
 					<Intro />
 					<PageTransition />

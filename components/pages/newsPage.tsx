@@ -58,7 +58,7 @@ export default function NewsPage(news: News) {
 					<Heading tag='h1' classes=''>
 						{title}
 					</Heading>
-					<h2>{subtitle}</h2>
+					<h2 className='font-script capitalize'>{subtitle}</h2>
 				</div>
 				{/* Release date + project info*/}
 				<div className='w-64 h-16'>

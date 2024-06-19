@@ -27,6 +27,7 @@ const config: Config = {
 		fontFamily: {
 			heading: "var(--font-primary), sans-serif",
 			text: "var(--font-secondary), sans-serif",
+			script: "var(--font-script), sans-serif",
 		},
 		fontSize: {
 			displayLarge: ["52px", "1"],
