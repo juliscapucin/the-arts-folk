@@ -1,9 +1,22 @@
 import type { ScrapbookImage } from "@/types"
 
+type artistPageRef = {
+	_type: "reference"
+	_key: string
+	_ref: string
+}
+
 export type News = {
-	name: string
+	title: string
+	subtitle: string
+	projectInfo: string
+	releaseDate: string
 	slug: string
 	description: string
 	scrapbookImages: ScrapbookImage[]
-	artistWebsite: string
+	artistPage: artistPageRef
+	images: {
+		alt: string
+		url: string
+	}[]
 }

@@ -28,5 +28,5 @@ export default async function Page() {
 
 	if (!news) return notFound()
 
-	return <NewsPage news={news} />
+	return notFound()
 }

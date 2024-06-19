@@ -54,6 +54,7 @@ export async function getNews(slug: string): Promise<News> {
       projectInfo,
       releaseDate,
       images,
+      artistPage
    }`,
 		{ slug }
 	)
