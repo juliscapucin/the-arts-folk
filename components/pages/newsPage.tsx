@@ -16,34 +16,37 @@ import { ButtonClose } from "@/components/buttons"
 export default function NewsPage(news: News) {
 	const { title, subtitle, projectInfo, releaseDate, images, artistPage } = news
 	const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
+	const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false)
 	const thumbnailsRef = useRef<HTMLDivElement>(null)
 	const mainImagesRef = useRef<HTMLDivElement>(null)
+	const projectInfoOuterRef = useRef<HTMLDivElement>(null)
+	const projectInfoInnerRef = useRef<HTMLDivElement>(null)
 
 	function openFullscreen(e: React.MouseEvent<HTMLButtonElement>) {
 		setIsFullscreenOpen(true)
 		// console.log(e.target.parentElement)
 	}
 
+	function toggleProjectInfo() {
+		setIsProjectInfoOpen(!isProjectInfoOpen)
+	}
+
 	useLayoutEffect(() => {
 		if (!mainImagesRef.current || !thumbnailsRef.current) return
-
-		console.log("thumbnails")
 
 		gsap.registerPlugin(ScrollTrigger)
 		const thumbnails = thumbnailsRef.current
 		const mainImages = mainImagesRef.current
 
+		//TODO: add gsap.ctx
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: mainImages,
 				start: "top top+=100",
 				end: "bottom bottom-=100",
 				scrub: 1,
-				markers: true,
 			},
 		})
-
-		const vhInPixels = window.innerHeight / 100
 
 		tl.to(thumbnails, {
 			yPercent: -88,
@@ -51,6 +54,37 @@ export default function NewsPage(news: News) {
 			ease: "none",
 		})
 	}, [thumbnailsRef, mainImagesRef])
+
+	useLayoutEffect(() => {
+		if (!projectInfoOuterRef.current || !projectInfoInnerRef.current) return
+
+		const projectInfoOuter = projectInfoOuterRef.current
+		const projectInfoInner = projectInfoInnerRef.current
+
+		if (isProjectInfoOpen) {
+			gsap.to(projectInfoOuter, {
+				yPercent: 0,
+				duration: 0.3,
+				ease: "power2.out",
+			})
+			gsap.to(projectInfoInner, {
+				yPercent: 0,
+				duration: 0.3,
+				ease: "power2.out",
+			})
+		} else {
+			gsap.to(projectInfoOuter, {
+				yPercent: -100,
+				duration: 0.3,
+				ease: "power2.in",
+			})
+			gsap.to(projectInfoInner, {
+				yPercent: 100,
+				duration: 0.3,
+				ease: "power2.in",
+			})
+		}
+	}, [isProjectInfoOpen])
 
 	return (
 		<>
@@ -62,15 +96,16 @@ export default function NewsPage(news: News) {
 				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block'>
 					<div className='relative max-w-desktop mx-auto'>
 						<aside className='absolute top-[--header-height-desktop] right-[--margin-mobile] lg:[--margin-desktop] pt-16 w-40 h-full z-80'>
-							<div className='relative w-full h-40 flex justify-center items-center pointer-events-auto'>
+							{/* Button Close */}
+							<div className='relative w-full h-40 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
 									color={"secondary"}
 									action={() => console.log("close")}
 								/>
 							</div>
+							{/* Minimap Position */}
 							<div className='absolute top-[calc(--header-height-desktop*2)] w-full lg:w-[10vw] max-w-40 h-[10vh] border border-secondary z-150'></div>
 							<div ref={thumbnailsRef} className='space-y-2'>
-								{/* Minimap Position */}
 								{images.map((image, index) => (
 									<button
 										onClick={() => console.log("clicked")}
@@ -120,16 +155,33 @@ export default function NewsPage(news: News) {
 						<p className='text-right font-script text-displayLarge'>
 							{releaseDate}
 						</p>
-						<div className='h-8 overflow-clip'>
-							<button className='mb-4 w-full text-right font-text uppercase text-labelMedium md:text-labelLarge flex gap-4 items-center justify-end'>
-								Project info{" "}
-								<span>
+						<div className='h-8'>
+							<button
+								onClick={toggleProjectInfo}
+								className='mb-4 w-full text-right font-text uppercase text-labelMedium md:text-labelLarge flex gap-4 items-center justify-end'
+							>
+								Project info
+								<span
+									className={`${
+										isProjectInfoOpen ? "rotate-180" : ""
+									} transition-transform duration-300 ease-in-out`}
+								>
 									<IconChevron />
 								</span>
 							</button>
-							<div>
-								<p className='font-text'>{projectInfo}</p>
-								<a href='/'>Artist page</a>
+							<div
+								ref={projectInfoOuterRef}
+								className='absolute left-[--margin-mobile] md:left-[--margin-desktop] right-64 h-64 overflow-clip pointer-events-none z-150'
+							>
+								<div ref={projectInfoInnerRef} className='my-8 h-64 bg-primary'>
+									<p className='mb-8 font-text max-w-prose'>{projectInfo}</p>
+									<a
+										className='block max-w-prose font-text text-center'
+										href='/'
+									>
+										Go to Artist page
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
