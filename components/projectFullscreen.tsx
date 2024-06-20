@@ -21,20 +21,33 @@ export default function ProjectFullscreen({
 	setIsFullscreenOpen,
 }: ProjectFullscreenProps) {
 	const projectFullscreenRef = useRef<HTMLDivElement>(null)
+	const closeButtonRef = useRef<HTMLDivElement>(null)
 
 	useLayoutEffect(() => {
 		if (isFullscreenOpen) {
 			// gsap.to("body", { overflow: "hidden" })
-			gsap.to(projectFullscreenRef.current, { yPercent: 0, duration: 0.5 })
+			gsap.to(projectFullscreenRef.current, {
+				yPercent: 0,
+				duration: 0.3,
+				ease: "power2.out",
+			})
+			gsap.to(closeButtonRef.current, { opacity: 1, delay: 0.5 })
 		} else {
 			// gsap.to("body", { overflow: "auto" })
-			gsap.to(projectFullscreenRef.current, { yPercent: -100, duration: 0.5 })
+			gsap.to(projectFullscreenRef.current, {
+				yPercent: 100,
+				duration: 0.3,
+				ease: "power2.in",
+			})
+			gsap.to(closeButtonRef.current, { opacity: 0 })
 		}
 	}, [isFullscreenOpen])
 
 	useLayoutEffect(() => {
-		!isFullscreenOpen &&
-			gsap.set(projectFullscreenRef.current, { yPercent: -100 })
+		if (!isFullscreenOpen) {
+			gsap.set(projectFullscreenRef.current, { yPercent: 100 })
+			gsap.set(closeButtonRef.current, { opacity: 0 })
+		}
 	}, [])
 
 	function closeFullscreen() {
@@ -43,7 +56,10 @@ export default function ProjectFullscreen({
 
 	return (
 		<>
-			<div className='fixed z-[301]'>
+			<div
+				ref={closeButtonRef}
+				className='fixed left-0 top-8 right-8 flex justify-end z-[301]'
+			>
 				<ButtonClose
 					color='primary'
 					action={closeFullscreen}
@@ -52,7 +68,7 @@ export default function ProjectFullscreen({
 			</div>
 			<div
 				ref={projectFullscreenRef}
-				className='fixed top-0 left-0 w-screen h-screen overflow-y-auto z-fullscreen'
+				className='fixed top-0 left-0 w-screen h-screen overflow-y-auto space-y-8 bg-primary z-fullscreen'
 			>
 				{images.map((image, index) =>
 					image.url.includes("vimeo") ? (

@@ -1,9 +1,11 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useLayoutEffect, use } from "react"
 import { CldImage } from "next-cloudinary"
-
 import ReactPlayer from "react-player/vimeo"
+
+import { gsap } from "gsap"
+import ScrollTrigger from "gsap/ScrollTrigger"
 
 import { News } from "@/types"
 import { ProjectFullscreen } from "@/components"
@@ -22,30 +24,57 @@ export default function NewsPage(news: News) {
 		// console.log(e.target.parentElement)
 	}
 
+	useLayoutEffect(() => {
+		if (!mainImagesRef.current || !thumbnailsRef.current) return
+
+		console.log("thumbnails")
+
+		gsap.registerPlugin(ScrollTrigger)
+		const thumbnails = thumbnailsRef.current
+		const mainImages = mainImagesRef.current
+
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: mainImages,
+				start: "top top+=100",
+				end: "bottom bottom-=100",
+				scrub: 1,
+				markers: true,
+			},
+		})
+
+		const vhInPixels = window.innerHeight / 100
+
+		tl.to(thumbnails, {
+			yPercent: -88,
+			duration: 1,
+			ease: "none",
+		})
+	}, [thumbnailsRef, mainImagesRef])
+
 	return (
 		<>
 			<ProjectFullscreen
 				{...{ images, isFullscreenOpen, setIsFullscreenOpen }}
 			/>
-			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] pr-64'>
+			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] md:pr-64'>
 				{/* Thumbnails */}
-				<div
-					ref={thumbnailsRef}
-					className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none'
-				>
+				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block'>
 					<div className='relative max-w-desktop mx-auto'>
-						<aside className='absolute top-[--header-height-desktop] right-0 pt-16 w-40 h-full z-80'>
+						<aside className='absolute top-[--header-height-desktop] right-[--margin-mobile] lg:[--margin-desktop] pt-16 w-40 h-full z-80'>
 							<div className='relative w-full h-40 flex justify-center items-center pointer-events-auto'>
 								<ButtonClose
 									color={"secondary"}
 									action={() => console.log("close")}
 								/>
 							</div>
-							<div className='space-y-8'>
+							<div className='absolute top-[calc(--header-height-desktop*2)] w-full lg:w-[10vw] max-w-40 h-[10vh] border border-secondary z-150'></div>
+							<div ref={thumbnailsRef} className='space-y-2'>
+								{/* Minimap Position */}
 								{images.map((image, index) => (
 									<button
 										onClick={() => console.log("clicked")}
-										className='relative w-full h-auto min-h-16'
+										className='relative w-full lg:w-[8vw] max-w-40'
 										key={`news-thumbnail-${index}`}
 									>
 										{image.url.includes("vimeo") ? (
@@ -64,7 +93,7 @@ export default function NewsPage(news: News) {
 												className={`w-full object-contain`}
 												src={image.url}
 												alt={`Photo by hello`}
-												sizes='(max-width: 768px) 20vw, (max-width: 1200px) 20vw, 10vw'
+												sizes='10vw'
 												quality={70}
 												width={image.width}
 												height={image.height}
