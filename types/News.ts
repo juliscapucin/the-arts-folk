@@ -18,5 +18,7 @@ export type News = {
 	images: {
 		alt: string
 		url: string
+		height: number
+		width: number
 	}[]
 }
