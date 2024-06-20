@@ -61,6 +61,7 @@ const config: Config = {
 				100: "100",
 				150: "150",
 				intro: "200",
+				fullscreen: "300",
 			},
 			letterSpacing: { tightest: "-.075em" },
 			scale: {

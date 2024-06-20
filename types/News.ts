@@ -1,4 +1,4 @@
-import type { ScrapbookImage } from "@/types"
+import { CloudinaryImage } from "./CloudinaryImage"
 
 type artistPageRef = {
 	_type: "reference"
@@ -13,12 +13,6 @@ export type News = {
 	releaseDate: string
 	slug: string
 	description: string
-	scrapbookImages: ScrapbookImage[]
 	artistPage: artistPageRef
-	images: {
-		alt: string
-		url: string
-		height: number
-		width: number
-	}[]
+	images: CloudinaryImage[]
 }
