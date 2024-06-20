@@ -1,11 +1,5 @@
 @import url("https://use.typekit.net/xxu6xgk.css");
 
-@font-face {
-	font-family: "hammock";
-	src: url("/fonts/hammock/hammock-regular.woff2") format("woff2"),
-		url("/fonts/hammock/hammock-regular.woff") format("woff");
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,7 +7,6 @@
 @layer base {
 	:root {
 		--font-secondary: "canada-type-gibson", sans-serif;
-		--font-script: "hammock", sans-serif;
 		--color-primary: 255 255 255;
 		--color-primary-rgb: 255, 255, 255;
 		/* --color-primary: 249 246 238;

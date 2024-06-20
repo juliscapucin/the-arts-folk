@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { CldImage } from "next-cloudinary"
 
 import ReactPlayer from "react-player/vimeo"
 
 import { News } from "@/types"
-import { NewsFullscreen } from "@/components"
+import { ProjectFullscreen } from "@/components"
 import { Heading } from "@/components/ui"
 import { IconChevron } from "@/components/icons"
 import { ButtonClose } from "@/components/buttons"
@@ -14,6 +14,8 @@ import { ButtonClose } from "@/components/buttons"
 export default function NewsPage(news: News) {
 	const { title, subtitle, projectInfo, releaseDate, images, artistPage } = news
 	const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
+	const thumbnailsRef = useRef<HTMLDivElement>(null)
+	const mainImagesRef = useRef<HTMLDivElement>(null)
 
 	function openFullscreen(e: React.MouseEvent<HTMLButtonElement>) {
 		setIsFullscreenOpen(true)
@@ -22,10 +24,15 @@ export default function NewsPage(news: News) {
 
 	return (
 		<>
-			<NewsFullscreen {...{ images, isFullscreenOpen, setIsFullscreenOpen }} />
+			<ProjectFullscreen
+				{...{ images, isFullscreenOpen, setIsFullscreenOpen }}
+			/>
 			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] pr-64'>
 				{/* Thumbnails */}
-				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none'>
+				<div
+					ref={thumbnailsRef}
+					className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none'
+				>
 					<div className='relative max-w-desktop mx-auto'>
 						<aside className='absolute top-[--header-height-desktop] right-0 pt-16 w-40 h-full z-80'>
 							<div className='relative w-full h-40 flex justify-center items-center pointer-events-auto'>
@@ -99,7 +106,10 @@ export default function NewsPage(news: News) {
 					</div>
 				</div>
 				{/* Main images */}
-				<section className='flex flex-col gap-8 w-full py-16'>
+				<section
+					ref={mainImagesRef}
+					className='flex flex-col gap-8 w-full py-16'
+				>
 					{images.map((image, index) => {
 						return (
 							<button

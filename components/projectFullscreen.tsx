@@ -9,17 +9,17 @@ import ReactPlayer from "react-player/vimeo"
 import { CloudinaryImage } from "@/types"
 import { ButtonClose } from "@/components/buttons"
 
-type NewsFullscreenProps = {
+type ProjectFullscreenProps = {
 	images: CloudinaryImage[]
 	isFullscreenOpen: boolean
 	setIsFullscreenOpen: (arg0: boolean) => void
 }
 
-export default function NewsFullscreen({
+export default function ProjectFullscreen({
 	images,
 	isFullscreenOpen,
 	setIsFullscreenOpen,
-}: NewsFullscreenProps) {
+}: ProjectFullscreenProps) {
 	const projectFullscreenRef = useRef<HTMLDivElement>(null)
 
 	useLayoutEffect(() => {
@@ -65,6 +65,7 @@ export default function NewsFullscreen({
 							controls={false}
 							muted={true}
 							loop={true}
+							key={`project-fullscreen-${index}`}
 						/>
 					) : (
 						<CldImage
@@ -75,6 +76,7 @@ export default function NewsFullscreen({
 							quality={100}
 							width={image.width}
 							height={image.height}
+							key={`project-fullscreen-${index}`}
 						/>
 					)
 				)}
