@@ -135,7 +135,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 							opacity: 0,
 						},
 						{
-							yPercent: 110,
+							yPercent: 135,
 							opacity: 1,
 							stagger: 0.07,
 							duration: 0.6,
@@ -227,10 +227,10 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 				{/* Gradients */}
 				<div
-					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-40 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
+					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
 				></div>
 				<div
-					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent z-50`}
+					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
 				></div>
 
 				{/* Artists Menu */}
