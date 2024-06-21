@@ -100,7 +100,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 					>
 						<div
 							ref={cookieRef}
-							className='translate-x-full space-x-4 bg-secondary text-primary px-3 py-2 pointer-events-auto'
+							className='translate-x-full space-x-4 bg-secondary text-primary px-3 py-2 pointer-events-auto mb-8'
 						>
 							<Link href='/' passHref legacyBehavior>
 								<button
