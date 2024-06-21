@@ -84,7 +84,7 @@ export default function News({ news }: NewsProps) {
 							}`}
 						>
 							{/* Release Date */}
-							<p className='block font-script text-headlineLarge md:text-displayMedium text-center'>
+							<p className='block font-script text-headlineLarge md:text-displayMedium text-center mx-auto'>
 								{project.releaseDate}
 							</p>
 
@@ -113,8 +113,8 @@ export default function News({ news }: NewsProps) {
 							)}
 
 							{/* Project Info */}
-							<p className='block text-center'>{project.title}</p>
-							<p className='block text-center font-script text-headlineSmall md:text-headlineLarge capitalize'>
+							<p className='block text-center mx-auto'>{project.title}</p>
+							<p className='block text-center mx-auto font-script text-headlineSmall md:text-headlineLarge capitalize'>
 								By {project.artistInfo?.name}
 							</p>
 						</button>
