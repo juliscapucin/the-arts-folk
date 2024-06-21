@@ -58,7 +58,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		let ctx = gsap.context(() => {
 			ScrollTrigger.create({
 				trigger: element,
-				start: "top+=100 top",
+				start: "top top",
 				end: "bottom 20%",
 				onEnter: () => {
 					const state = Flip.getState(element)

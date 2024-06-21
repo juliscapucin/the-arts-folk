@@ -10,40 +10,23 @@ type NewsProps = {
 }
 
 export default function News({ news }: NewsProps) {
-	// const smallImageHorizontal = "w-1/2"
-	// const smallImageVertical = "w-1/4"
-	// const bigImageHorizontal = "w-1/2"
-	// const bigImageVertical = "w-1/2"
-
 	return (
-		<section className='relative mt-64 mb-16 space-y-8 w-full max-w-desktop bg-faded-5 flex flex-wrap'>
+		<section className='relative mt-64 mb-16 w-full max-w-desktop flex flex-wrap'>
 			{news.map((project) => {
-				// console.log(project)
-
 				const aspectRatio = project.images[0].width / project.images[0].height
 
-				const imageSizeSmall = aspectRatio > 1 ? "w-1/2" : "w-1/4"
-				const imageSizeBig = aspectRatio > 1 ? "w-1/2" : "w-1/2"
+				const imageSizeSmall = aspectRatio > 1 ? "w-1/3" : "w-1/4"
+				const imageSizeBig = aspectRatio > 1 ? "w-3/4" : "w-2/5"
 
-				console.log(aspectRatio)
-
-				// const imageSizeHorizontal =
-				// 	project.newsPageSize === "small"
-				// 		? smallImageHorizontal
-				// 		: bigImageHorizontal
-
-				// const imageSizeVertical =
-				// 	project.newsPageSize === "small"
-				// 		? smallImageVertical
-				// 		: bigImageVertical
+				console.log(project.newsPageAlignment)
 
 				return (
 					<article
-						className='relative basis-1/2 h-[70svh] bg-faded-10'
+						className='relative basis-1/2 h-[70svh] flex justify-center items-center'
 						key={project.slug}
 					>
 						<div
-							className={`relative overflow-clip flex flex-col ${
+							className={`relative overflow-clip bg-faded-5 flex flex-col ${
 								project.newsPageSize === "small" ? imageSizeSmall : imageSizeBig
 							}`}
 						>
