@@ -79,7 +79,8 @@ export default async function RootLayout({
 					<Header navLinks={navLinks} />
 					{children}
 					<Footer />
-					<CookiesServer />
+					{/* TODO: Fix this */}
+					{/* <CookiesServer /> */}
 				</body>
 			</PageContextProvider>
 		</html>
