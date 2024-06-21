@@ -61,7 +61,7 @@ export async function getProject(slug: string): Promise<Project> {
       _id,
       "slug": slug.current,
       title,
-      "artist": artist[]->name,
+      artist,
       projectInfo,
       releaseDate,
       images,

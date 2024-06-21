@@ -7,14 +7,23 @@ import ReactPlayer from "react-player/vimeo"
 import { gsap } from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
 
-import { Project } from "@/types"
+import { usePageContext } from "@/context"
+
 import { ProjectFullscreen } from "@/components"
 import { Heading } from "@/components/ui"
 import { IconChevron } from "@/components/icons"
 import { ButtonClose } from "@/components/buttons"
+import { Artist, Project } from "@/types"
 
-export default function NewsPage(news: Project) {
-	const { title, artist, projectInfo, releaseDate, images } = news
+type NewsPageProps = {
+	news: Project
+	artist: Artist
+}
+
+export default function NewsPage({ news, artist }: NewsPageProps) {
+	const { title, projectInfo, releaseDate, images } = news
+	const { transitionOnClick } = usePageContext()
+
 	const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
 	const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false)
 	const thumbnailsRef = useRef<HTMLDivElement>(null)
@@ -110,7 +119,7 @@ export default function NewsPage(news: Project) {
 							<div className='relative w-full h-40 pt-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
 									color={"secondary"}
-									action={() => console.log("close")}
+									action={() => transitionOnClick("/")}
 								/>
 							</div>
 							{/* Minimap Marker */}
@@ -164,7 +173,7 @@ export default function NewsPage(news: Project) {
 							{title}
 						</Heading>
 						<h2 className='font-script capitalize text-displaySmall'>
-							{artist}
+							By {artist.name}
 						</h2>
 					</div>
 					{/* Release date + project info*/}
