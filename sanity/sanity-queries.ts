@@ -49,6 +49,8 @@ export async function getProjects(): Promise<Project[]> {
       releaseDate,
       images,
       isNews,
+      newsPageSize,
+      newsPageAlignment
    }`
 	)
 }
@@ -63,7 +65,7 @@ export async function getProject(slug: string): Promise<Project> {
       projectInfo,
       releaseDate,
       images,
-      isNews,
+      isNews
    }`,
 		{ slug }
 	)

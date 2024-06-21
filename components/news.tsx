@@ -10,27 +10,75 @@ type NewsProps = {
 }
 
 export default function News({ news }: NewsProps) {
+	// const smallImageHorizontal = "w-1/2"
+	// const smallImageVertical = "w-1/4"
+	// const bigImageHorizontal = "w-1/2"
+	// const bigImageVertical = "w-1/2"
+
 	return (
-		<section className='relative mt-64 mb-16 space-y-8 max-w-desktop md:flex items-start gap-8'>
+		<section className='relative mt-64 mb-16 space-y-8 w-full max-w-desktop bg-faded-5 flex flex-wrap'>
 			{news.map((project) => {
-				console.log(project)
+				// console.log(project)
+
+				const aspectRatio = project.images[0].width / project.images[0].height
+
+				const imageSizeSmall = aspectRatio > 1 ? "w-1/2" : "w-1/4"
+				const imageSizeBig = aspectRatio > 1 ? "w-1/2" : "w-1/2"
+
+				console.log(aspectRatio)
+
+				// const imageSizeHorizontal =
+				// 	project.newsPageSize === "small"
+				// 		? smallImageHorizontal
+				// 		: bigImageHorizontal
+
+				// const imageSizeVertical =
+				// 	project.newsPageSize === "small"
+				// 		? smallImageVertical
+				// 		: bigImageVertical
+
 				return (
 					<article
-						className='relative w-full md:w-1/2 md:max-w-1/2 min-w-[200px] h-[60svh] flex flex-col bg-faded-10'
+						className='relative basis-1/2 h-[70svh] bg-faded-10'
 						key={project.slug}
 					>
-						<div className=''>
-							<p className='font-script text-displayMedium text-center'>
+						<div
+							className={`relative overflow-clip flex flex-col ${
+								project.newsPageSize === "small" ? imageSizeSmall : imageSizeBig
+							}`}
+						>
+							{/* Release Date */}
+							<p className='block font-script text-displayMedium text-center'>
 								{project.releaseDate}
 							</p>
-							<NewsImage
-								image={project.images[0]}
-								artistName={
-									project.artistInfo?.name || "The Arts Folk new project"
-								}
-							/>
-							<p className='text-center'>{project.title}</p>
-							<p className='text-center font-script text-headlineLarge capitalize'>
+
+							{/* Project Image */}
+							{project.images[0].url.includes("vimeo") ? (
+								<ReactPlayer
+									url={project.images[0].url}
+									playing
+									playsinline
+									width='100%'
+									height='100%'
+									controls={false}
+									muted={true}
+									loop={true}
+								/>
+							) : (
+								<CldImage
+									className='object-contain'
+									src={project.images[0].url}
+									alt={`Photo by ${project.artistInfo?.name}`}
+									sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
+									quality={70}
+									width={project.images[0].width}
+									height={project.images[0].height}
+								/>
+							)}
+
+							{/* Project Info */}
+							<p className='block text-center'>{project.title}</p>
+							<p className='block text-center font-script text-headlineLarge capitalize'>
 								By {project.artistInfo?.name}
 							</p>
 						</div>
@@ -38,39 +86,5 @@ export default function News({ news }: NewsProps) {
 				)
 			})}
 		</section>
-	)
-}
-
-type NewsImageProps = {
-	artistName: string
-	image: CloudinaryImage
-}
-
-const NewsImage = ({ artistName, image }: NewsImageProps) => {
-	return (
-		<div className='relative flex-1'>
-			{image.url.includes("vimeo") ? (
-				<ReactPlayer
-					url={image.url}
-					playing
-					playsinline
-					width='100%'
-					height='100%'
-					controls={false}
-					muted={true}
-					loop={true}
-				/>
-			) : (
-				<CldImage
-					className={`object-contain`}
-					src={image.url}
-					alt={`Photo by ${artistName}`}
-					sizes='(max-width: 768px) 40vw, (max-width: 1200px) 20vw, 20vw'
-					quality={70}
-					width={image.width}
-					height={image.height}
-				/>
-			)}
-		</div>
 	)
 }

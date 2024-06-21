@@ -13,4 +13,6 @@ export type Project = {
 	artistInfo?: Artist
 	releaseDate: string
 	isNews: boolean
+	newsPageSize: string
+	newsPageAlignment: string
 }
