@@ -25,7 +25,7 @@ export const dynamic = "force-dynamic"
 
 export default async function Page() {
 	const projects = await getProjects()
-	const news = projects.find((project) => project.isNews)
+	const news = projects.filter((project) => !project.isNews)
 
 	if (!news) return notFound()
 

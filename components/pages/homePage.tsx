@@ -2,7 +2,8 @@
 
 import { Suspense } from "react"
 
-import { News, Showreel } from "@/components"
+import { Showreel } from "@/components"
+import { NewsServer } from "@/components/server"
 
 import type { CloudinaryImage } from "@/types"
 
@@ -16,7 +17,7 @@ export default function HomePage({ showreelImages }: HomePageProps) {
 			<Suspense>
 				<Showreel {...{ showreelImages }} />
 			</Suspense>
-			<News />
+			<NewsServer />
 		</main>
 	)
 }

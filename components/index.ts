@@ -4,6 +4,7 @@ import Copyright from "./copyright"
 import Intro from "./intro"
 import News from "./news"
 import ProjectFullscreen from "./projectFullscreen"
+import Projects from "./projects"
 import { PageTransition } from "./pageTransition"
 import Showreel from "./showreel"
 
@@ -14,6 +15,7 @@ export {
 	Intro,
 	News,
 	ProjectFullscreen,
+	Projects,
 	PageTransition,
 	Showreel,
 }

@@ -3,56 +3,55 @@
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
-type NewsImageProps = {
-	url: string
-	artistName: string
+import { CloudinaryImage, Project } from "@/types"
+
+type NewsProps = {
+	news: Project[]
 }
 
-export default function News() {
+export default function News({ news }: NewsProps) {
 	return (
-		<section className='mt-64 mb-16 space-y-8 max-w-desktop'>
-			<NewsRow />
-			<NewsRow />
-			<NewsRow />
+		<section className='relative mt-64 mb-16 space-y-8 max-w-desktop md:flex items-start gap-8'>
+			{news.map((project) => {
+				console.log(project)
+				return (
+					<article
+						className='relative w-full md:w-1/2 md:max-w-1/2 min-w-[200px] h-[60svh] flex flex-col bg-faded-10'
+						key={project.slug}
+					>
+						<div className=''>
+							<p className='font-script text-displayMedium text-center'>
+								{project.releaseDate}
+							</p>
+							<NewsImage
+								image={project.images[0]}
+								artistName={
+									project.artistInfo?.name || "The Arts Folk new project"
+								}
+							/>
+							<p className='text-center'>{project.title}</p>
+							<p className='text-center font-script text-headlineLarge capitalize'>
+								By {project.artistInfo?.name}
+							</p>
+						</div>
+					</article>
+				)
+			})}
 		</section>
 	)
 }
 
-const NewsRow = () => {
-	return (
-		<div className='relative h-screen w-full flex flex-col md:flex-row gap-8 justify-between'>
-			<a
-				href={"/news/news-1"}
-				className='relative flex-1 min-w-[250px] max-w-[500px] aspect-[3/4] self-start'
-			>
-				<p className=''>12.06.24</p>
-				<NewsImage
-					url='https://res.cloudinary.com/dwsipwsoc/image/upload/c_limit,w_1080/f_auto/q_50/v1718127568/Isaac_Marley_Morgan_Drakes_Danny_Fox_2000px_height_ny3h9m?_a=BAVAEyBy0'
-					artistName='Marlen Mueller'
-				/>
-				<p className='absolute -bottom-2'>Avonté</p>
-			</a>
-			<a
-				href={"/news/news-1"}
-				className='relative flex-1 min-w-[250px] max-w-[500px] aspect-[3/4] self-end'
-			>
-				<p className=''>12.06.24</p>
-				<NewsImage
-					url='https://res.cloudinary.com/dwsipwsoc/image/upload/c_limit,w_1080/f_auto/q_50/v1718127568/Isaac_Marley_Morgan_Drakes_Danny_Fox_2000px_height_ny3h9m?_a=BAVAEyBy0'
-					artistName='Marlen Mueller'
-				/>
-				<p className='absolute -bottom-2'>Avonté</p>
-			</a>
-		</div>
-	)
+type NewsImageProps = {
+	artistName: string
+	image: CloudinaryImage
 }
 
-const NewsImage = ({ url, artistName }: NewsImageProps) => {
+const NewsImage = ({ artistName, image }: NewsImageProps) => {
 	return (
-		<div className=''>
-			{url.includes("vimeo") ? (
+		<div className='relative flex-1'>
+			{image.url.includes("vimeo") ? (
 				<ReactPlayer
-					url={url}
+					url={image.url}
 					playing
 					playsinline
 					width='100%'
@@ -64,11 +63,12 @@ const NewsImage = ({ url, artistName }: NewsImageProps) => {
 			) : (
 				<CldImage
 					className={`object-contain`}
-					src={url}
+					src={image.url}
 					alt={`Photo by ${artistName}`}
 					sizes='(max-width: 768px) 40vw, (max-width: 1200px) 20vw, 20vw'
 					quality={70}
-					fill
+					width={image.width}
+					height={image.height}
 				/>
 			)}
 		</div>

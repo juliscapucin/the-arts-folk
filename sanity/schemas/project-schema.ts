@@ -126,8 +126,6 @@ const projectSchema = {
 				],
 				layout: "dropdown",
 			},
-			//TODO: Make icons work
-			inputComponent: CustomSelect,
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
 		},
