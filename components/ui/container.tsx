@@ -20,7 +20,7 @@ const Container = forwardRef(
 		return (
 			<HtmlTag
 				ref={ref}
-				className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] mx-[--margin-mobile] lg:mx-[--margin-desktop] max-w-desktop ${classes} ${
+				className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] ${classes} ${
 					hasPadding ? "px-[--padding-mobile] lg:px-[padding-desktop]" : ""
 				} ${bgColor ? bgColor : "bg-primary"}`}
 			>

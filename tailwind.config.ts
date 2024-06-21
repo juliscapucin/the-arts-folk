@@ -27,6 +27,7 @@ const config: Config = {
 		fontFamily: {
 			heading: "var(--font-primary), sans-serif",
 			text: "var(--font-secondary), sans-serif",
+			script: "var(--font-script), sans-serif",
 		},
 		fontSize: {
 			displayLarge: ["52px", "1"],
@@ -50,7 +51,7 @@ const config: Config = {
 				"fade-in": "fadeIn 1s linear forwards",
 			},
 			maxWidth: {
-				desktop: "1600px",
+				desktop: "var(--max-width)",
 			},
 			zIndex: {
 				5: "5",
@@ -60,6 +61,7 @@ const config: Config = {
 				100: "100",
 				150: "150",
 				intro: "200",
+				fullscreen: "300",
 			},
 			letterSpacing: { tightest: "-.075em" },
 			scale: {

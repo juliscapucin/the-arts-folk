@@ -93,7 +93,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 				<>
 					{/* Cookie button */}
 					<Container
-						classes='background-white absolute top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
+						classes='background-white fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
 						bgColor={isOverlayOpen ? "md:bg-primary/80" : "transparent"}
 						isDiv={true}
 						hasPadding={false}

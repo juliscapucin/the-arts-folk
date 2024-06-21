@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import { getHeaderNavLinks } from "@/sanity/sanity-queries"
@@ -39,12 +38,22 @@ export async function generateMetadata() {
 	}
 }
 
-// Load custom font //
-const myFont = localFont({
+// Load custom fonts //
+const displayFont = localFont({
 	variable: "--font-primary",
 	src: [
 		{
 			path: "../../public/fonts/geometos-neue-extrabold.otf",
+		},
+	],
+	display: "swap",
+})
+
+const scriptFont = localFont({
+	variable: "--font-script",
+	src: [
+		{
+			path: "../../public/fonts/hammock.woff",
 		},
 	],
 	display: "swap",
@@ -60,12 +69,12 @@ export default async function RootLayout({
 	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
 
 	return (
-		<html lang='en' className='overflow-clip'>
+		<html lang='en' className='overflow-y-scroll overflow-x-clip'>
 			<PageContextProvider>
 				<body
-					className={`${myFont.className} relative w-screen max-w-desktop min-h-svh mx-auto overflow-x-clip bg-white uppercase font-text font-thin`}
+					className={`${displayFont.className} ${scriptFont.variable} relative w-screen max-w-desktop min-h-svh mx-auto px-[--margin-mobile] md:px-[--margin-desktop] overflow-x-clip bg-white uppercase font-text font-thin`}
 				>
-					<Intro />
+					{/* <Intro /> */}
 					<PageTransition />
 					<Header navLinks={navLinks} />
 					{children}
