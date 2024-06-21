@@ -24,8 +24,18 @@ export default function ProjectFullscreen({
 	const closeButtonRef = useRef<HTMLDivElement>(null)
 
 	useLayoutEffect(() => {
+		if (!projectFullscreenRef.current || !closeButtonRef.current) return
+
+		const mainElement = document.querySelector("main")
+
 		if (isFullscreenOpen) {
-			// gsap.to("body", { overflow: "hidden" })
+			if (mainElement && !mainElement.classList.contains("overflow-clip"))
+				document.documentElement.classList.add("overflow-clip")
+
+			projectFullscreenRef.current.classList.remove("hidden")
+			closeButtonRef.current.classList.remove("hidden")
+			closeButtonRef.current!.classList.add("flex")
+
 			gsap.to(projectFullscreenRef.current, {
 				yPercent: 0,
 				duration: 0.3,
@@ -33,11 +43,18 @@ export default function ProjectFullscreen({
 			})
 			gsap.to(closeButtonRef.current, { opacity: 1, delay: 0.5 })
 		} else {
-			// gsap.to("body", { overflow: "auto" })
+			if (mainElement && mainElement.classList.contains("overflow-clip"))
+				document.documentElement.classList.remove("overflow-clip")
+
 			gsap.to(projectFullscreenRef.current, {
 				yPercent: 100,
 				duration: 0.3,
 				ease: "power2.in",
+				onComplete: () => {
+					projectFullscreenRef.current!.classList.add("hidden")
+					closeButtonRef.current!.classList.remove("flex")
+					closeButtonRef.current!.classList.add("hidden")
+				},
 			})
 			gsap.to(closeButtonRef.current, { opacity: 0 })
 		}
@@ -58,7 +75,7 @@ export default function ProjectFullscreen({
 		<>
 			<div
 				ref={closeButtonRef}
-				className='fixed left-0 top-[--margin-desktop] right-[--margin-desktop] flex justify-end z-[301] pointer-events-none'
+				className='fixed hidden left-0 top-[--margin-desktop] right-[--margin-desktop] justify-end z-[301]'
 			>
 				<ButtonClose
 					color='primary'
@@ -68,7 +85,7 @@ export default function ProjectFullscreen({
 			</div>
 			<div
 				ref={projectFullscreenRef}
-				className='fixed top-0 left-0 w-screen h-screen overflow-y-auto space-y-8 bg-primary z-fullscreen'
+				className='fixed hidden top-0 left-0 right-0 w-screen h-screen overflow-y-auto space-y-8 bg-primary z-fullscreen'
 			>
 				{images.map((image, index) =>
 					image.url.includes("vimeo") ? (

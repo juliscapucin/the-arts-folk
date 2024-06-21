@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 
 import { NewsPage } from "@/components/pages"
-import { getPage, getNews } from "@/sanity/sanity-queries"
+import { getPage, getProject } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
 
@@ -31,7 +31,7 @@ export const dynamic = "force-dynamic"
 
 export default async function page({ params }: { params: { slug: string } }) {
 	const { slug } = params
-	const news = await getNews(slug)
+	const news = await getProject(slug)
 
 	if (!news) return notFound()
 

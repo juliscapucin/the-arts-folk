@@ -1,5 +1,5 @@
 import { NewsPage } from "@/components/pages"
-import { getAllNews, getPage } from "@/sanity/sanity-queries"
+import { getProjects, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
 import { metadataFallback } from "@/utils"
@@ -24,7 +24,8 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic"
 
 export default async function Page() {
-	const news = await getAllNews()
+	const projects = await getProjects()
+	const news = projects.find((project) => project.isNews)
 
 	if (!news) return notFound()
 

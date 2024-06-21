@@ -7,14 +7,14 @@ import ReactPlayer from "react-player/vimeo"
 import { gsap } from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
 
-import { News } from "@/types"
+import { Project } from "@/types"
 import { ProjectFullscreen } from "@/components"
 import { Heading } from "@/components/ui"
 import { IconChevron } from "@/components/icons"
 import { ButtonClose } from "@/components/buttons"
 
-export default function NewsPage(news: News) {
-	const { title, subtitle, projectInfo, releaseDate, images, artistPage } = news
+export default function NewsPage(news: Project) {
+	const { title, artist, projectInfo, releaseDate, images } = news
 	const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
 	const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false)
 	const thumbnailsRef = useRef<HTMLDivElement>(null)
@@ -164,7 +164,7 @@ export default function NewsPage(news: News) {
 							{title}
 						</Heading>
 						<h2 className='font-script capitalize text-displaySmall'>
-							{subtitle}
+							{artist}
 						</h2>
 					</div>
 					{/* Release date + project info*/}

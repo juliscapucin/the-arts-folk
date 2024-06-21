@@ -4,7 +4,9 @@ export type Project = {
 	title: string
 	artistName: string
 	slug: string
-	description: string
+	projectInfo: string
 	images: CloudinaryImage[]
 	artist: string
+	releaseDate: string
+	isNews: boolean
 }
