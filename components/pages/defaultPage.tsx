@@ -29,7 +29,7 @@ export default function DefaultPage({
 }: PageProps) {
 	return (
 		<Container
-			classes={`relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll ${
+			classes={`default-page relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll ${
 				!isCentered && "lg:pt-24 lg:pb-64"
 			}`}
 			hasPadding={true}

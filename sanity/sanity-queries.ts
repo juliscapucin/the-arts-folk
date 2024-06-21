@@ -32,9 +32,9 @@ export async function getArtists(): Promise<Artist[]> {
 export async function getCategories(): Promise<Category[]> {
 	return client.fetch(
 		groq`*[_type == "categories"]{
-         title,
-         _id}
-      }`
+      title,
+      _id
+   }`
 	)
 }
 

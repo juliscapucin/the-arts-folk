@@ -210,7 +210,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			/>
 			<Container
 				ref={containerRef}
-				classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+				classes='artists-page relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 			>
 				{/* Artist Overlay */}
 				{filteredArtists.map((artist, index) => {

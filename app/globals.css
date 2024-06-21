@@ -33,9 +33,7 @@
 		--container-height-mobile: calc(
 			100svh - var(--header-height-mobile) - var(--footer-height-mobile)
 		);
-		--container-height-desktop: calc(
-			100svh - var(--header-height-desktop) - var(--footer-height-desktop)
-		);
+		--container-height-desktop: calc(100svh - var(--footer-height-desktop));
 		--minimap-height: calc(100svh / 9);
 	}
 
@@ -49,6 +47,14 @@
 	}
 	*::-webkit-scrollbar-thumb {
 		background-color: rgb(var(--color-secondary-rgb), 1);
+		width: 1rem;
+		height: 1rem;
+		-webkit-box-shadow: none;
+	}
+
+	.artists-page::-webkit-scrollbar-thumb,
+	.default-page::-webkit-scrollbar-thumb {
+		background-color: rgb(var(--color-primary-rgb), 1);
 		width: 1rem;
 		height: 1rem;
 		-webkit-box-shadow: none;

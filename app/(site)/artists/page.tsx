@@ -25,13 +25,9 @@ export const dynamic = "force-dynamic"
 
 export default async function Page() {
 	const artists = await getArtists()
-	// const categories = await getCategories()
+	const categories = await getCategories()
 
-	// console.log(categories)
+	if (!artists || !categories) return notFound()
 
-	// if (!artists || !categories) return notFound()
-
-	const fakeCategories = [{ title: "All", _id: "xxx" }]
-
-	return <ArtistsPage artists={artists} categories={fakeCategories} />
+	return <ArtistsPage artists={artists} categories={categories} />
 }
