@@ -23,6 +23,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	const logoRef = useRef<HTMLDivElement | null>(null)
 	const logoHeaderRef = useRef<HTMLDivElement | null>(null)
 	const logoShowreelRef = useRef<HTMLDivElement | null>(null)
+	const showreelRef = useRef<HTMLDivElement | null>(null)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const resetTimeout = () => {
@@ -47,19 +48,26 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [slideIndex])
 
 	useEffect(() => {
-		if (!logoRef.current || !logoHeaderRef.current || !logoShowreelRef.current)
+		if (
+			!logoRef.current ||
+			!logoHeaderRef.current ||
+			!logoShowreelRef.current ||
+			!showreelRef.current
+		)
 			return
 		gsap.registerPlugin(ScrollTrigger, Flip)
 
 		const element = logoRef.current
 		const logoHeader = logoHeaderRef.current
 		const logoShowreel = logoShowreelRef.current
+		const showreel = showreelRef.current
 
 		let ctx = gsap.context(() => {
 			ScrollTrigger.create({
-				trigger: element,
-				start: "top top",
-				end: "bottom 20%",
+				trigger: showreel,
+				start: "bottom center-=100",
+				end: "bottom top",
+				// markers: true,
 				onEnter: () => {
 					const state = Flip.getState(element)
 					setLogoClasses("origin-left scale-50 md:scale-75")
@@ -82,7 +90,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		})
 
 		return () => ctx.revert()
-	}, [logoRef])
+	}, [logoRef, showreelRef])
 
 	return (
 		<div className='pt-[--header-height-desktop]'>
@@ -101,7 +109,10 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 					/>
 				</div>
 			</div>
-			<div className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto overflow-clip'>
+			<div
+				ref={showreelRef}
+				className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto overflow-clip'
+			>
 				{showreelImages.map((image, index) => {
 					return (
 						<div className={`absolute w-full h-full`} key={`showreel-${index}`}>
