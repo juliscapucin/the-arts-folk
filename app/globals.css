@@ -15,6 +15,7 @@
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 180, 180, 180;
 		--color-white: 255 255 255;
+		--max-width: 1600px;
 		--margin-mobile: 1rem;
 		--margin-desktop: 2rem;
 		--padding-mobile: 0;
@@ -35,6 +36,7 @@
 		--container-height-desktop: calc(
 			100svh - var(--header-height-desktop) - var(--footer-height-desktop)
 		);
+		--minimap-height: calc(100svh / 9);
 	}
 
 	*::-webkit-scrollbar {

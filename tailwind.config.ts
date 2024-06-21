@@ -51,7 +51,7 @@ const config: Config = {
 				"fade-in": "fadeIn 1s linear forwards",
 			},
 			maxWidth: {
-				desktop: "1600px",
+				desktop: "var(--max-width)",
 			},
 			zIndex: {
 				5: "5",

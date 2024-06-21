@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useLayoutEffect, use } from "react"
+import { useRef, useState, useLayoutEffect, use, useEffect } from "react"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
@@ -21,6 +21,7 @@ export default function NewsPage(news: News) {
 	const mainImagesRef = useRef<HTMLDivElement>(null)
 	const projectInfoOuterRef = useRef<HTMLDivElement>(null)
 	const projectInfoInnerRef = useRef<HTMLDivElement>(null)
+	const minimapMarkerRef = useRef<HTMLDivElement>(null)
 
 	function openFullscreen(e: React.MouseEvent<HTMLButtonElement>) {
 		setIsFullscreenOpen(true)
@@ -30,6 +31,15 @@ export default function NewsPage(news: News) {
 	function toggleProjectInfo() {
 		setIsProjectInfoOpen(!isProjectInfoOpen)
 	}
+
+	useEffect(() => {
+		if (!minimapMarkerRef.current) return
+		const minimapMarker = minimapMarkerRef.current
+		const viewportHeight = window.innerHeight
+		const viewportWidth = window.innerWidth
+		const minimapMarquerHeight =
+			(minimapMarker.clientWidth * viewportHeight) / viewportWidth
+	}, [])
 
 	useLayoutEffect(() => {
 		if (!mainImagesRef.current || !thumbnailsRef.current) return
@@ -88,28 +98,35 @@ export default function NewsPage(news: News) {
 
 	return (
 		<>
-			<ProjectFullscreen
+			{/* <ProjectFullscreen
 				{...{ images, isFullscreenOpen, setIsFullscreenOpen }}
-			/>
-			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] md:pr-64'>
-				{/* Thumbnails */}
-				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block'>
+			/> */}
+			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] lg:pr-64'>
+				{/* Thumbnails Container */}
+				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden lg:block'>
 					<div className='relative max-w-desktop mx-auto'>
-						<aside className='absolute top-[--header-height-desktop] right-[--margin-mobile] lg:[--margin-desktop] pt-16 w-40 h-full z-80'>
+						<aside className='absolute top-[--header-height-desktop] right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
 							{/* Button Close */}
-							<div className='relative w-full h-40 flex justify-center items-center pointer-events-auto bg-primary z-150'>
+							<div className='relative w-full h-40 pt-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
 									color={"secondary"}
 									action={() => console.log("close")}
 								/>
 							</div>
-							{/* Minimap Position */}
-							<div className='absolute top-[calc(--header-height-desktop*2)] w-full lg:w-[10vw] max-w-40 h-[10vh] border border-secondary z-150'></div>
-							<div ref={thumbnailsRef} className='space-y-2'>
+							{/* Minimap Marker */}
+							<div
+								ref={minimapMarkerRef}
+								className='absolute w-[13vw] max-w-[170px] h-[--minimap-height] border border-secondary z-150'
+							></div>
+							{/* Thumbnails */}
+							<div
+								ref={thumbnailsRef}
+								className='relative w-[10vw] max-w-[160px] mx-auto space-y-1 pointer-events-auto'
+							>
 								{images.map((image, index) => (
 									<button
 										onClick={() => console.log("clicked")}
-										className='relative w-full lg:w-[8vw] max-w-40'
+										className='relative w-full'
 										key={`news-thumbnail-${index}`}
 									>
 										{image.url.includes("vimeo") ? (
