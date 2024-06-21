@@ -75,7 +75,7 @@ export default async function RootLayout({
 					className={`${displayFont.className} ${scriptFont.variable} relative w-screen max-w-desktop min-h-svh mx-auto px-[--margin-mobile] md:px-[--margin-desktop] overflow-x-clip bg-white uppercase font-text font-thin`}
 				>
 					{/* <Intro /> */}
-					{/* <PageTransition /> */}
+					<PageTransition />
 					<Header navLinks={navLinks} />
 					{children}
 					<Footer />

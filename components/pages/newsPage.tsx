@@ -98,9 +98,9 @@ export default function NewsPage(news: News) {
 
 	return (
 		<>
-			{/* <ProjectFullscreen
+			<ProjectFullscreen
 				{...{ images, isFullscreenOpen, setIsFullscreenOpen }}
-			/> */}
+			/>
 			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] lg:pr-64'>
 				{/* Thumbnails Container */}
 				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden lg:block'>
@@ -175,7 +175,7 @@ export default function NewsPage(news: News) {
 						<div className='h-8'>
 							<button
 								onClick={toggleProjectInfo}
-								className='mb-4 w-full text-right font-text uppercase text-labelMedium md:text-labelLarge flex gap-4 items-center justify-end'
+								className='mb-4 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-end'
 							>
 								Project info
 								<span
@@ -188,12 +188,15 @@ export default function NewsPage(news: News) {
 							</button>
 							<div
 								ref={projectInfoOuterRef}
-								className='absolute left-[--margin-mobile] md:left-[--margin-desktop] right-64 h-64 overflow-clip pointer-events-none z-150'
+								className='absolute left-[--margin-mobile] md:left-[--margin-desktop] right-64 h-48 overflow-clip pointer-events-none z-150'
 							>
-								<div ref={projectInfoInnerRef} className='my-8 h-64 bg-primary'>
+								<div
+									ref={projectInfoInnerRef}
+									className='mt-16 mb-8 h-48 w-3/4 bg-primary'
+								>
 									<p className='mb-8 font-text max-w-prose'>{projectInfo}</p>
 									<a
-										className='block max-w-prose font-text text-center'
+										className='block w-full font-text text-labelMedium font-medium text-center underline hover:no-underline'
 										href='/'
 									>
 										Go to Artist page

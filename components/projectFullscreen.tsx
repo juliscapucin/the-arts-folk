@@ -58,7 +58,7 @@ export default function ProjectFullscreen({
 		<>
 			<div
 				ref={closeButtonRef}
-				className='fixed left-0 top-[--margin-desktop] right-[--margin-desktop] flex justify-end z-[301]'
+				className='fixed left-0 top-[--margin-desktop] right-[--margin-desktop] flex justify-end z-[301] pointer-events-none'
 			>
 				<ButtonClose
 					color='primary'
