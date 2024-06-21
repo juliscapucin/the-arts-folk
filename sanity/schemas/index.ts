@@ -3,7 +3,7 @@ import categorySchema from "./category-schema"
 import footerNavSchema from "./footer-schema"
 import headerNavSchema from "./header-nav-schema"
 import infoPageSchema from "./info-page-schema"
-import newsSchema from "./news-schema"
+import projectSchema from "./project-schema"
 import pageSchema from "./page-schema"
 import showreelSchema from "./showreel-schema"
 
@@ -13,7 +13,7 @@ const schemas = [
 	footerNavSchema,
 	headerNavSchema,
 	infoPageSchema,
-	newsSchema,
+	projectSchema,
 	pageSchema,
 	showreelSchema,
 ]

@@ -1,6 +1,13 @@
 import { createClient, groq } from "next-sanity"
 import clientConfig from "@/sanity/config/client-config"
-import type { Artist, Category, InfoPage, NavLink, News, Page } from "@/types"
+import type {
+	Artist,
+	Category,
+	InfoPage,
+	NavLink,
+	Project,
+	Page,
+} from "@/types"
 
 const client = createClient(clientConfig)
 
@@ -26,35 +33,37 @@ export async function getCategories(): Promise<Category[]> {
 	return client.fetch(
 		groq`*[_type == "categories"]{
       title,
-      _id
+      _id}
    }`
 	)
 }
 
-export async function getAllNews(): Promise<News[]> {
+export async function getProjects(): Promise<Project[]> {
 	return client.fetch(
-		groq`*[_type == "news"]{
+		groq`*[_type == "project" | order(releaseDate desc){
       _id,
       "slug": slug.current,
       title,
-      subtitle,
-      releaseDate,
-      images,
-   }`
-	)
-}
-
-export async function getNews(slug: string): Promise<News> {
-	return client.fetch(
-		groq`*[_type == "news" && slug.current == $slug][0]{
-      _id,
-      "slug": slug.current,
-      title,
-      subtitle,
+      "artistName": artist[]->name,
       projectInfo,
       releaseDate,
       images,
-      artistPage
+      isNews,
+   }`
+	)
+}
+
+export async function getProject(slug: string): Promise<Project> {
+	return client.fetch(
+		groq`*[_type == "project" && slug.current == $slug][0]{
+      _id,
+      "slug": slug.current,
+      title,
+      "artistName": artist[]->name,
+      projectInfo,
+      releaseDate,
+      images,
+      isNews,
    }`,
 		{ slug }
 	)
