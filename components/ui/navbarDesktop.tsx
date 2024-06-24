@@ -1,5 +1,7 @@
 "use client"
 
+import { usePageContext } from "@/context"
+
 import { ButtonLogo } from "@/components/buttons"
 import { NavbarLink } from "@/components/ui"
 
@@ -8,17 +10,14 @@ import { usePathname } from "next/navigation"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
-	transitionOnClick: (link: NavLink) => void
 }
 
-export default function NavbarDesktop({
-	navLinks,
-	transitionOnClick,
-}: NavbarDesktopProps) {
+export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 	const pathname = usePathname()
+	const { transitionOnClick } = usePageContext()
 
 	return (
-		<>
+		<div className='w-full h-[--header-height-desktop] max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-between items-end'>
 			<ButtonLogo
 				handleClick={() =>
 					transitionOnClick({ slug: "/", title: "Home", order: 1 })
@@ -43,6 +42,6 @@ export default function NavbarDesktop({
 					</nav>
 				</div>
 			)}
-		</>
+		</div>
 	)
 }

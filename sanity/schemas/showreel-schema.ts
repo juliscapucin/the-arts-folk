@@ -1,6 +1,6 @@
 const showreelSchema = {
 	name: "showreel",
-	title: "Showreel",
+	title: "Home Showreel",
 	type: "document",
 	fields: [
 		{

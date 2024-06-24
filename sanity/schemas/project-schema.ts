@@ -15,7 +15,7 @@ interface ProjectDocument {
 
 const projectSchema = {
 	name: "project",
-	title: "Project",
+	title: "Projects / News",
 	type: "document",
 	fields: [
 		{
@@ -98,36 +98,54 @@ const projectSchema = {
 			type: "string",
 			options: {
 				list: [
-					{ title: "Top, Left", value: "top-left", icon: "FaAlignLeft" },
-					{ title: "Top, Center", value: "top-center", icon: "FaAlignCenter" },
-					{ title: "Top, Right", value: "top-right", icon: "FaAlignRight" },
-					{ title: "Center, Left", value: "center-left", icon: "FaAlignLeft" },
+					{
+						title: "Top, Left",
+						value: "items-start justify-start",
+						icon: "FaAlignLeft",
+					},
+					{
+						title: "Top, Center",
+						value: "items-start justify-center",
+						icon: "FaAlignCenter",
+					},
+					{
+						title: "Top, Right",
+						value: "items-start justify-end",
+						icon: "FaAlignRight",
+					},
+					{
+						title: "Center, Left",
+						value: "items-center justify-start",
+						icon: "FaAlignLeft",
+					},
 					{
 						title: "Center, Center",
-						value: "center-center",
+						value: "justify-center items-center",
 						icon: "FaAlignJustify",
 					},
 					{
 						title: "Center, Right",
-						value: "center-right",
+						value: "items-center justify-end",
 						icon: "FaAlignRight",
 					},
-					{ title: "Bottom, Left", value: "bottom-left", icon: "FaAlignLeft" },
+					{
+						title: "Bottom, Left",
+						value: "items-end justify-start",
+						icon: "FaAlignLeft",
+					},
 					{
 						title: "Bottom, Center",
-						value: "bottom-center",
+						value: "items-end justify-center",
 						icon: "FaAlignCenter",
 					},
 					{
 						title: "Bottom, Right",
-						value: "bottom-right",
+						value: "items-end justify-end",
 						icon: "FaAlignRight",
 					},
 				],
 				layout: "dropdown",
 			},
-			//TODO: Make icons work
-			inputComponent: CustomSelect,
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
 		},

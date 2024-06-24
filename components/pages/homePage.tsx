@@ -3,7 +3,7 @@
 import { Suspense } from "react"
 
 import { Showreel } from "@/components"
-import { Container } from "@/components/ui"
+import { NewsServer } from "@/components/server"
 
 import type { CloudinaryImage } from "@/types"
 
@@ -13,10 +13,11 @@ type HomePageProps = {
 
 export default function HomePage({ showreelImages }: HomePageProps) {
 	return (
-		<Container hasPadding={false}>
+		<main>
 			<Suspense>
 				<Showreel {...{ showreelImages }} />
 			</Suspense>
-		</Container>
+			<NewsServer />
+		</main>
 	)
 }

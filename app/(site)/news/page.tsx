@@ -1,11 +1,11 @@
-import { ArtistsPage } from "@/components/pages"
-import { getArtists, getCategories, getPage } from "@/sanity/sanity-queries"
+import { NewsPage } from "@/components/pages"
+import { getProjects, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
 import { metadataFallback } from "@/utils"
 
 export async function generateMetadata() {
-	const pageData = getPage("artists")
+	const pageData = getPage("news")
 	const page = await pageData
 
 	if (!page) {
@@ -24,10 +24,10 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic"
 
 export default async function Page() {
-	const artists = await getArtists()
-	const categories = await getCategories()
+	const projects = await getProjects()
+	const news = projects.filter((project) => !project.isNews)
 
-	if (!artists || !categories) return notFound()
+	if (!news) return notFound()
 
-	return <ArtistsPage artists={artists} categories={categories} />
+	return notFound()
 }
