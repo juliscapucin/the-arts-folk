@@ -15,7 +15,7 @@ interface ProjectDocument {
 
 const projectSchema = {
 	name: "project",
-	title: "Project",
+	title: "Projects / News",
 	type: "document",
 	fields: [
 		{

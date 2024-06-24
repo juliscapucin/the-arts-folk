@@ -11,46 +11,6 @@ type NewsProps = {
 	news: Project[]
 }
 
-const options = [
-	{
-		title: "top-left",
-		value: "items-start justify-start",
-	},
-	{
-		title: "top-center",
-		value: "items-start justify-center",
-	},
-	{
-		title: "top-right",
-		value: "items-start justify-end",
-	},
-	{
-		title: "center-left",
-		value: "items-center justify-start",
-	},
-	{
-		title: "center-center",
-		value: "justify-center items-center",
-	},
-	{
-		title: "center-right",
-		value: "items-center justify-end",
-	},
-	{
-		title: "bottom-left",
-		value: "items-end justify-start",
-	},
-	{
-		title: "bottom-center",
-		value: "items-end justify-center",
-		icon: "FaAlignCenter",
-	},
-	{
-		title: "bottom-right",
-		value: "items-end justify-end",
-	},
-]
-
 export default function News({ news }: NewsProps) {
 	const { transitionOnClick } = usePageContext()
 
@@ -59,21 +19,19 @@ export default function News({ news }: NewsProps) {
 			{news.map((project) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
+				console.log(project.newsPageAlignment)
+
 				const imageSizeSmall =
 					aspectRatio > 1 ? "w-2/3 md:w-1/3" : "w-2/3 md:w-1/4"
 				const imageSizeBig =
-					aspectRatio > 1 ? "w-2/3 md:w-3/4" : "w-2/3 md:w-2/5"
-
-				const alignment = options.find((option) => {
-					if (option.title === project.newsPageAlignment) {
-						return option
-					}
-				})
+					aspectRatio > 1 ? "w-2/3 md:w-1/2" : "w-2/3 md:w-2/5"
 
 				return (
 					<article
 						className={`relative py-12 md:py-0 md:basis-1/2 h-fit md:h-[65svh] flex ${
-							alignment?.value ? alignment.value : "items-center justify-center"
+							project.newsPageAlignment
+								? project.newsPageAlignment
+								: "items-center justify-center"
 						}`}
 						key={project.slug}
 					>
