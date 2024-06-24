@@ -36,8 +36,15 @@ export default function ArtistPage({
 					<p className='mt-8'>
 						Isaac Marley Morgan is a London based photographer & art director
 					</p>
-					<a href='#'>Contact Agent</a>
-					<a href='#'>Instagram</a>
+					<button
+						className='uppercase mt-8'
+						onClick={() => transitionOnClick("info")}
+					>
+						Contact Agent
+					</button>
+					<a className='block' href='#'>
+						Instagram
+					</a>
 				</aside>
 				<section className='w-9/12 flex flex-wrap gap-4'>
 					{artistProjects.map((project) => {
