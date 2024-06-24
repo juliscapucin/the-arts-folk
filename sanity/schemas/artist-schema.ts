@@ -61,9 +61,9 @@ const artistSchema = {
 		{
 			name: "category",
 			title: "Categories",
-			type: "reference",
 			description: "Select the categories associated with this artist.",
-			to: [{ type: "categories" }],
+			type: "array",
+			of: [{ type: "reference", to: [{ type: "categories" }] }],
 		},
 		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{

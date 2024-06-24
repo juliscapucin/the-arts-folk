@@ -1,6 +1,6 @@
 const pageSchema = {
 	name: "pages",
-	title: "Generic Pages",
+	title: "Pages",
 	type: "document",
 	fields: [
 		{

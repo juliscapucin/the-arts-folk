@@ -7,38 +7,31 @@ import {
 	useRef,
 	useState,
 } from "react"
+import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
-import { usePageContext } from "@/context"
-
-import { ArtistOverlay, CategoryFilter } from "@/components"
+import { ArtistOverlay } from "@/components"
 import { IconScroll } from "@/components/icons"
 import { Container } from "@/components/ui"
 
 import { infiniteVerticalLoop } from "@/helpers"
 import { GSAPQueries } from "@/utils"
 
-import { Artist, Category } from "@/types"
+import { Artist } from "@/types/Artist"
 
 type ArtistsPageProps = {
 	artists: Artist[]
-	categories: Category[]
 }
 
-export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
+export default function ArtistsPage({ artists }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const [isScrolling, setIsScrolling] = useState(false)
-	const [activeCategory, setActiveCategory] = useState("all")
-	const [filteredArtists, setFilteredArtists] = useState<Artist[]>([])
 	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
-
-	const { transitionOnClick } = usePageContext()
-
 	let mm = gsap.matchMedia()
 
 	const handleMouseEnter = (name: string) => {
@@ -49,79 +42,71 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	const getViewportPosition = useCallback(
-		(element: HTMLElement) => {
-			if (filteredArtists.length < 4) return { isMiddle: false }
+	const getViewportPosition = useCallback((element: HTMLElement) => {
+		const rect = element.getBoundingClientRect()
+		const viewportHeight =
+			window.innerHeight || document.documentElement.clientHeight
+		const elementTop = rect.top
+		const elementBottom = rect.bottom
+		const screenMiddle = viewportHeight / 2
+		return {
+			isMiddle:
+				Math.abs(elementTop) < screenMiddle &&
+				Math.abs(elementBottom) > screenMiddle,
+		}
+	}, [])
 
-			const rect = element.getBoundingClientRect()
-			const viewportHeight =
-				window.innerHeight || document.documentElement.clientHeight
-			const elementTop = rect.top
-			const elementBottom = rect.bottom
-			const screenMiddle = viewportHeight / 2
-			return {
-				isMiddle:
-					Math.abs(elementTop) < screenMiddle &&
-					Math.abs(elementBottom) > screenMiddle,
-			}
-		},
-		[filteredArtists]
-	)
+	const createScrollLoop = useCallback((isMobile: boolean) => {
+		if (!sectionRef.current) return
+		gsap.registerPlugin(Observer)
 
-	const createScrollLoop = useCallback(
-		(isMobile: boolean) => {
-			if (!sectionRef.current || filteredArtists.length < 4) return
-			gsap.registerPlugin(Observer)
+		const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 
-			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
+		// Create an infinite vertical loop
+		const loop = infiniteVerticalLoop(items, {
+			repeat: -1,
+		})
 
-			// Create an infinite vertical loop
-			const loop = infiniteVerticalLoop(items, {
-				repeat: -1,
-			})
+		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
+		let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
+		// make the loop stopped initially.
+		loop.timeScale(0)
 
-			// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
-			let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
-			// make the loop stopped initially.
-			loop.timeScale(0)
+		// Create an observer to detect touch and wheel events
+		Observer.create({
+			target: sectionRef.current,
+			type: "pointer,touch,wheel",
+			wheelSpeed: -1,
+			onStop: () => {
+				setIsScrolling(false)
+			},
+			onChangeY: (self) => {
+				let calculatedTimeScale = -self.deltaY
 
-			// Create an observer to detect touch and wheel events
-			Observer.create({
-				target: sectionRef.current,
-				type: "pointer,touch,wheel",
-				wheelSpeed: -1,
-				onStop: () => {
-					setIsScrolling(false)
-				},
-				onChangeY: (self) => {
-					let calculatedTimeScale = -self.deltaY
+				setIsScrolling(true)
 
-					setIsScrolling(true)
+				// Set the loop's timeScale to the desired value
+				loop.timeScale(calculatedTimeScale)
 
-					// Set the loop's timeScale to the desired value
-					loop.timeScale(calculatedTimeScale)
-
-					// Check if the element is in the middle of the viewport if the user is not scrolling fast
-					if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
-						loop.eventCallback("onUpdate", () => {
-							items.forEach((item) => {
-								const position = getViewportPosition(item)
-								position.isMiddle &&
-									item.dataset.name &&
-									setIsHovered(item.dataset.name)
-							})
+				// Check if the element is in the middle of the viewport if the user is not scrolling fast
+				if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
+					loop.eventCallback("onUpdate", () => {
+						items.forEach((item) => {
+							const position = getViewportPosition(item)
+							position.isMiddle &&
+								item.dataset.name &&
+								setIsHovered(item.dataset.name)
 						})
-					}
+					})
+				}
 
-					// Decelerate
-					slow.invalidate().restart()
+				// Decelerate
+				slow.invalidate().restart()
 
-					isScrollTipVisible && setIsScrollTipVisible(false)
-				},
-			})
-		},
-		[filteredArtists]
-	)
+				isScrollTipVisible && setIsScrollTipVisible(false)
+			},
+		})
+	}, [])
 
 	useLayoutEffect(() => {
 		if (!sectionRef.current || !containerRef.current) return
@@ -131,23 +116,6 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			(context) => {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
-
-				if (filteredArtists.length < 4) {
-					gsap.fromTo(
-						items,
-						{
-							yPercent: -100,
-							opacity: 0,
-						},
-						{
-							yPercent: 135,
-							opacity: 1,
-							stagger: 0.07,
-							duration: 0.6,
-						}
-					)
-					return
-				}
 
 				// Artist names entrance animation
 				gsap.from(items, {
@@ -166,7 +134,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		return () => {
 			mm.revert()
 		}
-	}, [filteredArtists])
+	}, [])
 
 	// Reload the page on window resize
 	useEffect(() => {
@@ -185,18 +153,6 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		}
 	}, [resizeTimeout])
 
-	useEffect(() => {
-		if (activeCategory === "all") setFilteredArtists(artists)
-		else {
-			const filteredArtitsts = artists.filter((artist) => {
-				return artist.category.some(
-					(category) => category._ref === activeCategory
-				)
-			})
-			setFilteredArtists(filteredArtitsts)
-		}
-	}, [activeCategory])
-
 	return (
 		<>
 			{/* Icon Scroll */}
@@ -207,18 +163,12 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			>
 				<IconScroll />
 			</div>
-			{/* Category Filter */}
-			<CategoryFilter
-				categories={categories}
-				activeCategory={activeCategory}
-				setActiveCategory={setActiveCategory}
-			/>
 			<Container
 				ref={containerRef}
-				classes='artists-page relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+				classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
 			>
 				{/* Artist Overlay */}
-				{filteredArtists.map((artist, index) => {
+				{artists.map((artist, index) => {
 					return (
 						<ArtistOverlay
 							key={`${artist.name}-overlay`}
@@ -232,23 +182,24 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 				{/* Gradients */}
 				<div
-					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
+					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-16 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
 				></div>
 				<div
-					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
+					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent z-50`}
 				></div>
 
 				{/* Artists Menu */}
 				<section ref={sectionRef} className='w-full text-center space-y-8 pt-8'>
-					{filteredArtists.map((artist) => {
+					{artists.map((artist) => {
 						return (
 							<div
 								className='gsap-scroll-item text-center'
 								key={artist.name}
 								data-name={artist.name}
 							>
-								<button
-									onClick={() => transitionOnClick(`artists/${artist.slug}`)}
+								<a
+									href={artist.artistWebsite ? artist.artistWebsite : "#"}
+									target='_blank'
 									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 										isHovered === artist.name
 											? ""
@@ -262,13 +213,20 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 								>
 									{artist.name}
 									<span
-										className={`block mt-2 font-text uppercase text-labelLarge font-medium transition-opacity ${
+										className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
 											isHovered === artist.name ? "" : "opacity-0"
 										}`}
 									>
 										{artist.description}
 									</span>
-								</button>
+									<span
+										className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
+											isHovered === artist.name ? "" : "opacity-0"
+										}`}
+									>
+										Coming soon
+									</span>
+								</a>
 							</div>
 						)
 					})}
