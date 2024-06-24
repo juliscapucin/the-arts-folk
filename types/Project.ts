@@ -1,18 +1,10 @@
-import type { CloudinaryImage, Artist } from "@/types"
-
-type ArtistReference = {
-	_ref: string
-}
+import type { CloudinaryImage } from "@/types"
 
 export type Project = {
 	title: string
+	artistName: string
 	slug: string
-	projectInfo: string
+	description: string
 	images: CloudinaryImage[]
-	artist: ArtistReference
-	artistInfo?: Artist
-	releaseDate: string
-	isNews: boolean
-	newsPageSize: string
-	newsPageAlignment: string
+	artist: string
 }

@@ -2,12 +2,10 @@
 
 import { PortableText } from "@portabletext/react"
 
-import gsap from "gsap"
-
 import { Container, Heading } from "@/components/ui"
 
 import type { Page } from "@/types"
-import { Copyright, PageTransition } from "@/components"
+import { Copyright } from "@/components"
 
 type PageProps = {
 	children?: React.ReactNode
@@ -29,7 +27,7 @@ export default function DefaultPage({
 }: PageProps) {
 	return (
 		<Container
-			classes={`default-page relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll ${
+			classes={`relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll ${
 				!isCentered && "lg:pt-24 lg:pb-64"
 			}`}
 			hasPadding={true}

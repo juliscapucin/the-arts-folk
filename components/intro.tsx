@@ -70,7 +70,7 @@ export default function Intro() {
 			ref={containerRef}
 			className='fixed w-screen h-svh z-intro pointer-events-none'
 		>
-			<div className='gsap-bg fixed w-screen h-svh z-intro bg-primary'></div>
+			<div className='gsap-bg fixed w-screen h-svh z-intro bg-white'></div>
 			<div className='gsap-logo-container fixed top-0 left-0 w-screen h-svh flex justify-center items-center z-intro'>
 				<Logo classes='gsap-logo' animate={true} />
 			</div>
