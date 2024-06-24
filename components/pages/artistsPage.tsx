@@ -11,6 +11,8 @@ import {
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
+import { usePageContext } from "@/context"
+
 import { ArtistOverlay, CategoryFilter } from "@/components"
 import { IconScroll } from "@/components/icons"
 import { Container } from "@/components/ui"
@@ -34,6 +36,9 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
+
+	const { transitionOnClick } = usePageContext()
+
 	let mm = gsap.matchMedia()
 
 	const handleMouseEnter = (name: string) => {
@@ -242,9 +247,8 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 								key={artist.name}
 								data-name={artist.name}
 							>
-								<a
-									href={artist.artistWebsite ? artist.artistWebsite : "#"}
-									target='_blank'
+								<button
+									onClick={() => transitionOnClick(`artists/${artist.slug}`)}
 									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 										isHovered === artist.name
 											? ""
@@ -264,7 +268,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 									>
 										{artist.description}
 									</span>
-								</a>
+								</button>
 							</div>
 						)
 					})}
