@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 
-import { NewsPage } from "@/components/pages"
+import { ProjectPage } from "@/components/pages"
 import { getArtists, getPage, getProject } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
@@ -31,12 +31,12 @@ export const dynamic = "force-dynamic"
 
 export default async function page({ params }: { params: { slug: string } }) {
 	const { slug } = params
-	const news = await getProject(slug)
+	const project = await getProject(slug)
 	const artists = await getArtists()
 
-	const artist = artists.find((artist) => artist._id === news.artist._ref)
+	const artist = artists.find((artist) => artist._id === project.artist._ref)
 
-	if (!news || !artist) return notFound()
+	if (!project || !artist) return notFound()
 
-	return <NewsPage {...{ news, artist }} />
+	return <ProjectPage {...{ project, artist }} />
 }

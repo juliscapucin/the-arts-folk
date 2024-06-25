@@ -1,8 +1,8 @@
-import { NewsPage } from "@/components/pages"
 import { getProjects, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
 import { metadataFallback } from "@/utils"
+import { NewsServer } from "@/components/server"
 
 export async function generateMetadata() {
 	const pageData = getPage("news")
@@ -29,5 +29,9 @@ export default async function Page() {
 
 	if (!news) return notFound()
 
-	return notFound()
+	return (
+		<main>
+			<NewsServer />
+		</main>
+	)
 }

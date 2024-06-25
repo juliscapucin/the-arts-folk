@@ -13,6 +13,11 @@ interface ProjectDocument {
 	// Add other fields as necessary
 }
 
+interface PreviewSelection {
+	title: string
+	artistName: string
+}
+
 const projectSchema = {
 	name: "project",
 	title: "Projects / News",
@@ -29,6 +34,14 @@ const projectSchema = {
 			description: "Select an artist to associate with this project.",
 			type: "reference",
 			to: [{ type: "artist" }], // Ensure this type matches the name of your artistSchema
+		},
+		{
+			name: "artistSection",
+			title: "Artist Section",
+			description:
+				"Select artist page section(s) / link(s) to associate with this project.",
+			type: "array",
+			of: [{ type: "reference", to: [{ type: "artistSection" }] }],
 		},
 		{
 			name: "releaseDate",
@@ -157,6 +170,18 @@ const projectSchema = {
 			by: [{ field: "releaseDate", direction: "desc" }],
 		},
 	],
+	preview: {
+		select: {
+			title: "title",
+			artistName: "artist.name",
+		},
+		prepare(selection: PreviewSelection) {
+			const { title, artistName } = selection
+			return {
+				title: `${artistName} - ${title}`,
+			}
+		},
+	},
 }
 
 export default projectSchema

@@ -1,4 +1,3 @@
-import React, { forwardRef, Ref } from "react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui"
@@ -16,7 +15,9 @@ export default function artistAside() {
 				Isaac Marley Morgan is a London based photographer & art director
 			</p>
 			<Link href='/info' passHref legacyBehavior>
-				<Button classes={"block uppercase mt-8"} label={"Contact Agent"} />
+				<Button classes={"block uppercase mt-8"}>
+					<span>Contact Agent</span>
+				</Button>
 			</Link>
 			<a className='block' href='#'>
 				Instagram

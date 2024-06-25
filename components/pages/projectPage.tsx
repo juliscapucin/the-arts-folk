@@ -15,13 +15,13 @@ import { IconChevron } from "@/components/icons"
 import { ButtonClose } from "@/components/buttons"
 import { Artist, Project } from "@/types"
 
-type NewsPageProps = {
-	news: Project
+type ProjectPageProps = {
+	project: Project
 	artist: Artist
 }
 
-export default function NewsPage({ news, artist }: NewsPageProps) {
-	const { title, projectInfo, releaseDate, images } = news
+export default function ProjectPage({ project, artist }: ProjectPageProps) {
+	const { title, projectInfo, releaseDate, images } = project
 	const { transitionOnClick } = usePageContext()
 
 	const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
@@ -136,7 +136,7 @@ export default function NewsPage({ news, artist }: NewsPageProps) {
 									<button
 										onClick={() => console.log("clicked")}
 										className='relative w-full'
-										key={`news-thumbnail-${index}`}
+										key={`project-thumbnail-${index}`}
 									>
 										{image.url.includes("vimeo") ? (
 											<ReactPlayer
@@ -227,7 +227,7 @@ export default function NewsPage({ news, artist }: NewsPageProps) {
 								className={`relative w-3/4 ${
 									index % 2 !== 0 ? "self-end" : "self-start"
 								}`}
-								key={`news-image-${index}`}
+								key={`project-image-${index}`}
 							>
 								{image.url.includes("vimeo") ? (
 									<ReactPlayer

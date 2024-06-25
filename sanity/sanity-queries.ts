@@ -29,6 +29,37 @@ export async function getArtists(): Promise<Artist[]> {
 	)
 }
 
+export async function getArtist(slug: string): Promise<Artist> {
+	return client.fetch(
+		groq`*[_type == "artist" && slug.current == $slug][0]{
+      _id,
+      name,
+      "slug": slug.current,
+      description,
+      artistInfo,
+      coverImage{
+         fileName,
+         alt,
+       },
+      url,
+      "category": categories[]->title,
+      "copy1": copy1[]{
+         children[0]{
+           text,
+           _key
+         }
+       },
+       "copy2": copy2[]{
+         children[0]{
+           text,
+           _key
+         }
+       },
+   }`,
+		{ slug }
+	)
+}
+
 export async function getCategories(): Promise<Category[]> {
 	return client.fetch(
 		groq`*[_type == "categories"]{
@@ -66,36 +97,6 @@ export async function getProject(slug: string): Promise<Project> {
       releaseDate,
       images,
       isNews
-   }`,
-		{ slug }
-	)
-}
-
-export async function getArtist(slug: string): Promise<Artist> {
-	return client.fetch(
-		groq`*[_type == "artist" && slug.current == $slug][0]{
-      _id,
-      name,
-      "slug": slug.current,
-      description,
-      coverImage{
-         fileName,
-         alt,
-       },
-      url,
-      "category": categories[]->title,
-      "copy1": copy1[]{
-         children[0]{
-           text,
-           _key
-         }
-       },
-       "copy2": copy2[]{
-         children[0]{
-           text,
-           _key
-         }
-       },
    }`,
 		{ slug }
 	)

@@ -5,22 +5,23 @@ import { usePageContext } from "@/context"
 type MyButtonProps = {
 	href?: string
 	classes?: string
-	label: string
+	children?: React.ReactNode
 }
 
 // Create MyButton component using forwardRef
 const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
-	({ href, classes, label }, ref) => {
+	({ href, classes, children }, ref) => {
 		const { transitionOnClick } = usePageContext()
+		const slug = href && href.length > 0 ? href.split("/").pop() ?? "/" : "/"
 
 		return (
 			<a
 				className={classes}
 				href={href}
-				onClick={() => transitionOnClick(`info`)}
+				onClick={() => transitionOnClick(slug)}
 				ref={ref}
 			>
-				{label}
+				{children}
 			</a>
 		)
 	}
