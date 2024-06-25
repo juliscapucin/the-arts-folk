@@ -8,6 +8,7 @@ import { usePageContext } from "@/context"
 
 import { Artist, Project } from "@/types"
 import { Container } from "@/components/ui"
+import { ArtistAside } from ".."
 
 type artistPageProps = {
 	artist: Artist
@@ -26,26 +27,7 @@ export default function ArtistPage({
 		<Container hasPadding classes='pt-32'>
 			<h1 className='text-headlineLarge mb-8'>{artist.name}</h1>
 			<div className='flex w-full gap-8'>
-				<aside className='w-3/12 font-text'>
-					<ul className='text-labelLarge font-medium'>
-						<li className='underline'>Featured</li>
-						<li>Portfolio</li>
-						<li>Motion</li>
-						<li>Personal</li>
-					</ul>
-					<p className='mt-8'>
-						Isaac Marley Morgan is a London based photographer & art director
-					</p>
-					<button
-						className='uppercase mt-8'
-						onClick={() => transitionOnClick("info")}
-					>
-						Contact Agent
-					</button>
-					<a className='block' href='#'>
-						Instagram
-					</a>
-				</aside>
+				<ArtistAside />
 				<section className='w-9/12 flex flex-wrap gap-4'>
 					{artistProjects.map((project) => {
 						const firstImage = project.images[0]

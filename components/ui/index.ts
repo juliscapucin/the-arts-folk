@@ -1,3 +1,4 @@
+import Button from "./button"
 import Container from "./container"
 import Cookies from "./cookies"
 import Footer from "./footer"
@@ -10,6 +11,7 @@ import NavbarSocials from "./navbarSocials"
 import Paragraph from "./paragraph"
 
 export {
+	Button,
 	Container,
 	Cookies,
 	Footer,
