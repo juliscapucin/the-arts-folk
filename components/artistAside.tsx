@@ -19,7 +19,7 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed max-w-[20%] pr-32 font-text'>
+		<aside className='fixed top-32 w-1/2 md:w-[25%] pr-8 font-text'>
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2'>
 				{artistSections.map((link) => {
@@ -45,10 +45,7 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='my-16 text-bodyMedium'>
-				{artist.artistInfo} She is a celebrated photographer known for her
-				evocative imagery that blends fine art and documentary styles.
-			</p>
+			<p className='my-12 text-bodyMedium'>{artist.artistInfo}</p>
 
 			{/* Secondary Links */}
 			<div className='mb-32'>
