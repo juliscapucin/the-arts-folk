@@ -36,8 +36,8 @@ export default async function page({ params }: { params: { slug: string } }) {
 	const { slug } = params
 	const projects = await getProjects()
 	const artistSections = await getArtistSections()
-	const featuredSection = artistSections.find(
-		(section) => section.title === "Featured"
+	const portfolioSection = artistSections.find(
+		(section) => section.title === "Portfolio"
 	)
 	const artist = await getArtist(slug)
 
@@ -47,15 +47,15 @@ export default async function page({ params }: { params: { slug: string } }) {
 		(project) => artist._id === project.artist._ref
 	)
 
-	if (!featuredSection) return notFound()
+	if (!portfolioSection) return notFound()
 
-	const featuredProjects = artistProjects.filter((project) =>
+	const portfolioProjects = artistProjects.filter((project) =>
 		project.artistSection?.some(
-			(section) => section._ref === featuredSection._id
+			(section) => section._ref === portfolioSection._id
 		)
 	)
 
-	if (featuredProjects.length === 0) return notFound()
+	if (portfolioProjects.length === 0) return notFound()
 
-	return <ArtistPage {...{ artist, projects: featuredProjects }} />
+	return <ArtistPage {...{ artist, projects: portfolioProjects }} />
 }

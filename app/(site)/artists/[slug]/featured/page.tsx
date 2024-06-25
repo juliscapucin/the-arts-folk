@@ -1,8 +1,11 @@
 import { notFound } from "next/navigation"
-
 import { ArtistPage } from "@/components/pages"
-import { getArtist, getPage, getProjects } from "@/sanity/sanity-queries"
-
+import {
+	getArtist,
+	getArtistSections,
+	getPage,
+	getProjects,
+} from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
 
 export async function generateMetadata({
@@ -32,13 +35,27 @@ export const dynamic = "force-dynamic"
 export default async function page({ params }: { params: { slug: string } }) {
 	const { slug } = params
 	const projects = await getProjects()
+	const artistSections = await getArtistSections()
+	const featuredSection = artistSections.find(
+		(section) => section.title === "Featured"
+	)
 	const artist = await getArtist(slug)
 
-	const artistProjects = projects.filter((project) => {
-		return artist._id === project.artist._ref ? project : null
-	})
+	if (!artist) return notFound()
 
-	if (!artistProjects || !artist) return notFound()
+	const artistProjects = projects.filter(
+		(project) => artist._id === project.artist._ref
+	)
 
-	return <ArtistPage {...{ artist, artistProjects }} />
+	if (!featuredSection) return notFound()
+
+	const featuredProjects = artistProjects.filter((project) =>
+		project.artistSection?.some(
+			(section) => section._ref === featuredSection._id
+		)
+	)
+
+	if (featuredProjects.length === 0) return notFound()
+
+	return <ArtistPage {...{ artist, projects: featuredProjects }} />
 }

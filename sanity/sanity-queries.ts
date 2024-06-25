@@ -69,12 +69,22 @@ export async function getCategories(): Promise<Category[]> {
 	)
 }
 
+export async function getArtistSections(): Promise<Category[]> {
+	return client.fetch(
+		groq`*[_type == "artistSection"]{
+      title,
+      _id
+   }`
+	)
+}
+
 export async function getProjects(): Promise<Project[]> {
 	return client.fetch(
 		groq`*[_type == "project"] | order(releaseDate desc){
       _id,
       "slug": slug.current,
       artist,
+      artistSection,
       title,
       projectInfo,
       releaseDate,
