@@ -19,7 +19,7 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed w-3/12 font-text'>
+		<aside className='fixed max-w-[20%] pr-32 font-text'>
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2'>
 				{artistSections.map((link) => {
@@ -45,27 +45,35 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='mt-16'>{artist.artistInfo}</p>
+			<p className='my-16 text-bodyMedium'>
+				{artist.artistInfo} She is a celebrated photographer known for her
+				evocative imagery that blends fine art and documentary styles.
+			</p>
 
 			{/* Secondary Links */}
-			<div className='fixed bottom-[--footer-height-mobile] flex items-end'>
-				<div className='mb-32'>
-					<Button
-						href='/info'
-						classes={"block uppercase mt-8 text-labelLarge font-medium"}
-					>
-						<span>Contact Agent</span>
-					</Button>
-					<a className='block text-labelLarge font-medium' href='#'>
-						Instagram
-					</a>
-					<Button
-						href='/artists'
-						classes={"block uppercase mt-8 text-labelLarge font-medium"}
-					>
-						<span>Back to Artists</span>
-					</Button>
-				</div>
+			<div className='mb-32'>
+				<Button
+					href='/info'
+					classes={
+						"underlined-link block uppercase mt-8 text-labelLarge font-medium"
+					}
+				>
+					<span>Contact Agent</span>
+				</Button>
+				<a
+					className='underlined-link block text-labelLarge font-medium'
+					href='#'
+				>
+					Instagram
+				</a>
+				<Button
+					href='/artists'
+					classes={
+						"underlined-link block uppercase mt-8 text-labelLarge font-medium"
+					}
+				>
+					<span>Back to Artists</span>
+				</Button>
 			</div>
 		</aside>
 	)

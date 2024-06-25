@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { getFooterNavLinks } from "@/sanity/sanity-queries"
+import { Button } from "@/components/ui"
 
 export default async function Footer() {
 	const navLinks = await getFooterNavLinks()
@@ -10,7 +10,7 @@ export default async function Footer() {
 				navLinks.map((link) => {
 					return link.url ? (
 						<a
-							className=''
+							className='underlined-link'
 							key={`${link.title}-footer`}
 							href={link.url}
 							target='_blank'
@@ -19,13 +19,13 @@ export default async function Footer() {
 							{link.title}
 						</a>
 					) : (
-						<Link
-							className=''
+						<Button
+							classes='underlined-link'
 							key={`${link.title}-footer`}
 							href={`/${link.slug}`}
 						>
 							{link.title}
-						</Link>
+						</Button>
 					)
 				})}
 		</footer>

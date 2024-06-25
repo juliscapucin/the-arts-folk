@@ -17,8 +17,8 @@ export default function CategoryFilter({
 			<button
 				onClick={() => setActiveCategory("all")}
 				className={`uppercase text-labelMedium md:text-labelLarge font-medium ${
-					activeCategory === "all" ? "underline" : ""
-				} hover:text-faded-50`}
+					activeCategory === "all" ? "active underlined-link" : ""
+				}`}
 			>
 				All
 			</button>
@@ -29,9 +29,9 @@ export default function CategoryFilter({
 					<Fragment key={`${category.title}-category`}>
 						<button
 							onClick={() => setActiveCategory(category._id)}
-							className={`uppercase text-labelMedium md:text-labelLarge font-medium ${
-								activeCategory === category._id ? "underline" : ""
-							} hover:text-faded-50`}
+							className={`underlined-link uppercase text-labelMedium md:text-labelLarge font-medium ${
+								activeCategory === category._id ? "active" : ""
+							}`}
 						>
 							{category.title}
 						</button>

@@ -23,10 +23,10 @@ export default function ArtistPage({
 	return (
 		<Container hasPadding classes='pt-32'>
 			<h1 className='text-displaySmall mb-8'>{artist.name}</h1>
-			<div className='flex w-full gap-8'>
+			<div className='w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 
-				<section className='ml-[25%] w-9/12 flex flex-wrap gap-4'>
+				<section className='ml-[30%] w-9/12 flex flex-wrap gap-4'>
 					{projects.map((project) => {
 						const firstImage = project.images[0]
 
