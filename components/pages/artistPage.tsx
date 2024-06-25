@@ -3,9 +3,9 @@
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
-import { Artist, Category, Project } from "@/types"
+import { Artist, Project } from "@/types"
 import { Button, Container } from "@/components/ui"
-import { ArtistAside, ArtistMenu } from ".."
+import { ArtistAside } from "@/components"
 
 type artistPageProps = {
 	artist: Artist

@@ -36,8 +36,6 @@ export default async function page({
 	const artist = await getArtist(slug)
 	const project = await getProject(projectSlug)
 
-	console.log(projectSlug, slug)
-
 	if (!artist || !project) return notFound()
 
 	return (
