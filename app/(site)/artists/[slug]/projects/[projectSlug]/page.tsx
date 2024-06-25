@@ -1,14 +1,12 @@
 import { notFound } from "next/navigation"
-
 import { ProjectPage } from "@/components/pages"
-import { getArtists, getPage, getProject } from "@/sanity/sanity-queries"
-
+import { getArtist, getPage, getProject } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
 
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string }
+	params: { projectSlug: string; slug: string }
 }) {
 	const { slug } = params
 	const pageData = getPage(slug)
@@ -29,14 +27,23 @@ export async function generateMetadata({
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
 
-export default async function page({ params }: { params: { slug: string } }) {
-	const { slug } = params
-	const project = await getProject(slug)
-	const artists = await getArtists()
+export default async function page({
+	params,
+}: {
+	params: { projectSlug: string; slug: string }
+}) {
+	const { projectSlug, slug } = params
+	const artist = await getArtist(slug)
+	const project = await getProject(projectSlug)
 
-	const artist = artists.find((artist) => artist._id === project.artist._ref)
+	if (!artist || !project) return notFound()
 
-	if (!project || !artist) return notFound()
-
-	return <ProjectPage {...{ project, artist }} />
+	return (
+		<ProjectPage
+			{...{
+				artist,
+				project,
+			}}
+		/>
+	)
 }

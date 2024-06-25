@@ -33,7 +33,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 									<NavbarLink
 										key={link.slug}
 										link={link}
-										isActive={pathname.includes(`/${link.slug}`) ? true : false}
+										isActive={pathname === `/${link.slug}` ? true : false}
 										transitionOnClick={transitionOnClick}
 									/>
 								)

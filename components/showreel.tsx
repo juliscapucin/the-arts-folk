@@ -93,7 +93,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [logoRef, showreelRef])
 
 	return (
-		<div className='pt-[--header-height-desktop]'>
+		<section className='pt-[--header-height-desktop] mb-40'>
 			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 z-150 pointer-events-none'>
 				<div className='w-full max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-start items-end '>
 					<div ref={logoHeaderRef} className='h-full'></div>
@@ -133,6 +133,6 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 					)
 				})}
 			</div>
-		</div>
+		</section>
 	)
 }

@@ -4,14 +4,14 @@ import {
 	getArtist,
 	getArtistSections,
 	getPage,
-	getProjectsByArtist,
+	getProjects,
 } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
 
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string }
+	params: { sectionSlug: string; slug: string }
 }) {
 	const { slug } = params
 	const pageData = getPage(slug)
@@ -32,14 +32,18 @@ export async function generateMetadata({
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
 
-export default async function page({ params }: { params: { slug: string } }) {
-	const { slug } = params
-	const artist = await getArtist(slug)
-	const projects = await getProjectsByArtist(artist._id)
+export default async function page({
+	params,
+}: {
+	params: { sectionSlug: string; slug: string }
+}) {
+	const { sectionSlug, slug } = params
+	const projects = await getProjects()
 	const artistSections = await getArtistSections()
-	const featuredSection = artistSections.find(
-		(section) => section.title === "Featured"
+	const activeSection = artistSections.find(
+		(section) => section.title.toLowerCase() === sectionSlug
 	)
+	const artist = await getArtist(slug)
 
 	const artistProjects = projects.filter(
 		(project) => artist._id === project.artist._ref
@@ -61,23 +65,23 @@ export default async function page({ params }: { params: { slug: string } }) {
 		return acc
 	}, [])
 
-	const featuredProjects = featuredSection
+	const activeProjects = activeSection
 		? artistProjects.filter((project) =>
 				project.artistSection?.some(
-					(section) => section._ref === featuredSection._id
+					(section) => section._ref === activeSection._id
 				)
 		  )
 		: []
 
-	if (!featuredSection) return notFound()
-	// if (!artist || !featuredProjects || !featuredSection) return notFound()
+	// if (!activeSection) return notFound()
+	if (!artist || !activeProjects || !activeSection) return notFound()
 
 	return (
 		<ArtistPage
 			{...{
 				artist,
-				projects: featuredProjects,
-				sectionSlug: featuredSection.title,
+				projects: activeProjects,
+				sectionSlug: sectionSlug,
 				artistSections: artistLinks,
 			}}
 		/>

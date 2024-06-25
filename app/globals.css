@@ -132,33 +132,6 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-.underlined-link {
-	display: inline-block;
-	position: relative;
-	overflow-x: clip;
-	text-decoration: none;
-	color: var(--color-secondary);
-	transition: color 0.2s linear;
-}
-
-.underlined-link::after {
-	content: "";
-	position: absolute;
-	z-index: 50;
-	bottom: 2px;
-	left: 0;
-	width: 100%;
-	height: 1px;
-	background-color: currentColor;
-	transition: transform 0.3s;
-	transform: translateX(0);
-}
-
-.underlined-link:hover::after {
-	opacity: 0.5;
-	transform: translateX(100%);
-}
-
 /* a,
 button {
 	transition: opacity 0.3s linear;
@@ -171,4 +144,33 @@ button:hover {
 
 button {
 	cursor: pointer;
+}
+
+.underlined-link {
+	position: relative;
+	overflow-x: clip;
+	text-decoration: none;
+	width: fit-content;
+	color: var(--color-secondary);
+}
+
+.underlined-link::after {
+	content: "";
+	position: absolute;
+	z-index: 50;
+	bottom: 2px;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background-color: currentColor;
+	transition: transform 0.3s;
+	transform: translateX(-100%);
+}
+
+.underlined-link:hover::after {
+	transform: translateX(0%);
+}
+
+.active.underlined-link::after {
+	transform: translateX(0%);
 }

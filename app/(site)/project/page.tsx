@@ -27,11 +27,5 @@ export default async function Page() {
 	const projects = await getProjects()
 	const news = projects.filter((project) => !project.isNews)
 
-	if (!news) return notFound()
-
-	return (
-		<main>
-			<NewsServer />
-		</main>
-	)
+	return notFound()
 }

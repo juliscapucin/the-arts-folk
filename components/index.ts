@@ -1,3 +1,4 @@
+import ArtistAside from "./artistAside"
 import ArtistOverlay from "./artistOverlay"
 import CategoryFilter from "./categoryFilter"
 import Copyright from "./copyright"
@@ -9,6 +10,7 @@ import { PageTransition } from "./pageTransition"
 import Showreel from "./showreel"
 
 export {
+	ArtistAside,
 	ArtistOverlay,
 	CategoryFilter,
 	Copyright,

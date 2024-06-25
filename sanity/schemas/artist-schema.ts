@@ -25,8 +25,15 @@ const artistSchema = {
 			type: "string",
 		},
 		{
-			name: "subtitle",
-			title: "Subtitle",
+			name: "category",
+			title: "Categories",
+			type: "array",
+			description: "Select the categories associated with this artist.",
+			of: [{ type: "reference", to: [{ type: "categories" }] }],
+		},
+		{
+			name: "artistInfo",
+			title: "Artist Info",
 			type: "text",
 		},
 		{
@@ -57,13 +64,6 @@ const artistSchema = {
 					],
 				},
 			],
-		},
-		{
-			name: "category",
-			title: "Categories",
-			type: "reference",
-			description: "Select the categories associated with this artist.",
-			to: [{ type: "categories" }],
 		},
 		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{

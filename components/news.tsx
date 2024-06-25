@@ -3,19 +3,17 @@
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
-import { usePageContext } from "@/context"
+import { Button } from "@/components/ui"
 
-import { CloudinaryImage, Project } from "@/types"
+import { Project } from "@/types"
 
 type NewsProps = {
 	news: Project[]
 }
 
 export default function News({ news }: NewsProps) {
-	const { transitionOnClick } = usePageContext()
-
 	return (
-		<section className='relative mt-64 mb-32 w-full max-w-desktop flex flex-wrap'>
+		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap'>
 			{news.map((project) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
@@ -35,9 +33,9 @@ export default function News({ news }: NewsProps) {
 						}`}
 						key={project.slug}
 					>
-						<button
-							onClick={() => transitionOnClick(`news/${project.slug}`)}
-							className={`relative overflow-clip flex flex-col ${
+						<Button
+							href={`/news/${project.slug}`}
+							classes={`relative overflow-clip flex flex-col ${
 								project.newsPageSize === "small" ? imageSizeSmall : imageSizeBig
 							}`}
 						>
@@ -75,7 +73,7 @@ export default function News({ news }: NewsProps) {
 							<p className='block text-center mx-auto font-script text-headlineSmall md:text-headlineLarge capitalize'>
 								By {project.artistInfo?.name}
 							</p>
-						</button>
+						</Button>
 					</article>
 				)
 			})}

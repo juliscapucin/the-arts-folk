@@ -1,59 +1,39 @@
 "use client"
 
-import { notFound } from "next/navigation"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
-import { usePageContext } from "@/context"
-
 import { Artist, Project } from "@/types"
-import { Container } from "@/components/ui"
+import { Button, Container } from "@/components/ui"
+import { ArtistAside } from "@/components"
 
 type artistPageProps = {
 	artist: Artist
-	artistProjects: Project[]
+	projects: Project[]
+	sectionSlug: string
+	artistSections: string[]
 }
 
 export default function ArtistPage({
 	artist,
-	artistProjects,
+	projects,
+	sectionSlug,
+	artistSections,
 }: artistPageProps) {
-	const { transitionOnClick } = usePageContext()
-
-	// console.log(artistProjects[0])
-
 	return (
 		<Container hasPadding classes='pt-32'>
-			<h1 className='text-headlineLarge mb-8'>{artist.name}</h1>
+			<h1 className='text-displaySmall mb-8'>{artist.name}</h1>
 			<div className='flex w-full gap-8'>
-				<aside className='w-3/12 font-text'>
-					<ul className='text-labelLarge font-medium'>
-						<li className='underline'>Featured</li>
-						<li>Portfolio</li>
-						<li>Motion</li>
-						<li>Personal</li>
-					</ul>
-					<p className='mt-8'>
-						Isaac Marley Morgan is a London based photographer & art director
-					</p>
-					<button
-						className='uppercase mt-8'
-						onClick={() => transitionOnClick("info")}
-					>
-						Contact Agent
-					</button>
-					<a className='block' href='#'>
-						Instagram
-					</a>
-				</aside>
-				<section className='w-9/12 flex flex-wrap gap-4'>
-					{artistProjects.map((project) => {
+				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
+
+				<section className='ml-[25%] w-9/12 flex flex-wrap gap-4'>
+					{projects.map((project) => {
 						const firstImage = project.images[0]
 
 						return (
-							<button
-								onClick={() => transitionOnClick(project.slug)}
-								className={"w-2/12 overflow-hidden"}
+							<Button
+								href={`artists/${artist.slug}/projects/${project.slug}`}
+								classes={"w-2/12 overflow-hidden"}
 								key={project.slug}
 							>
 								{/* <h2>{project.title}</h2> */}
@@ -81,7 +61,7 @@ export default function ArtistPage({
 										/>
 									)}
 								</div>
-							</button>
+							</Button>
 						)
 					})}
 				</section>
