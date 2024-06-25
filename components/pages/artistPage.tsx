@@ -1,13 +1,10 @@
 "use client"
 
-import { notFound } from "next/navigation"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
-import { usePageContext } from "@/context"
-
 import { Artist, Category, Project } from "@/types"
-import { Container } from "@/components/ui"
+import { Button, Container } from "@/components/ui"
 import { ArtistAside, ArtistMenu } from ".."
 
 type artistPageProps = {
@@ -23,8 +20,6 @@ export default function ArtistPage({
 	sectionSlug,
 	artistSections,
 }: artistPageProps) {
-	const { transitionOnClick } = usePageContext()
-
 	return (
 		<Container hasPadding classes='pt-32'>
 			<h1 className='text-displaySmall mb-8'>{artist.name}</h1>
@@ -36,9 +31,9 @@ export default function ArtistPage({
 						const firstImage = project.images[0]
 
 						return (
-							<button
-								onClick={() => transitionOnClick(project.slug)}
-								className={"w-2/12 overflow-hidden"}
+							<Button
+								href={`artists/${artist.slug}/projects/${project.slug}`}
+								classes={"w-2/12 overflow-hidden"}
 								key={project.slug}
 							>
 								{/* <h2>{project.title}</h2> */}
@@ -66,7 +61,7 @@ export default function ArtistPage({
 										/>
 									)}
 								</div>
-							</button>
+							</Button>
 						)
 					})}
 				</section>

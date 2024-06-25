@@ -4,7 +4,7 @@ import {
 	getArtist,
 	getArtistSections,
 	getPage,
-	getProjects,
+	getProjectsByArtist,
 } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
 
@@ -34,12 +34,12 @@ export const dynamic = "force-dynamic"
 
 export default async function page({ params }: { params: { slug: string } }) {
 	const { slug } = params
-	const projects = await getProjects()
+	const artist = await getArtist(slug)
+	const projects = await getProjectsByArtist(artist._id)
 	const artistSections = await getArtistSections()
 	const featuredSection = artistSections.find(
 		(section) => section.title === "Featured"
 	)
-	const artist = await getArtist(slug)
 
 	const artistProjects = projects.filter(
 		(project) => artist._id === project.artist._ref

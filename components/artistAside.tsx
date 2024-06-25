@@ -1,10 +1,9 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui"
-import { Artist, Category } from "@/types"
+import { Artist } from "@/types"
 
 type ArtistAsideProps = {
 	artist: Artist
@@ -18,8 +17,6 @@ export default function artistAside({
 	artistSections,
 }: ArtistAsideProps) {
 	const pathname = usePathname()
-
-	console.log(pathname)
 
 	return (
 		<aside className='fixed w-3/12 font-text'>
@@ -36,16 +33,13 @@ export default function artistAside({
 							{link}
 						</span>
 					) : (
-						<Link
+						<Button
 							key={link}
+							classes={"underlined-link block"}
 							href={`/artists/${artist.slug}/${linkLowerCase}`}
-							passHref
-							legacyBehavior
 						>
-							<Button classes={"underlined-link block"}>
-								<span>{link}</span>
-							</Button>
-						</Link>
+							<span>{link}</span>
+						</Button>
 					)
 				})}
 			</nav>
@@ -56,23 +50,21 @@ export default function artistAside({
 			{/* Secondary Links */}
 			<div className='fixed bottom-[--footer-height-mobile] flex items-end'>
 				<div className='mb-32'>
-					<Link href='/info' passHref legacyBehavior>
-						<Button
-							classes={"block uppercase mt-8 text-labelLarge font-medium"}
-						>
-							<span>Contact Agent</span>
-						</Button>
-					</Link>
+					<Button
+						href='/info'
+						classes={"block uppercase mt-8 text-labelLarge font-medium"}
+					>
+						<span>Contact Agent</span>
+					</Button>
 					<a className='block text-labelLarge font-medium' href='#'>
 						Instagram
 					</a>
-					<Link href='/artists' passHref legacyBehavior>
-						<Button
-							classes={"block uppercase mt-8 text-labelLarge font-medium"}
-						>
-							<span>Back to Artists</span>
-						</Button>
-					</Link>
+					<Button
+						href='/artists'
+						classes={"block uppercase mt-8 text-labelLarge font-medium"}
+					>
+						<span>Back to Artists</span>
+					</Button>
 				</div>
 			</div>
 		</aside>

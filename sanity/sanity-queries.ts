@@ -96,6 +96,24 @@ export async function getProjects(): Promise<Project[]> {
 	)
 }
 
+export async function getProjectsByArtist(
+	artistId: string
+): Promise<Project[]> {
+	return client.fetch(
+		groq`*[_type == "project" && artist._ref == $artistId] | order(releaseDate desc){
+       _id,
+       "slug": slug.current,
+       artist,
+       artistSection,
+       title,
+       projectInfo,
+       releaseDate,
+       images,
+     }`,
+		{ artistId }
+	)
+}
+
 export async function getProject(slug: string): Promise<Project> {
 	return client.fetch(
 		groq`*[_type == "project" && slug.current == $slug][0]{
