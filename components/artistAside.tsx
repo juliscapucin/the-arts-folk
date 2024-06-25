@@ -1,46 +1,42 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui"
-import { Artist } from "@/types"
+import { Artist, Category } from "@/types"
 
 type ArtistAsideProps = {
 	artist: Artist
 	sectionSlug: string
+	artistSections: string[]
 }
 
-const links = [
-	{
-		title: "Featured",
-	},
-	{
-		title: "Portfolio",
-	},
-	{
-		title: "Motion",
-	},
-	{
-		title: "Personal",
-	},
-]
+export default function artistAside({
+	artist,
+	sectionSlug,
+	artistSections,
+}: ArtistAsideProps) {
+	const pathname = usePathname()
 
-export default function artistAside({ artist, sectionSlug }: ArtistAsideProps) {
 	return (
 		<aside className='w-3/12 font-text'>
 			<nav className='text-labelLarge font-medium'>
-				{links.map((link) => {
-					return link.title === sectionSlug ? (
-						<span className='underline' key={link.title}>
-							{link.title}
+				{artistSections.map((link) => {
+					return pathname.includes(link.toLowerCase()) ||
+						pathname === `/artists/${artist.name}` ? (
+						<span className='underline' key={link}>
+							{link}
 						</span>
 					) : (
 						<Link
-							key={link.title}
-							href={`/artists/${artist.slug}/${link.title.toLowerCase()}`}
+							key={link}
+							href={`/artists/${artist.slug}/${link.toLowerCase()}`}
 							passHref
 							legacyBehavior
 						>
 							<Button classes={"block uppercase"}>
-								<span>{link.title}</span>
+								<span>{link}</span>
 							</Button>
 						</Link>
 					)
@@ -48,13 +44,18 @@ export default function artistAside({ artist, sectionSlug }: ArtistAsideProps) {
 			</nav>
 			<p className='mt-8'>{artist.artistInfo}</p>
 			<Link href='/info' passHref legacyBehavior>
-				<Button classes={"block uppercase mt-8"}>
+				<Button classes={"block uppercase mt-8 text-labelLarge font-medium"}>
 					<span>Contact Agent</span>
 				</Button>
 			</Link>
-			<a className='block' href='#'>
+			<a className='block text-labelLarge font-medium' href='#'>
 				Instagram
 			</a>
+			<Link href='/artists' passHref legacyBehavior>
+				<Button classes={"block uppercase mt-8 text-labelLarge font-medium"}>
+					<span>Back to Artists</span>
+				</Button>
+			</Link>
 		</aside>
 	)
 }

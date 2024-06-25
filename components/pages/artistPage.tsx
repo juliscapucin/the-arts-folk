@@ -6,7 +6,7 @@ import ReactPlayer from "react-player/vimeo"
 
 import { usePageContext } from "@/context"
 
-import { Artist, Project } from "@/types"
+import { Artist, Category, Project } from "@/types"
 import { Container } from "@/components/ui"
 import { ArtistAside } from ".."
 
@@ -14,12 +14,14 @@ type artistPageProps = {
 	artist: Artist
 	projects: Project[]
 	sectionSlug: string
+	artistSections: string[]
 }
 
 export default function ArtistPage({
 	artist,
 	projects,
 	sectionSlug,
+	artistSections,
 }: artistPageProps) {
 	const { transitionOnClick } = usePageContext()
 
@@ -27,7 +29,7 @@ export default function ArtistPage({
 		<Container hasPadding classes='pt-32'>
 			<h1 className='text-headlineLarge mb-8'>{artist.name}</h1>
 			<div className='flex w-full gap-8'>
-				<ArtistAside {...{ artist, sectionSlug }} />
+				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 				<section className='w-9/12 flex flex-wrap gap-4'>
 					{projects.map((project) => {
 						const firstImage = project.images[0]

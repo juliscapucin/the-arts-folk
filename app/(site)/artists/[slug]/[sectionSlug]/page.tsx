@@ -49,6 +49,22 @@ export default async function page({
 		(project) => artist._id === project.artist._ref
 	)
 
+	const artistLinks = artistProjects.reduce<string[]>((acc, project) => {
+		if (project.artistSection) {
+			project.artistSection.forEach((section) => {
+				artistSections.forEach((artistSection) => {
+					if (
+						artistSection._id === section._ref &&
+						!acc.includes(artistSection.title)
+					) {
+						acc.push(artistSection.title)
+					}
+				})
+			})
+		}
+		return acc
+	}, [])
+
 	const activeProjects = activeSection
 		? artistProjects.filter((project) =>
 				project.artistSection?.some(
@@ -66,6 +82,7 @@ export default async function page({
 				artist,
 				projects: activeProjects,
 				sectionSlug: sectionSlug,
+				artistSections: artistLinks,
 			}}
 		/>
 	)
