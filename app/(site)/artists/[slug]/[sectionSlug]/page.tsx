@@ -11,7 +11,7 @@ import { metadataFallback } from "@/utils"
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string }
+	params: { sectionSlug: string; slug: string }
 }) {
 	const { slug } = params
 	const pageData = getPage(slug)
@@ -32,30 +32,41 @@ export async function generateMetadata({
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
 
-export default async function page({ params }: { params: { slug: string } }) {
-	const { slug } = params
+export default async function page({
+	params,
+}: {
+	params: { sectionSlug: string; slug: string }
+}) {
+	const { sectionSlug, slug } = params
 	const projects = await getProjects()
 	const artistSections = await getArtistSections()
-	const portfolioSection = artistSections.find(
-		(section) => section.title === "Portfolio"
+	const activeSection = artistSections.find(
+		(section) => section.title.toLowerCase() === sectionSlug
 	)
 	const artist = await getArtist(slug)
-
-	if (!artist) return notFound()
 
 	const artistProjects = projects.filter(
 		(project) => artist._id === project.artist._ref
 	)
 
-	if (!portfolioSection) return notFound()
+	const activeProjects = activeSection
+		? artistProjects.filter((project) =>
+				project.artistSection?.some(
+					(section) => section._ref === activeSection._id
+				)
+		  )
+		: []
 
-	const portfolioProjects = artistProjects.filter((project) =>
-		project.artistSection?.some(
-			(section) => section._ref === portfolioSection._id
-		)
+	// if (!activeSection) return notFound()
+	if (!artist || !activeProjects || !activeSection) return notFound()
+
+	return (
+		<ArtistPage
+			{...{
+				artist,
+				projects: activeProjects,
+				sectionSlug: sectionSlug,
+			}}
+		/>
 	)
-
-	if (portfolioProjects.length === 0) return notFound()
-
-	return <ArtistPage {...{ artist, projects: portfolioProjects }} />
 }

@@ -9,6 +9,7 @@ export type Artist = {
 	name: string
 	slug: string
 	description: string
+	artistInfo: string
 	scrapbookImages: ScrapbookImage[]
 	artistWebsite: string
 	category: CategoryArtist[]

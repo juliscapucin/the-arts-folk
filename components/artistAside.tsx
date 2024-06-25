@@ -1,19 +1,52 @@
 import Link from "next/link"
 
 import { Button } from "@/components/ui"
+import { Artist } from "@/types"
 
-export default function artistAside() {
+type ArtistAsideProps = {
+	artist: Artist
+	sectionSlug: string
+}
+
+const links = [
+	{
+		title: "Featured",
+	},
+	{
+		title: "Portfolio",
+	},
+	{
+		title: "Motion",
+	},
+	{
+		title: "Personal",
+	},
+]
+
+export default function artistAside({ artist, sectionSlug }: ArtistAsideProps) {
 	return (
 		<aside className='w-3/12 font-text'>
-			<ul className='text-labelLarge font-medium'>
-				<li className='underline'>Featured</li>
-				<li>Portfolio</li>
-				<li>Motion</li>
-				<li>Personal</li>
-			</ul>
-			<p className='mt-8'>
-				Isaac Marley Morgan is a London based photographer & art director
-			</p>
+			<nav className='text-labelLarge font-medium'>
+				{links.map((link) => {
+					return link.title === sectionSlug ? (
+						<span className='underline' key={link.title}>
+							{link.title}
+						</span>
+					) : (
+						<Link
+							key={link.title}
+							href={`/artists/${artist.slug}/${link.title.toLowerCase()}`}
+							passHref
+							legacyBehavior
+						>
+							<Button classes={"block uppercase"}>
+								<span>{link.title}</span>
+							</Button>
+						</Link>
+					)
+				})}
+			</nav>
+			<p className='mt-8'>{artist.artistInfo}</p>
 			<Link href='/info' passHref legacyBehavior>
 				<Button classes={"block uppercase mt-8"}>
 					<span>Contact Agent</span>

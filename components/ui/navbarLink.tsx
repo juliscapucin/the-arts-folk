@@ -16,7 +16,7 @@ export default function navbarLink({
 	return (
 		<>
 			{isActive ? (
-				<span className='uppercase font-text font-extralight text-bodyLarge tracking-wider text-faded-50 select-none'>
+				<span className='uppercase underline font-text font-extralight text-bodyLarge tracking-wider select-none'>
 					{link.title}
 				</span>
 			) : (
@@ -26,7 +26,7 @@ export default function navbarLink({
 							e.preventDefault()
 							transitionOnClick(link)
 						}}
-						className='uppercase font-text font-extralight text-bodyLarge tracking-wider select-none'
+						className='uppercase font-text font-extralight text-bodyLarge tracking-wider select-none hover:underline'
 					>
 						{link.title}
 					</button>

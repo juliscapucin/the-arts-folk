@@ -13,16 +13,21 @@ import { ArtistAside } from ".."
 type artistPageProps = {
 	artist: Artist
 	projects: Project[]
+	sectionSlug: string
 }
 
-export default function ArtistPage({ artist, projects }: artistPageProps) {
+export default function ArtistPage({
+	artist,
+	projects,
+	sectionSlug,
+}: artistPageProps) {
 	const { transitionOnClick } = usePageContext()
 
 	return (
 		<Container hasPadding classes='pt-32'>
 			<h1 className='text-headlineLarge mb-8'>{artist.name}</h1>
 			<div className='flex w-full gap-8'>
-				<ArtistAside />
+				<ArtistAside {...{ artist, sectionSlug }} />
 				<section className='w-9/12 flex flex-wrap gap-4'>
 					{projects.map((project) => {
 						const firstImage = project.images[0]
