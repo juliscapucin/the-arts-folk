@@ -19,43 +19,62 @@ export default function artistAside({
 }: ArtistAsideProps) {
 	const pathname = usePathname()
 
+	console.log(pathname)
+
 	return (
-		<aside className='w-3/12 font-text'>
-			<nav className='text-labelLarge font-medium'>
+		<aside className='fixed w-3/12 font-text'>
+			{/* Artist Sections */}
+			<nav className='text-labelLarge font-medium mt-2'>
 				{artistSections.map((link) => {
-					return pathname.includes(link.toLowerCase()) ||
-						pathname === `/artists/${artist.name}` ? (
-						<span className='underline' key={link}>
+					const linkLowerCase = link.toLowerCase()
+					const isActive =
+						pathname.includes(linkLowerCase) ||
+						(pathname === `/artists/${artist.slug}` && link === "Featured")
+
+					return isActive ? (
+						<span className='active underlined-link block' key={link}>
 							{link}
 						</span>
 					) : (
 						<Link
 							key={link}
-							href={`/artists/${artist.slug}/${link.toLowerCase()}`}
+							href={`/artists/${artist.slug}/${linkLowerCase}`}
 							passHref
 							legacyBehavior
 						>
-							<Button classes={"block uppercase"}>
+							<Button classes={"underlined-link block"}>
 								<span>{link}</span>
 							</Button>
 						</Link>
 					)
 				})}
 			</nav>
-			<p className='mt-8'>{artist.artistInfo}</p>
-			<Link href='/info' passHref legacyBehavior>
-				<Button classes={"block uppercase mt-8 text-labelLarge font-medium"}>
-					<span>Contact Agent</span>
-				</Button>
-			</Link>
-			<a className='block text-labelLarge font-medium' href='#'>
-				Instagram
-			</a>
-			<Link href='/artists' passHref legacyBehavior>
-				<Button classes={"block uppercase mt-8 text-labelLarge font-medium"}>
-					<span>Back to Artists</span>
-				</Button>
-			</Link>
+
+			{/* Artist Info */}
+			<p className='mt-16'>{artist.artistInfo}</p>
+
+			{/* Secondary Links */}
+			<div className='fixed bottom-[--footer-height-mobile] flex items-end'>
+				<div className='mb-32'>
+					<Link href='/info' passHref legacyBehavior>
+						<Button
+							classes={"block uppercase mt-8 text-labelLarge font-medium"}
+						>
+							<span>Contact Agent</span>
+						</Button>
+					</Link>
+					<a className='block text-labelLarge font-medium' href='#'>
+						Instagram
+					</a>
+					<Link href='/artists' passHref legacyBehavior>
+						<Button
+							classes={"block uppercase mt-8 text-labelLarge font-medium"}
+						>
+							<span>Back to Artists</span>
+						</Button>
+					</Link>
+				</div>
+			</div>
 		</aside>
 	)
 }

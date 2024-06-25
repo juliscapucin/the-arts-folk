@@ -8,7 +8,7 @@ import { usePageContext } from "@/context"
 
 import { Artist, Category, Project } from "@/types"
 import { Container } from "@/components/ui"
-import { ArtistAside } from ".."
+import { ArtistAside, ArtistMenu } from ".."
 
 type artistPageProps = {
 	artist: Artist
@@ -27,10 +27,11 @@ export default function ArtistPage({
 
 	return (
 		<Container hasPadding classes='pt-32'>
-			<h1 className='text-headlineLarge mb-8'>{artist.name}</h1>
+			<h1 className='text-displaySmall mb-8'>{artist.name}</h1>
 			<div className='flex w-full gap-8'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
-				<section className='w-9/12 flex flex-wrap gap-4'>
+
+				<section className='ml-[25%] w-9/12 flex flex-wrap gap-4'>
 					{projects.map((project) => {
 						const firstImage = project.images[0]
 

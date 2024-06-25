@@ -1,4 +1,5 @@
 import ArtistAside from "./artistAside"
+import ArtistMenu from "./artistMenu"
 import ArtistOverlay from "./artistOverlay"
 import CategoryFilter from "./categoryFilter"
 import Copyright from "./copyright"
@@ -11,6 +12,7 @@ import Showreel from "./showreel"
 
 export {
 	ArtistAside,
+	ArtistMenu,
 	ArtistOverlay,
 	CategoryFilter,
 	Copyright,
