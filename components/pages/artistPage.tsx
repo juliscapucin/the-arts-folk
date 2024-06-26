@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { use, useEffect, useRef, useState } from "react"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
@@ -23,9 +23,15 @@ export default function ArtistPage({
 	sectionSlug,
 	artistSections,
 }: artistPageProps) {
+	const [hasWindow, setHasWindow] = useState(false)
 	const [view, setView] = useState("thumbnail")
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
+
+	// Check if window is available
+	useEffect(() => {
+		setHasWindow(true)
+	}, [])
 
 	const toggleView = () => {
 		const tl = gsap.timeline({
@@ -93,7 +99,7 @@ export default function ArtistPage({
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
-						{projects.map((project) => {
+						{projects.map((project, index) => {
 							const firstImage = project.images[0]
 
 							///////////////////
@@ -101,14 +107,14 @@ export default function ArtistPage({
 							///////////////////
 							return view === "thumbnail" ? (
 								<Button
-									classes='w-full md:w-1/3 xl:w-1/5 h-80 relative overflow-hidden pl-4 pb-4 group'
+									classes='h-72 relative overflow-hidden pl-4 pb-4 group'
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
-									<label className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+									<span className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
 										{project.title}
-									</label>
-									<div className='relative w-full h-full'>
+									</span>
+									<div className='relative w-full h-full bg-faded-5'>
 										{firstImage.url.includes("vimeo") ? (
 											<ReactPlayer
 												url={firstImage.url}
@@ -122,12 +128,14 @@ export default function ArtistPage({
 											/>
 										) : (
 											<CldImage
-												className={`w-full h-full object-cover`}
+												className={`w-full h-full object-contain`}
 												src={firstImage.url}
-												alt={`Photo by hello`}
+												alt={`Photo by ${artist.name}`}
 												sizes='20vw'
 												quality={70}
-												fill
+												width={firstImage.width}
+												height={firstImage.height}
+												priority={index < 8}
 											/>
 										)}
 									</div>
@@ -137,19 +145,21 @@ export default function ArtistPage({
 								// Gallery view
 								////////////////
 								<Button
-									classes='w-full relative overflow-hidden pl-4 pb-8'
+									classes={`w-full relative overflow-hidden pl-4 pb-8 bg-faded-5 ${
+										firstImage.url.includes("vimeo") ?? "aspect-video"
+									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
 									{/* <h2>{project.title}</h2> */}
-									<div className='relative w-full h-full'>
+									<div className={`relative w-full h-full bg-faded-5`}>
 										{firstImage.url.includes("vimeo") ? (
 											<ReactPlayer
 												url={firstImage.url}
 												playing
 												playsinline
-												width='100%'
 												height='100%'
+												width='100%'
 												controls={false}
 												muted={true}
 												loop={true}

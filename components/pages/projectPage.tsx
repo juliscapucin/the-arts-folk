@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useLayoutEffect } from "react"
+import { useRef, useState, useLayoutEffect, Suspense } from "react"
 import { usePathname } from "next/navigation"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
@@ -115,7 +115,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	return (
 		<>
 			<ProjectFullscreen
-				{...{ images, isFullscreenOpen, setIsFullscreenOpen }}
+				{...{
+					artistName: artist.name,
+					images,
+					isFullscreenOpen,
+					setIsFullscreenOpen,
+				}}
 			/>
 			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] lg:pr-64'>
 				{/* Thumbnails Container */}
@@ -149,8 +154,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							>
 								{images.map((image, index) => (
 									<button
-										onClick={() => console.log("clicked")}
-										className='relative w-full'
+										onClick={() => console.log("clicked")} //TODO: add click event
+										className='relative w-full bg-faded-5'
 										key={`project-thumbnail-${index}`}
 									>
 										{image.url.includes("vimeo") ? (
@@ -168,7 +173,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 											<CldImage
 												className={`w-full object-contain`}
 												src={image.url}
-												alt={`Photo by hello`}
+												alt={`Photo ${artist.name}`}
 												sizes='10vw'
 												quality={70}
 												width={image.width}
@@ -193,28 +198,32 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						</h2>
 					</div>
 					<div className='w-64 h-16'>
-						{/* Release date + project info button */}
 						<div className=''>
 							<div className='relative bg-faded-5'>
 								<div className='absolute top-0 right-0 z-80'>
+									{/* Release date*/}
 									<p className='text-right font-script text-displayLarge'>
 										{releaseDate}
 									</p>
-									<div className='h-8'>
-										<button
-											onClick={toggleProjectInfo}
-											className='mb-4 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-end'
-										>
-											Project info
-											<span
-												className={`${
-													isProjectInfoOpen ? "rotate-180" : ""
-												} transition-transform duration-300 ease-in-out`}
+
+									{/* Project Info Button */}
+									{projectInfo && (
+										<div className='h-8 mt-3'>
+											<button
+												onClick={toggleProjectInfo}
+												className='mb-4 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-end'
 											>
-												<IconChevron />
-											</span>
-										</button>
-									</div>
+												Project info
+												<span
+													className={`${
+														isProjectInfoOpen ? "rotate-180" : ""
+													} transition-transform duration-300 ease-in-out`}
+												>
+													<IconChevron />
+												</span>
+											</button>
+										</div>
+									)}
 								</div>
 							</div>
 
@@ -256,25 +265,28 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								key={`project-image-${index}`}
 							>
 								{image.url.includes("vimeo") ? (
-									<ReactPlayer
-										url={image.url}
-										playing
-										playsinline
-										width='100%'
-										height='100%'
-										controls={false}
-										muted={true}
-										loop={true}
-									/>
+									<div className='relative w-full aspect-video bg-faded-5'>
+										<ReactPlayer
+											url={image.url}
+											playing
+											playsinline
+											width='100%'
+											height='100%'
+											controls={false}
+											muted={true}
+											loop={true}
+										/>
+									</div>
 								) : (
 									<CldImage
 										className={`w-full h-full object-contain`}
 										src={image.url}
-										alt={`Photo by hello`}
+										alt={`Photo by ${artist.name}`}
 										sizes='(max-width: 768px) 90vw, (max-width: 1200px) 90vw, 90vw'
 										quality={70}
 										width={image.width}
 										height={image.height}
+										priority={index === 0}
 									/>
 								)}
 							</button>

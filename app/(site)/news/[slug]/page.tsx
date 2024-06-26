@@ -4,6 +4,7 @@ import { ProjectPage } from "@/components/pages"
 import { getArtists, getPage, getProject } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
+import { Suspense } from "react"
 
 export async function generateMetadata({
 	params,
@@ -38,5 +39,9 @@ export default async function page({ params }: { params: { slug: string } }) {
 
 	if (!project || !artist) return notFound()
 
-	return <ProjectPage {...{ project, artist }} />
+	return (
+		<Suspense fallback={null}>
+			<ProjectPage {...{ artist, project }} />
+		</Suspense>
+	)
 }

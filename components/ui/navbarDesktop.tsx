@@ -26,7 +26,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 			{navLinks && (
 				<div className='hidden lg:flex z-150'>
 					{/* Menu links */}
-					<nav className='w-full h-full hidden lg:flex justify-end items-center gap-24'>
+					<nav className='w-full h-full hidden lg:flex justify-end items-center gap-24 mb-3'>
 						{navLinks.map((link) => {
 							return (
 								link.slug && (

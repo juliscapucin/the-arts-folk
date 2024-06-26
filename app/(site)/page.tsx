@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { HomePage } from "@/components/pages"
 import { getPage, getShowreel } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
+import { Suspense } from "react"
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
@@ -30,5 +31,9 @@ export default async function Home() {
 
 	if (!showreelImages) return notFound()
 
-	return <HomePage showreelImages={showreelImages} />
+	return (
+		<Suspense fallback={null}>
+			<HomePage showreelImages={showreelImages} />
+		</Suspense>
+	)
 }
