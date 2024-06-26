@@ -106,14 +106,10 @@ export default function ArtistPage({
 							// Thumbnail view
 							///////////////////
 							return view === "thumbnail" ? (
-								// <Button
-								// 	classes='h-72 relative overflow-hidden pl-4 pb-4 group'
-								// 	href={`artists/${artist.slug}/projects/${project.slug}`}
-								// 	key={project.slug}
-								// >
-								<div
+								<Button
+									classes='h-72 relative overflow-hidden pl-4 pb-4 group'
+									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
-									className='h-72 relative overflow-hidden pl-4 pb-4 group'
 								>
 									<span className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
 										{project.title}
@@ -143,7 +139,7 @@ export default function ArtistPage({
 											/>
 										)}
 									</div>
-								</div>
+								</Button>
 							) : (
 								////////////////
 								// Gallery view
