@@ -132,6 +132,12 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
 
+				gsap.to(containerRef.current, {
+					opacity: 1,
+					duration: 0.3,
+				})
+
+				// If there are less than 4 artists, animate entry without scroll loop
 				if (filteredArtists.length < 4) {
 					gsap.fromTo(
 						items,
@@ -140,7 +146,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 							opacity: 0,
 						},
 						{
-							yPercent: 135,
+							yPercent: 180,
 							opacity: 1,
 							stagger: 0.07,
 							duration: 0.6,
@@ -149,7 +155,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					return
 				}
 
-				// Artist names entrance animation
+				// Artist names entrance animation + scroll loop
 				gsap.from(items, {
 					yPercent: -100,
 					opacity: 0,
@@ -186,15 +192,21 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	}, [resizeTimeout])
 
 	useEffect(() => {
-		if (activeCategory === "all") setFilteredArtists(artists)
-		else {
-			const filteredArtitsts = artists.filter((artist) => {
-				return artist.category.some(
-					(category) => category._ref === activeCategory
-				)
-			})
-			setFilteredArtists(filteredArtitsts)
-		}
+		gsap.to(containerRef.current, {
+			opacity: 0,
+			duration: 0.3,
+			onComplete: () => {
+				if (activeCategory === "all") setFilteredArtists(artists)
+				else {
+					const filteredArtitsts = artists.filter((artist) => {
+						return artist.category.some(
+							(category) => category._ref === activeCategory
+						)
+					})
+					setFilteredArtists(filteredArtitsts)
+				}
+			},
+		})
 	}, [activeCategory])
 
 	return (
@@ -239,7 +251,10 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				></div>
 
 				{/* Artists Menu */}
-				<section ref={sectionRef} className='w-full text-center space-y-8 pt-8'>
+				<section
+					ref={sectionRef}
+					className='w-full text-center space-y-12 pt-8'
+				>
 					{filteredArtists.map((artist) => {
 						return (
 							<div
@@ -247,6 +262,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 								key={artist.name}
 								data-name={artist.name}
 							>
+								{/* TODO: add Button component */}
 								<button
 									onClick={() => transitionOnClick(`artists/${artist.slug}`)}
 									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
