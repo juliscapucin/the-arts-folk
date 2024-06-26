@@ -30,7 +30,7 @@ export default function artistAside({
 				<span className='underlined-link'>Back to Artists</span>
 			</Button>
 			{/* Artist Sections */}
-			<nav className='text-labelLarge font-medium mt-8'>
+			<nav className='text-labelLarge font-medium mt-16'>
 				{artistSections.map((link) => {
 					const linkLowerCase = link.toLowerCase()
 					const isActive =
