@@ -17,8 +17,6 @@ export default function News({ news }: NewsProps) {
 			{news.map((project) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
-				console.log(project.newsPageAlignment)
-
 				const imageSizeSmall =
 					aspectRatio > 1 ? "w-2/3 md:w-1/3" : "w-2/3 md:w-1/4"
 				const imageSizeBig =

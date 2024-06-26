@@ -25,39 +25,71 @@ export default function ArtistPage({
 }: artistPageProps) {
 	const [view, setView] = useState("thumbnail")
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
+	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
 
 	const toggleView = () => {
-		gsap.to(imagesSectionRef.current, {
-			opacity: 0,
-			duration: 0.4,
+		const tl = gsap.timeline({
 			onComplete: () => {
 				setView(view === "gallery" ? "thumbnail" : "gallery")
 				gsap.to(imagesSectionRef.current, {
 					opacity: 1,
 					duration: 0.4,
 				})
+				gsap.to(changeViewButtonRef.current, {
+					opacity: 1,
+					duration: 0.4,
+				})
 			},
 		})
+
+		tl.to(imagesSectionRef.current, {
+			opacity: 0,
+			duration: 0.4,
+		}).to(
+			changeViewButtonRef.current,
+			{
+				opacity: 0,
+				duration: 0.4,
+			},
+			"<"
+		) // "<" ensures both animations start at the same time
 	}
 
 	return (
 		<Container hasPadding classes='pt-[--header-height-desktop]'>
-			<div className='w-full'>
+			<div className='relative w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 
-				<section className='relative ml-[50%] md:ml-[30%] xl:ml-[25%] w-1/2 md:w-9/12'>
+				<section className='relative ml-[50%] md:ml-[25%] w-1/2 md:w-9/12'>
 					<header className='sticky top-8 pb-4 flex items-end justify-between bg-primary z-50'>
 						<Heading tag='h1' classes='mt-16 pl-4 leading-tightest'>
 							{artist.name}
 						</Heading>
 						<button
+							ref={changeViewButtonRef}
 							onClick={toggleView}
 							className='font-text text-labelLarge font-medium uppercase flex items-center gap-2'
 						>
-							<span>
+							<span className='underlined-link hidden lg:block'>
 								{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
 							</span>
-							<span className='border border-faded-70 w-4 h-4'></span>
+							{view === "thumbnail" ? (
+								<div className='flex flex-col gap-[1px] -translate-y-[1px]'>
+									<span className='border border-faded-70 w-[12px] h-[6px]'></span>
+									<span className='border border-faded-70 w-[12px] h-[6px]'></span>
+								</div>
+							) : (
+								<div className='space-y-[1px] -translate-y-[1px]'>
+									<div className='flex gap-[1px]'>
+										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
+										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
+									</div>
+									<div className='flex gap-[1px]'>
+										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
+										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
+									</div>
+								</div>
+							)}
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
@@ -73,7 +105,7 @@ export default function ArtistPage({
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
-									<label className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+									<label className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
 										{project.title}
 									</label>
 									<div className='relative w-full h-full'>

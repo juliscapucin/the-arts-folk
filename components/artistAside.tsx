@@ -20,7 +20,7 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-32 w-1/2 md:w-[25%] pr-8 font-text'>
+		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary'>
 			{/* Back Button */}
 			<Button
 				href='/artists'
@@ -54,7 +54,7 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='block my-12 pr-8 text-bodyMedium'>{artist.artistInfo}</p>
+			<p className='block my-12 text-bodyMedium'>{artist.artistInfo}</p>
 
 			{/* Secondary Links */}
 			<div className='mb-32'>
