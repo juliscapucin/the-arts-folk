@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui"
 import { Artist } from "@/types"
+import { IconChevron } from "./icons"
 
 type ArtistAsideProps = {
 	artist: Artist
@@ -19,9 +20,17 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed w-3/12 font-text'>
+		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary'>
+			{/* Back Button */}
+			<Button
+				href='/artists'
+				classes={"block uppercase text-labelLarge font-medium flex gap-4 -ml-2"}
+			>
+				<IconChevron classes={"rotate-90 scale-75"} />
+				<span className='underlined-link'>Back to Artists</span>
+			</Button>
 			{/* Artist Sections */}
-			<nav className='text-labelLarge font-medium mt-2'>
+			<nav className='text-labelLarge font-medium mt-16'>
 				{artistSections.map((link) => {
 					const linkLowerCase = link.toLowerCase()
 					const isActive =
@@ -45,27 +54,24 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='mt-16'>{artist.artistInfo}</p>
+			<p className='block my-12 text-bodyMedium'>{artist.artistInfo}</p>
 
 			{/* Secondary Links */}
-			<div className='fixed bottom-[--footer-height-mobile] flex items-end'>
-				<div className='mb-32'>
-					<Button
-						href='/info'
-						classes={"block uppercase mt-8 text-labelLarge font-medium"}
-					>
-						<span>Contact Agent</span>
-					</Button>
-					<a className='block text-labelLarge font-medium' href='#'>
-						Instagram
-					</a>
-					<Button
-						href='/artists'
-						classes={"block uppercase mt-8 text-labelLarge font-medium"}
-					>
-						<span>Back to Artists</span>
-					</Button>
-				</div>
+			<div className='mb-32'>
+				<Button
+					href='/info'
+					classes={
+						"underlined-link block uppercase mt-8 text-labelLarge font-medium"
+					}
+				>
+					<span>Contact Agent</span>
+				</Button>
+				<a
+					className='underlined-link block text-labelLarge font-medium'
+					href='#'
+				>
+					Instagram
+				</a>
 			</div>
 		</aside>
 	)

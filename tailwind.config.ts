@@ -30,9 +30,9 @@ const config: Config = {
 			script: "var(--font-script), sans-serif",
 		},
 		fontSize: {
-			displayLarge: ["52px", "1"],
-			displayMedium: ["45px", "1"],
-			displaySmall: ["40px", "1"],
+			displayLarge: ["45px", "1"],
+			displayMedium: ["40px", "1"],
+			displaySmall: ["36px", "1"],
 			headlineLarge: ["36px", "1"],
 			headlineMedium: ["32px", "1"],
 			headlineSmall: ["28px", "1"],

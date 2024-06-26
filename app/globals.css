@@ -9,8 +9,6 @@
 		--font-secondary: "canada-type-gibson", sans-serif;
 		--color-primary: 255 255 255;
 		--color-primary-rgb: 255, 255, 255;
-		/* --color-primary: 249 246 238;
-		--color-primary-rgb: 249, 246, 238; */
 		--color-secondary: 18 12 15;
 		--color-secondary-rgb: 18, 12, 15;
 		--color-focus: 180, 180, 180;
@@ -38,11 +36,11 @@
 	}
 
 	*::-webkit-scrollbar {
-		width: 3px;
-		height: 3px;
+		width: 4px;
+		height: 4px;
 	}
 	*::-webkit-scrollbar-track {
-		background-color: rgba(var(--color-primary-rgb), 0.2);
+		background-color: rgba(var(--color-secondary-rgb), 0.2);
 		-webkit-box-shadow: none;
 	}
 	*::-webkit-scrollbar-thumb {
@@ -53,10 +51,16 @@
 	}
 
 	.artists-page::-webkit-scrollbar-thumb,
-	.default-page::-webkit-scrollbar-thumb {
+	.hide-scroll::-webkit-scrollbar-thumb {
 		background-color: rgb(var(--color-primary-rgb), 1);
 		width: 1rem;
 		height: 1rem;
+		-webkit-box-shadow: none;
+	}
+
+	.artists-page::-webkit-scrollbar-track,
+	.hide-scroll::-webkit-scrollbar-track {
+		background-color: rgba(var(--color-primary-rgb), 1);
 		-webkit-box-shadow: none;
 	}
 

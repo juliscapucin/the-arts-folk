@@ -1,4 +1,5 @@
 import { usePageContext } from "@/context"
+import { Button } from "@/components/ui"
 
 export default function Copyright() {
 	const year = new Date().getFullYear()
@@ -6,12 +7,9 @@ export default function Copyright() {
 
 	return (
 		<div className='absolute bottom-0 right-0 py-4 flex flex-col items-end text-labelSmall font-text'>
-			<button
-				onClick={() => transitionOnClick("impressum")}
-				className='mb-4 underline hover:text-faded-50 uppercase'
-			>
+			<Button href={"impressum"} classes='underlined-link mb-4 uppercase'>
 				Impressum
-			</button>
+			</Button>
 			<span>The Arts Folk ©{year}</span>
 			<span>
 				Website by{" "}
