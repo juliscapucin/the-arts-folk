@@ -148,16 +148,18 @@ export default function ArtistPage({
 									{/* <h2>{project.title}</h2> */}
 									<div className='relative w-full h-full'>
 										{firstImage.url.includes("vimeo") ? (
-											<ReactPlayer
-												url={firstImage.url}
-												playing
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/>
+											<Suspense fallback={null}>
+												<ReactPlayer
+													url={firstImage.url}
+													playing
+													playsinline
+													width='100%'
+													height='100%'
+													controls={false}
+													muted={true}
+													loop={true}
+												/>
+											</Suspense>
 										) : (
 											<CldImage
 												className={`w-full h-full object-cover`}

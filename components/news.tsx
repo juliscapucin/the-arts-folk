@@ -6,6 +6,7 @@ import ReactPlayer from "react-player/vimeo"
 import { Button } from "@/components/ui"
 
 import { Project } from "@/types"
+import { Suspense } from "react"
 
 type NewsProps = {
 	news: Project[]
@@ -44,16 +45,18 @@ export default function News({ news }: NewsProps) {
 
 							{/* Project Image */}
 							{project.images[0].url.includes("vimeo") ? (
-								<ReactPlayer
-									url={project.images[0].url}
-									playing
-									playsinline
-									width='100%'
-									height='100%'
-									controls={false}
-									muted={true}
-									loop={true}
-								/>
+								<Suspense fallback={null}>
+									<ReactPlayer
+										url={project.images[0].url}
+										playing
+										playsinline
+										width='100%'
+										height='100%'
+										controls={false}
+										muted={true}
+										loop={true}
+									/>
+								</Suspense>
 							) : (
 								<CldImage
 									className='object-contain'

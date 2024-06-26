@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useLayoutEffect, useRef, useState } from "react"
+import { Suspense, useLayoutEffect, useRef } from "react"
 import gsap from "gsap"
 
 import { CldImage } from "next-cloudinary"
@@ -89,17 +89,20 @@ export default function ProjectFullscreen({
 			>
 				{images.map((image, index) =>
 					image.url.includes("vimeo") ? (
-						<ReactPlayer
-							url={image.url}
-							playing
-							playsinline
-							width='100%'
-							height='100%'
-							controls={false}
-							muted={true}
-							loop={true}
-							key={`project-fullscreen-${index}`}
-						/>
+						<div key={`project-fullscreen-${index}`}>
+							<Suspense fallback={null}>
+								<ReactPlayer
+									url={image.url}
+									playing
+									playsinline
+									width='100%'
+									height='100%'
+									controls={false}
+									muted={true}
+									loop={true}
+								/>
+							</Suspense>
+						</div>
 					) : (
 						<CldImage
 							className={`w-full object-contain`}
