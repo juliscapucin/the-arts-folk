@@ -142,47 +142,51 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									}
 								/>
 							</div>
-							{/* Minimap Marker */}
-							<div
-								ref={minimapMarkerRef}
-								className='absolute w-[13vw] max-w-[170px] h-[--minimap-height] border border-secondary z-150'
-							></div>
-							{/* Thumbnails */}
-							<div
-								ref={thumbnailsRef}
-								className='relative w-[10vw] max-w-[160px] mx-auto space-y-1 pointer-events-auto'
-							>
-								{images.map((image, index) => (
-									<button
-										onClick={() => console.log("clicked")} //TODO: add click event
-										className='relative w-full bg-faded-5'
-										key={`project-thumbnail-${index}`}
+							{images.length > 1 && (
+								<>
+									{/* Minimap Marker */}
+									<div
+										ref={minimapMarkerRef}
+										className='absolute w-[13vw] max-w-[170px] h-[--minimap-height] border border-secondary z-150'
+									></div>
+									{/* Thumbnails */}
+									<div
+										ref={thumbnailsRef}
+										className='relative w-[10vw] max-w-[160px] mx-auto space-y-1 pointer-events-auto'
 									>
-										{image.url.includes("vimeo") ? (
-											<ReactPlayer
-												url={image.url}
-												playing
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/>
-										) : (
-											<CldImage
-												className={`w-full object-contain`}
-												src={image.url}
-												alt={`Photo ${artist.name}`}
-												sizes='10vw'
-												quality={70}
-												width={image.width}
-												height={image.height}
-											/>
-										)}
-									</button>
-								))}
-							</div>
+										{images.map((image, index) => (
+											<button
+												onClick={() => console.log("clicked")} //TODO: add click event
+												className='relative w-full bg-faded-5'
+												key={`project-thumbnail-${index}`}
+											>
+												{image.url.includes("vimeo") ? (
+													<ReactPlayer
+														url={image.url}
+														playing
+														playsinline
+														width='100%'
+														height='100%'
+														controls={false}
+														muted={true}
+														loop={true}
+													/>
+												) : (
+													<CldImage
+														className={`w-full object-contain`}
+														src={image.url}
+														alt={`Photo ${artist.name}`}
+														sizes='10vw'
+														quality={70}
+														width={image.width}
+														height={image.height}
+													/>
+												)}
+											</button>
+										))}
+									</div>
+								</>
+							)}
 						</aside>
 					</div>
 				</div>

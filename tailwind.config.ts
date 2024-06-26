@@ -63,6 +63,7 @@ const config: Config = {
 				intro: "200",
 				header: "250",
 				fullscreen: "300",
+				transition: "400",
 			},
 			letterSpacing: { tightest: "-.075em" },
 			scale: {
