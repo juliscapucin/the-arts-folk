@@ -116,7 +116,9 @@ export default function ArtistPage({
 									</span>
 									<div className='relative w-full h-full bg-faded-5'>
 										{firstImage.url.includes("vimeo") ? (
+											// <div className='relative pt-[56%]'>
 											<ReactPlayer
+												// className='absolute top-0 left-0'
 												url={firstImage.url}
 												playing
 												playsinline
@@ -127,6 +129,7 @@ export default function ArtistPage({
 												loop={true}
 											/>
 										) : (
+											// </div>
 											<CldImage
 												className={`w-full h-full object-contain`}
 												src={firstImage.url}

@@ -29,7 +29,7 @@ export const PageTransition = () => {
 	return (
 		<div
 			ref={pageTransitionRef}
-			className='fixed top-0 left-0 w-screen h-screen min-h-svh z-150 pointer-events-none bg-primary'
+			className='fixed top-0 left-0 w-screen h-screen min-h-svh z-transition pointer-events-none bg-primary'
 		></div>
 	)
 }
