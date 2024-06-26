@@ -10,12 +10,14 @@ import { CloudinaryImage } from "@/types"
 import { ButtonClose } from "@/components/buttons"
 
 type ProjectFullscreenProps = {
+	artistName: string
 	images: CloudinaryImage[]
 	isFullscreenOpen: boolean
 	setIsFullscreenOpen: (arg0: boolean) => void
 }
 
 export default function ProjectFullscreen({
+	artistName,
 	images,
 	isFullscreenOpen,
 	setIsFullscreenOpen,
@@ -107,7 +109,7 @@ export default function ProjectFullscreen({
 						<CldImage
 							className={`w-full object-contain`}
 							src={image.url}
-							alt={`Photo by hello`}
+							alt={`Photo by ${artistName}`}
 							sizes='100vw'
 							quality={100}
 							width={image.width}
