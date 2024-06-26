@@ -7,6 +7,7 @@ import {
 	getProjectsByArtist,
 } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
+import { Suspense } from "react"
 
 export async function generateMetadata({
 	params,
@@ -73,13 +74,15 @@ export default async function page({ params }: { params: { slug: string } }) {
 	// if (!artist || !featuredProjects || !featuredSection) return notFound()
 
 	return (
-		<ArtistPage
-			{...{
-				artist,
-				projects: featuredProjects,
-				sectionSlug: featuredSection.title,
-				artistSections: artistLinks,
-			}}
-		/>
+		<Suspense fallback={null}>
+			<ArtistPage
+				{...{
+					artist,
+					projects: featuredProjects,
+					sectionSlug: featuredSection.title,
+					artistSections: artistLinks,
+				}}
+			/>
+		</Suspense>
 	)
 }

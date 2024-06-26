@@ -253,7 +253,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				{/* Artists Menu */}
 				<section
 					ref={sectionRef}
-					className='w-full text-center space-y-12 pt-8'
+					className='w-full text-center space-y-20 pt-20'
 				>
 					{filteredArtists.map((artist) => {
 						return (

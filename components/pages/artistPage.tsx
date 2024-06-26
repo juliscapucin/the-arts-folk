@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { Suspense, useRef, useState } from "react"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
@@ -93,7 +93,7 @@ export default function ArtistPage({
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
-						{projects.map((project) => {
+						{projects.map((project, index) => {
 							const firstImage = project.images[0]
 
 							///////////////////
@@ -101,7 +101,7 @@ export default function ArtistPage({
 							///////////////////
 							return view === "thumbnail" ? (
 								<Button
-									classes='w-full md:w-1/3 xl:w-1/5 h-80 relative overflow-hidden pl-4 pb-4 group'
+									classes='h-72 relative overflow-hidden pl-4 pb-4 group'
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
@@ -110,24 +110,28 @@ export default function ArtistPage({
 									</label>
 									<div className='relative w-full h-full'>
 										{firstImage.url.includes("vimeo") ? (
-											<ReactPlayer
-												url={firstImage.url}
-												playing
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/>
+											<Suspense>
+												<ReactPlayer
+													url={firstImage.url}
+													playing
+													playsinline
+													width='100%'
+													height='100%'
+													controls={false}
+													muted={true}
+													loop={true}
+												/>
+											</Suspense>
 										) : (
 											<CldImage
-												className={`w-full h-full object-cover`}
+												className={`w-full h-full object-contain`}
 												src={firstImage.url}
 												alt={`Photo by hello`}
 												sizes='20vw'
 												quality={70}
-												fill
+												width={firstImage.width}
+												height={firstImage.height}
+												priority={index < 8}
 											/>
 										)}
 									</div>

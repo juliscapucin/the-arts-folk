@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 
 import { metadataFallback } from "@/utils"
 import { NewsServer } from "@/components/server"
+import { Suspense } from "react"
 
 export async function generateMetadata() {
 	const pageData = getPage("news")
@@ -31,7 +32,9 @@ export default async function Page() {
 
 	return (
 		<main>
-			<NewsServer />
+			<Suspense fallback={null}>
+				<NewsServer />
+			</Suspense>
 		</main>
 	)
 }

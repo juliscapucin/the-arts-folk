@@ -1,3 +1,5 @@
+"use client"
+
 import { Category } from "@/types"
 import { Fragment } from "react"
 

@@ -4,6 +4,7 @@ import { DefaultPage } from "@/components/pages"
 import { getPage } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
+import { Suspense } from "react"
 
 export async function generateMetadata({
 	params,
@@ -35,5 +36,9 @@ export default async function page({ params }: { params: { slug: string } }) {
 
 	if (!pageData) return notFound()
 
-	return <DefaultPage pageData={pageData} />
+	return (
+		<Suspense fallback={null}>
+			<DefaultPage {...{ pageData }} />
+		</Suspense>
+	)
 }

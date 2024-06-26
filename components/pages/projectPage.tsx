@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useLayoutEffect } from "react"
+import { useRef, useState, useLayoutEffect, Suspense } from "react"
 import { usePathname } from "next/navigation"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
@@ -256,16 +256,20 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								key={`project-image-${index}`}
 							>
 								{image.url.includes("vimeo") ? (
-									<ReactPlayer
-										url={image.url}
-										playing
-										playsinline
-										width='100%'
-										height='100%'
-										controls={false}
-										muted={true}
-										loop={true}
-									/>
+									<div className='relative w-full aspect-video bg-faded-5'>
+										<Suspense>
+											<ReactPlayer
+												url={image.url}
+												playing
+												playsinline
+												width='100%'
+												height='100%'
+												controls={false}
+												muted={true}
+												loop={true}
+											/>
+										</Suspense>
+									</div>
 								) : (
 									<CldImage
 										className={`w-full h-full object-contain`}
@@ -275,6 +279,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										quality={70}
 										width={image.width}
 										height={image.height}
+										priority={index === 0}
 									/>
 								)}
 							</button>
