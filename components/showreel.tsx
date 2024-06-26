@@ -70,7 +70,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				// markers: true,
 				onEnter: () => {
 					const state = Flip.getState(element)
-					setLogoClasses("origin-left scale-50 md:scale-75")
+					setLogoClasses("origin-left scale-50 md:scale-[60%]")
 					logoHeader.appendChild(element)
 					Flip.from(state, {
 						duration: 0.5,

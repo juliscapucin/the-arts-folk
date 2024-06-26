@@ -29,7 +29,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 		<>
 			{navLinks && (
 				<div className='block lg:hidden overflow-clip'>
-					<div className='absolute top-4 right-4 flex justify-end items-center z-150'>
+					<div className='absolute top-4 right-4 flex justify-end items-center z-header'>
 						{/* Burger Button */}
 						<ButtonBurger action={toggleMobileMenu} isOpen={isOpen} />
 					</div>
