@@ -1,6 +1,7 @@
 "use client"
 
-import { useRef, useState, useLayoutEffect, use, useEffect } from "react"
+import { useRef, useState, useLayoutEffect } from "react"
+import { usePathname } from "next/navigation"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
@@ -23,6 +24,7 @@ type ProjectPageProps = {
 export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	const { title, projectInfo, releaseDate, images } = project
 	const { transitionOnClick } = usePageContext()
+	const pathname = usePathname()
 
 	const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
 	const [isProjectInfoOpen, setIsProjectInfoOpen] = useState(false)
@@ -40,15 +42,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	function toggleProjectInfo() {
 		setIsProjectInfoOpen(!isProjectInfoOpen)
 	}
-
-	useEffect(() => {
-		if (!minimapMarkerRef.current) return
-		const minimapMarker = minimapMarkerRef.current
-		const viewportHeight = window.innerHeight
-		const viewportWidth = window.innerWidth
-		const minimapMarquerHeight =
-			(minimapMarker.clientWidth * viewportHeight) / viewportWidth
-	}, [])
 
 	useLayoutEffect(() => {
 		if (!mainImagesRef.current || !thumbnailsRef.current) return
@@ -105,6 +98,20 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		}
 	}, [isProjectInfoOpen])
 
+	useLayoutEffect(() => {
+		if (!minimapMarkerRef.current) return
+		const minimapMarker = minimapMarkerRef.current
+		const viewportHeight = window.innerHeight
+		const viewportWidth = window.innerWidth
+		const minimapMarquerHeight =
+			(minimapMarker.clientWidth * viewportHeight) / viewportWidth
+
+		if (!projectInfoInnerRef.current || !projectInfoOuterRef.current) return
+
+		gsap.set(projectInfoOuterRef.current, { yPercent: -100 })
+		gsap.set(projectInfoInnerRef.current, { yPercent: 100 })
+	}, [])
+
 	return (
 		<>
 			<ProjectFullscreen
@@ -119,7 +126,15 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							<div className='relative w-full h-40 pt-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
 									color={"secondary"}
-									action={() => transitionOnClick("/")}
+									action={() =>
+										transitionOnClick(
+											`${
+												pathname.includes("artists")
+													? `artists/${artist.slug}`
+													: "news"
+											}`
+										)
+									}
 								/>
 							</div>
 							{/* Minimap Marker */}

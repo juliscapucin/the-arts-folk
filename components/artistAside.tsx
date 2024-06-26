@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui"
 import { Artist } from "@/types"
+import { IconChevron } from "./icons"
 
 type ArtistAsideProps = {
 	artist: Artist
@@ -20,8 +21,16 @@ export default function artistAside({
 
 	return (
 		<aside className='fixed top-32 w-1/2 md:w-[25%] pr-8 font-text'>
+			{/* Back Button */}
+			<Button
+				href='/artists'
+				classes={"block uppercase text-labelLarge font-medium flex gap-4 -ml-2"}
+			>
+				<IconChevron classes={"rotate-90 scale-75"} />
+				<span className='underlined-link'>Back to Artists</span>
+			</Button>
 			{/* Artist Sections */}
-			<nav className='text-labelLarge font-medium mt-2'>
+			<nav className='text-labelLarge font-medium mt-8'>
 				{artistSections.map((link) => {
 					const linkLowerCase = link.toLowerCase()
 					const isActive =
@@ -45,7 +54,7 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='my-12 text-bodyMedium'>{artist.artistInfo}</p>
+			<p className='block my-12 pr-8 text-bodyMedium'>{artist.artistInfo}</p>
 
 			{/* Secondary Links */}
 			<div className='mb-32'>
@@ -63,14 +72,6 @@ export default function artistAside({
 				>
 					Instagram
 				</a>
-				<Button
-					href='/artists'
-					classes={
-						"underlined-link block uppercase mt-8 text-labelLarge font-medium"
-					}
-				>
-					<span>Back to Artists</span>
-				</Button>
 			</div>
 		</aside>
 	)

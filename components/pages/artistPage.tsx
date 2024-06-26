@@ -57,7 +57,7 @@ export default function ArtistPage({
 							<span>
 								{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
 							</span>
-							<span className='border border-secondary w-6 h-6'></span>
+							<span className='border border-faded-70 w-4 h-4'></span>
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
