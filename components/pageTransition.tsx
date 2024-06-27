@@ -8,7 +8,7 @@ import { useLayoutEffect } from "react"
 
 export const PageTransition = () => {
 	const pathname = usePathname()
-	const { pageTransitionRef } = usePageContext()
+	const { pageTransitionRef, transitionIndex } = usePageContext()
 	let ctx = gsap.context(() => {})
 
 	// On page Enter
@@ -24,12 +24,14 @@ export const PageTransition = () => {
 				ease: "linear",
 			})
 		})
+
+		return () => ctx.revert()
 	}, [pathname])
 
 	return (
 		<div
 			ref={pageTransitionRef}
-			className='fixed top-0 left-0 w-screen h-screen min-h-svh z-transition pointer-events-none bg-primary'
+			className={`fixed top-0 left-0 w-screen h-screen min-h-svh pointer-events-none bg-primary ${transitionIndex}`}
 		></div>
 	)
 }

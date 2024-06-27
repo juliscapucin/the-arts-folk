@@ -67,16 +67,18 @@ const artistSchema = {
 		},
 		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{
-			name: "copy1",
-			title: "Copy 1",
+			name: "projects",
+			title: "Projects",
 			type: "array",
-			of: [{ type: "block" }],
-		},
-		{
-			name: "copy2",
-			title: "Copy 2",
-			type: "array",
-			of: [{ type: "block" }],
+			of: [
+				{
+					type: "reference",
+					to: [{ type: "project" }],
+				},
+			],
+			options: {
+				sortable: true,
+			},
 		},
 	],
 }

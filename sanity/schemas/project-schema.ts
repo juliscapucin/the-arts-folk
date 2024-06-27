@@ -1,16 +1,7 @@
 import { Rule } from "sanity"
-import {
-	FaAlignLeft,
-	FaAlignCenter,
-	FaAlignRight,
-	FaAlignJustify,
-} from "react-icons/fa"
-
-import CustomSelect from "../components/CustomSelect"
 
 interface ProjectDocument {
 	isNews?: boolean
-	// Add other fields as necessary
 }
 
 interface PreviewSelection {

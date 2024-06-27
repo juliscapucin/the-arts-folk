@@ -63,7 +63,9 @@ const config: Config = {
 				intro: "200",
 				header: "250",
 				fullscreen: "300",
-				transition: "400",
+				transitionLow: "400",
+				artistAside: "500",
+				transitionHigh: "600",
 			},
 			letterSpacing: { tightest: "-.075em" },
 			scale: {

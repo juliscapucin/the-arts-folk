@@ -1,13 +1,7 @@
 "use client"
 
 import { usePathname, useRouter } from "next/navigation"
-import {
-	createContext,
-	useContext,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-} from "react"
+import { createContext, useContext, useRef, useState } from "react"
 
 import gsap from "gsap"
 
@@ -17,6 +11,8 @@ import { NavLink } from "@/types"
 interface ContextProps {
 	pageTransitionRef: React.MutableRefObject<HTMLDivElement | null>
 	transitionOnClick: (link: NavLink | string) => void
+	transitionIndex: string
+	setTransitionIndex: React.Dispatch<React.SetStateAction<string>>
 }
 
 // CREATE CONTEXT
@@ -32,6 +28,7 @@ export const PageContextProvider = ({
 	const pathname = usePathname()
 	const router = useRouter()
 	let ctx = gsap.context(() => {})
+	const [transitionIndex, setTransitionIndex] = useState("z-transitionHigh")
 
 	const animateMobileMenu = (mobileMenuRef: HTMLDivElement) => {
 		console.log("animate mobile menu")
@@ -82,6 +79,8 @@ export const PageContextProvider = ({
 			value={{
 				transitionOnClick,
 				pageTransitionRef,
+				transitionIndex,
+				setTransitionIndex,
 			}}
 		>
 			{children}

@@ -54,7 +54,7 @@ const CustomCursor = ({
 		<div
 			className={`${
 				isActive && isHovering ? "opacity-100" : "opacity-0"
-			} fixed top-0 left-0 z-15 pointer-events-none cursor-pointer transition-opacity duration-300`}
+			} fixed top-0 left-0 z-artistAside pointer-events-none cursor-pointer transition-opacity duration-300`}
 			ref={refCursor}
 		>
 			<span className='block px-1 w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>

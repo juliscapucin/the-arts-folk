@@ -20,7 +20,7 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary'>
+		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
 			{/* Back Button */}
 			<Button
 				href='/artists'
@@ -46,6 +46,7 @@ export default function artistAside({
 							key={link}
 							classes={"underlined-link block"}
 							href={`/artists/${artist.slug}/${linkLowerCase}`}
+							transitionZIndex='z-transitionLow'
 						>
 							<span>{link}</span>
 						</Button>
