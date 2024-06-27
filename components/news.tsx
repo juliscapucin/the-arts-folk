@@ -12,22 +12,39 @@ type NewsProps = {
 	news: Project[]
 }
 
+const alignment = [
+	"items-start justify-start", // 1
+	"justify-center items-end xl:justify-start", // 2
+	"items-center justify-center xl:items-center xl:justify-end", // 3
+	"items-end justify-end xl:items-start xl:justify-center", // 4
+	"items-start justify start xl:items-end xl:justify-center", // 5
+	"items-center justify-center", // 6
+	"items-center justify-start", // 7
+	"items-end justify-center", // 8
+	"items-start justify-end", // 9
+	"items-center justify-center xl:items-center xl:justify-start", // 10
+	"items-start justify-center xl:items-end xl:justify-end", // 11
+	"items-end justify-end xl:items-center xl:justify-center", // 12
+]
+
 export default function News({ news }: NewsProps) {
 	return (
-		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap'>
-			{news.map((project) => {
+		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap gap-y-4 md:gap-y-16 xl:gap-y-4'>
+			{news.map((project, index) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
 				const imageSizeSmall =
-					aspectRatio > 1 ? "w-2/3 md:w-1/3" : "w-2/3 md:w-1/4"
+					aspectRatio > 1 ? "w-2/3 md:w-1/3" : "w-2/3 md:w-1/3 lg:w-1/4"
 				const imageSizeBig =
-					aspectRatio > 1 ? "w-2/3 md:w-1/2" : "w-2/3 md:w-2/5"
+					aspectRatio > 1
+						? "w-2/3 md:w-[80%] xl:w-3/4"
+						: "w-full sm:w-2/3 lg:w-[55%] xl:w-1/2" // horizontal : vertical
 
 				return (
 					<article
-						className={`relative py-12 md:py-0 md:basis-1/2 h-fit md:h-[65svh] flex ${
-							project.newsPageAlignment
-								? project.newsPageAlignment
+						className={`relative sm:basis-1/2 xl:basis-1/3 h-fit sm:h-[60svh] lg:h-[75svh] xl:h-[80svh] flex ${
+							alignment.length > 2
+								? alignment[index % alignment.length]
 								: "items-center justify-center"
 						}`}
 						key={project.slug}
@@ -40,7 +57,7 @@ export default function News({ news }: NewsProps) {
 						>
 							{/* Release Date */}
 							<p className='block font-script text-headlineLarge md:text-displayMedium text-center mx-auto'>
-								{project.releaseDate}
+								[{index + 1}] {project.releaseDate}
 							</p>
 
 							{/* Project Image */}
