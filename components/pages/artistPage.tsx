@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
@@ -8,7 +8,7 @@ import gsap from "gsap"
 
 import { Artist, Project } from "@/types"
 import { Button, Container, Heading } from "@/components/ui"
-import { ArtistAside } from "@/components"
+import { ArtistAside, CustomCursor } from "@/components"
 
 type artistPageProps = {
 	artist: Artist
@@ -23,15 +23,50 @@ export default function ArtistPage({
 	sectionSlug,
 	artistSections,
 }: artistPageProps) {
-	const [hasWindow, setHasWindow] = useState(false)
 	const [view, setView] = useState("thumbnail")
+	const [isHovering, setIsHovering] = useState(false)
+	const [activeProject, setActiveProject] = useState<Project | null>(null)
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
+	const thumbnailButtonRef = useRef<HTMLAnchorElement>(null)
+	const thumbnailButtonRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
-	// Check if window is available
 	useEffect(() => {
-		setHasWindow(true)
-	}, [])
+		if (!thumbnailButtonRefs.current) return
+
+		const handleMouseEnter = (e: MouseEvent) => {
+			setIsHovering(true)
+			projects.forEach((project, index) => {
+				if (thumbnailButtonRefs.current[index] === e.target) {
+					setActiveProject(project)
+				}
+			})
+		}
+
+		const handleMouseLeave = () => {
+			setIsHovering(false)
+			// setActiveProject(null)
+		}
+
+		thumbnailButtonRefs.current.forEach((item) => {
+			item?.addEventListener("mouseenter", handleMouseEnter)
+		})
+		thumbnailButtonRefs.current.forEach((item) => {
+			item?.addEventListener("mouseleave", handleMouseLeave)
+		})
+
+		return () => {
+			if (!thumbnailButtonRef.current) return
+			thumbnailButtonRef.current.removeEventListener(
+				"mouseenter",
+				handleMouseEnter
+			)
+			thumbnailButtonRef.current.removeEventListener(
+				"mouseleave",
+				handleMouseLeave
+			)
+		}
+	}, [thumbnailButtonRefs.current])
 
 	const toggleView = () => {
 		const tl = gsap.timeline({
@@ -107,13 +142,20 @@ export default function ArtistPage({
 							///////////////////
 							return view === "thumbnail" ? (
 								<Button
-									classes='h-72 relative overflow-hidden pl-4 pb-4 group'
+									ref={(el) => {
+										thumbnailButtonRefs.current[index] = el
+									}}
+									classes='h-72 relative overflow-hidden pl-4 pb-4'
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
-									<span className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-										{project.title}
-									</span>
+									{isHovering && project.slug === activeProject?.slug && (
+										<CustomCursor
+											isHovering={isHovering}
+											variant='thumbnail'
+											projectTitle={project.title}
+										/>
+									)}
 									<div className='relative w-full h-full bg-faded-5'>
 										{firstImage.url.includes("vimeo") ? (
 											// <div className='relative pt-[56%]'>

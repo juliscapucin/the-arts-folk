@@ -23,7 +23,7 @@ const alignment = [
 	"items-end justify-center", // 8
 	"items-start justify-end", // 9
 	"items-center justify-center xl:items-center xl:justify-start", // 10
-	"items-start justify-center xl:items-end xl:justify-end", // 11
+	"items-start justify-center xl:items-end xl:justify-center", // 11
 	"items-end justify-end xl:items-center xl:justify-center", // 12
 ]
 
@@ -57,7 +57,8 @@ export default function News({ news }: NewsProps) {
 						>
 							{/* Release Date */}
 							<p className='block font-script text-headlineLarge md:text-displayMedium text-center mx-auto'>
-								[{index + 1}] {project.releaseDate}
+								{/* [{index + 1}]  */}
+								{project.releaseDate}
 							</p>
 
 							{/* Project Image */}
@@ -87,7 +88,7 @@ export default function News({ news }: NewsProps) {
 							)}
 
 							{/* Project Info */}
-							<p className='block text-center mx-auto'>{project.title}</p>
+							<p className='block text-center mt-3 mx-auto'>{project.title}</p>
 							<p className='block text-center mx-auto font-script text-headlineSmall md:text-headlineLarge capitalize'>
 								By {project.artistInfo?.name}
 							</p>
