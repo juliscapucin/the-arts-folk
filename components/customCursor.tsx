@@ -1,50 +1,67 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import React, { useLayoutEffect, useRef } from "react"
 import { gsap } from "gsap"
 
 type Props = {
 	isHovering: boolean
+	isActive: boolean
 	variant: string
 	projectTitle: string
 }
 
-export default function CustomCursor({
+const CustomCursor = ({
 	isHovering,
+	isActive,
 	variant,
 	projectTitle,
-}: Props) {
-	const refCursor = useRef(null)
+}: Props) => {
+	const refCursor = useRef<HTMLDivElement | null>(null)
 
-	useEffect(() => {
-		const cursorDiv = refCursor.current as HTMLDivElement | null
-
+	useLayoutEffect(() => {
+		const cursorDiv = refCursor.current
 		if (!cursorDiv) return
 
-		const moveCursor = (e: MouseEvent) => {
-			gsap.to(cursorDiv, {
-				x: e.clientX - cursorDiv.clientWidth / 1.5,
-				y: e.clientY - cursorDiv.clientHeight / 1.5,
-				duration: 0.3,
+		gsap.set(cursorDiv, { xPercent: -50, yPercent: -50 })
+
+		let xTo = gsap.quickTo(cursorDiv, "x", { duration: 0.6, ease: "power3" }),
+			yTo = gsap.quickTo(cursorDiv, "y", { duration: 0.6, ease: "power3" })
+
+		window.addEventListener("mousemove", (e) => {
+			xTo(e.clientX)
+			yTo(e.clientY)
+		})
+
+		return () => {
+			window.removeEventListener("mousemove", (e) => {
+				gsap.set(cursorDiv, { xPercent: -50, yPercent: -50 })
+
+				let xTo = gsap.quickTo(cursorDiv, "x", {
+						duration: 0.6,
+						ease: "power3",
+					}),
+					yTo = gsap.quickTo(cursorDiv, "y", { duration: 0.6, ease: "power3" })
+
+				window.addEventListener("mousemove", (e) => {
+					xTo(e.clientX)
+					yTo(e.clientY)
+				})
 			})
 		}
-
-		window.addEventListener("mousemove", moveCursor)
-		return () => {
-			window.removeEventListener("mousemove", moveCursor)
-		}
-	}, [refCursor, variant])
+	}, [variant]) // Only re-run if `variant` changes
 
 	return (
 		<div
 			className={`${
-				!isHovering && "hidden"
-			} fixed top-0 left-0 z-15 pointer-events-none cursor-pointer`}
+				isActive && isHovering ? "opacity-100" : "opacity-0"
+			} fixed top-0 left-0 z-15 pointer-events-none cursor-pointer transition-opacity duration-300`}
 			ref={refCursor}
 		>
-			<span className='w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>
+			<span className='block px-1 w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>
 				{projectTitle}
 			</span>
 		</div>
 	)
 }
+
+export default React.memo(CustomCursor)
