@@ -28,14 +28,13 @@ export default function ArtistPage({
 	const [activeProject, setActiveProject] = useState<Project | null>(null)
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
-	const thumbnailButtonRef = useRef<HTMLAnchorElement>(null)
-	const thumbnailButtonRefs = useRef<(HTMLAnchorElement | null)[]>([])
+	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
 	const handleMouseEnter = useCallback(
 		(e: MouseEvent) => {
 			setIsHovering(true)
 			projects.forEach((project, index) => {
-				if (thumbnailButtonRefs.current[index] === e.target) {
+				if (buttonRefs.current[index] === e.target) {
 					setActiveProject(project)
 				}
 			})
@@ -48,11 +47,11 @@ export default function ArtistPage({
 	}, [])
 
 	useEffect(() => {
-		if (!thumbnailButtonRefs.current) return
+		if (!buttonRefs.current) return
 
-		const buttons = thumbnailButtonRefs.current
-		buttons.forEach((button) => {
-			button?.addEventListener("mouseenter", handleMouseEnter)
+		const buttons = buttonRefs.current
+		buttons.forEach((button, index) => {
+			button?.addEventListener("mouseenter", (e) => handleMouseEnter(e))
 			button?.addEventListener("mouseleave", handleMouseLeave)
 		})
 
@@ -62,7 +61,7 @@ export default function ArtistPage({
 				button?.removeEventListener("mouseleave", handleMouseLeave)
 			})
 		}
-	}, [thumbnailButtonRefs.current])
+	}, [buttonRefs.current])
 
 	const toggleView = useCallback(() => {
 		const tl = gsap.timeline({
@@ -93,8 +92,6 @@ export default function ArtistPage({
 			"<"
 		)
 	}, [])
-
-	console.log(activeProject)
 
 	return (
 		<Container hasPadding classes='pt-[--header-height-desktop]'>
@@ -136,32 +133,35 @@ export default function ArtistPage({
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
 						{projects.map((project, index) => {
 							const firstImage = project.images[0]
+							const isVideo = firstImage.url.includes("vimeo")
 
-							///////////////////
-							// Thumbnail view
-							///////////////////
-							return view === "thumbnail" ? (
+							return (
 								<Button
 									ref={(el) => {
-										thumbnailButtonRefs.current[index] = el
+										buttonRefs.current[index] = el
 									}}
-									classes='h-72 relative overflow-hidden pl-4 pb-4'
+									classes={`relative overflow-hidden pl-4 cursor-pointer ${
+										view === "thumbnail"
+											? `h-72 pb-4 ${isVideo ? "aspect-[15.5/9]" : ""}`
+											: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
+									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
 									<CustomCursor
 										isHovering={isHovering}
 										isActive={activeProject === project}
-										variant='thumbnail'
+										variant={view === "thumbnail" ? "thumbnail" : "gallery"}
 										projectTitle={project.title}
 									/>
-									<div className='relative w-full h-full bg-faded-5'>
-										{firstImage.url.includes("vimeo") ? (
-											// <div className='relative pt-[56%]'>
+									<div className='relative w-full h-full'>
+										{isVideo ? (
 											<ReactPlayer
-												// className='absolute top-0 left-0'
+												className='bg-faded-5 object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
 												url={firstImage.url}
-												playing
+												playing={
+													isHovering && project.slug === activeProject?.slug
+												}
 												playsinline
 												width='100%'
 												height='100%'
@@ -170,53 +170,19 @@ export default function ArtistPage({
 												loop={true}
 											/>
 										) : (
-											// </div>
 											<CldImage
-												className={`w-full h-full object-contain`}
+												className={`w-full h-full object-contain bg-faded-5`}
 												src={firstImage.url}
 												alt={`Photo by ${artist.name}`}
-												sizes='20vw'
+												sizes={
+													view === "thumbnail"
+														? "20vw"
+														: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
+												}
 												quality={70}
 												width={firstImage.width}
 												height={firstImage.height}
 												priority={index < 8}
-											/>
-										)}
-									</div>
-								</Button>
-							) : (
-								////////////////
-								// Gallery view
-								////////////////
-								<Button
-									classes={`w-full relative overflow-hidden pl-4 pb-8 bg-faded-5 ${
-										firstImage.url.includes("vimeo") ?? "aspect-video"
-									}`}
-									href={`artists/${artist.slug}/projects/${project.slug}`}
-									key={project.slug}
-								>
-									{/* <h2>{project.title}</h2> */}
-									<div className={`relative w-full h-full bg-faded-5`}>
-										{firstImage.url.includes("vimeo") ? (
-											<ReactPlayer
-												url={firstImage.url}
-												playing
-												playsinline
-												height='100%'
-												width='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/>
-										) : (
-											<CldImage
-												className={`w-full h-full object-cover`}
-												src={firstImage.url}
-												alt={`Photo by ${artist.name}`}
-												sizes='100vw'
-												quality={70}
-												width={firstImage.width}
-												height={firstImage.height}
 											/>
 										)}
 									</div>

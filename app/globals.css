@@ -178,3 +178,7 @@ button {
 .active.underlined-link::after {
 	transform: translateX(0%);
 }
+
+.custom-video-container iframe {
+	cursor: pointer;
+}
