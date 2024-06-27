@@ -44,26 +44,34 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	}
 
 	useLayoutEffect(() => {
-		if (!mainImagesRef.current || !thumbnailsRef.current) return
+		if (
+			!mainImagesRef.current ||
+			!thumbnailsRef.current ||
+			!minimapMarkerRef.current
+		)
+			return
 
 		gsap.registerPlugin(ScrollTrigger)
 		const thumbnails = thumbnailsRef.current
 		const mainImages = mainImagesRef.current
+		const thumbnailsHeight = thumbnails.clientHeight
+		const markerHeight = minimapMarkerRef.current.clientHeight
+		const yPercentAdjust = (markerHeight / thumbnailsHeight) * 100
 
 		//TODO: add gsap.ctx
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: mainImages,
 				start: "top top+=100",
-				end: "bottom bottom-=100",
-				scrub: 1,
+				end: "bottom bottom-=20",
+				scrub: 0.5,
 			},
 		})
 
 		tl.to(thumbnails, {
-			yPercent: -88,
+			yPercent: -100 + yPercentAdjust,
 			duration: 1,
-			ease: "none",
+			ease: "linear",
 		})
 	}, [thumbnailsRef, mainImagesRef])
 
@@ -124,11 +132,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 			/>
 			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] lg:pr-64'>
 				{/* Thumbnails Container */}
-				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden lg:block'>
+				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden lg:block bg-primary'>
 					<div className='relative max-w-desktop mx-auto'>
-						<aside className='absolute top-[--header-height-desktop] right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
+						<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
 							{/* Button Close */}
-							<div className='relative w-full h-40 pt-8 flex justify-center items-center pointer-events-auto bg-primary z-150'>
+							<div className='relative w-full h-40 pt-32 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
 									color={"secondary"}
 									action={() =>
@@ -147,15 +155,15 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									{/* Minimap Marker */}
 									<div
 										ref={minimapMarkerRef}
-										className='absolute w-[13vw] max-w-[170px] h-[--minimap-height] border border-secondary z-150'
+										className='absolute top-60 w-[13vw] max-w-[176px] -translate-x-[3px] h-[13svh] border border-secondary z-150'
 									></div>
 									{/* Thumbnails */}
 									<div
 										ref={thumbnailsRef}
-										className='relative w-[10vw] max-w-[160px] mx-auto space-y-1 pointer-events-auto'
+										className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'
 									>
 										{images.map((image, index) => (
-											<button
+											<div
 												onClick={() => console.log("clicked")} //TODO: add click event
 												className='relative w-full bg-faded-5'
 												key={`project-thumbnail-${index}`}
@@ -182,7 +190,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 														height={image.height}
 													/>
 												)}
-											</button>
+											</div>
 										))}
 									</div>
 								</>
@@ -191,7 +199,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					</div>
 				</div>
 				{/* Header */}
-				<header className='flex flex-row justify-between flex-nowrap gap-8 w-full h-40 pt-[--header-height-desktop]'>
+				<header className='flex flex-row justify-between flex-nowrap gap-8 w-full h-40 pt-[--header-height-desktop] bg-primary'>
 					{/* Title + subtitle */}
 					<div className='flex-1 bg-primary z-80'>
 						<Heading tag='h1' classes=''>

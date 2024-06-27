@@ -32,7 +32,7 @@
 			100svh - var(--header-height-mobile) - var(--footer-height-mobile)
 		);
 		--container-height-desktop: calc(100svh - var(--footer-height-desktop));
-		--minimap-height: calc(100svh / 9);
+		--minimap-height: calc(100svh / 8.3);
 	}
 
 	*::-webkit-scrollbar {
