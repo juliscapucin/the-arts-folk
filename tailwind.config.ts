@@ -32,7 +32,7 @@ const config: Config = {
 		fontSize: {
 			displayLarge: ["45px", "1"],
 			displayMedium: ["40px", "1"],
-			displaySmall: ["36px", "1"],
+			displaySmall: ["32px", "1"],
 			headlineLarge: ["36px", "1"],
 			headlineMedium: ["32px", "1"],
 			headlineSmall: ["28px", "1"],

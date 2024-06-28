@@ -7,6 +7,7 @@ export default function useReloadOnResize() {
 		function handleResize() {
 			resizeTimeout.current && clearTimeout(resizeTimeout.current) // Clear previous timeout
 
+			if (window.innerWidth < 768) return
 			resizeTimeout.current = setTimeout(() => {
 				window.location.reload()
 			}, 500)

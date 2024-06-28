@@ -20,12 +20,12 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
+		<aside className='fixed top-52 md:top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
 			{/* Back Button */}
-			<ButtonBack href='/artists' label='Back' classes='mt-1' />
+			{/* <ButtonBack href='/artists' label='Back' classes='mt-1' /> */}
 
 			{/* Artist Sections */}
-			<nav className='text-labelLarge font-medium mt-16'>
+			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
 				{artistSections.map((link) => {
 					const linkLowerCase = link.toLowerCase()
 					const isActive =

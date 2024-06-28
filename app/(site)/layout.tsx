@@ -72,9 +72,9 @@ export default async function RootLayout({
 		<html lang='en' className='overflow-y-scroll overflow-x-clip'>
 			<PageContextProvider>
 				<body
-					className={`${displayFont.className} ${scriptFont.variable} relative w-screen max-w-desktop min-h-svh mx-auto px-[--margin-mobile] md:px-[--margin-desktop] overflow-x-clip bg-white uppercase font-text font-thin`}
+					className={`${displayFont.className} ${scriptFont.variable} relative w-screen max-w-desktop min-h-svh mx-auto px-[--margin-mobile] md:px-[--margin-desktop] overflow-x-clip bg-primary uppercase font-text font-thin`}
 				>
-					<Intro />
+					{/* <Intro /> */}
 					<PageTransition />
 					<Header navLinks={navLinks} />
 					{children}
