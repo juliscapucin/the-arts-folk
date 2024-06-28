@@ -36,7 +36,7 @@ export default function NavbarMobile({ navLinks }: NavbarMobileProps) {
 
 					{/* Mobile Menu */}
 					<aside
-						className={`absolute top-0 left-0 w-screen h-svh p-8 bg-secondary transition-transform duration-300 delay-200 z-100 overflow-clip ${
+						className={`absolute top-0 left-0 w-screen h-vh p-8 bg-secondary transition-transform duration-300 delay-200 z-100 overflow-clip ${
 							isOpen ? "" : "-translate-y-full"
 						}`}
 					>
