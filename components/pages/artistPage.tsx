@@ -139,7 +139,7 @@ export default function ArtistPage({
 										isHovering={isHovering}
 										isActive={activeProject === project}
 										variant={view === "thumbnail" ? "thumbnail" : "gallery"}
-										projectTitle={project.title}
+										label={project.title}
 									/>
 									<div className='relative w-full h-full'>
 										{isVideo ? (

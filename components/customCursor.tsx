@@ -5,16 +5,16 @@ import { gsap } from "gsap"
 
 type Props = {
 	isHovering: boolean
-	isActive: boolean
+	isActive?: boolean
 	variant: string
-	projectTitle: string
+	label: string
 }
 
 const CustomCursor = ({
 	isHovering,
 	isActive,
 	variant,
-	projectTitle,
+	label: projectTitle,
 }: Props) => {
 	const refCursor = useRef<HTMLDivElement | null>(null)
 
@@ -57,7 +57,7 @@ const CustomCursor = ({
 			} fixed top-0 left-0 z-artistAside pointer-events-none cursor-pointer transition-opacity duration-300`}
 			ref={refCursor}
 		>
-			<span className='block px-1 w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>
+			<span className='block py-1 px-2 w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>
 				{projectTitle}
 			</span>
 		</div>
