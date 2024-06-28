@@ -20,10 +20,7 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-52 md:top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
-			{/* Back Button */}
-			{/* <ButtonBack href='/artists' label='Back' classes='mt-1' /> */}
-
+		<aside className='fixed top-48 md:top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
 				{artistSections.map((link) => {
