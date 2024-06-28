@@ -168,7 +168,7 @@ button {
 	height: 1px;
 	background-color: currentColor;
 	transition: transform 0.3s;
-	transform: translateX(-100%);
+	transform: translateX(-105%);
 }
 
 .underlined-link:hover::after {
