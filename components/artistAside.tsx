@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui"
 import { Artist } from "@/types"
 import { IconChevron } from "./icons"
+import { ButtonBack } from "@/components/buttons"
 
 type ArtistAsideProps = {
 	artist: Artist
@@ -14,7 +15,6 @@ type ArtistAsideProps = {
 
 export default function artistAside({
 	artist,
-	sectionSlug,
 	artistSections,
 }: ArtistAsideProps) {
 	const pathname = usePathname()
@@ -22,13 +22,8 @@ export default function artistAside({
 	return (
 		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
 			{/* Back Button */}
-			<Button
-				href='/artists'
-				classes={"block uppercase text-labelLarge font-medium flex gap-4 -ml-2"}
-			>
-				<IconChevron classes={"rotate-90 scale-75"} />
-				<span className='underlined-link'>Back to Artists</span>
-			</Button>
+			<ButtonBack href='/artists' label='Back to Artists' />
+
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-16'>
 				{artistSections.map((link) => {

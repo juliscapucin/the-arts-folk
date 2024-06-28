@@ -14,7 +14,7 @@ import { useReloadOnResize } from "@/hooks"
 import { ProjectFullscreen } from "@/components"
 import { Button, Heading } from "@/components/ui"
 import { IconChevron } from "@/components/icons"
-import { ButtonClose } from "@/components/buttons"
+import { ButtonBack, ButtonClose } from "@/components/buttons"
 import { Artist, Project } from "@/types"
 
 type ProjectPageProps = {
@@ -133,14 +133,15 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					setIsFullscreenOpen,
 				}}
 			/>
-			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] lg:pr-64'>
+			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] md:pr-32 lg:pr-64'>
 				{/* THUMBNAILS CONTAINER */}
-				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden lg:block bg-primary'>
+				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block bg-primary'>
 					<div className='relative max-w-desktop mx-auto'>
 						<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
 							{/* BUTTON CLOSE */}
 							<div className='relative w-full h-40 pt-40 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
+									classes='w-12 h-12 absolute top-4 right-0'
 									color={"secondary"}
 									action={() =>
 										transitionOnClick(
@@ -206,10 +207,20 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				<header className='relative flex flex-row justify-between flex-nowrap gap-8 w-full h-fit pt-[--header-height-desktop] bg-primary'>
 					{/* HEADER LEFT */}
 					<div className='flex-1 bg-primary z-80'>
+						{/* MOBILE – BACK BUTTON */}
+						<ButtonBack
+							classes='md:hidden absolute top-6'
+							href={
+								pathname.includes("news") ? "/news" : `/artists/${artist.slug}`
+							}
+							label={pathname.includes("news") ? "News" : "Artist"}
+						/>
+
 						{/* MOBILE – RELEASE DATE */}
 						<p className='block mb-4 font-script text-displaySmall md:text-displayLarge sm:hidden'>
 							{releaseDate}
 						</p>
+
 						{/* TITLE */}
 						<Heading tag='h1' variant='display'>
 							{title}
