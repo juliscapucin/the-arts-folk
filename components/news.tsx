@@ -29,7 +29,7 @@ const alignment = [
 
 export default function News({ news }: NewsProps) {
 	return (
-		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap gap-y-4 md:gap-y-24 lg:gap-y-16 xl:gap-y-4'>
+		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap gap-y-16 md:gap-y-24 lg:gap-y-16 xl:gap-y-8'>
 			{news.map((project, index) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
@@ -37,7 +37,7 @@ export default function News({ news }: NewsProps) {
 					aspectRatio > 1 ? "w-2/3 md:w-1/3" : "w-2/3 md:w-1/3 lg:w-1/4"
 				const imageSizeBig =
 					aspectRatio > 1
-						? "w-2/3 md:w-[80%] xl:w-3/4"
+						? "w-full sm:w-[80%] xl:w-3/4"
 						: "w-full sm:w-[55%] md:[50%] lg:w-[55%] xl:w-1/2" // horizontal : vertical
 
 				return (
