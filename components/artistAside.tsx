@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui"
 import { Artist } from "@/types"
 import { IconChevron } from "./icons"
+import { ButtonBack } from "@/components/buttons"
 
 type ArtistAsideProps = {
 	artist: Artist
@@ -14,21 +15,15 @@ type ArtistAsideProps = {
 
 export default function artistAside({
 	artist,
-	sectionSlug,
 	artistSections,
 }: ArtistAsideProps) {
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary'>
+		<aside className='fixed top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
 			{/* Back Button */}
-			<Button
-				href='/artists'
-				classes={"block uppercase text-labelLarge font-medium flex gap-4 -ml-2"}
-			>
-				<IconChevron classes={"rotate-90 scale-75"} />
-				<span className='underlined-link'>Back to Artists</span>
-			</Button>
+			<ButtonBack href='/artists' label='Back' classes='mt-1' />
+
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-16'>
 				{artistSections.map((link) => {
@@ -46,6 +41,7 @@ export default function artistAside({
 							key={link}
 							classes={"underlined-link block"}
 							href={`/artists/${artist.slug}/${linkLowerCase}`}
+							transitionZIndex='z-transitionLow'
 						>
 							<span>{link}</span>
 						</Button>
@@ -54,24 +50,29 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='block my-12 text-bodyMedium'>{artist.artistInfo}</p>
+			<p className='hidden sm:block my-12 text-bodyMedium'>
+				{artist.artistInfo}
+			</p>
 
 			{/* Secondary Links */}
 			<div className='mb-32'>
-				<Button
-					href='/info'
-					classes={
-						"underlined-link block uppercase mt-8 text-labelLarge font-medium"
-					}
-				>
-					<span>Contact Agent</span>
-				</Button>
-				<a
-					className='underlined-link block text-labelLarge font-medium'
-					href='#'
-				>
-					Instagram
-				</a>
+				{artist.agentEmail && (
+					<a
+						href={`mailto:${artist.agentEmail}`}
+						className='underlined-link block uppercase mt-8 text-labelLarge font-medium'
+						rel='noopener noreferrer'
+					>
+						<span>Contact Agent</span>
+					</a>
+				)}
+				{artist.artistInstagram && (
+					<a
+						className='underlined-link block text-labelLarge font-medium'
+						href={artist.artistInstagram}
+					>
+						Instagram
+					</a>
+				)}
 			</div>
 		</aside>
 	)

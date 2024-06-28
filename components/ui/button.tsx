@@ -9,12 +9,13 @@ type MyButtonProps = {
 	href: string
 	classes?: string
 	children?: React.ReactNode
+	transitionZIndex?: string
 }
 
 // Create MyButton component using forwardRef
 const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
-	({ href, classes, children }, ref) => {
-		const { transitionOnClick } = usePageContext()
+	({ href, classes, children, transitionZIndex }, ref) => {
+		const { transitionOnClick, setTransitionIndex } = usePageContext()
 		const slug =
 			href && href.length > 0
 				? href.startsWith("/")
@@ -29,6 +30,9 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 					href={href}
 					onClick={(e) => {
 						e.preventDefault()
+						transitionZIndex
+							? setTransitionIndex(transitionZIndex)
+							: setTransitionIndex("z-transitionHigh")
 						transitionOnClick(slug)
 					}}
 					ref={ref}

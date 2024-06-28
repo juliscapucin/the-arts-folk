@@ -65,19 +65,23 @@ const artistSchema = {
 				},
 			],
 		},
-		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{
-			name: "copy1",
-			title: "Copy 1",
+			name: "projects",
+			title: "Projects",
 			type: "array",
-			of: [{ type: "block" }],
+			of: [
+				{
+					type: "reference",
+					to: [{ type: "project" }],
+				},
+			],
+			options: {
+				sortable: true,
+			},
 		},
-		{
-			name: "copy2",
-			title: "Copy 2",
-			type: "array",
-			of: [{ type: "block" }],
-		},
+		{ name: "artistWebsite", title: "Artist Website", type: "url" },
+		{ name: "artistInstagram", title: "Artist Instagram", type: "url" },
+		{ name: "agentEmail", title: "Agent email", type: "string" },
 	],
 }
 

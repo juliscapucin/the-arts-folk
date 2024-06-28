@@ -43,18 +43,8 @@ export async function getArtist(slug: string): Promise<Artist> {
        },
       url,
       "category": categories[]->title,
-      "copy1": copy1[]{
-         children[0]{
-           text,
-           _key
-         }
-       },
-       "copy2": copy2[]{
-         children[0]{
-           text,
-           _key
-         }
-       },
+      artistInstagram,
+      agentEmail
    }`,
 		{ slug }
 	)

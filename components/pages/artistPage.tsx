@@ -1,6 +1,6 @@
 "use client"
 
-import { use, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
@@ -8,7 +8,8 @@ import gsap from "gsap"
 
 import { Artist, Project } from "@/types"
 import { Button, Container, Heading } from "@/components/ui"
-import { ArtistAside } from "@/components"
+import { ArtistAside, CustomCursor } from "@/components"
+import { IconGallery, IconThumbnails } from "@/components/icons"
 
 type artistPageProps = {
 	artist: Artist
@@ -23,20 +24,52 @@ export default function ArtistPage({
 	sectionSlug,
 	artistSections,
 }: artistPageProps) {
-	const [hasWindow, setHasWindow] = useState(false)
 	const [view, setView] = useState("thumbnail")
+	const [isHovering, setIsHovering] = useState(false)
+	const [activeProject, setActiveProject] = useState<Project | null>(null)
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
+	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
-	// Check if window is available
-	useEffect(() => {
-		setHasWindow(true)
+	const handleMouseEnter = useCallback(
+		(e: MouseEvent) => {
+			setIsHovering(true)
+			projects.forEach((project, index) => {
+				if (buttonRefs.current[index] === e.target) {
+					setActiveProject(project)
+				}
+			})
+		},
+		[projects]
+	)
+
+	const handleMouseLeave = useCallback(() => {
+		setIsHovering(false)
 	}, [])
 
-	const toggleView = () => {
+	useEffect(() => {
+		if (!buttonRefs.current) return
+
+		const buttons = buttonRefs.current
+		buttons.forEach((button, index) => {
+			button?.addEventListener("mouseenter", (e) => handleMouseEnter(e))
+			button?.addEventListener("mouseleave", handleMouseLeave)
+		})
+
+		return () => {
+			buttons.forEach((button) => {
+				button?.removeEventListener("mouseenter", handleMouseEnter)
+				button?.removeEventListener("mouseleave", handleMouseLeave)
+			})
+		}
+	}, [buttonRefs.current])
+
+	const toggleView = useCallback(() => {
 		const tl = gsap.timeline({
 			onComplete: () => {
-				setView(view === "gallery" ? "thumbnail" : "gallery")
+				setView((prevView) =>
+					prevView === "gallery" ? "thumbnail" : "gallery"
+				)
 				gsap.to(imagesSectionRef.current, {
 					opacity: 1,
 					duration: 0.4,
@@ -58,124 +91,85 @@ export default function ArtistPage({
 				duration: 0.4,
 			},
 			"<"
-		) // "<" ensures both animations start at the same time
-	}
+		)
+	}, [])
 
 	return (
 		<Container hasPadding classes='pt-[--header-height-desktop]'>
 			<div className='relative w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 
-				<section className='relative ml-[50%] md:ml-[25%] w-1/2 md:w-9/12'>
-					<header className='sticky top-8 pb-4 flex items-end justify-between bg-primary z-50'>
+				<section className='relative ml-[25%] w-9/12'>
+					<header className='sticky top-8 pb-4 md:flex items-end justify-between bg-primary z-50'>
 						<Heading tag='h1' classes='mt-16 pl-4 leading-tightest'>
 							{artist.name}
 						</Heading>
 						<button
 							ref={changeViewButtonRef}
 							onClick={toggleView}
-							className='font-text text-labelLarge font-medium uppercase flex items-center gap-2'
+							className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
 						>
-							<span className='underlined-link hidden lg:block'>
+							<span className='underlined-link block'>
 								{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
 							</span>
-							{view === "thumbnail" ? (
-								<div className='flex flex-col gap-[1px] -translate-y-[1px]'>
-									<span className='border border-faded-70 w-[12px] h-[6px]'></span>
-									<span className='border border-faded-70 w-[12px] h-[6px]'></span>
-								</div>
-							) : (
-								<div className='space-y-[1px] -translate-y-[1px]'>
-									<div className='flex gap-[1px]'>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-									</div>
-									<div className='flex gap-[1px]'>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-									</div>
-								</div>
-							)}
+
+							{/* VIEW ICONS */}
+							{view === "thumbnail" ? <IconThumbnails /> : <IconGallery />}
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
 						{projects.map((project, index) => {
 							const firstImage = project.images[0]
+							const isVideo = firstImage.url.includes("vimeo")
 
-							///////////////////
-							// Thumbnail view
-							///////////////////
-							return view === "thumbnail" ? (
+							return (
 								<Button
-									classes='h-72 relative overflow-hidden pl-4 pb-4 group'
-									href={`artists/${artist.slug}/projects/${project.slug}`}
-									key={project.slug}
-								>
-									<span className='absolute w-fit top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-1 bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-										{project.title}
-									</span>
-									<div className='relative w-full h-full bg-faded-5'>
-										{firstImage.url.includes("vimeo") ? (
-											// <div className='relative pt-[56%]'>
-											<ReactPlayer
-												// className='absolute top-0 left-0'
-												url={firstImage.url}
-												playing
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/>
-										) : (
-											// </div>
-											<CldImage
-												className={`w-full h-full object-contain`}
-												src={firstImage.url}
-												alt={`Photo by ${artist.name}`}
-												sizes='20vw'
-												quality={70}
-												width={firstImage.width}
-												height={firstImage.height}
-												priority={index < 8}
-											/>
-										)}
-									</div>
-								</Button>
-							) : (
-								////////////////
-								// Gallery view
-								////////////////
-								<Button
-									classes={`w-full relative overflow-hidden pl-4 pb-8 bg-faded-5 ${
-										firstImage.url.includes("vimeo") ?? "aspect-video"
+									ref={(el) => {
+										buttonRefs.current[index] = el
+									}}
+									classes={`relative overflow-hidden pl-4 cursor-pointer ${
+										view === "thumbnail"
+											? `h-36 md:h-72 pb-4 ${isVideo ? "aspect-[15.5/9]" : ""}`
+											: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
 									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
-									{/* <h2>{project.title}</h2> */}
-									<div className={`relative w-full h-full bg-faded-5`}>
-										{firstImage.url.includes("vimeo") ? (
+									<CustomCursor
+										isHovering={isHovering}
+										isActive={activeProject === project}
+										variant={view === "thumbnail" ? "thumbnail" : "gallery"}
+										label={project.title}
+									/>
+									<div className='relative w-full h-full'>
+										{isVideo ? (
 											<ReactPlayer
+												className='bg-faded-5 object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
 												url={firstImage.url}
-												playing
+												playing={
+													isHovering && project.slug === activeProject?.slug
+												}
 												playsinline
-												height='100%'
 												width='100%'
+												height='100%'
 												controls={false}
 												muted={true}
 												loop={true}
 											/>
 										) : (
 											<CldImage
-												className={`w-full h-full object-cover`}
+												className={`w-full h-full object-contain bg-faded-5`}
 												src={firstImage.url}
 												alt={`Photo by ${artist.name}`}
-												sizes='100vw'
+												sizes={
+													view === "thumbnail"
+														? "20vw"
+														: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
+												}
 												quality={70}
 												width={firstImage.width}
 												height={firstImage.height}
+												priority={index < 8}
 											/>
 										)}
 									</div>
