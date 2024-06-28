@@ -65,7 +65,6 @@ const artistSchema = {
 				},
 			],
 		},
-		{ name: "artistWebsite", title: "Artist website", type: "url" },
 		{
 			name: "projects",
 			title: "Projects",
@@ -80,6 +79,9 @@ const artistSchema = {
 				sortable: true,
 			},
 		},
+		{ name: "artistWebsite", title: "Artist Website", type: "url" },
+		{ name: "artistInstagram", title: "Artist Instagram", type: "url" },
+		{ name: "agentEmail", title: "Agent email", type: "string" },
 	],
 }
 

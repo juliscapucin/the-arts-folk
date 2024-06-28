@@ -169,20 +169,22 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										{images.map((image, index) => (
 											<div
 												onClick={() => console.log("clicked")} //TODO: add click event
-												className='relative w-full bg-faded-5'
+												className={`relative w-full bg-faded-5`}
 												key={`project-thumbnail-${index}`}
 											>
 												{image.url.includes("vimeo") ? (
-													<ReactPlayer
-														url={image.url}
-														playing
-														playsinline
-														width='100%'
-														height='100%'
-														controls={false}
-														muted={true}
-														loop={true}
-													/>
+													<div className='relative w-full aspect-video'>
+														<ReactPlayer
+															url={image.url}
+															playing
+															playsinline
+															width='100%'
+															height='100%'
+															controls={false}
+															muted={true}
+															loop={true}
+														/>
+													</div>
 												) : (
 													<CldImage
 														className={`w-full object-contain`}
@@ -293,7 +295,9 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							ref={projectInfoInnerRef}
 							className='py-8 h-fit w-[95%] sm:w-3/4 bg-primary'
 						>
-							<p className='font-text lg:max-w-prose'>{projectInfo}</p>
+							<p className='font-text text-bodyMedium lg:text-bodyLarge lg:max-w-prose'>
+								{projectInfo}
+							</p>
 							{pathname.includes("news") && (
 								<Button
 									classes='underlined-link block w-full mt-8 font-text text-labelMedium font-medium text-center pointer-events-auto'

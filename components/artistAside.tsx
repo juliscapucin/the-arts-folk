@@ -20,9 +20,9 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-32 w-1/2 md:w-[25%] max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
+		<aside className='fixed top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
 			{/* Back Button */}
-			<ButtonBack href='/artists' label='Back to Artists' />
+			<ButtonBack href='/artists' label='Back' classes='mt-1' />
 
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-16'>
@@ -50,24 +50,29 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='block my-12 text-bodyMedium'>{artist.artistInfo}</p>
+			<p className='hidden sm:block my-12 text-bodyMedium'>
+				{artist.artistInfo}
+			</p>
 
 			{/* Secondary Links */}
 			<div className='mb-32'>
-				<Button
-					href='/info'
-					classes={
-						"underlined-link block uppercase mt-8 text-labelLarge font-medium"
-					}
-				>
-					<span>Contact Agent</span>
-				</Button>
-				<a
-					className='underlined-link block text-labelLarge font-medium'
-					href='#'
-				>
-					Instagram
-				</a>
+				{artist.agentEmail && (
+					<a
+						href={`mailto:${artist.agentEmail}`}
+						className='underlined-link block uppercase mt-8 text-labelLarge font-medium'
+						rel='noopener noreferrer'
+					>
+						<span>Contact Agent</span>
+					</a>
+				)}
+				{artist.artistInstagram && (
+					<a
+						className='underlined-link block text-labelLarge font-medium'
+						href={artist.artistInstagram}
+					>
+						Instagram
+					</a>
+				)}
 			</div>
 		</aside>
 	)

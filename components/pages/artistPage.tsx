@@ -9,6 +9,7 @@ import gsap from "gsap"
 import { Artist, Project } from "@/types"
 import { Button, Container, Heading } from "@/components/ui"
 import { ArtistAside, CustomCursor } from "@/components"
+import { IconGallery, IconThumbnails } from "@/components/icons"
 
 type artistPageProps = {
 	artist: Artist
@@ -98,36 +99,22 @@ export default function ArtistPage({
 			<div className='relative w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 
-				<section className='relative ml-[50%] md:ml-[25%] w-1/2 md:w-9/12'>
-					<header className='sticky top-8 pb-4 flex items-end justify-between bg-primary z-50'>
+				<section className='relative ml-[25%] w-9/12'>
+					<header className='sticky top-8 pb-4 md:flex items-end justify-between bg-primary z-50'>
 						<Heading tag='h1' classes='mt-16 pl-4 leading-tightest'>
 							{artist.name}
 						</Heading>
 						<button
 							ref={changeViewButtonRef}
 							onClick={toggleView}
-							className='font-text text-labelLarge font-medium uppercase flex items-center gap-2'
+							className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
 						>
-							<span className='underlined-link hidden lg:block'>
+							<span className='underlined-link block'>
 								{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
 							</span>
-							{view === "thumbnail" ? (
-								<div className='flex flex-col gap-[1px] -translate-y-[1px]'>
-									<span className='border border-faded-70 w-[12px] h-[6px]'></span>
-									<span className='border border-faded-70 w-[12px] h-[6px]'></span>
-								</div>
-							) : (
-								<div className='space-y-[1px] -translate-y-[1px]'>
-									<div className='flex gap-[1px]'>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-									</div>
-									<div className='flex gap-[1px]'>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-										<span className='border border-faded-70 w-[6px] h-[6px]'></span>
-									</div>
-								</div>
-							)}
+
+							{/* VIEW ICONS */}
+							{view === "thumbnail" ? <IconThumbnails /> : <IconGallery />}
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
@@ -142,7 +129,7 @@ export default function ArtistPage({
 									}}
 									classes={`relative overflow-hidden pl-4 cursor-pointer ${
 										view === "thumbnail"
-											? `h-72 pb-4 ${isVideo ? "aspect-[15.5/9]" : ""}`
+											? `h-36 md:h-72 pb-4 ${isVideo ? "aspect-[15.5/9]" : ""}`
 											: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
 									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}

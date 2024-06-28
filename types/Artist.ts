@@ -11,6 +11,8 @@ export type Artist = {
 	description: string
 	artistInfo: string
 	scrapbookImages: ScrapbookImage[]
-	artistWebsite: string
 	category: CategoryArtist[]
+	artistWebsite: string
+	artistInstagram: string
+	agentEmail: string
 }
