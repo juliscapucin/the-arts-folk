@@ -110,17 +110,16 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	}, [isProjectInfoOpen])
 
 	useLayoutEffect(() => {
-		if (!minimapMarkerRef.current) return
-		const minimapMarker = minimapMarkerRef.current
-		const viewportHeight = window.innerHeight
-		const viewportWidth = window.innerWidth
-		const minimapMarquerHeight =
-			(minimapMarker.clientWidth * viewportHeight) / viewportWidth
-
 		if (!projectInfoInnerRef.current || !projectInfoOuterRef.current) return
 
 		gsap.set(projectInfoOuterRef.current, { yPercent: -150 })
 		gsap.set(projectInfoInnerRef.current, { yPercent: 150 })
+
+		window.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				setIsFullscreenOpen(false)
+			}
+		})
 	}, [])
 
 	return (

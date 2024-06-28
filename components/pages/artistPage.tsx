@@ -114,7 +114,7 @@ export default function ArtistPage({
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 
 				{/* BACK BUTTON */}
-				<ButtonBack href='/artists' label='Back' classes='pt-8' />
+				<ButtonBack href='/artists' label='Artists' classes='pt-8' />
 
 				{/* MOBILE – HEADER */}
 				<Heading tag='h1' classes='mt-4 mb-6 leading-tightest md:hidden'>

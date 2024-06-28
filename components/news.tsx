@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
+import { formatDate } from "@/utils"
+
 import { Button } from "@/components/ui"
 
 import { Project } from "@/types"
@@ -62,12 +64,12 @@ export default function News({ news }: NewsProps) {
 
 	return (
 		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap gap-y-16 md:gap-y-24'>
-			<CustomCursor
+			{/* <CustomCursor
 				isHovering={isHovering}
 				label={"View"}
 				isActive={true}
 				variant='gallery'
-			/>
+			/> */}
 			{news.map((project, index) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
@@ -102,8 +104,9 @@ export default function News({ news }: NewsProps) {
 							}`}
 						>
 							{/* Release Date */}
-							<p className='block font-script lg:text-center lg:mx-auto text-headlineLarge md:text-displaySmall'>
-								[{index + 1}]{project.releaseDate}
+							<p className='block font-script text-headlineLarge md:text-displaySmall mb-1'>
+								{/* [{index + 1}] */}
+								{formatDate(project.releaseDate)}
 							</p>
 
 							{/* Project Image */}
@@ -135,10 +138,8 @@ export default function News({ news }: NewsProps) {
 							</div>
 
 							{/* Project Info */}
-							<p className='block mt-3 lg:text-center lg:mx-auto'>
-								{project.title}
-							</p>
-							<p className='block font-script lg:text-center lg:mx-auto text-headlineSmall md:text-headlineMedium capitalize tracking-tighter'>
+							<p className='block mt-3'>{project.title}</p>
+							<p className='block font-script text-headlineSmall md:text-headlineMedium capitalize tracking-tighter'>
 								By {project.artistInfo?.name}
 							</p>
 						</Button>
