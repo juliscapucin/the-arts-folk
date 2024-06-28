@@ -77,7 +77,7 @@ export default function ProjectFullscreen({
 		<>
 			<div
 				ref={closeButtonRef}
-				className='fixed hidden left-0 top-[--margin-desktop] right-[--margin-desktop] justify-end z-[301]'
+				className='fixed hidden left-0 right-0 top-[--header-height-mobile] md:top-[--header-height-desktop] justify-end z-[401]'
 			>
 				<ButtonClose
 					color='primary'
@@ -111,7 +111,7 @@ export default function ProjectFullscreen({
 							src={image.url}
 							alt={`Photo by ${artistName}`}
 							sizes='100vw'
-							quality={100}
+							quality={90}
 							width={image.width}
 							height={image.height}
 							key={`project-fullscreen-${index}`}
