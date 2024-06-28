@@ -12,6 +12,7 @@ import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
 import { usePageContext } from "@/context"
+import { useReloadOnResize } from "@/hooks"
 
 import { ArtistOverlay, CategoryFilter } from "@/components"
 import { IconScroll } from "@/components/icons"
@@ -33,11 +34,11 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	const [isScrolling, setIsScrolling] = useState(false)
 	const [activeCategory, setActiveCategory] = useState("all")
 	const [filteredArtists, setFilteredArtists] = useState<Artist[]>([])
-	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 
 	const { transitionOnClick } = usePageContext()
+	useReloadOnResize()
 
 	let mm = gsap.matchMedia()
 
@@ -173,23 +174,6 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			mm.revert()
 		}
 	}, [filteredArtists])
-
-	// Reload the page on window resize
-	useEffect(() => {
-		function handleResize() {
-			resizeTimeout.current && clearTimeout(resizeTimeout.current) // Clear previous timeout
-
-			resizeTimeout.current = setTimeout(() => {
-				window.location.reload()
-			}, 500)
-		}
-
-		window.addEventListener("resize", handleResize)
-
-		return () => {
-			window.removeEventListener("resize", handleResize)
-		}
-	}, [resizeTimeout])
 
 	useEffect(() => {
 		gsap.to(containerRef.current, {

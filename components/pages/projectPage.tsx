@@ -9,6 +9,7 @@ import { gsap } from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
 
 import { usePageContext } from "@/context"
+import { useReloadOnResize } from "@/hooks"
 
 import { ProjectFullscreen } from "@/components"
 import { Button, Heading } from "@/components/ui"
@@ -33,6 +34,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	const projectInfoOuterRef = useRef<HTMLDivElement>(null)
 	const projectInfoInnerRef = useRef<HTMLDivElement>(null)
 	const minimapMarkerRef = useRef<HTMLDivElement>(null)
+
+	useReloadOnResize()
 
 	function openFullscreen(e: React.MouseEvent<HTMLButtonElement>) {
 		setIsFullscreenOpen(true)
@@ -131,12 +134,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				}}
 			/>
 			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] lg:pr-64'>
-				{/* Thumbnails Container */}
+				{/* THUMBNAILS CONTAINER */}
 				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden lg:block bg-primary'>
 					<div className='relative max-w-desktop mx-auto'>
 						<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
-							{/* Button Close */}
-							<div className='relative w-full h-40 pt-32 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
+							{/* BUTTON CLOSE */}
+							<div className='relative w-full h-40 pt-40 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
 								<ButtonClose
 									color={"secondary"}
 									action={() =>
@@ -152,12 +155,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							</div>
 							{images.length > 1 && (
 								<>
-									{/* Minimap Marker */}
+									{/* MINIMAP MARKER */}
 									<div
 										ref={minimapMarkerRef}
-										className='absolute top-60 w-[13vw] max-w-[176px] -translate-x-[3px] h-[13svh] border border-secondary z-150'
+										className='absolute top-[272px] w-[13vw] max-w-[176px] xl:-translate-x-[3px] h-[13.7svh] border border-secondary z-150'
 									></div>
-									{/* Thumbnails */}
+									{/* THUMBNAILS */}
 									<div
 										ref={thumbnailsRef}
 										className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'
@@ -198,8 +201,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						</aside>
 					</div>
 				</div>
-				{/* Header */}
 
+				{/* HEADER */}
 				<header className='relative flex flex-row justify-between flex-nowrap gap-8 w-full h-fit pt-[--header-height-desktop] bg-primary'>
 					{/* HEADER LEFT */}
 					<div className='flex-1 bg-primary z-80'>
@@ -264,6 +267,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						</div>
 					</div>
 				</header>
+
 				{/* MAIN IMAGES */}
 				<section
 					ref={mainImagesRef}
@@ -294,7 +298,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							<button
 								onClick={openFullscreen}
 								className={`relative ${
-									pathname.includes("news") ? "w-3/4" : "w-full"
+									pathname.includes("news") ? "w-full sm:w-3/4" : "w-full"
 								} ${index % 2 !== 0 ? "self-end" : "self-start"}`}
 								key={`project-image-${index}`}
 							>
