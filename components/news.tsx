@@ -13,14 +13,14 @@ type NewsProps = {
 }
 
 const alignment = [
-	"items-start justify-start", // 1
-	"justify-center items-end xl:justify-start", // 2
+	"items-start justify-start xl:-translate-y-4", // 1
+	"justify-center items-end xl:justify-start xl:translate-y-4", // 2
 	"items-center justify-center xl:items-center xl:justify-end", // 3
 	"items-end justify-end xl:items-start xl:justify-center", // 4
-	"items-start justify start xl:items-end xl:justify-center", // 5
+	"items-start justify start xl:items-end xl:justify-center xl:translate-y-8", // 5
 	"items-center justify-center", // 6
 	"items-center justify-start", // 7
-	"items-end justify-center", // 8
+	"items-end justify-center xl:translate-y-8", // 8
 	"items-start justify-end", // 9
 	"items-center justify-center xl:items-center xl:justify-start", // 10
 	"items-start justify-center xl:items-end xl:justify-center", // 11
@@ -29,7 +29,7 @@ const alignment = [
 
 export default function News({ news }: NewsProps) {
 	return (
-		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap gap-y-4 md:gap-y-16 xl:gap-y-4'>
+		<section className='relative mt-32 mb-32 w-full max-w-desktop flex flex-wrap gap-y-4 md:gap-y-24 lg:gap-y-16 xl:gap-y-4'>
 			{news.map((project, index) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
@@ -38,7 +38,7 @@ export default function News({ news }: NewsProps) {
 				const imageSizeBig =
 					aspectRatio > 1
 						? "w-2/3 md:w-[80%] xl:w-3/4"
-						: "w-full sm:w-2/3 lg:w-[55%] xl:w-1/2" // horizontal : vertical
+						: "w-full sm:w-[55%] md:[50%] lg:w-[55%] xl:w-1/2" // horizontal : vertical
 
 				return (
 					<article
@@ -57,8 +57,7 @@ export default function News({ news }: NewsProps) {
 						>
 							{/* Release Date */}
 							<p className='block font-script text-headlineLarge md:text-displayMedium text-center mx-auto'>
-								{/* [{index + 1}]  */}
-								{project.releaseDate}
+								[{index + 1}]{project.releaseDate}
 							</p>
 
 							{/* Project Image */}
