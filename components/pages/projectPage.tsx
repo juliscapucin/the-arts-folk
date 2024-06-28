@@ -201,26 +201,48 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				{/* Header */}
 
 				<header className='relative flex flex-row justify-between flex-nowrap gap-8 w-full h-fit pt-[--header-height-desktop] bg-primary'>
-					{/* Title + subtitle Mobile */}
+					{/* HEADER LEFT */}
 					<div className='flex-1 bg-primary z-80'>
+						{/* MOBILE – RELEASE DATE */}
+						<p className='block mb-4 font-script text-displaySmall md:text-displayLarge sm:hidden'>
+							{releaseDate}
+						</p>
+						{/* TITLE */}
 						<Heading tag='h1' variant='display'>
 							{title}
 						</Heading>
+						{/* SUBTITLE */}
 						<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall mt-4'>
 							By {artist.name}
 						</h2>
+						{/* MOBILE – PROJECT INFO BUTTON */}
+						{projectInfo && (
+							<button
+								onClick={toggleProjectInfo}
+								className='sm:hidden mt-6 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-start'
+							>
+								Project info
+								<span
+									className={`${
+										isProjectInfoOpen ? "rotate-180" : ""
+									} transition-transform duration-300 ease-in-out`}
+								>
+									<IconChevron />
+								</span>
+							</button>
+						)}
 					</div>
 
-					{/* Release date + Project Info */}
-					<div className='w-[40%] md:w-64 h-16 -mt-1 lg:mt-0'>
+					{/* HEADER RIGHT – DESKTOP */}
+					<div className='w-[40%] md:w-64 h-16 -mt-1 lg:mt-0 hidden sm:block'>
 						<div className='relative'>
 							<div className='absolute top-0 right-0 z-80'>
-								{/* Release date*/}
+								{/* RELEASE DATE */}
 								<p className='text-right font-script text-displaySmall md:text-displayLarge'>
 									{releaseDate}
 								</p>
 
-								{/* Project Info Button */}
+								{/* PROJECT INFO BUTTON */}
 								{projectInfo && (
 									<div className='h-8 mt-1 md:mt-4'>
 										<button
@@ -242,21 +264,21 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						</div>
 					</div>
 				</header>
-				{/* Main images */}
+				{/* MAIN IMAGES */}
 				<section
 					ref={mainImagesRef}
-					className='relative flex flex-col gap-8 w-full pt-4 pb-16 bg-primary'
+					className='relative flex flex-col gap-8 w-full mt-4 pt-4 pb-16 bg-primary' // Needs mt & pt because it's overlay reference
 				>
-					{/* More Info Overlay */}
+					{/* MORE INFO OVERLAY */}
 					<div
 						ref={projectInfoOuterRef}
 						className='absolute top-0 left-0 right-0 min-h-32 overflow-clip bg-primary pointer-events-none z-40'
 					>
 						<div
 							ref={projectInfoInnerRef}
-							className='py-8 h-fit w-3/4 bg-primary'
+							className='py-8 h-fit w-[95%] sm:w-3/4 bg-primary'
 						>
-							<p className='font-text max-w-prose'>{projectInfo}</p>
+							<p className='font-text lg:max-w-prose'>{projectInfo}</p>
 							{pathname.includes("news") && (
 								<Button
 									classes='underlined-link block w-full mt-8 font-text text-labelMedium font-medium text-center pointer-events-auto'
