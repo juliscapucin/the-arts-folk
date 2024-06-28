@@ -6,10 +6,13 @@ import ReactPlayer from "react-player/vimeo"
 
 import gsap from "gsap"
 
+import { useWindowDimensions } from "@/hooks"
+
 import { Artist, Project } from "@/types"
 import { Button, Container, Heading } from "@/components/ui"
 import { ArtistAside, CustomCursor } from "@/components"
 import { IconGallery, IconThumbnails } from "@/components/icons"
+import { ButtonBack } from "@/components/buttons"
 
 type artistPageProps = {
 	artist: Artist
@@ -31,6 +34,8 @@ export default function ArtistPage({
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
 	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
+	const { width } = useWindowDimensions()
+
 	const handleMouseEnter = useCallback(
 		(e: MouseEvent) => {
 			setIsHovering(true)
@@ -49,9 +54,9 @@ export default function ArtistPage({
 
 	useEffect(() => {
 		if (!buttonRefs.current) return
-
 		const buttons = buttonRefs.current
-		buttons.forEach((button, index) => {
+
+		buttons.forEach((button) => {
 			button?.addEventListener("mouseenter", (e) => handleMouseEnter(e))
 			button?.addEventListener("mouseleave", handleMouseLeave)
 		})
@@ -63,6 +68,15 @@ export default function ArtistPage({
 			})
 		}
 	}, [buttonRefs.current])
+
+	useEffect(() => {
+		if (width < 768) {
+			setView("gallery")
+			return
+		} else {
+			setView("thumbnail")
+		}
+	}, [width])
 
 	const toggleView = useCallback(() => {
 		const tl = gsap.timeline({
@@ -98,26 +112,19 @@ export default function ArtistPage({
 		<Container hasPadding classes='pt-[--header-height-desktop]'>
 			<div className='relative w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
-				<header className='pb-4 md:flex items-end justify-between bg-primary z-50'>
-					<Heading tag='h1' classes='mt-16 leading-tightest'>
-						{artist.name}
-					</Heading>
-					<button
-						ref={changeViewButtonRef}
-						onClick={toggleView}
-						className='md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
-					>
-						<span className='underlined-link block'>
-							{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
-						</span>
 
-						{/* VIEW ICONS */}
-						{view === "thumbnail" ? <IconThumbnails /> : <IconGallery />}
-					</button>
-				</header>
+				{/* BACK BUTTON */}
+				<ButtonBack href='/artists' label='Back' classes='pt-8' />
+
+				{/* MOBILE – HEADER */}
+				<Heading tag='h1' classes='mt-4 mb-6 leading-tightest md:hidden'>
+					{artist.name}
+				</Heading>
+
 				<section className='relative ml-[25%] w-9/12'>
-					<header className='hidden sticky top-8 pb-4 md:flex items-end justify-between bg-primary z-50'>
-						<Heading tag='h1' classes='mt-16 pl-4 leading-tightest'>
+					{/* DESKTOP – HEADER */}
+					<header className='hidden pb-4 md:flex items-end justify-between bg-primary z-50'>
+						<Heading tag='h1' classes='pl-4 leading-tightest'>
 							{artist.name}
 						</Heading>
 						<button
@@ -126,7 +133,7 @@ export default function ArtistPage({
 							className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
 						>
 							<span className='underlined-link block'>
-								{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
+								{view === "thumbnail" ? "Gallery" : "Thumbnails"}
 							</span>
 
 							{/* VIEW ICONS */}
@@ -146,17 +153,21 @@ export default function ArtistPage({
 									classes={`relative overflow-hidden pl-4 cursor-pointer ${
 										view === "thumbnail"
 											? `h-36 md:h-72 pb-4 ${isVideo ? "aspect-[15.5/9]" : ""}`
-											: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
+											: `w-full pb-16 md:pb-8 ${
+													isVideo ? "aspect-[15.5/9]" : ""
+											  }`
 									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
-									<CustomCursor
-										isHovering={isHovering}
-										isActive={activeProject === project}
-										variant={view === "thumbnail" ? "thumbnail" : "gallery"}
-										label={project.title}
-									/>
+									{width > 768 && (
+										<CustomCursor
+											isHovering={isHovering}
+											isActive={activeProject === project}
+											variant={view === "thumbnail" ? "thumbnail" : "gallery"}
+											label={project.title}
+										/>
+									)}
 									<div className='relative w-full h-full'>
 										{isVideo ? (
 											<ReactPlayer
@@ -188,6 +199,9 @@ export default function ArtistPage({
 												priority={index < 8}
 											/>
 										)}
+										<label className='absolute -bottom-8 left-0 bg-primary z-50 md:hidden'>
+											{project.title}
+										</label>
 									</div>
 								</Button>
 							)

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import { useThrottle } from "./useThrottle" // Adjust the import path as necessary
 
 export const useWindowDimensions = () => {
@@ -20,6 +20,11 @@ export const useWindowDimensions = () => {
 			}
 		}
 	}, [throttledListener])
+
+	useEffect(() => {
+		setWidth(window.innerWidth)
+		setHeight(window.innerHeight)
+	}, [])
 
 	return { width, height }
 }
