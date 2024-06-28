@@ -98,9 +98,25 @@ export default function ArtistPage({
 		<Container hasPadding classes='pt-[--header-height-desktop]'>
 			<div className='relative w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
+				<header className='pb-4 md:flex items-end justify-between bg-primary z-50'>
+					<Heading tag='h1' classes='mt-16 leading-tightest'>
+						{artist.name}
+					</Heading>
+					<button
+						ref={changeViewButtonRef}
+						onClick={toggleView}
+						className='md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
+					>
+						<span className='underlined-link block'>
+							{view === "thumbnail" ? "Gallery View" : "Thumbnail View"}
+						</span>
 
+						{/* VIEW ICONS */}
+						{view === "thumbnail" ? <IconThumbnails /> : <IconGallery />}
+					</button>
+				</header>
 				<section className='relative ml-[25%] w-9/12'>
-					<header className='sticky top-8 pb-4 md:flex items-end justify-between bg-primary z-50'>
+					<header className='hidden sticky top-8 pb-4 md:flex items-end justify-between bg-primary z-50'>
 						<Heading tag='h1' classes='mt-16 pl-4 leading-tightest'>
 							{artist.name}
 						</Heading>
