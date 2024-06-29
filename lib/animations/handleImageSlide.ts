@@ -1,7 +1,10 @@
 import gsap from "gsap"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 
-export const handleImageSlide = (targetIndex: number) => {
+export const handleImageSlide = (
+	targetIndex: number,
+	container: HTMLElement | null
+) => {
 	const targetPanel = document.querySelector(
 		`[data-id=image-${targetIndex}]`
 	) as HTMLDivElement
@@ -9,7 +12,7 @@ export const handleImageSlide = (targetIndex: number) => {
 
 	gsap.registerPlugin(ScrollToPlugin)
 
-	gsap.to(window, {
+	gsap.to(container ? container : window, {
 		scrollTo: {
 			y: y,
 			autoKill: false,
