@@ -10,6 +10,7 @@ import ScrollTrigger from "gsap/ScrollTrigger"
 
 import { usePageContext } from "@/context"
 import { useReloadOnResize } from "@/hooks"
+import { handlePanelSlide } from "@/lib/animations"
 
 import { ProjectFullscreen } from "@/components"
 import { Button, Heading } from "@/components/ui"
@@ -37,9 +38,14 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 
 	useReloadOnResize()
 
-	function openFullscreen(e: React.MouseEvent<HTMLButtonElement>) {
+	function openFullscreen(
+		e: React.MouseEvent<HTMLButtonElement>,
+		index: number
+	) {
 		setIsFullscreenOpen(true)
-		// console.log(e.target.parentElement)
+		setTimeout(() => {
+			handlePanelSlide(index, mainImagesRef.current)
+		}, 500)
 	}
 
 	function toggleProjectInfo() {
@@ -124,14 +130,14 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 
 	return (
 		<>
-			<ProjectFullscreen
+			{/* <ProjectFullscreen
 				{...{
 					artistName: artist.name,
 					images,
 					isFullscreenOpen,
 					setIsFullscreenOpen,
 				}}
-			/>
+			/> */}
 			<main className='w-full min-h-[--container-height-desktop] pt-[--header-height-desktop] md:pr-32 lg:pr-64'>
 				{/* THUMBNAILS CONTAINER */}
 				<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block bg-primary'>
@@ -166,8 +172,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'
 									>
 										{images.map((image, index) => (
-											<div
-												onClick={() => console.log("clicked")} //TODO: add click event
+											<button
+												onClick={() => handlePanelSlide(index, null)}
 												className={`relative w-full bg-faded-5`}
 												key={`project-thumbnail-${index}`}
 											>
@@ -195,7 +201,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 														height={image.height}
 													/>
 												)}
-											</div>
+											</button>
 										))}
 									</div>
 								</>
@@ -280,9 +286,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					</div>
 				</header>
 
-				{/* MAIN IMAGES */}
+				{/* MAIN IMAGES CONTAINER */}
 				<section
-					ref={mainImagesRef}
 					className='relative flex flex-col gap-8 w-full mt-4 pt-4 pb-16 bg-primary' // Needs mt & pt because it's overlay reference
 				>
 					{/* MORE INFO OVERLAY */}
@@ -307,43 +312,55 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							)}
 						</div>
 					</div>
-					{images.map((image, index) => {
-						return (
-							<button
-								onClick={openFullscreen}
-								className={`relative ${
-									pathname.includes("news") ? "w-full sm:w-3/4" : "w-full"
-								} ${index % 2 !== 0 ? "self-end" : "self-start"}`}
-								key={`project-image-${index}`}
-							>
-								{image.url.includes("vimeo") ? (
-									<div className='relative w-full aspect-video bg-faded-5'>
-										<ReactPlayer
-											url={image.url}
-											playing
-											playsinline
-											width='100%'
-											height='100%'
-											controls={false}
-											muted={true}
-											loop={true}
+
+					{/* MAIN IMAGES */}
+					<div
+						ref={mainImagesRef}
+						className={`${
+							isFullscreenOpen
+								? "fixed inset-0 z-fullscreen overflow-y-scroll"
+								: ""
+						}`}
+					>
+						{images.map((image, index) => {
+							return (
+								<button
+									onClick={(e) => openFullscreen(e, index)}
+									data-id={`image-${index}`}
+									className={`relative ${
+										pathname.includes("news") ? "w-full sm:w-3/4" : "w-full"
+									} ${index % 2 !== 0 ? "self-end" : "self-start"}`}
+									key={`project-image-${index}`}
+								>
+									{image.url.includes("vimeo") ? (
+										<div className='relative w-full aspect-video bg-faded-5'>
+											<ReactPlayer
+												url={image.url}
+												playing
+												playsinline
+												width='100%'
+												height='100%'
+												controls={false}
+												muted={true}
+												loop={true}
+											/>
+										</div>
+									) : (
+										<CldImage
+											className={`w-full h-full object-contain`}
+											src={image.url}
+											alt={`Photo by ${artist.name}`}
+											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
+											quality={70}
+											width={image.width}
+											height={image.height}
+											priority={index === 0}
 										/>
-									</div>
-								) : (
-									<CldImage
-										className={`w-full h-full object-contain`}
-										src={image.url}
-										alt={`Photo by ${artist.name}`}
-										sizes='(max-width: 768px) 90vw, (max-width: 1200px) 90vw, 90vw'
-										quality={70}
-										width={image.width}
-										height={image.height}
-										priority={index === 0}
-									/>
-								)}
-							</button>
-						)
-					})}
+									)}
+								</button>
+							)
+						})}
+					</div>
 				</section>
 			</main>
 		</>

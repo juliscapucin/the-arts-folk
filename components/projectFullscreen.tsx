@@ -28,10 +28,10 @@ export default function ProjectFullscreen({
 	useLayoutEffect(() => {
 		if (!projectFullscreenRef.current || !closeButtonRef.current) return
 
-		const mainElement = document.querySelector("main")
+		const htmlElement = document.querySelector("html")
 
 		if (isFullscreenOpen) {
-			if (mainElement && !mainElement.classList.contains("overflow-clip"))
+			if (htmlElement && !htmlElement.classList.contains("overflow-clip"))
 				document.documentElement.classList.add("overflow-clip")
 
 			projectFullscreenRef.current.classList.remove("hidden")
@@ -45,7 +45,7 @@ export default function ProjectFullscreen({
 			})
 			gsap.to(closeButtonRef.current, { opacity: 1, delay: 0.5 })
 		} else {
-			if (mainElement && mainElement.classList.contains("overflow-clip"))
+			if (htmlElement && htmlElement.classList.contains("overflow-clip"))
 				document.documentElement.classList.remove("overflow-clip")
 
 			gsap.to(projectFullscreenRef.current, {
