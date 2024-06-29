@@ -10,6 +10,7 @@ import ScrollTrigger from "gsap/ScrollTrigger"
 
 import { usePageContext } from "@/context"
 import { useReloadOnResize } from "@/hooks"
+import { handlePanelSlide } from "@/lib/animations"
 
 import { ProjectFullscreen } from "@/components"
 import { Button, Heading } from "@/components/ui"
@@ -166,8 +167,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'
 									>
 										{images.map((image, index) => (
-											<div
-												onClick={() => console.log("clicked")} //TODO: add click event
+											<button
+												onClick={() => handlePanelSlide(index)}
 												className={`relative w-full bg-faded-5`}
 												key={`project-thumbnail-${index}`}
 											>
@@ -195,7 +196,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 														height={image.height}
 													/>
 												)}
-											</div>
+											</button>
 										))}
 									</div>
 								</>
@@ -280,7 +281,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					</div>
 				</header>
 
-				{/* MAIN IMAGES */}
+				{/* MAIN IMAGES CONTAINER */}
 				<section
 					ref={mainImagesRef}
 					className='relative flex flex-col gap-8 w-full mt-4 pt-4 pb-16 bg-primary' // Needs mt & pt because it's overlay reference
@@ -307,10 +308,13 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							)}
 						</div>
 					</div>
+
+					{/* MAIN IMAGES */}
 					{images.map((image, index) => {
 						return (
 							<button
 								onClick={openFullscreen}
+								data-id={`image-${index}`}
 								className={`relative ${
 									pathname.includes("news") ? "w-full sm:w-3/4" : "w-full"
 								} ${index % 2 !== 0 ? "self-end" : "self-start"}`}

@@ -3,6 +3,7 @@ import { ProjectPage } from "@/components/pages"
 import { getArtist, getPage, getProject } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
 import { Suspense } from "react"
+import { PanelDesktop } from "@/components"
 
 export async function generateMetadata({
 	params,

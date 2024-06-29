@@ -28,11 +28,11 @@ export default function ProjectFullscreen({
 	useLayoutEffect(() => {
 		if (!projectFullscreenRef.current || !closeButtonRef.current) return
 
-		const mainElement = document.querySelector("main")
+		// const mainElement = document.querySelector("main")
 
 		if (isFullscreenOpen) {
-			if (mainElement && !mainElement.classList.contains("overflow-clip"))
-				document.documentElement.classList.add("overflow-clip")
+			// if (mainElement && !mainElement.classList.contains("overflow-clip"))
+			// 	document.documentElement.classList.add("overflow-clip")
 
 			projectFullscreenRef.current.classList.remove("hidden")
 			closeButtonRef.current.classList.remove("hidden")
@@ -45,8 +45,8 @@ export default function ProjectFullscreen({
 			})
 			gsap.to(closeButtonRef.current, { opacity: 1, delay: 0.5 })
 		} else {
-			if (mainElement && mainElement.classList.contains("overflow-clip"))
-				document.documentElement.classList.remove("overflow-clip")
+			// if (mainElement && mainElement.classList.contains("overflow-clip"))
+			// 	document.documentElement.classList.remove("overflow-clip")
 
 			gsap.to(projectFullscreenRef.current, {
 				yPercent: 100,
