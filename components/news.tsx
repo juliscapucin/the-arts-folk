@@ -67,7 +67,9 @@ export default function News({ news }: NewsProps) {
 	return (
 		<section
 			className={`relative mb-32 w-full max-w-desktop flex flex-wrap gap-y-16 md:gap-y-24 ${
-				pathname.includes("news") ? "mt-64 xl:mt-96" : "mt-32 xl:mt-80"
+				pathname.includes("news")
+					? "mt-24 md:mt-32 xl:mt-[460px]"
+					: "mt-24 xl:mt-[460px]"
 			}`}
 		>
 			{/* <CustomCursor
