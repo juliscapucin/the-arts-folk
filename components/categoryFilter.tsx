@@ -15,7 +15,7 @@ export default function CategoryFilter({
 	setActiveCategory,
 }: CategoryFilterProps) {
 	return (
-		<div className='absolute top-[--header-height-desktop] w-full h-16 pr-16 z-100 flex items-center justify-center gap-1 md:gap-2 font-text'>
+		<div className='absolute top-[--header-height-desktop] w-full max-w-desktop h-16 pr-16 z-100 flex items-center justify-center gap-1 md:gap-2 font-text'>
 			<button
 				onClick={() => setActiveCategory("all")}
 				className={`uppercase text-labelMedium md:text-labelLarge font-medium ${
