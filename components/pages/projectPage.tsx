@@ -235,7 +235,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						{title}
 					</Heading>
 					{/* SUBTITLE */}
-					<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall mt-4'>
+					<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
 						By {artist.name}
 					</h2>
 					{/* MOBILE – PROJECT INFO BUTTON */}
