@@ -22,9 +22,7 @@
 		--header-height-desktop: 4.5rem;
 		--footer-height-mobile: 3rem;
 		--footer-height-desktop: 3rem;
-		--showreel-height-mobile: calc(
-			100svh - var(--header-height-mobile) - var(--footer-height-mobile)
-		);
+		--showreel-height-mobile: calc(100svh - var(--footer-height-mobile));
 		--showreel-height-desktop: calc(
 			100svh - var(--header-height-desktop) - var(--footer-height-desktop)
 		);
@@ -46,6 +44,10 @@
 		width: 1rem;
 		height: 1rem;
 		-webkit-box-shadow: none;
+	}
+
+	.artists-page {
+		overflow-y: hidden;
 	}
 
 	.artists-page::-webkit-scrollbar-thumb,

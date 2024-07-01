@@ -52,8 +52,6 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 	const getViewportPosition = useCallback(
 		(element: HTMLElement) => {
-			if (filteredArtists.length < 4) return { isMiddle: false }
-
 			const rect = element.getBoundingClientRect()
 			const viewportHeight =
 				window.innerHeight || document.documentElement.clientHeight
@@ -69,63 +67,63 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		[filteredArtists]
 	)
 
-	const createScrollLoop = useCallback(
-		(isMobile: boolean) => {
-			if (!sectionRef.current || filteredArtists.length < 4) return
-			gsap.registerPlugin(Observer)
+	// SCROLL LOOP
+	const createScrollLoop = (isMobile: boolean) => {
+		if (!sectionRef.current) return
 
-			const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
+		gsap.registerPlugin(Observer)
 
-			// Create an infinite vertical loop
-			const loop = infiniteVerticalLoop(items, {
-				repeat: -1,
-			})
+		const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 
-			// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
-			let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
-			// make the loop stopped initially.
-			loop.timeScale(0)
+		// Create an infinite vertical loop
+		const loop = infiniteVerticalLoop(items, {
+			repeat: -1,
+		})
 
-			// Create an observer to detect touch and wheel events
-			Observer.create({
-				target: sectionRef.current,
-				type: "pointer,touch,wheel",
-				wheelSpeed: -1,
-				onStop: () => {
-					setIsScrolling(false)
-				},
-				onChangeY: (self) => {
-					let calculatedTimeScale = -self.deltaY
+		// create a tween that'll always decelerate the timeScale of the timeline back to 0 over the course of 2 seconds (or whatever)
+		let slow = gsap.to(loop, { timeScale: 0, duration: 1 })
+		// make the loop stopped initially.
+		loop.timeScale(0)
 
-					setIsScrolling(true)
+		// Create an observer to detect touch and wheel events
+		Observer.create({
+			target: sectionRef.current,
+			type: "pointer,touch,wheel",
+			wheelSpeed: -1,
+			onStop: () => {
+				setIsScrolling(false)
+			},
+			onChangeY: (self) => {
+				let calculatedTimeScale = -self.deltaY
 
-					// Set the loop's timeScale to the desired value
-					loop.timeScale(calculatedTimeScale)
+				setIsScrolling(true)
 
-					// Check if the element is in the middle of the viewport if the user is not scrolling fast
-					if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
-						loop.eventCallback("onUpdate", () => {
-							items.forEach((item) => {
-								const position = getViewportPosition(item)
-								position.isMiddle &&
-									item.dataset.name &&
-									setIsHovered(item.dataset.name)
-							})
+				// Set the loop's timeScale to the desired value
+				loop.timeScale(calculatedTimeScale)
+
+				// Check if the element is in the middle of the viewport if the user is not scrolling fast
+				if (isMobile && (self.velocityY! < -200 || self.velocityY! > 200)) {
+					loop.eventCallback("onUpdate", () => {
+						items.forEach((item) => {
+							const position = getViewportPosition(item)
+							position.isMiddle &&
+								item.dataset.name &&
+								setIsHovered(item.dataset.name)
 						})
-					}
+					})
+				}
 
-					// Decelerate
-					slow.invalidate().restart()
+				// Decelerate
+				slow.invalidate().restart()
 
-					isScrollTipVisible && setIsScrollTipVisible(false)
-				},
-			})
-		},
-		[filteredArtists]
-	)
+				isScrollTipVisible && setIsScrollTipVisible(false)
+			},
+		})
+	}
 
+	// ENTRY ANIMATION
 	useLayoutEffect(() => {
-		if (!sectionRef.current || !containerRef.current) return
+		if (!sectionRef.current || !containerRef.current || !filteredArtists) return
 
 		mm.add(
 			GSAPQueries,
@@ -139,33 +137,46 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				})
 
 				// If there are less than 4 artists, animate entry without scroll loop
-				if (filteredArtists.length < 4) {
+				if (filteredArtists.length === 1) {
+					setIsScrollTipVisible(false)
 					gsap.fromTo(
 						items,
 						{
-							yPercent: -100,
+							yPercent: -500,
 							opacity: 0,
 						},
 						{
-							yPercent: 180,
+							yPercent: 0,
 							opacity: 1,
-							stagger: 0.07,
 							duration: 0.6,
 						}
 					)
+
+					if (filteredArtists.length === 1 && isMobile) {
+						setIsHovered(filteredArtists[0].name)
+					}
 					return
 				}
 
+				if (!isScrollTipVisible) setIsScrollTipVisible(true)
+
 				// Artist names entrance animation + scroll loop
-				gsap.from(items, {
-					yPercent: -100,
-					opacity: 0,
-					stagger: 0.07,
-					duration: 0.6,
-					onComplete: () => {
-						createScrollLoop(isMobile)
+				gsap.fromTo(
+					items,
+					{
+						yPercent: -200,
+						opacity: 0,
 					},
-				})
+					{
+						yPercent: 0,
+						opacity: 1,
+						stagger: 0.07,
+						duration: 0.6,
+						onComplete: () => {
+							createScrollLoop(isMobile)
+						},
+					}
+				)
 			},
 			containerRef.current
 		)
@@ -176,6 +187,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	}, [filteredArtists])
 
 	useEffect(() => {
+		setIsHovered("")
 		gsap.to(containerRef.current, {
 			opacity: 0,
 			duration: 0.3,
@@ -194,8 +206,8 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	}, [activeCategory])
 
 	return (
-		<div className='relative'>
-			{/* Icon Scroll */}
+		<div className='artists-page relative'>
+			{/* ICON SCROLL */}
 			<div
 				className={`absolute mx-auto top-0 right-2 h-screen flex items-center transition-opacity duration-500 delay-300 z-100 ${
 					isScrollTipVisible ? "" : "opacity-0"
@@ -203,7 +215,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			>
 				<IconScroll />
 			</div>
-			{/* Category Filter */}
+			{/* CATEGORY FILTER */}
 			<CategoryFilter
 				categories={categories}
 				activeCategory={activeCategory}
@@ -211,9 +223,9 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			/>
 			<Container
 				ref={containerRef}
-				classes='artists-page relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+				classes='artists-page relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-clip'
 			>
-				{/* Artist Overlay */}
+				{/* ARTIST OVERLAY */}
 				{filteredArtists.map((artist, index) => {
 					return (
 						<ArtistOverlay
@@ -226,7 +238,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					)
 				})}
 
-				{/* Gradients */}
+				{/* GRADIENTS */}
 				<div
 					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
 				></div>
@@ -234,10 +246,14 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
 				></div>
 
-				{/* Artists Menu */}
+				{/* ARTISTS MENU */}
 				<section
 					ref={sectionRef}
-					className='w-full text-center space-y-20 pt-20'
+					className={`w-full min-h-[--container-height-mobile] text-center ${
+						filteredArtists.length < 4
+							? "flex flex-col justify-center items-center gap-32"
+							: "space-y-20"
+					}`}
 				>
 					{filteredArtists.map((artist) => {
 						return (
