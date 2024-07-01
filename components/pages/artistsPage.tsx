@@ -194,7 +194,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	}, [activeCategory])
 
 	return (
-		<>
+		<div className='relative'>
 			{/* Icon Scroll */}
 			<div
 				className={`absolute mx-auto top-0 right-2 h-screen flex items-center transition-opacity duration-500 delay-300 z-100 ${
@@ -274,6 +274,6 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					})}
 				</section>
 			</Container>
-		</>
+		</div>
 	)
 }

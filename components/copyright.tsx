@@ -6,7 +6,7 @@ export default function Copyright() {
 	const { transitionOnClick } = usePageContext()
 
 	return (
-		<div className='absolute bottom-0 right-0 py-4 flex flex-col items-end text-labelSmall font-text'>
+		<div className='py-4 flex flex-col items-end text-labelSmall font-text'>
 			<Button href={"impressum"} classes='underlined-link mb-4 uppercase'>
 				Impressum
 			</Button>
