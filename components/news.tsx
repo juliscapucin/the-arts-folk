@@ -7,10 +7,9 @@ import ReactPlayer from "react-player/vimeo"
 
 import { formatDate } from "@/utils"
 
-import { Button } from "@/components/ui"
+import { Button, Container } from "@/components/ui"
 
 import { Project } from "@/types"
-import { CustomCursor } from "@/components"
 
 type NewsProps = {
 	news: Project[]
@@ -65,19 +64,14 @@ export default function News({ news }: NewsProps) {
 	}, [buttonRefs.current])
 
 	return (
-		<section
-			className={`relative mb-32 w-full max-w-desktop flex flex-wrap gap-y-16 md:gap-y-24 ${
+		<Container
+			isSection={pathname.includes("news") ? false : true}
+			classes={`relative mb-32 flex flex-wrap gap-y-16 md:gap-y-24 ${
 				pathname.includes("news")
 					? "mt-24 md:mt-32 xl:mt-[460px]"
 					: "mt-24 xl:mt-[460px]"
 			}`}
 		>
-			{/* <CustomCursor
-				isHovering={isHovering}
-				label={"View"}
-				isActive={true}
-				variant='gallery'
-			/> */}
 			{news.map((project, index) => {
 				const aspectRatio = project.images[0].width / project.images[0].height
 
@@ -154,6 +148,6 @@ export default function News({ news }: NewsProps) {
 					</article>
 				)
 			})}
-		</section>
+		</Container>
 	)
 }

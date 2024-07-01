@@ -29,7 +29,7 @@ export default function DefaultPage({
 }: PageProps) {
 	return (
 		<Container
-			classes={`default-page relative pt-16 lg:pt-0 lg:flex flex-col justify-end min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] ${
+			classes={`default-page relative pt-16 lg:pt-0 lg:flex flex-col justify-end ${
 				!isCentered && "lg:pt-32 lg:pb-16"
 			}`}
 			hasPadding={true}

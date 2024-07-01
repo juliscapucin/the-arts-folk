@@ -8,20 +8,28 @@ type ContainerProps = {
 	hasPadding?: boolean
 	bgColor?: string
 	isDiv?: boolean
+	isSection?: boolean
 }
 
 const Container = forwardRef(
 	(
-		{ children, classes, hasPadding, bgColor, isDiv }: ContainerProps,
+		{
+			children,
+			classes,
+			hasPadding,
+			bgColor,
+			isDiv,
+			isSection,
+		}: ContainerProps,
 		ref?: React.Ref<HTMLDivElement>
 	) => {
-		const HtmlTag = isDiv ? "div" : "main"
+		const HtmlTag = isDiv ? "div" : isSection ? "section" : "main"
 
 		return (
 			<HtmlTag
 				ref={ref}
-				className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] ${classes} ${
-					hasPadding ? "px-[--padding-mobile] lg:px-[padding-desktop]" : ""
+				className={`min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] w-full max-w-desktop mx-auto px-[--margin-mobile] lg:px-[margin-desktop] ${classes} ${
+					hasPadding ? "px-[--margin-mobile] lg:px-[margin-desktop]" : ""
 				} ${bgColor ? bgColor : "bg-primary"}`}
 			>
 				{children}

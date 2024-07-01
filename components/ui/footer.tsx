@@ -5,8 +5,8 @@ export default async function Footer() {
 	const navLinks = await getFooterNavLinks()
 
 	return (
-		<footer className='absolute left-0 right-0 bottom-0 bg-primary px-[--margin-mobile] lg:px-[--margin-desktop] w-full h-[--footer-height-mobile] lg:h-[--footer-height-desktop] z-100'>
-			<div className='w-full max-w-desktop mx-auto flex justify-center lg:justify-start items-center gap-6 lg:gap-8 font-text font-extralight text-bodySmall lg:text-labelLarge tracking-wide'>
+		<footer className='absolute left-0 right-0 bottom-0 bg-primary w-full h-[--footer-height-mobile] lg:h-[--footer-height-desktop] z-100'>
+			<div className='w-full max-w-desktop mx-auto px-[--margin-mobile] lg:px-[margin-desktop] flex justify-center lg:justify-start items-center gap-6 lg:gap-8 font-text font-extralight text-bodySmall lg:text-labelLarge tracking-wide'>
 				{navLinks &&
 					navLinks.map((link) => {
 						return link.url ? (
