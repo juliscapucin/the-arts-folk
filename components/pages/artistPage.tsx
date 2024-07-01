@@ -30,6 +30,7 @@ export default function ArtistPage({
 	const [view, setView] = useState("thumbnail")
 	const [isHovering, setIsHovering] = useState(false)
 	const [activeProject, setActiveProject] = useState<Project | null>(null)
+	const [asidePosition, setAsidePosition] = useState("")
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
 	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
@@ -51,6 +52,12 @@ export default function ArtistPage({
 	const handleMouseLeave = useCallback(() => {
 		setIsHovering(false)
 	}, [])
+
+	const getDistanceFromTop = (element: HTMLElement) => {
+		const rect = element.getBoundingClientRect()
+		const scrollTop = window.scrollY || window.pageYOffset
+		return rect.top + scrollTop
+	}
 
 	useEffect(() => {
 		if (!buttonRefs.current) return
@@ -77,6 +84,15 @@ export default function ArtistPage({
 			setView("thumbnail")
 		}
 	}, [width])
+
+	useEffect(() => {
+		if (!imagesSectionRef.current) return
+
+		const mainImagesPosition = getDistanceFromTop(
+			imagesSectionRef.current
+		).toString()
+		setAsidePosition(mainImagesPosition)
+	}, [width, imagesSectionRef.current])
 
 	const toggleView = useCallback(() => {
 		const tl = gsap.timeline({
@@ -111,17 +127,19 @@ export default function ArtistPage({
 	return (
 		<Container classes='pt-[--header-height-desktop]'>
 			<div className='relative w-full'>
-				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
-
 				{/* BACK BUTTON */}
 				<ButtonBack href='/artists' label='Artists' classes='pt-8' />
+
+				<ArtistAside
+					{...{ artist, sectionSlug, artistSections, asidePosition }}
+				/>
 
 				{/* MOBILE – HEADER */}
 				<Heading tag='h1' classes='mt-4 mb-6 leading-tightest md:hidden'>
 					{artist.name}
 				</Heading>
 
-				<section className='relative ml-[25%] w-9/12'>
+				<section className='relative ml-[25%] w-[75%]'>
 					{/* DESKTOP – HEADER */}
 					<header className='hidden pb-4 md:flex items-end justify-between bg-primary z-50'>
 						<Heading tag='h1' classes='pl-4 leading-tightest'>
@@ -150,12 +168,8 @@ export default function ArtistPage({
 									ref={(el) => {
 										buttonRefs.current[index] = el
 									}}
-									classes={`relative overflow-hidden pl-4 cursor-pointer ${
-										view === "thumbnail"
-											? `h-36 md:h-72 pb-4 ${isVideo ? "aspect-[15.5/9]" : ""}`
-											: `w-full pb-16 md:pb-8 ${
-													isVideo ? "aspect-[15.5/9]" : ""
-											  }`
+									classes={`relative cursor-pointer ${
+										view === "gallery" ? "w-full" : ""
 									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
@@ -168,7 +182,17 @@ export default function ArtistPage({
 											label={project.title}
 										/>
 									)}
-									<div className='relative w-full h-full'>
+									<div
+										className={`relative pl-4 overflow-hidden ${
+											view === "thumbnail"
+												? `h-36 md:h-72 pb-4 ${
+														isVideo ? "aspect-[15.5/9]" : ""
+												  }`
+												: `w-full pb-16 md:pb-8 ${
+														isVideo ? "aspect-[15.5/9]" : ""
+												  }`
+										}`}
+									>
 										{isVideo ? (
 											<ReactPlayer
 												className='bg-faded-5 object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
@@ -199,7 +223,7 @@ export default function ArtistPage({
 												priority={index < 8}
 											/>
 										)}
-										<label className='absolute -bottom-8 left-0 bg-primary z-50 md:hidden'>
+										<label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
 											{project.title}
 										</label>
 									</div>

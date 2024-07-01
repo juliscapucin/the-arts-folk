@@ -4,23 +4,26 @@ import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui"
 import { Artist } from "@/types"
-import { IconChevron } from "./icons"
-import { ButtonBack } from "@/components/buttons"
 
 type ArtistAsideProps = {
 	artist: Artist
-	sectionSlug: string
 	artistSections: string[]
+	asidePosition: string
 }
 
 export default function artistAside({
 	artist,
 	artistSections,
+	asidePosition,
 }: ArtistAsideProps) {
 	const pathname = usePathname()
 
 	return (
-		<aside className='fixed top-48 md:top-32 w-1/4 max-w-[400px] pr-8 font-text bg-primary z-artistAside'>
+		<aside
+			className={`fixed w-1/4 max-w-[400px] pr-8 font-text z-artistAside ${
+				asidePosition ? `top-[${asidePosition}px]` : ""
+			}`}
+		>
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
 				{artistSections.map((link) => {

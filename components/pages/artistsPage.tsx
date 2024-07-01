@@ -251,14 +251,14 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					ref={sectionRef}
 					className={`w-full min-h-[--container-height-mobile] text-center ${
 						filteredArtists.length < 4
-							? "flex flex-col justify-center items-center gap-32"
-							: "space-y-20"
+							? "flex flex-col justify-center items-center gap-24"
+							: "pt-10"
 					}`}
 				>
 					{filteredArtists.map((artist) => {
 						return (
 							<div
-								className='gsap-scroll-item text-center'
+								className='gsap-scroll-item text-center mt-20'
 								key={artist.name}
 								data-name={artist.name}
 							>

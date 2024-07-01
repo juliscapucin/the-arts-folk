@@ -68,6 +68,7 @@ const config: Config = {
 				intro: "450",
 			},
 			letterSpacing: { tightest: "-.075em" },
+			leading: { tightest: "0.75" },
 			scale: {
 				200: "2",
 			},
