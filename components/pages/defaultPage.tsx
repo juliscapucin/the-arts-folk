@@ -32,10 +32,9 @@ export default function DefaultPage({
 			classes={`default-page relative pt-16 lg:pt-0 lg:flex flex-col justify-end ${
 				!isCentered && "lg:pt-32 lg:pb-16"
 			}`}
-			hasPadding={true}
 		>
 			<div
-				className={`relative flex-1 lg:flex gap-32 justify-between min-h-full ${
+				className={`relative flex-1 lg:flex gap-32 justify-between ${
 					isCentered && "lg:items-center"
 				}`}
 			>

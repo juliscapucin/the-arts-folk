@@ -28,9 +28,7 @@
 		--showreel-height-desktop: calc(
 			100svh - var(--header-height-desktop) - var(--footer-height-desktop)
 		);
-		--container-height-mobile: calc(
-			100svh - var(--header-height-mobile) - var(--footer-height-mobile)
-		);
+		--container-height-mobile: calc(100svh - var(--footer-height-mobile));
 		--container-height-desktop: calc(100svh - var(--footer-height-desktop));
 		--minimap-height: calc(100svh / 8.3);
 	}

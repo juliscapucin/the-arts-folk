@@ -96,7 +96,6 @@ export default function Cookies({ cookieData }: CookiesProps) {
 						classes='background-white fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] left-0 right-0 flex items-end justify-end z-50 overflow-clip pointer-events-none transition-colors duration-300'
 						bgColor={isOverlayOpen ? "md:bg-primary/80" : "transparent"}
 						isDiv={true}
-						hasPadding={false}
 					>
 						<div
 							ref={cookieRef}
@@ -128,7 +127,6 @@ export default function Cookies({ cookieData }: CookiesProps) {
 							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
 						}`}
 						isDiv={true}
-						hasPadding={false}
 						bgColor='transparent'
 					>
 						<ButtonClose

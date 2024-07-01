@@ -109,7 +109,7 @@ export default function ArtistPage({
 	}, [])
 
 	return (
-		<Container hasPadding classes='pt-[--header-height-desktop]'>
+		<Container classes='pt-[--header-height-desktop]'>
 			<div className='relative w-full'>
 				<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 

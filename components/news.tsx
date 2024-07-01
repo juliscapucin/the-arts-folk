@@ -16,21 +16,21 @@ type NewsProps = {
 }
 
 const alignment = [
-	"items-start justify-start xl:-translate-y-[50%]", // 1
+	"items-start justify-start xl:-translate-y-[40%]", // 1
 	"justify-center items-end xl:justify-start", // 2
-	"items-center justify-center xl:items-center xl:justify-end xl:-translate-y-[50%]", // 3
-	"items-end justify-end xl:items-start xl:justify-start xl:-translate-y-[50%]", // 4
+	"items-center justify-center xl:items-center xl:justify-end xl:-translate-y-[40%]", // 3
+	"items-end justify-end xl:items-start xl:justify-start xl:-translate-y-[40%]", // 4
 	"items-start justify start xl:items-end xl:justify-center", // 5
-	"items-center justify-end xl:-translate-y-[50%]", // 6
-	"items-center justify-center xl:justify-start xl:-translate-y-[50%]", // 7
+	"items-center justify-end xl:-translate-y-[40%]", // 6
+	"items-center justify-center xl:justify-start xl:-translate-y-[40%]", // 7
 	"items-end justify-center xl:justify-start", // 8
-	"items-start justify-start xl:justify-end xl:-translate-y-[50%]", // 9
-	"items-center justify-center xl:items-center xl:justify-start xl:-translate-y-[50%]", // 10
+	"items-start justify-start xl:justify-end xl:-translate-y-[40%]", // 9
+	"items-center justify-center xl:items-center xl:justify-start xl:-translate-y-[40%]", // 10
 	"items-start justify-center xl:items-end xl:justify-start", // 11
-	"items-end justify-end xl:items-start xl:justify-end xl:-translate-y-[50%]", // 12
-	"items-center justify-start xl:items-center xl:justify-start xl:-translate-y-[50%]", // 13
+	"items-end justify-end xl:items-start xl:justify-end xl:-translate-y-[40%]", // 12
+	"items-center justify-start xl:items-center xl:justify-start xl:-translate-y-[40%]", // 13
 	"items-start justify-center xl:items-end xl:justify-end", // 14
-	"items-end justify-start xl:items-start xl:justify-end xl:-translate-y-[50%]", // 15
+	"items-end justify-start xl:items-start xl:justify-end xl:-translate-y-[40%]", // 15
 ]
 
 export default function News({ news }: NewsProps) {
@@ -65,11 +65,11 @@ export default function News({ news }: NewsProps) {
 
 	return (
 		<Container
-			isSection={pathname.includes("news") ? false : true}
+			isSection
 			classes={`relative mb-32 flex flex-wrap gap-y-16 md:gap-y-24 ${
 				pathname.includes("news")
-					? "mt-24 md:mt-32 xl:mt-[460px]"
-					: "mt-24 xl:mt-[460px]"
+					? "mt-24 md:mt-32 xl:mt-[400px]"
+					: "mt-24 xl:mt-[400px]"
 			}`}
 		>
 			{news.map((project, index) => {
@@ -78,14 +78,14 @@ export default function News({ news }: NewsProps) {
 				const imageSizeSmall = aspectRatio > 1 ? "w-[60%]" : "w-2/3 md:w-[42%]"
 				const imageSizeBig =
 					aspectRatio > 1
-						? "w-full sm:w-[80%] xl:w-[90%]"
-						: "w-[65%] sm:[60%] md:[35%] lg:w-[50%] xl:w-[65%]" // horizontal : vertical
+						? "w-full sm:w-[75%] xl:w-[80%]"
+						: "w-[65%] sm:[60%] md:[35%] lg:w-[50%] xl:w-[55%]" // horizontal : vertical
 
 				const isVideo = project.images[0].url.includes("vimeo")
 
 				return (
 					<article
-						className={`relative sm:basis-1/2 xl:basis-1/3 h-fit sm:h-[60svh] md:h[65svh] lg:h[65svh] xl:h-[75svh] flex  ${
+						className={`relative sm:basis-1/2 xl:basis-1/3 h-fit sm:h-[70svh] md:h[75svh] lg:h[75svh] xl:h-[75svh] flex  ${
 							alignment.length > 2
 								? alignment[index % alignment.length]
 								: "items-center justify-center"

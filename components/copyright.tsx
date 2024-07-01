@@ -1,12 +1,10 @@
-import { usePageContext } from "@/context"
 import { Button } from "@/components/ui"
 
 export default function Copyright() {
 	const year = new Date().getFullYear()
-	const { transitionOnClick } = usePageContext()
 
 	return (
-		<div className='py-4 flex flex-col items-end text-labelSmall font-text'>
+		<div className='absolute right-0 bottom-8 flex flex-col items-end text-labelSmall font-text'>
 			<Button href={"impressum"} classes='underlined-link mb-4 uppercase'>
 				Impressum
 			</Button>
