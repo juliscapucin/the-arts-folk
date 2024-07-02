@@ -7,9 +7,20 @@ import { Suspense } from "react"
 export const dynamic = "force-dynamic"
 
 export default async function NewsServer() {
+	const artists = await getArtists()
 	const projects = await getProjects()
 	//TODO: implement query for news
 	const news = projects.filter((project) => project.isNews)
+
+	news.forEach((project) => {
+		const artist = artists.find((artist) => {
+			if (!project.artist) return null
+			return artist._id === project.artist._ref
+		})
+		if (artist) {
+			project.artistInfo = artist
+		}
+	})
 
 	return (
 		<Suspense fallback={null}>
