@@ -45,9 +45,12 @@ export default async function page({
 	)
 	const artist = await getArtist(slug)
 
-	const artistProjects = projects.filter(
-		(project) => artist._id === project.artist?._ref
-	)
+	const artistProjects = projects.filter((project) => {
+		if (!project.artist) return null
+		return artist._id === project.artist._ref
+	})
+
+	if (!artistProjects) return notFound()
 
 	const artistLinks = artistProjects.reduce<string[]>((acc, project) => {
 		if (project.artistSection) {
