@@ -218,7 +218,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				<div className='flex-1 bg-primary z-80'>
 					{/* MOBILE – BACK BUTTON */}
 					<ButtonBack
-						classes='md:hidden absolute top-6'
+						classes='md:hidden absolute top-8'
 						href={
 							pathname.includes("news") ? "/news" : `/artists/${artist.slug}`
 						}
@@ -226,9 +226,9 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					/>
 
 					{/* MOBILE – RELEASE DATE */}
-					<p className='block mb-4 font-script text-displaySmall md:text-displayLarge sm:hidden'>
+					{/* <p className='block mb-4 font-script text-displaySmall md:text-displayLarge sm:hidden'>
 						{releaseDate}
-					</p>
+					</p> */}
 
 					{/* TITLE */}
 					<Heading tag='h1' variant='display'>
@@ -261,9 +261,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					<div className='relative'>
 						<div className='absolute top-0 right-0 z-80'>
 							{/* RELEASE DATE */}
-							<p className='text-right font-script text-displaySmall md:text-displayLarge'>
-								{releaseDate}
-							</p>
+							{pathname.includes("news") && (
+								<p className='text-right font-script text-displaySmall md:text-displayLarge'>
+									{releaseDate}
+								</p>
+							)}
 
 							{/* PROJECT INFO BUTTON */}
 							{projectInfo && (

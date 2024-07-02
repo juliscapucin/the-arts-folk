@@ -12,7 +12,7 @@ export default function buttonBack({ classes, href, label }: ButtonBackProps) {
 	return (
 		<Button
 			href={href}
-			classes={`block uppercase font-text text-labelLarge font-medium flex gap-4 -ml-2 ${classes}`}
+			classes={`block uppercase font-text text-labelLarge font-medium flex gap-4 -ml-2 w-fit ${classes}`}
 		>
 			<IconChevron classes={"rotate-90 scale-75"} />
 			<span className='underlined-link'>{label}</span>

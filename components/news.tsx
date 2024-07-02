@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useCallback, useEffect, useState } from "react"
+import { Fragment } from "react"
 import { usePathname } from "next/navigation"
 import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
@@ -19,7 +19,7 @@ export default function News({ news }: NewsProps) {
 	return (
 		<Container
 			isSection
-			classes={`relative mb-8 flex flex-wrap gap-y-24 mt-32`}
+			classes='relative mt-40 lg:mt-64 mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24'
 		>
 			{news.map((project, index) => {
 				if (project.images && project.images[0]) {
@@ -28,18 +28,16 @@ export default function News({ news }: NewsProps) {
 					return (
 						<Fragment key={project.slug}>
 							{project.addSpaceBefore && (
-								<article className='hidden md:block md:basis-1/4 w-full h-full bg-faded-5'></article>
+								<article className='hidden md:block w-full h-full'></article>
 							)}
 							<article
-								className={`relative basis-1/2 h-fit ${
-									project.newsPageSize === "small"
-										? "md:basis-1/4"
-										: "md:basis-1/2"
+								className={`relative h-fit w-full ${
+									project.newsPageSize === "small" ? "" : "md:col-span-2"
 								}`}
 							>
 								<Button
 									href={`/news/${project.slug}`}
-									classes={`relative overflow-clip flex flex-col group w-[97%]`}
+									classes='relative overflow-clip flex flex-col group w-full'
 								>
 									{/* Project Image */}
 									<div className='bg-faded-5 overflow-clip'>
@@ -80,7 +78,7 @@ export default function News({ news }: NewsProps) {
 								</Button>
 							</article>
 							{project.addSpaceAfter && (
-								<article className='hidden md:block md:basis-1/4 w-full h-full bg-faded-5'></article>
+								<article className='hidden md:block md:basis-1/4 w-full h-full'></article>
 							)}
 						</Fragment>
 					)
