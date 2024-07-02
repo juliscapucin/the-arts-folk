@@ -96,6 +96,8 @@ const projectSchema = {
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
 		},
+		{ name: "addSpaceBefore", title: "Add Space Before", type: "boolean" },
+		{ name: "addSpaceAfter", title: "Add Space After", type: "boolean" },
 	],
 	orderings: [
 		{
