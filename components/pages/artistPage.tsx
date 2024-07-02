@@ -10,7 +10,7 @@ import { useWindowDimensions } from "@/hooks"
 
 import { Artist, Project } from "@/types"
 import { Button, Container, Heading } from "@/components/ui"
-import { ArtistAside, CustomCursor } from "@/components"
+import { ArtistAside } from "@/components"
 import { IconGallery, IconThumbnails } from "@/components/icons"
 import { ButtonBack } from "@/components/buttons"
 
@@ -30,12 +30,15 @@ export default function ArtistPage({
 	const [view, setView] = useState("thumbnail")
 	const [isHovering, setIsHovering] = useState(false)
 	const [activeProject, setActiveProject] = useState<Project | null>(null)
-	const [asidePosition, setAsidePosition] = useState("")
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
 	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
 	const { width } = useWindowDimensions()
+
+	const sortedProjects = artist.projects.map((project) => {
+		return projects.find((item) => item._id === project._ref)
+	})
 
 	const handleMouseEnter = useCallback(
 		(e: MouseEvent) => {
@@ -52,12 +55,6 @@ export default function ArtistPage({
 	const handleMouseLeave = useCallback(() => {
 		setIsHovering(false)
 	}, [])
-
-	const getDistanceFromTop = (element: HTMLElement) => {
-		const rect = element.getBoundingClientRect()
-		const scrollTop = window.scrollY || window.pageYOffset
-		return rect.top + scrollTop
-	}
 
 	useEffect(() => {
 		if (!buttonRefs.current) return
@@ -147,8 +144,8 @@ export default function ArtistPage({
 						</button>
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
-						{projects.map((project, index) => {
-							if (!project.images) return null
+						{sortedProjects.map((project, index) => {
+							if (!project || !project.images) return null
 							const firstImage = project.images[0]
 							const isVideo = firstImage.url.includes("vimeo")
 
@@ -161,16 +158,8 @@ export default function ArtistPage({
 										view === "gallery" ? "w-full" : ""
 									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
-									key={project.slug}
+									key={`project.slug-${index}`}
 								>
-									{/* {width > 768 && (
-										<CustomCursor
-											isHovering={isHovering}
-											isActive={activeProject === project}
-											variant={view === "thumbnail" ? "thumbnail" : "gallery"}
-											label={project.title}
-										/>
-									)} */}
 									<div
 										className={`relative pl-4 overflow-hidden ${
 											view === "thumbnail"

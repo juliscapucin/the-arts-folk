@@ -1,4 +1,4 @@
-import type { ScrapbookImage } from "@/types"
+import type { Reference, ScrapbookImage } from "@/types"
 
 type CategoryArtist = {
 	_ref: string
@@ -15,4 +15,5 @@ export type Artist = {
 	artistWebsite: string
 	artistInstagram: string
 	agentEmail: string
+	projects: Reference[]
 }

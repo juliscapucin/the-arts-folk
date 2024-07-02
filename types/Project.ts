@@ -1,10 +1,7 @@
-import type { CloudinaryImage, Artist } from "@/types"
-
-type Reference = {
-	_ref: string
-}
+import type { CloudinaryImage, Artist, Reference } from "@/types"
 
 export type Project = {
+	_id: string
 	title: string
 	slug: string
 	projectInfo?: string

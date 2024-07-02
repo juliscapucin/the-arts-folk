@@ -6,6 +6,7 @@ import { MetadataParams } from "./MetadataParams"
 import { NavLink } from "./NavLink"
 import { Project } from "./Project"
 import { Page } from "./Page"
+import { Reference } from "./Reference"
 import { ScrapbookImage } from "./ScrapbookImage"
 
 export type {
@@ -17,5 +18,6 @@ export type {
 	NavLink,
 	Project,
 	Page,
+	Reference,
 	ScrapbookImage,
 }
