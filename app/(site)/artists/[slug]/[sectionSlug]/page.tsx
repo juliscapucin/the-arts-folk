@@ -46,7 +46,7 @@ export default async function page({
 	const artist = await getArtist(slug)
 
 	const artistProjects = projects.filter(
-		(project) => artist._id === project.artist._ref
+		(project) => artist._id === project.artist?._ref
 	)
 
 	const artistLinks = artistProjects.reduce<string[]>((acc, project) => {
