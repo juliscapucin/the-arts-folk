@@ -8,21 +8,17 @@ import { Artist } from "@/types"
 type ArtistAsideProps = {
 	artist: Artist
 	artistSections: string[]
-	asidePosition: string
 }
 
 export default function artistAside({
 	artist,
 	artistSections,
-	asidePosition,
 }: ArtistAsideProps) {
 	const pathname = usePathname()
 
 	return (
 		<aside
-			className={`fixed w-1/4 max-w-[400px] pr-8 font-text z-artistAside ${
-				asidePosition ? `top-[${asidePosition}px]` : ""
-			}`}
+			className={`absolute left-0 w-1/4 max-w-[400px] pr-8 font-text z-artistAside`}
 		>
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
