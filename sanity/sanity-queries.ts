@@ -81,7 +81,6 @@ export async function getProjects(): Promise<Project[]> {
       images,
       isNews,
       newsPageSize,
-      newsPageAlignment
    }`
 	)
 }
