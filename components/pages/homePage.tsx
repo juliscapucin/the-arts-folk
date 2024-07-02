@@ -14,11 +14,11 @@ type HomePageProps = {
 
 export default function HomePage({ showreelImages }: HomePageProps) {
 	return (
-		<Container>
+		<main>
 			<Suspense>
 				<Showreel {...{ showreelImages }} />
 			</Suspense>
 			<NewsServer />
-		</Container>
+		</main>
 	)
 }
