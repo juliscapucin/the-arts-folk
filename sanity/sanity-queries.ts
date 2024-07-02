@@ -44,7 +44,8 @@ export async function getArtist(slug: string): Promise<Artist> {
       url,
       "category": categories[]->title,
       artistInstagram,
-      agentEmail
+      agentEmail,
+      projects
    }`,
 		{ slug }
 	)
