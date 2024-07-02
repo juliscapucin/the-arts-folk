@@ -161,7 +161,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								}
 							/>
 						</div>
-						{images.length > 1 && (
+						{images && images.length > 1 && (
 							<>
 								{/* MINIMAP MARKER */}
 								<div
@@ -324,74 +324,75 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							: ""
 					}`}
 				>
-					{images.map((image, index) =>
-						width > 640 ? (
-							<button
-								onClick={(e) => openFullscreen(e, index)}
-								data-id={`image-${index}`}
-								className={`relative ${
-									pathname.includes("news") && !isFullscreenOpen
-										? "w-full sm:w-3/4"
-										: "w-full"
-								} ${index % 2 !== 0 ? "self-end" : "self-start"}`}
-								key={`project-image-${index}`}
-							>
-								{image.url.includes("vimeo") ? (
-									<div className='relative w-full aspect-video bg-faded-5'>
-										<ReactPlayer
-											url={image.url}
-											playing
-											playsinline
-											width='100%'
-											height='100%'
-											controls={false}
-											muted={true}
-											loop={true}
+					{images &&
+						images.map((image, index) =>
+							width > 640 ? (
+								<button
+									onClick={(e) => openFullscreen(e, index)}
+									data-id={`image-${index}`}
+									className={`relative ${
+										pathname.includes("news") && !isFullscreenOpen
+											? "w-full sm:w-3/4"
+											: "w-full"
+									} ${index % 2 !== 0 ? "self-end" : "self-start"}`}
+									key={`project-image-${index}`}
+								>
+									{image.url.includes("vimeo") ? (
+										<div className='relative w-full aspect-video bg-faded-5'>
+											<ReactPlayer
+												url={image.url}
+												playing
+												playsinline
+												width='100%'
+												height='100%'
+												controls={false}
+												muted={true}
+												loop={true}
+											/>
+										</div>
+									) : (
+										<CldImage
+											className={`w-full h-full object-contain`}
+											src={image.url}
+											alt={`Photo by ${artist.name}`}
+											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
+											quality={70}
+											width={image.width}
+											height={image.height}
+											priority={index === 0}
 										/>
-									</div>
-								) : (
-									<CldImage
-										className={`w-full h-full object-contain`}
-										src={image.url}
-										alt={`Photo by ${artist.name}`}
-										sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
-										quality={70}
-										width={image.width}
-										height={image.height}
-										priority={index === 0}
-									/>
-								)}
-							</button>
-						) : (
-							<div className='relative w-full' key={`project-image-${index}`}>
-								{image.url.includes("vimeo") ? (
-									<div className='relative w-full aspect-video bg-faded-5'>
-										<ReactPlayer
-											url={image.url}
-											playing
-											playsinline
-											width='100%'
-											height='100%'
-											controls={false}
-											muted={true}
-											loop={true}
+									)}
+								</button>
+							) : (
+								<div className='relative w-full' key={`project-image-${index}`}>
+									{image.url.includes("vimeo") ? (
+										<div className='relative w-full aspect-video bg-faded-5'>
+											<ReactPlayer
+												url={image.url}
+												playing
+												playsinline
+												width='100%'
+												height='100%'
+												controls={false}
+												muted={true}
+												loop={true}
+											/>
+										</div>
+									) : (
+										<CldImage
+											className={`w-full h-full object-contain`}
+											src={image.url}
+											alt={`Photo by ${artist.name}`}
+											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
+											quality={70}
+											width={image.width}
+											height={image.height}
+											priority={index === 0}
 										/>
-									</div>
-								) : (
-									<CldImage
-										className={`w-full h-full object-contain`}
-										src={image.url}
-										alt={`Photo by ${artist.name}`}
-										sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
-										quality={70}
-										width={image.width}
-										height={image.height}
-										priority={index === 0}
-									/>
-								)}
-							</div>
-						)
-					)}
+									)}
+								</div>
+							)
+						)}
 				</div>
 			</section>
 		</Container>

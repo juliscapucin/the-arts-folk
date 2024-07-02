@@ -48,9 +48,9 @@
 		-webkit-box-shadow: none;
 	}
 
-	.artists-page {
+	/* .artists-page {
 		overflow-y: hidden;
-	}
+	} */
 
 	.artists-page::-webkit-scrollbar-thumb,
 	.hide-scroll::-webkit-scrollbar-thumb {
@@ -151,6 +151,10 @@ button:hover {
 
 button {
 	cursor: pointer;
+}
+
+.gutter-stable {
+	scrollbar-gutter: stable both-edges;
 }
 
 .underlined-link {

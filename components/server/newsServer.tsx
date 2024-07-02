@@ -13,7 +13,10 @@ export default async function NewsServer() {
 	const news = projects.filter((project) => project.isNews)
 
 	news.forEach((project) => {
-		const artist = artists.find((artist) => artist._id === project.artist._ref)
+		const artist = artists.find((artist) => {
+			if (!project.artist) return null
+			return artist._id === project.artist._ref
+		})
 		if (artist) {
 			project.artistInfo = artist
 		}

@@ -85,15 +85,6 @@ export default function ArtistPage({
 		}
 	}, [width])
 
-	useEffect(() => {
-		if (!imagesSectionRef.current) return
-
-		const mainImagesPosition = getDistanceFromTop(
-			imagesSectionRef.current
-		).toString()
-		setAsidePosition(mainImagesPosition)
-	}, [width, imagesSectionRef.current])
-
 	const toggleView = useCallback(() => {
 		const tl = gsap.timeline({
 			onComplete: () => {
@@ -130,16 +121,13 @@ export default function ArtistPage({
 				{/* BACK BUTTON */}
 				<ButtonBack href='/artists' label='Artists' classes='pt-8' />
 
-				<ArtistAside
-					{...{ artist, sectionSlug, artistSections, asidePosition }}
-				/>
-
 				{/* MOBILE – HEADER */}
 				<Heading tag='h1' classes='mt-4 mb-6 leading-tightest md:hidden'>
 					{artist.name}
 				</Heading>
 
-				<section className='relative ml-[25%] w-[75%]'>
+				<section className='relative pl-[25%]'>
+					<ArtistAside {...{ artist, sectionSlug, artistSections }} />
 					{/* DESKTOP – HEADER */}
 					<header className='hidden pb-4 md:flex items-end justify-between bg-primary z-50'>
 						<Heading tag='h1' classes='pl-4 leading-tightest'>
@@ -160,6 +148,7 @@ export default function ArtistPage({
 					</header>
 					<div ref={imagesSectionRef} className='flex flex-wrap'>
 						{projects.map((project, index) => {
+							if (!project.images) return null
 							const firstImage = project.images[0]
 							const isVideo = firstImage.url.includes("vimeo")
 
@@ -168,64 +157,64 @@ export default function ArtistPage({
 									ref={(el) => {
 										buttonRefs.current[index] = el
 									}}
-									classes={`relative cursor-pointer ${
+									classes={`group relative cursor-pointer ${
 										view === "gallery" ? "w-full" : ""
 									}`}
 									href={`artists/${artist.slug}/projects/${project.slug}`}
 									key={project.slug}
 								>
-									{width > 768 && (
+									{/* {width > 768 && (
 										<CustomCursor
 											isHovering={isHovering}
 											isActive={activeProject === project}
 											variant={view === "thumbnail" ? "thumbnail" : "gallery"}
 											label={project.title}
 										/>
-									)}
+									)} */}
 									<div
 										className={`relative pl-4 overflow-hidden ${
 											view === "thumbnail"
 												? `h-36 md:h-72 pb-4 ${
 														isVideo ? "aspect-[15.5/9]" : ""
 												  }`
-												: `w-full pb-16 md:pb-8 ${
-														isVideo ? "aspect-[15.5/9]" : ""
-												  }`
+												: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
 										}`}
 									>
-										{isVideo ? (
-											<ReactPlayer
-												className='bg-faded-5 object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
-												url={firstImage.url}
-												playing={
-													isHovering && project.slug === activeProject?.slug
-												}
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/>
-										) : (
-											<CldImage
-												className={`w-full h-full object-contain bg-faded-5`}
-												src={firstImage.url}
-												alt={`Photo by ${artist.name}`}
-												sizes={
-													view === "thumbnail"
-														? "20vw"
-														: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
-												}
-												quality={70}
-												width={firstImage.width}
-												height={firstImage.height}
-												priority={index < 8}
-											/>
-										)}
-										<label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
+										<div className='relative w-full h-full overflow-hidden'>
+											{isVideo ? (
+												<ReactPlayer
+													className='bg-faded-5 object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
+													url={firstImage.url}
+													playing={
+														isHovering && project.slug === activeProject?.slug
+													}
+													playsinline
+													width='100%'
+													height='100%'
+													controls={false}
+													muted={true}
+													loop={true}
+												/>
+											) : (
+												<CldImage
+													className={`w-full h-full object-contain bg-faded-5 group-hover:scale-105 transition-transform duration-300`}
+													src={firstImage.url}
+													alt={`Photo by ${artist.name}`}
+													sizes={
+														view === "thumbnail"
+															? "20vw"
+															: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
+													}
+													quality={70}
+													width={firstImage.width}
+													height={firstImage.height}
+													priority={index < 8}
+												/>
+											)}
+										</div>
+										{/* <label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
 											{project.title}
-										</label>
+										</label> */}
 									</div>
 								</Button>
 							)

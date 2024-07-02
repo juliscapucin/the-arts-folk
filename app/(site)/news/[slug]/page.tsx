@@ -35,7 +35,10 @@ export default async function page({ params }: { params: { slug: string } }) {
 	const project = await getProject(slug)
 	const artists = await getArtists()
 
-	const artist = artists.find((artist) => artist._id === project.artist._ref)
+	const artist = artists.find((artist) => {
+		if (!project.artist) return null
+		return artist._id === project.artist._ref
+	})
 
 	if (!project || !artist) return notFound()
 
