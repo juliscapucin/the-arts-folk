@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import { CldImage } from "next-cloudinary"
 
 import gsap from "gsap"
@@ -19,13 +19,14 @@ const delay = 1000
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
-	const [logoClasses, setLogoClasses] = useState("sm:scale-150 lg:scale-200")
+	// const [logoClasses, setLogoClasses] = useState("sm:scale-150 lg:scale-200")
 	const logoRef = useRef<HTMLDivElement | null>(null)
 	const logoHeaderRef = useRef<HTMLDivElement | null>(null)
 	const logoShowreelRef = useRef<HTMLDivElement | null>(null)
 	const showreelRef = useRef<HTMLDivElement | null>(null)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+	// SLIDE ANIMATION
 	const resetTimeout = () => {
 		if (timeoutRef.current) {
 			clearTimeout(timeoutRef.current)
@@ -47,7 +48,23 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		}
 	}, [slideIndex])
 
-	useEffect(() => {
+	// LOGO ANIMATION
+	const logoHeaderToCenter = (
+		element: HTMLElement,
+		logoShowreel: HTMLElement
+	) => {
+		gsap.registerPlugin(ScrollTrigger, Flip)
+		const state = Flip.getState(element)
+
+		logoShowreel.appendChild(element)
+
+		Flip.from(state, {
+			duration: 0.5,
+			ease: "power1.inOut",
+		})
+	}
+
+	useLayoutEffect(() => {
 		if (
 			!logoRef.current ||
 			!logoHeaderRef.current ||
@@ -62,6 +79,8 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		const logoShowreel = logoShowreelRef.current
 		const showreel = showreelRef.current
 
+		logoHeaderToCenter(element, logoShowreel)
+
 		let ctx = gsap.context(() => {
 			ScrollTrigger.create({
 				trigger: showreel,
@@ -70,45 +89,35 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				// markers: true,
 				onEnter: () => {
 					const state = Flip.getState(element)
-					setLogoClasses("origin-left scale-50 md:scale-[60%] z-header")
+
 					logoHeader.appendChild(element)
 					Flip.from(state, {
 						duration: 0.5,
 						ease: "power1.inOut",
-						absolute: true,
 					})
 				},
 				onLeaveBack: () => {
-					const state = Flip.getState(element)
-					setLogoClasses("sm:scale-150 lg:scale-200")
-					logoShowreel.appendChild(element)
-					Flip.from(state, {
-						duration: 0.5,
-						ease: "power1.inOut",
-					})
+					logoHeaderToCenter(element, logoShowreel)
 				},
 			})
 		})
 
 		return () => ctx.revert()
-	}, [logoRef, showreelRef])
+	}, [logoRef.current, showreelRef.current])
 
 	return (
 		<section className='pt-[--header-height-desktop] mb-40'>
 			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 z-header pointer-events-none'>
 				<div className='w-full max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-start items-end '>
-					<div ref={logoHeaderRef} className='h-full'></div>
+					<div ref={logoHeaderRef} className='relative h-full w-[220px]'>
+						<div ref={logoRef} className='mt-2'>
+							<Logo classes='w-full h-auto' />
+						</div>
+					</div>
 				</div>
 			</div>
-			<div
-				ref={logoShowreelRef}
-				className='fixed left-0 top-0 w-screen h-svh flex justify-center items-center z-150 pointer-events-none'
-			>
-				<div ref={logoRef} className=''>
-					<Logo
-						classes={`transition-transform duration-300 ease-in ${logoClasses}`}
-					/>
-				</div>
+			<div className='fixed left-0 top-0 w-screen h-svh flex justify-center items-center z-header pointer-events-none'>
+				<div className='relative w-[600px]' ref={logoShowreelRef}></div>
 			</div>
 			<div
 				ref={showreelRef}

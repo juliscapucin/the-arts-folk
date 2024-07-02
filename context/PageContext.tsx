@@ -1,7 +1,13 @@
 "use client"
 
 import { usePathname, useRouter } from "next/navigation"
-import { createContext, useContext, useRef, useState } from "react"
+import {
+	createContext,
+	useContext,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react"
 
 import gsap from "gsap"
 
@@ -48,7 +54,7 @@ export const PageContextProvider = ({
 
 			gsap.to(pageTransitionRef.current, {
 				yPercent: 0,
-				duration: 0.3,
+				duration: 0.4,
 				ease: "linear",
 				onComplete: () => {
 					router.push(link.slug ? `/${link.slug}` : `/${link}`)
