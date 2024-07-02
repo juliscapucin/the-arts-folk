@@ -16,21 +16,21 @@ type NewsProps = {
 }
 
 const alignment = [
-	"items-start justify-start xl:-translate-y-[40%]", // 1
-	"justify-center items-end xl:justify-start", // 2
-	"items-center justify-center xl:items-center xl:justify-end xl:-translate-y-[40%]", // 3
-	"items-end justify-end xl:items-start xl:justify-start xl:-translate-y-[40%]", // 4
-	"items-start justify start xl:items-end xl:justify-center", // 5
-	"items-center justify-end xl:-translate-y-[40%]", // 6
-	"items-center justify-center xl:justify-start xl:-translate-y-[40%]", // 7
+	"-translate-y-[15%] items-end justify-start xl:-translate-y-[35%]", // 1
+	"items-end justify-center xl:justify-end", // 2
+	"-translate-y-[15%] items-start justify-start xl:items-center xl:justify-end xl:-translate-y-[20%]", // 3
+	"items-end justify-end xl:items-start xl:justify-start xl:-translate-y-[25%]", // 4
+	"-translate-y-[15%] items-start justify-start xl:items-end xl:justify-center", // 5
+	"items-end justify-center xl:justify-end xl:-translate-y-[30%]", // 6
+	"-translate-y-[15%] items-center justify-center xl:justify-start xl:-translate-y-[35%]", // 7
 	"items-end justify-center xl:justify-start", // 8
-	"items-start justify-start xl:justify-end xl:-translate-y-[40%]", // 9
-	"items-center justify-center xl:items-center xl:justify-start xl:-translate-y-[40%]", // 10
-	"items-start justify-center xl:items-end xl:justify-start", // 11
-	"items-end justify-end xl:items-start xl:justify-end xl:-translate-y-[40%]", // 12
-	"items-center justify-start xl:items-center xl:justify-start xl:-translate-y-[40%]", // 13
-	"items-start justify-center xl:items-end xl:justify-end", // 14
-	"items-end justify-start xl:items-start xl:justify-end xl:-translate-y-[40%]", // 15
+	"-translate-y-[15%] items-start justify-start xl:justify-end xl:-translate-y-[20%]", // 9
+	"items-center justify-center xl:items-center xl:justify-start xl:-translate-y-[35%]", // 10
+	"-translate-y-[15%] items-start justify-center xl:items-end", // 11
+	"items-end justify-end xl:items-start xl:justify-end xl:-translate-y-[20%]", // 12
+	"-translate-y-[15%] items-center justify-start xl:items-center xl:justify-start xl:-translate-y-[35%]", // 13
+	"items-end justify-center xl:items-end xl:justify-end", // 14
+	"items-end justify-start xl:items-start xl:justify-end xl:-translate-y-[20%]", // 15
 ]
 
 export default function News({ news }: NewsProps) {
@@ -79,13 +79,13 @@ export default function News({ news }: NewsProps) {
 				const imageSizeBig =
 					aspectRatio > 1
 						? "w-full sm:w-[75%] xl:w-[80%]"
-						: "w-[65%] sm:[60%] md:[35%] lg:w-[50%] xl:w-[55%]" // horizontal : vertical
+						: "w-[65%] sm:[60%] md:[45%] lg:w-[50%] xl:w-[60%]" // horizontal : vertical
 
 				const isVideo = project.images[0].url.includes("vimeo")
 
 				return (
 					<article
-						className={`relative sm:basis-1/2 xl:basis-1/3 h-fit sm:h-[70svh] md:h[75svh] lg:h[75svh] xl:h-[75svh] flex  ${
+						className={`relative sm:basis-1/2 xl:basis-1/3 h-fit sm:h-[70svh] md:h[85svh] xl:h-[90svh] flex  ${
 							alignment.length > 2
 								? alignment[index % alignment.length]
 								: "items-center justify-center"
@@ -105,12 +105,6 @@ export default function News({ news }: NewsProps) {
 									: imageSizeBig
 							}`}
 						>
-							{/* Release Date */}
-							<p className='block font-script text-headlineLarge md:text-displaySmall mb-1'>
-								{/* [{index + 1}] */}
-								{formatDate(project.releaseDate)}
-							</p>
-
 							{/* Project Image */}
 							<div className='bg-faded-5 overflow-clip'>
 								{isVideo ? (
