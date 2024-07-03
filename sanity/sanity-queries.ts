@@ -7,6 +7,7 @@ import type {
 	NavLink,
 	Project,
 	Page,
+	ArtistSection,
 } from "@/types"
 
 const client = createClient(clientConfig)
@@ -60,10 +61,11 @@ export async function getCategories(): Promise<Category[]> {
 	)
 }
 
-export async function getArtistSections(): Promise<Category[]> {
+export async function getArtistSections(): Promise<ArtistSection[]> {
 	return client.fetch(
-		groq`*[_type == "artistSection"]{
+		groq`*[_type == "artistSection"] | order(order asc) {
       title,
+      order,
       _id
    }`
 	)

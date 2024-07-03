@@ -8,7 +8,7 @@ import gsap from "gsap"
 
 import { useWindowDimensions } from "@/hooks"
 
-import { Artist, Project } from "@/types"
+import { Artist, ArtistSection, Project } from "@/types"
 import { Button, Container, Heading } from "@/components/ui"
 import { ArtistAside } from "@/components"
 import { IconGallery, IconThumbnails } from "@/components/icons"
@@ -18,7 +18,7 @@ type artistPageProps = {
 	artist: Artist
 	projects: Project[]
 	sectionSlug: string
-	artistSections: string[]
+	artistSections: ArtistSection[]
 }
 
 export default function ArtistPage({

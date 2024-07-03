@@ -3,11 +3,11 @@
 import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui"
-import { Artist } from "@/types"
+import { Artist, ArtistSection } from "@/types"
 
 type ArtistAsideProps = {
 	artist: Artist
-	artistSections: string[]
+	artistSections: ArtistSection[]
 }
 
 export default function artistAside({
@@ -23,23 +23,24 @@ export default function artistAside({
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
 				{artistSections.map((link) => {
-					const linkLowerCase = link.toLowerCase()
+					const linkLowerCase = link.title.toLowerCase()
 					const isActive =
 						pathname.includes(linkLowerCase) ||
-						(pathname === `/artists/${artist.slug}` && link === "Featured")
+						(pathname === `/artists/${artist.slug}` &&
+							link.title === "Featured")
 
 					return isActive ? (
-						<span className='active underlined-link block' key={link}>
-							{link}
+						<span className='active underlined-link block' key={link.title}>
+							{link.title}
 						</span>
 					) : (
 						<Button
-							key={link}
+							key={link.title}
 							classes={"underlined-link block"}
 							href={`/artists/${artist.slug}/${linkLowerCase}`}
 							transitionZIndex='z-transitionLow'
 						>
-							<span>{link}</span>
+							<span>{link.title}</span>
 						</Button>
 					)
 				})}
