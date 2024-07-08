@@ -47,6 +47,7 @@ const projectSchema = {
 				source: "title",
 				maxLength: 96,
 			},
+			validation: (Rule: Rule) => Rule.required().error("Slug is required"),
 		},
 		{
 			name: "projectInfo",
