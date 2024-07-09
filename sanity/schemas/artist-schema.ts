@@ -18,6 +18,7 @@ const artistSchema = {
 				source: "name",
 				maxLength: 96,
 			},
+			validation: (Rule: Rule) => Rule.required().error("Slug is required"),
 		},
 		{
 			name: "description",
@@ -30,6 +31,7 @@ const artistSchema = {
 			type: "array",
 			description: "Select the categories associated with this artist.",
 			of: [{ type: "reference", to: [{ type: "categories" }] }],
+			validation: (Rule: Rule) => Rule.required().error("Category is required"),
 		},
 		{
 			name: "artistInfo",

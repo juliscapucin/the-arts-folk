@@ -187,22 +187,35 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	}, [filteredArtists])
 
 	useEffect(() => {
+		if (!containerRef.current) return
+
 		setIsHovered("")
-		gsap.to(containerRef.current, {
-			opacity: 0,
-			duration: 0.3,
-			onComplete: () => {
-				if (activeCategory === "all") setFilteredArtists(artists)
-				else {
-					const filteredArtitsts = artists.filter((artist) => {
-						return artist.category.some(
-							(category) => category._ref === activeCategory
-						)
-					})
-					setFilteredArtists(filteredArtitsts)
-				}
-			},
+		const filterArtists = () => {
+			if (activeCategory === "all") {
+				setFilteredArtists(artists)
+			} else {
+				const filteredArtists = artists.filter((artist) => {
+					console.log(artist.category)
+					return (
+						Array.isArray(artist.category) &&
+						artist.category.find((category) => category._ref === activeCategory)
+					)
+				})
+				setFilteredArtists(filteredArtists)
+			}
+		}
+
+		const ctx = gsap.context(() => {
+			gsap.to(containerRef.current, {
+				opacity: 0,
+				duration: 0.3,
+				onComplete: () => filterArtists(),
+			})
 		})
+
+		return () => {
+			ctx.revert()
+		}
 	}, [activeCategory])
 
 	return (
