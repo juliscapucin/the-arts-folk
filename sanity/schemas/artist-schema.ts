@@ -7,12 +7,13 @@ const artistSchema = {
 	fields: [
 		{
 			name: "name",
-			title: "Name",
+			title: "Name (required)",
 			type: "string",
+			validation: (Rule: Rule) => Rule.required().error("Name is required"),
 		},
 		{
 			name: "slug",
-			title: "Slug",
+			title: "Slug (required)",
 			type: "slug",
 			options: {
 				source: "name",
@@ -27,7 +28,7 @@ const artistSchema = {
 		},
 		{
 			name: "category",
-			title: "Categories",
+			title: "Categories (required)",
 			type: "array",
 			description: "Select the categories associated with this artist.",
 			of: [{ type: "reference", to: [{ type: "categories" }] }],
@@ -40,7 +41,7 @@ const artistSchema = {
 		},
 		{
 			name: "scrapbookImages",
-			title: "Scrapbook Images",
+			title: "Scrapbook Images (required)",
 			type: "array",
 			description: "These images are served from Cloudinary or Vimeo",
 			of: [
@@ -66,6 +67,8 @@ const artistSchema = {
 					],
 				},
 			],
+			validation: (Rule: Rule) =>
+				Rule.required().error("Scrapbook images are required"),
 		},
 		{
 			name: "projects",

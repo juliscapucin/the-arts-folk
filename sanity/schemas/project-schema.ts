@@ -16,8 +16,9 @@ const projectSchema = {
 	fields: [
 		{
 			name: "title",
-			title: "Title",
+			title: "Title (required)",
 			type: "string",
+			validation: (Rule: Rule) => Rule.required().error("Title is required"),
 		},
 		{
 			name: "artist",
@@ -41,7 +42,7 @@ const projectSchema = {
 		},
 		{
 			name: "slug",
-			title: "Slug",
+			title: "Slug (required)",
 			type: "slug",
 			options: {
 				source: "title",
@@ -56,7 +57,7 @@ const projectSchema = {
 		},
 		{
 			name: "images",
-			title: "Images",
+			title: "Images (required)",
 			type: "array",
 			description: "Served from Cloudinary or Vimeo",
 			of: [
@@ -82,6 +83,7 @@ const projectSchema = {
 					],
 				},
 			],
+			validation: (Rule: Rule) => Rule.required().error("Images are required"),
 		},
 		{ name: "isNews", title: "Show In News Page", type: "boolean" },
 		{
