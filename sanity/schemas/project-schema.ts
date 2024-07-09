@@ -99,8 +99,20 @@ const projectSchema = {
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
 		},
-		{ name: "addSpaceBefore", title: "Add Space Before", type: "boolean" },
-		{ name: "addSpaceAfter", title: "Add Space After", type: "boolean" },
+		{
+			name: "addSpaceBefore",
+			title: "Add Space Before",
+			type: "boolean",
+			hidden: ({ document }: { document: ProjectDocument }) =>
+				!document?.isNews,
+		},
+		{
+			name: "addSpaceAfter",
+			title: "Add Space After",
+			type: "boolean",
+			hidden: ({ document }: { document: ProjectDocument }) =>
+				!document?.isNews,
+		},
 	],
 	orderings: [
 		{
