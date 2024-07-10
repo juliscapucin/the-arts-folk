@@ -6,7 +6,6 @@ import { Showreel } from "@/components"
 import { NewsServer } from "@/components/server"
 
 import type { CloudinaryImage } from "@/types"
-import { Container } from "@/components/ui"
 
 type HomePageProps = {
 	showreelImages: CloudinaryImage[]
@@ -15,6 +14,7 @@ type HomePageProps = {
 export default function HomePage({ showreelImages }: HomePageProps) {
 	return (
 		<main>
+			{/* TODO: add spinner */}
 			<Suspense>
 				<Showreel {...{ showreelImages }} />
 			</Suspense>

@@ -10,6 +10,7 @@ import Flip from "gsap/Flip"
 import { Logo } from "@/components/svgs"
 
 import type { CloudinaryImage } from "@/types"
+import { useMobileMenuContext } from "@/context"
 
 type ShowreelProps = {
 	showreelImages: CloudinaryImage[]
@@ -107,7 +108,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 
 	return (
 		<section className='pt-[--header-height-desktop] mb-40'>
-			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 z-header pointer-events-none'>
+			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 z-logoHeader pointer-events-none'>
 				<div className='w-full max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-start items-end '>
 					<div ref={logoHeaderRef} className='relative h-full w-[220px]'>
 						<div ref={logoRef} className='mt-2'>
