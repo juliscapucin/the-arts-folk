@@ -45,7 +45,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		setIsFullscreenOpen(true)
 		setTimeout(() => {
 			handlePanelSlide(index, mainImagesRef.current)
-			console.log("timeout")
 		}, 500)
 	}
 
@@ -235,9 +234,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						{title}
 					</Heading>
 					{/* SUBTITLE */}
-					<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
-						By {artist.name}
-					</h2>
+					<Button href={`/artists/${artist.slug}`}>
+						<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
+							By {artist.name}
+						</h2>
+					</Button>
 					{/* MOBILE – PROJECT INFO BUTTON */}
 					{projectInfo && (
 						<button

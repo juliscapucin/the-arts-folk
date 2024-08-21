@@ -195,7 +195,6 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				setFilteredArtists(artists)
 			} else {
 				const filteredArtists = artists.filter((artist) => {
-					console.log(artist.category)
 					return (
 						Array.isArray(artist.category) &&
 						artist.category.find((category) => category._ref === activeCategory)

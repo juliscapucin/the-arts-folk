@@ -42,7 +42,6 @@ export default function ArtistPage({
 
 	const handleMouseEnter = useCallback(
 		(e: MouseEvent) => {
-			console.log("mouse enter")
 			setIsHovering(true)
 			projects.forEach((project, index) => {
 				if (buttonRefs.current[index] === e.target) {
