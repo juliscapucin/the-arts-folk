@@ -1,4 +1,4 @@
-import { Rule } from "sanity"
+import { Rule as SanityRule } from "sanity"
 
 const headerNavSchema = {
 	name: "header",
@@ -22,12 +22,10 @@ const headerNavSchema = {
 		{
 			name: "order",
 			type: "number",
-			title: "Order",
+			title: "Order (required)",
 			description: "Set the order for the header link",
-			validation: (Rule: Rule) =>
-				Rule.required()
-					.min(1)
-					.error("Order is required and must be at least 1"),
+			validation: (Rule: SanityRule) =>
+				Rule.required().error("Order is required"),
 		},
 	],
 }

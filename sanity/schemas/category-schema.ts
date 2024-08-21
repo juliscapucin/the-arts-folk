@@ -1,4 +1,4 @@
-import { Rule } from "sanity"
+import { Rule as SanityRule } from "sanity"
 
 const categorySchema = {
 	name: "categories",
@@ -12,20 +12,11 @@ const categorySchema = {
 		},
 		{
 			name: "order",
-			title: "Order",
+			title: "Order (required)",
 			type: "number",
 			description: "Set the order for the category",
-			validation: (Rule: Rule) =>
-				Rule.required()
-					.min(1)
-					.error("Order is required and must be at least 1"),
-		},
-	],
-	orderings: [
-		{
-			title: "Order by Custom Order",
-			name: "customOrder",
-			by: [{ field: "order", direction: "asc" }],
+			validation: (Rule: SanityRule) =>
+				Rule.required().error("Order is required"),
 		},
 	],
 }
