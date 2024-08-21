@@ -2,10 +2,9 @@
 
 import { Fragment } from "react"
 import { usePathname } from "next/navigation"
-import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
-import { Button, Container } from "@/components/ui"
+import { Button, Container, ImageWithSpinner } from "@/components/ui"
 
 import { Project } from "@/types"
 
@@ -55,8 +54,8 @@ export default function News({ news }: NewsProps) {
 												/>
 											</div>
 										) : (
-											<CldImage
-												className='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
+											<ImageWithSpinner
+												classes='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
 												src={project.images[0].url}
 												alt={`Photo by ${project.artistInfo?.name}`}
 												sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'

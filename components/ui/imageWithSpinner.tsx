@@ -23,7 +23,7 @@ export default async function ImageWithSpinner({
 }: ImageWithSpinnerProps) {
 	const imageUrl = getCldImageUrl({
 		src: src,
-		width: 100, // Resize the original file to a smaller size
+		width: 10, // Resize the original file to a smaller size
 	})
 	const response = await fetch(imageUrl)
 	const arrayBuffer = await response.arrayBuffer()

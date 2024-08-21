@@ -1,7 +1,6 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
 import gsap from "gsap"
@@ -9,7 +8,7 @@ import gsap from "gsap"
 import { useWindowDimensions } from "@/hooks"
 
 import { Artist, ArtistSection, Project } from "@/types"
-import { Button, Container, Heading } from "@/components/ui"
+import { Button, Container, Heading, ImageWithSpinner } from "@/components/ui"
 import { ArtistAside } from "@/components"
 import { IconGallery, IconThumbnails } from "@/components/icons"
 import { ButtonBack } from "@/components/buttons"
@@ -188,8 +187,8 @@ export default function ArtistPage({
 															loop={true}
 														/>
 													) : (
-														<CldImage
-															className={`w-full h-full object-contain bg-faded-5 group-hover:scale-105 transition-transform duration-300`}
+														<ImageWithSpinner
+															classes={`w-full h-full object-contain bg-faded-5 group-hover:scale-105 transition-transform duration-300`}
 															src={firstImage.url}
 															alt={`Photo by ${artist.name}`}
 															sizes={
