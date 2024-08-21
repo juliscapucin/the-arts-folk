@@ -66,6 +66,18 @@
 		-webkit-box-shadow: none;
 	}
 
+	.cookies-overlay::-webkit-scrollbar-thumb {
+		background-color: rgb(var(--color-secondary-rgb), 0.5);
+		width: 1rem;
+		height: 1rem;
+		-webkit-box-shadow: none;
+	}
+
+	.cookies-overlay::-webkit-scrollbar-track {
+		background-color: rgba(var(--color-primary-rgb), 0.8);
+		-webkit-box-shadow: none;
+	}
+
 	/* @supports (scrollbar-color: #ccc #fff) {
 		* {
 			scrollbar-color: rgba(var(--color-secondary-rgb), 0.2)

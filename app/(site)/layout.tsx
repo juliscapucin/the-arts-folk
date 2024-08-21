@@ -80,7 +80,7 @@ export default async function RootLayout({
 					{children}
 					<Footer />
 					{/* TODO: Fix this */}
-					{/* <CookiesServer /> */}
+					<CookiesServer />
 				</body>
 			</PageContextProvider>
 		</html>

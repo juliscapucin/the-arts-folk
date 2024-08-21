@@ -67,6 +67,8 @@ const config: Config = {
 				logoHeader: "375",
 				fullscreen: "400",
 				intro: "450",
+				cookies: "475",
+				cookiesOverlay: "490",
 				mobileMenu: "500",
 			},
 			letterSpacing: { tightest: "-.075em" },
