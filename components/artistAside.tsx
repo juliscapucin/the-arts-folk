@@ -17,9 +17,7 @@ export default function artistAside({
 	const pathname = usePathname()
 
 	return (
-		<aside
-			className={`absolute left-0 w-1/4 max-w-[400px] pr-8 font-text z-artistAside`}
-		>
+		<aside className={`w-1/3 lg:w-1/4 pr-8 font-text z-artistAside`}>
 			{/* Artist Sections */}
 			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
 				{artistSections.map((link) => {
@@ -47,7 +45,7 @@ export default function artistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='hidden sm:block my-12 text-bodyMedium'>
+			<p className='hidden sm:block my-12 lg:pr-8 text-bodyMedium'>
 				{artist.artistInfo}
 			</p>
 
