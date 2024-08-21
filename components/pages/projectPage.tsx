@@ -349,7 +349,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 												width='100%'
 												height='100%'
 												controls={false}
-												muted={true}
+												muted={false}
 												loop={true}
 											/>
 										</div>
