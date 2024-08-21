@@ -16,7 +16,7 @@ import { NavLink } from "@/types"
 // TYPE
 interface ContextProps {
 	pageTransitionRef: React.MutableRefObject<HTMLDivElement | null>
-	transitionOnClick: (link: NavLink | string) => void
+	transitionOnClick: (link: NavLink | string | (() => void)) => void
 	transitionIndex: string
 	setTransitionIndex: React.Dispatch<React.SetStateAction<string>>
 }
