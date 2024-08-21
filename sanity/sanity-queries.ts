@@ -54,7 +54,7 @@ export async function getArtist(slug: string): Promise<Artist> {
 
 export async function getCategories(): Promise<Category[]> {
 	return client.fetch(
-		groq`*[_type == "categories"]{
+		groq`*[_type == "categories"] | order(order asc){
       title,
       _id
    }`
