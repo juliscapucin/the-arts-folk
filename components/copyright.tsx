@@ -5,9 +5,9 @@ export default function Copyright() {
 
 	return (
 		<div className='mb-8 lg:mb-0 lg:absolute right-[--margin-mobile] lg:right-[--margin-desktop] bottom-8 flex flex-col items-end text-labelSmall font-text'>
-			<Button href={"impressum"} classes='underlined-link mb-4 uppercase'>
+			{/* <Button href={"impressum"} classes='underlined-link mb-4 uppercase'>
 				Impressum
-			</Button>
+			</Button> */}
 			<span>The Arts Folk ©{year}</span>
 			<span>
 				Website by{" "}
