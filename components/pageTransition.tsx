@@ -20,7 +20,7 @@ export const PageTransition = () => {
 		ctx.add(() => {
 			gsap.to(pageTransitionRef.current, {
 				yPercent: 100,
-				duration: 1,
+				duration: 0.8,
 				ease: "linear",
 			})
 		})

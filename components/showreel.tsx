@@ -118,7 +118,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				</div>
 			</div>
 			<div className='fixed left-0 top-0 w-screen h-svh flex justify-center items-center z-header pointer-events-none'>
-				<div className='relative w-[600px]' ref={logoShowreelRef}></div>
+				<div className='relative w-[735px]' ref={logoShowreelRef}></div>
 			</div>
 			<div
 				ref={showreelRef}

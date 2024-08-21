@@ -18,7 +18,9 @@ export default function News({ news }: NewsProps) {
 	return (
 		<Container
 			isSection
-			classes='relative mt-40 lg:mt-64 mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24'
+			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
+				pathname.includes("news") ? "lg:mt-24" : "lg:mt-64"
+			}`}
 		>
 			{news.map((project, index) => {
 				if (project.images && project.images[0]) {
