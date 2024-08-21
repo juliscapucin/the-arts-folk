@@ -50,14 +50,10 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	}, [slideIndex])
 
 	// LOGO ANIMATION
-	const logoHeaderToCenter = (
-		element: HTMLElement,
-		logoShowreel: HTMLElement
-	) => {
-		gsap.registerPlugin(ScrollTrigger, Flip)
+	const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
 		const state = Flip.getState(element)
 
-		logoShowreel.appendChild(element)
+		targetDiv.appendChild(element)
 
 		Flip.from(state, {
 			duration: 0.5,
@@ -73,6 +69,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 			!showreelRef.current
 		)
 			return
+
 		gsap.registerPlugin(ScrollTrigger, Flip)
 
 		const element = logoRef.current
@@ -80,7 +77,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		const logoShowreel = logoShowreelRef.current
 		const showreel = showreelRef.current
 
-		logoHeaderToCenter(element, logoShowreel)
+		// logoHeaderToCenter(element, logoShowreel)
 
 		let ctx = gsap.context(() => {
 			ScrollTrigger.create({
@@ -89,16 +86,10 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				end: "bottom top",
 				// markers: true,
 				onEnter: () => {
-					const state = Flip.getState(element)
-
-					logoHeader.appendChild(element)
-					Flip.from(state, {
-						duration: 0.5,
-						ease: "power1.inOut",
-					})
+					moveLogo(element, logoHeader)
 				},
 				onLeaveBack: () => {
-					logoHeaderToCenter(element, logoShowreel)
+					moveLogo(element, logoShowreel)
 				},
 			})
 		})
@@ -110,18 +101,15 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		<section className='pt-[--header-height-desktop] mb-40'>
 			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 z-logoHeader pointer-events-none'>
 				<div className='w-full max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-start items-end '>
-					<div ref={logoHeaderRef} className='relative h-full w-[220px]'>
-						<div ref={logoRef} className='mt-2'>
-							<Logo classes='w-full h-auto' />
-						</div>
-					</div>
+					<div ref={logoHeaderRef} className='relative h-full w-[220px]'></div>
 				</div>
 			</div>
 			<div className='fixed left-0 -top-1 w-screen h-svh flex justify-center items-center z-header pointer-events-none'>
-				<div
-					className='relative w-[369px] md:w-[738px]'
-					ref={logoShowreelRef}
-				></div>
+				<div className='relative w-[369px] md:w-[738px]' ref={logoShowreelRef}>
+					<div ref={logoRef} className='mt-2'>
+						<Logo classes='w-full h-auto' />
+					</div>
+				</div>
 			</div>
 			<div
 				ref={showreelRef}

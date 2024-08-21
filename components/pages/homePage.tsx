@@ -12,6 +12,15 @@ type HomePageProps = {
 	showreelImages: CloudinaryImage[]
 }
 
+const Spinner = () => {
+	return (
+		<div className='relative w-[10%] min-w-12 aspect-square animate-spin'>
+			<div className='absolute w-full h-full top-0 left-0 rounded-full border border-faded-5 border-r-secondary z-10'></div>
+			<div className='absolute w-full h-full top-0 left-0 rounded-full border border-faded-30 opacity-20'></div>
+		</div>
+	)
+}
+
 export default function HomePage({ showreelImages }: HomePageProps) {
 	const scrollTipRef = useRef<HTMLDivElement>(null)
 
@@ -41,9 +50,9 @@ export default function HomePage({ showreelImages }: HomePageProps) {
 				<IconScrollDown />
 			</div>
 			{/* TODO: add spinner */}
-			{/* <Suspense> */}
-			<Showreel {...{ showreelImages }} />
-			{/* </Suspense> */}
+			<Suspense fallback={<Spinner />}>
+				<Showreel {...{ showreelImages }} />
+			</Suspense>
 			<NewsServer />
 		</main>
 	)
