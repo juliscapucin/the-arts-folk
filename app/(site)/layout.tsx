@@ -74,7 +74,7 @@ export default async function RootLayout({
 				<body
 					className={`${displayFont.className} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}
 				>
-					{/* <Intro /> */}
+					<Intro />
 					<PageTransition />
 					<Header navLinks={navLinks} />
 					{children}
