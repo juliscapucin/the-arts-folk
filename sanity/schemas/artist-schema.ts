@@ -71,6 +71,17 @@ const artistSchema = {
 				Rule.required().error("Scrapbook images are required"),
 		},
 		{
+			name: "startView",
+			title: "Start With Gallery View",
+			type: "boolean",
+			description:
+				"Check if you want to start in Gallery View. Default is Thumbnail View.",
+			options: {
+				layout: "checkbox", // This creates a toggle button in the Sanity studio
+			},
+			initialValue: false, // Optional: Set an initial value if needed
+		},
+		{
 			name: "projects",
 			title: "Projects",
 			type: "array",

@@ -18,6 +18,7 @@ type artistPageProps = {
 	projects: Project[]
 	sectionSlug: string
 	artistSections: ArtistSection[]
+	startView: string
 }
 
 export default function ArtistPage({
@@ -25,13 +26,16 @@ export default function ArtistPage({
 	projects,
 	sectionSlug,
 	artistSections,
+	startView,
 }: artistPageProps) {
-	const [view, setView] = useState("thumbnail")
+	const [view, setView] = useState(startView)
 	const [isHovering, setIsHovering] = useState(false)
 	const [activeProject, setActiveProject] = useState<Project | null>(null)
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
 	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
+
+	console.log(view)
 
 	const { width } = useWindowDimensions()
 
@@ -77,7 +81,7 @@ export default function ArtistPage({
 			setView("gallery")
 			return
 		} else {
-			setView("thumbnail")
+			setView(startView)
 		}
 	}, [width])
 

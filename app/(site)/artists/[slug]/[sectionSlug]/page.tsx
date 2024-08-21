@@ -89,6 +89,10 @@ export default async function page({
 				projects: activeProjects,
 				sectionSlug: sectionSlug,
 				artistSections: orderedArtistLinks,
+				startView:
+					sectionSlug === "featured" && artist.startView
+						? "gallery"
+						: "thumbnail",
 			}}
 		/>
 	)

@@ -87,6 +87,7 @@ export default async function page({ params }: { params: { slug: string } }) {
 					projects: featuredProjects,
 					sectionSlug: featuredSection.title,
 					artistSections: orderedArtistLinks,
+					startView: artist.startView ? "gallery" : "thumbnail",
 				}}
 			/>
 		</Suspense>

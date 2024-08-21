@@ -16,4 +16,5 @@ export type Artist = {
 	artistInstagram: string
 	agentEmail: string
 	projects: Reference[]
+	startView: boolean
 }
