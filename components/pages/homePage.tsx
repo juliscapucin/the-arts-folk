@@ -10,18 +10,10 @@ import type { CloudinaryImage } from "@/types"
 
 type HomePageProps = {
 	showreelImages: CloudinaryImage[]
+	children?: React.ReactNode
 }
 
-const Spinner = () => {
-	return (
-		<div className='relative w-[10%] min-w-12 aspect-square animate-spin'>
-			<div className='absolute w-full h-full top-0 left-0 rounded-full border border-faded-5 border-r-secondary z-10'></div>
-			<div className='absolute w-full h-full top-0 left-0 rounded-full border border-faded-30 opacity-20'></div>
-		</div>
-	)
-}
-
-export default function HomePage({ showreelImages }: HomePageProps) {
+export default function HomePage({ showreelImages, children }: HomePageProps) {
 	const scrollTipRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
@@ -49,11 +41,8 @@ export default function HomePage({ showreelImages }: HomePageProps) {
 				<span className='font-text -rotate-90'>Scroll</span>
 				<IconScrollDown />
 			</div>
-			{/* TODO: add spinner */}
-			<Suspense fallback={<Spinner />}>
-				<Showreel {...{ showreelImages }} />
-			</Suspense>
-			<NewsServer />
+			<Showreel {...{ showreelImages }} />
+			{children}
 		</main>
 	)
 }
