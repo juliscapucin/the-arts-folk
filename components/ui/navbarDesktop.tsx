@@ -12,6 +12,7 @@ import { ButtonLogo } from "@/components/buttons"
 import { NavbarLink } from "@/components/ui"
 
 import type { NavLink } from "@/types"
+import path from "path"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
@@ -31,9 +32,8 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 				trigger: "body",
 				start: () => "top top-=" + window.innerHeight,
 				end: "bottom bottom",
-				// markers: true,
 				onEnter: () => {
-					console.log("enter")
+					setIsScrolled(true)
 				},
 				onLeaveBack: () => {
 					console.log("onLeaveBack")
@@ -61,7 +61,13 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 									<NavbarLink
 										key={link.slug}
 										link={link}
-										isActive={pathname === `/${link.slug}` ? true : false}
+										isActive={
+											pathname === `/${link.slug}`
+												? true
+												: pathname === "/" && link.slug === "news" && isScrolled // highlight News link
+												? true
+												: false
+										}
 										transitionOnClick={transitionOnClick}
 									/>
 								)

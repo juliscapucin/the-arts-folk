@@ -1,9 +1,8 @@
 "use client"
 
-import { Suspense, useEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 
 import { Showreel } from "@/components"
-import { NewsServer } from "@/components/server"
 import { IconScrollDown } from "@/components/icons"
 
 import type { CloudinaryImage } from "@/types"
@@ -16,7 +15,7 @@ type HomePageProps = {
 export default function HomePage({ showreelImages, children }: HomePageProps) {
 	const scrollTipRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const handleScroll = () => {
 			if (window.scrollY > 100) {
 				!scrollTipRef.current?.classList.contains("opacity-0") &&
