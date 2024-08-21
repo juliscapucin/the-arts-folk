@@ -16,7 +16,6 @@ export default function HomePage({ showreelImages }: HomePageProps) {
 	const scrollTipRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		console.log("mounted")
 		const handleScroll = () => {
 			if (window.scrollY > 100) {
 				!scrollTipRef.current?.classList.contains("opacity-0") &&

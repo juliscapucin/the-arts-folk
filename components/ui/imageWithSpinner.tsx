@@ -1,4 +1,7 @@
-import { CldImage, getCldImageUrl } from "next-cloudinary"
+"use client"
+
+import { useState } from "react"
+import { CldImage } from "next-cloudinary"
 
 type ImageWithSpinnerProps = {
 	classes: string
@@ -11,7 +14,7 @@ type ImageWithSpinnerProps = {
 	priority?: boolean
 }
 
-export default async function ImageWithSpinner({
+export default function ImageWithSpinner({
 	classes,
 	src,
 	alt,
@@ -21,28 +24,32 @@ export default async function ImageWithSpinner({
 	height,
 	priority = false,
 }: ImageWithSpinnerProps) {
-	const imageUrl = getCldImageUrl({
-		src: src,
-		width: 10, // Resize the original file to a smaller size
-	})
-	const response = await fetch(imageUrl)
-	const arrayBuffer = await response.arrayBuffer()
-	const buffer = Buffer.from(arrayBuffer)
-	const base64 = buffer.toString("base64")
-	const dataUrl = `data:${response.type};base64,${base64}`
+	const [isLoading, setIsLoading] = useState(true)
 
 	return (
-		<CldImage
-			className={classes}
-			src={src}
-			alt={alt}
-			sizes={sizes}
-			quality={quality}
-			width={width}
-			height={height}
-			priority={priority}
-			placeholder='blur'
-			blurDataURL={dataUrl}
-		/>
+		<>
+			{isLoading && (
+				<div className='absolute top-0 left-0 w-full h-full bg-faded-5'>
+					<div className='relative w-16 h-16 animate-spin'>
+						<div className='absolute w-full h-full top-0 left-0 rounded-full border border-faded-5 border-r-secondary z-10'></div>
+						<div className='absolute w-full h-full top-0 left-0 rounded-full border border-faded-30 opacity-20'></div>
+					</div>
+				</div>
+			)}
+			<CldImage
+				className={classes}
+				src={src}
+				alt={alt}
+				sizes={sizes}
+				quality={quality}
+				width={width}
+				height={height}
+				onLoad={() => {
+					console.log("load")
+					setIsLoading(false)
+				}}
+				priority={priority}
+			/>
+		</>
 	)
 }
