@@ -57,7 +57,9 @@ export const PageContextProvider = ({
 				duration: 0.4,
 				ease: "linear",
 				onComplete: () => {
-					router.push(link.slug ? `/${link.slug}` : `/${link}`)
+					link === "back"
+						? router.back()
+						: router.push(link.slug ? `/${link.slug}` : `/${link}`)
 				},
 			})
 		})

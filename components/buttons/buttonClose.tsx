@@ -1,8 +1,7 @@
 import { MouseEventHandler } from "react"
-import { useRouter } from "next/navigation"
 
 interface ButtonCloseProps {
-	action?: MouseEventHandler<HTMLButtonElement>
+	action: MouseEventHandler<HTMLButtonElement>
 	classes?: string
 	color?: "primary" | "secondary" | "transparent"
 	mixBlend?: boolean
@@ -14,7 +13,6 @@ export default function ButtonClose({
 	color,
 	mixBlend,
 }: ButtonCloseProps) {
-	const router = useRouter()
 	let bgColor = ""
 
 	switch (color) {
@@ -34,7 +32,7 @@ export default function ButtonClose({
 	return (
 		<button
 			className={`relative hover:opacity-50 transition-all duration-500 ${classes}`}
-			onClick={action ? action : () => router.back()}
+			onClick={action}
 			aria-label='close cookie window'
 		>
 			<div

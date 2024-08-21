@@ -149,6 +149,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							<ButtonClose
 								classes='w-12 h-12 absolute top-4 right-0'
 								color='secondary'
+								action={
+									pathname.includes("news")
+										? () => transitionOnClick("news")
+										: () => transitionOnClick("back")
+								}
 							/>
 						</div>
 						{images && images.length > 1 && (
