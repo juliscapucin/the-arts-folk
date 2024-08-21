@@ -20,7 +20,6 @@ const delay = 1000
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
-	// const [logoClasses, setLogoClasses] = useState("sm:scale-150 lg:scale-200")
 	const logoRef = useRef<HTMLDivElement | null>(null)
 	const logoHeaderRef = useRef<HTMLDivElement | null>(null)
 	const logoShowreelRef = useRef<HTMLDivElement | null>(null)

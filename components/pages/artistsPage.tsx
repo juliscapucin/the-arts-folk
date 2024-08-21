@@ -160,6 +160,8 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 				if (!isScrollTipVisible) setIsScrollTipVisible(true)
 
+				if (!items) return
+
 				// Artist names entrance animation + scroll loop
 				gsap.fromTo(
 					items,

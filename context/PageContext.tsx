@@ -49,19 +49,17 @@ export const PageContextProvider = ({
 
 		if (!pageTransitionRef.current) return
 
-		ctx.add(() => {
-			gsap.set(pageTransitionRef.current, { yPercent: -100 })
+		gsap.set(pageTransitionRef.current, { yPercent: -100 })
 
-			gsap.to(pageTransitionRef.current, {
-				yPercent: 0,
-				duration: 0.4,
-				ease: "linear",
-				onComplete: () => {
-					link === "back"
-						? router.back()
-						: router.push(link.slug ? `/${link.slug}` : `/${link}`)
-				},
-			})
+		gsap.to(pageTransitionRef.current, {
+			yPercent: 0,
+			duration: 0.4,
+			ease: "linear",
+			onComplete: () => {
+				link === "back"
+					? router.back()
+					: router.push(link.slug ? `/${link.slug}` : `/${link}`)
+			},
 		})
 	}
 

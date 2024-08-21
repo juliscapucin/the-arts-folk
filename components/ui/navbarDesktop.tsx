@@ -1,12 +1,17 @@
 "use client"
 
+import { useLayoutEffect, useState } from "react"
+import { usePathname } from "next/navigation"
+
+import gsap from "gsap"
+import ScrollTrigger from "gsap/ScrollTrigger"
+
 import { usePageContext } from "@/context"
 
 import { ButtonLogo } from "@/components/buttons"
 import { NavbarLink } from "@/components/ui"
 
 import type { NavLink } from "@/types"
-import { usePathname } from "next/navigation"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
@@ -15,6 +20,29 @@ type NavbarDesktopProps = {
 export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 	const pathname = usePathname()
 	const { transitionOnClick } = usePageContext()
+	const [isScrolled, setIsScrolled] = useState(false)
+
+	useLayoutEffect(() => {
+		if (typeof window === "undefined") return
+		gsap.registerPlugin(ScrollTrigger)
+
+		let ctx = gsap.context(() => {
+			ScrollTrigger.create({
+				trigger: "body",
+				start: () => "top top-=" + window.innerHeight,
+				end: "bottom bottom",
+				// markers: true,
+				onEnter: () => {
+					console.log("enter")
+				},
+				onLeaveBack: () => {
+					console.log("onLeaveBack")
+				},
+			})
+		})
+
+		return () => ctx.revert()
+	}, [])
 
 	return (
 		<div className='w-full h-full max-w-desktop mx-auto px-[--margin-mobile] lg:px-[--margin-desktop] flex justify-between items-end'>

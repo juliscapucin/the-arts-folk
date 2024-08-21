@@ -25,7 +25,7 @@ export const PageTransition = () => {
 			})
 		})
 
-		return () => ctx.revert()
+		// return () => ctx.revert()
 	}, [pathname])
 
 	return (
