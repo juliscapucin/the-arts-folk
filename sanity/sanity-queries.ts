@@ -56,6 +56,7 @@ export async function getCategories(): Promise<Category[]> {
 	return client.fetch(
 		groq`*[_type == "categories"] | order(order asc){
       title,
+      order,
       _id
    }`
 	)
