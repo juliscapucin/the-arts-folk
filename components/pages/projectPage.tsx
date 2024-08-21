@@ -2,7 +2,6 @@
 
 import { useRef, useState, useLayoutEffect, Suspense } from "react"
 import { usePathname } from "next/navigation"
-import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
 import { gsap } from "gsap"
@@ -12,7 +11,7 @@ import { usePageContext } from "@/context"
 import { useReloadOnResize, useWindowDimensions } from "@/hooks"
 import { handlePanelSlide } from "@/lib/animations"
 
-import { Button, Container, Heading } from "@/components/ui"
+import { Button, Container, Heading, ImageWithSpinner } from "@/components/ui"
 import { IconChevron } from "@/components/icons"
 import { ButtonBack, ButtonClose } from "@/components/buttons"
 import { Artist, Project } from "@/types"
@@ -188,8 +187,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 													/>
 												</div>
 											) : (
-												<CldImage
-													className={`w-full object-contain`}
+												<ImageWithSpinner
+													classes={`w-full object-contain`}
 													src={image.url}
 													alt={`Photo ${artist.name}`}
 													sizes='10vw'
@@ -350,8 +349,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 											/>
 										</div>
 									) : (
-										<CldImage
-											className={`w-full h-full object-contain`}
+										<ImageWithSpinner
+											classes={`w-full h-full object-contain`}
 											src={image.url}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
@@ -378,8 +377,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 											/>
 										</div>
 									) : (
-										<CldImage
-											className={`w-full h-full object-contain`}
+										<ImageWithSpinner
+											classes={`w-full h-full object-contain`}
 											src={image.url}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
