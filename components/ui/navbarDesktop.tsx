@@ -16,7 +16,6 @@ import path from "path"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
-	transitionOnClick: (link: NavLink) => void
 }
 
 export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
