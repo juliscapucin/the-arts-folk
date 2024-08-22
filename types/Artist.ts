@@ -5,6 +5,7 @@ type CategoryArtist = {
 }
 
 export type Artist = {
+	_id: string
 	name: string
 	slug: string
 	description: string
