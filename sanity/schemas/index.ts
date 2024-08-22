@@ -1,4 +1,5 @@
 import artistSchema from "./artist-schema"
+import artistSectionSchema from "./artist-section-schema"
 import categorySchema from "./category-schema"
 import footerNavSchema from "./footer-schema"
 import headerNavSchema from "./header-nav-schema"
@@ -9,6 +10,7 @@ import showreelSchema from "./showreel-schema"
 
 const schemas = [
 	artistSchema,
+	artistSectionSchema,
 	categorySchema,
 	footerNavSchema,
 	headerNavSchema,

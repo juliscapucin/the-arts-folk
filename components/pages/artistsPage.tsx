@@ -7,31 +7,39 @@ import {
 	useRef,
 	useState,
 } from "react"
-import Link from "next/link"
 
 import gsap from "gsap"
 import { Observer } from "gsap/Observer"
 
-import { ArtistOverlay } from "@/components"
+import { usePageContext } from "@/context"
+import { useReloadOnResize } from "@/hooks"
+
+import { ArtistOverlay, CategoryFilter } from "@/components"
 import { IconScroll } from "@/components/icons"
 import { Container } from "@/components/ui"
 
 import { infiniteVerticalLoop } from "@/helpers"
 import { GSAPQueries } from "@/utils"
 
-import { Artist } from "@/types/Artist"
+import { Artist, Category } from "@/types"
 
 type ArtistsPageProps = {
 	artists: Artist[]
+	categories: Category[]
 }
 
-export default function ArtistsPage({ artists }: ArtistsPageProps) {
+export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	const [isHovered, setIsHovered] = useState("")
 	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const [isScrolling, setIsScrolling] = useState(false)
-	const resizeTimeout = useRef<NodeJS.Timeout | null>(null)
+	const [activeCategory, setActiveCategory] = useState("all")
+	const [filteredArtists, setFilteredArtists] = useState<Artist[]>([])
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
+
+	const { transitionOnClick } = usePageContext()
+	useReloadOnResize()
+
 	let mm = gsap.matchMedia()
 
 	const handleMouseEnter = (name: string) => {
@@ -42,22 +50,27 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		setIsHovered("")
 	}
 
-	const getViewportPosition = useCallback((element: HTMLElement) => {
-		const rect = element.getBoundingClientRect()
-		const viewportHeight =
-			window.innerHeight || document.documentElement.clientHeight
-		const elementTop = rect.top
-		const elementBottom = rect.bottom
-		const screenMiddle = viewportHeight / 2
-		return {
-			isMiddle:
-				Math.abs(elementTop) < screenMiddle &&
-				Math.abs(elementBottom) > screenMiddle,
-		}
-	}, [])
+	const getViewportPosition = useCallback(
+		(element: HTMLElement) => {
+			const rect = element.getBoundingClientRect()
+			const viewportHeight =
+				window.innerHeight || document.documentElement.clientHeight
+			const elementTop = rect.top
+			const elementBottom = rect.bottom
+			const screenMiddle = viewportHeight / 2
+			return {
+				isMiddle:
+					Math.abs(elementTop) < screenMiddle &&
+					Math.abs(elementBottom) > screenMiddle,
+			}
+		},
+		[filteredArtists]
+	)
 
-	const createScrollLoop = useCallback((isMobile: boolean) => {
+	// SCROLL LOOP
+	const createScrollLoop = (isMobile: boolean) => {
 		if (!sectionRef.current) return
+
 		gsap.registerPlugin(Observer)
 
 		const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
@@ -106,10 +119,11 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				isScrollTipVisible && setIsScrollTipVisible(false)
 			},
 		})
-	}, [])
+	}
 
+	// ENTRY ANIMATION
 	useLayoutEffect(() => {
-		if (!sectionRef.current || !containerRef.current) return
+		if (!sectionRef.current || !containerRef.current || !filteredArtists) return
 
 		mm.add(
 			GSAPQueries,
@@ -117,16 +131,54 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 				const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 				let isMobile = context.conditions?.isMobile ?? false
 
-				// Artist names entrance animation
-				gsap.from(items, {
-					yPercent: -100,
-					opacity: 0,
-					stagger: 0.07,
-					duration: 0.6,
-					onComplete: () => {
-						createScrollLoop(isMobile)
-					},
+				gsap.to(containerRef.current, {
+					opacity: 1,
+					duration: 0.3,
 				})
+
+				// If there are less than 4 artists, animate entry without scroll loop
+				if (filteredArtists.length === 1) {
+					setIsScrollTipVisible(false)
+					gsap.fromTo(
+						items,
+						{
+							yPercent: -500,
+							opacity: 0,
+						},
+						{
+							yPercent: 0,
+							opacity: 1,
+							duration: 0.6,
+						}
+					)
+
+					if (filteredArtists.length === 1 && isMobile) {
+						setIsHovered(filteredArtists[0].name)
+					}
+					return
+				}
+
+				if (!isScrollTipVisible) setIsScrollTipVisible(true)
+
+				if (!items) return
+
+				// Artist names entrance animation + scroll loop
+				gsap.fromTo(
+					items,
+					{
+						yPercent: -200,
+						opacity: 0,
+					},
+					{
+						yPercent: 0,
+						opacity: 1,
+						stagger: 0.07,
+						duration: 0.6,
+						onComplete: () => {
+							createScrollLoop(isMobile)
+						},
+					}
+				)
 			},
 			containerRef.current
 		)
@@ -134,28 +186,42 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 		return () => {
 			mm.revert()
 		}
-	}, [])
+	}, [filteredArtists])
 
-	// Reload the page on window resize
 	useEffect(() => {
-		function handleResize() {
-			resizeTimeout.current && clearTimeout(resizeTimeout.current) // Clear previous timeout
+		if (!containerRef.current) return
 
-			resizeTimeout.current = setTimeout(() => {
-				window.location.reload()
-			}, 500)
+		setIsHovered("")
+		const filterArtists = () => {
+			if (activeCategory === "all") {
+				setFilteredArtists(artists)
+			} else {
+				const filteredArtists = artists.filter((artist) => {
+					return (
+						Array.isArray(artist.category) &&
+						artist.category.find((category) => category._ref === activeCategory)
+					)
+				})
+				setFilteredArtists(filteredArtists)
+			}
 		}
 
-		window.addEventListener("resize", handleResize)
+		const ctx = gsap.context(() => {
+			gsap.to(containerRef.current, {
+				opacity: 0,
+				duration: 0.3,
+				onComplete: () => filterArtists(),
+			})
+		})
 
 		return () => {
-			window.removeEventListener("resize", handleResize)
+			ctx.revert()
 		}
-	}, [resizeTimeout])
+	}, [activeCategory])
 
 	return (
-		<>
-			{/* Icon Scroll */}
+		<div className='artists-page relative'>
+			{/* ICON SCROLL */}
 			<div
 				className={`absolute mx-auto top-0 right-2 h-screen flex items-center transition-opacity duration-500 delay-300 z-100 ${
 					isScrollTipVisible ? "" : "opacity-0"
@@ -163,12 +229,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 			>
 				<IconScroll />
 			</div>
+			{/* CATEGORY FILTER */}
+			<CategoryFilter
+				categories={categories}
+				activeCategory={activeCategory}
+				setActiveCategory={setActiveCategory}
+			/>
 			<Container
 				ref={containerRef}
-				classes='relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll'
+				classes='artists-page relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-clip'
 			>
-				{/* Artist Overlay */}
-				{artists.map((artist, index) => {
+				{/* ARTIST OVERLAY */}
+				{filteredArtists.map((artist, index) => {
 					return (
 						<ArtistOverlay
 							key={`${artist.name}-overlay`}
@@ -180,26 +252,33 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 					)
 				})}
 
-				{/* Gradients */}
+				{/* GRADIENTS */}
 				<div
-					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-16 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent z-50`}
+					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
 				></div>
 				<div
-					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent z-50`}
+					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}
 				></div>
 
-				{/* Artists Menu */}
-				<section ref={sectionRef} className='w-full text-center space-y-8 pt-8'>
-					{artists.map((artist) => {
+				{/* ARTISTS MENU */}
+				<section
+					ref={sectionRef}
+					className={`w-full min-h-[--container-height-mobile] text-center ${
+						filteredArtists.length < 4
+							? "flex flex-col justify-center items-center gap-24"
+							: "pt-10"
+					}`}
+				>
+					{filteredArtists.map((artist) => {
 						return (
 							<div
-								className='gsap-scroll-item text-center'
+								className='gsap-scroll-item text-center mt-20'
 								key={artist.name}
 								data-name={artist.name}
 							>
-								<a
-									href={artist.artistWebsite ? artist.artistWebsite : "#"}
-									target='_blank'
+								{/* TODO: add Button component */}
+								<button
+									onClick={() => transitionOnClick(`artists/${artist.slug}`)}
 									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
 										isHovered === artist.name
 											? ""
@@ -213,25 +292,18 @@ export default function ArtistsPage({ artists }: ArtistsPageProps) {
 								>
 									{artist.name}
 									<span
-										className={`block mt-2 font-text uppercase text-labelLarge font-normal transition-opacity ${
+										className={`block mt-2 font-text uppercase text-labelLarge font-medium transition-opacity ${
 											isHovered === artist.name ? "" : "opacity-0"
 										}`}
 									>
 										{artist.description}
 									</span>
-									<span
-										className={`block mt-2 font-text uppercase text-labelMedium transition-opacity delay-75 ${
-											isHovered === artist.name ? "" : "opacity-0"
-										}`}
-									>
-										Coming soon
-									</span>
-								</a>
+								</button>
 							</div>
 						)
 					})}
 				</section>
 			</Container>
-		</>
+		</div>
 	)
 }

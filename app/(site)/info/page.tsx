@@ -4,6 +4,7 @@ import { InfoPage } from "@/components/pages"
 import { getInfoPage } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
+import { Suspense } from "react"
 
 export async function generateMetadata() {
 	const pageData = getInfoPage()
@@ -29,5 +30,9 @@ export default async function Page() {
 
 	if (!infoData) return notFound()
 
-	return <InfoPage infoData={infoData} />
+	return (
+		<Suspense fallback={null}>
+			<InfoPage infoData={infoData} />
+		</Suspense>
+	)
 }

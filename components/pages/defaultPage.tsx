@@ -27,13 +27,12 @@ export default function DefaultPage({
 }: PageProps) {
 	return (
 		<Container
-			classes={`relative lg:pt-0 lg:flex flex-col justify-end max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-scroll ${
-				!isCentered && "lg:pt-24 lg:pb-64"
+			classes={`default-page relative pt-16 lg:pt-0 lg:flex flex-col justify-end ${
+				!isCentered && "lg:pt-32 lg:pb-16"
 			}`}
-			hasPadding={true}
 		>
 			<div
-				className={`relative flex-1 lg:flex gap-32 justify-between min-h-full ${
+				className={`relative flex-1 lg:flex gap-32 justify-between ${
 					isCentered && "lg:items-center"
 				}`}
 			>

@@ -1,3 +1,5 @@
+import { Rule as SanityRule } from "sanity"
+
 const categorySchema = {
 	name: "categories",
 	title: "Categories",
@@ -9,13 +11,12 @@ const categorySchema = {
 			type: "string",
 		},
 		{
-			name: "slug",
-			title: "Slug",
-			type: "slug",
-			options: {
-				source: "title",
-				maxLength: 96,
-			},
+			name: "order",
+			title: "Order (required)",
+			type: "number",
+			description: "Set the order for the category",
+			validation: (Rule: SanityRule) =>
+				Rule.required().error("Order is required"),
 		},
 	],
 }

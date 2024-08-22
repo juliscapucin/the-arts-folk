@@ -1,3 +1,4 @@
 import CookiesServer from "./cookiesServer"
+import NewsServer from "./newsServer"
 
-export { CookiesServer }
+export { CookiesServer, NewsServer }

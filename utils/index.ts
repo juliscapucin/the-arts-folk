@@ -37,3 +37,16 @@ export const metadataFallback = {
 		images: "/_next/static/media/opengraph-image.62da8378.png",
 	},
 }
+
+export const formatDate = (inputDate: string) => {
+	// Create a new Date object from the input string
+	const date = new Date(inputDate)
+
+	// Extract the day, month, and year
+	const day = String(date.getDate()).padStart(2, "0")
+	const month = String(date.getMonth() + 1).padStart(2, "0")
+	const year = String(date.getFullYear()).slice(-2)
+
+	// Format the date as "dd/mm/yy"
+	return `${day}/${month}/${year}`
+}

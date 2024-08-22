@@ -7,17 +7,19 @@ const artistSchema = {
 	fields: [
 		{
 			name: "name",
-			title: "Name",
+			title: "Name (required)",
 			type: "string",
+			validation: (Rule: Rule) => Rule.required().error("Name is required"),
 		},
 		{
 			name: "slug",
-			title: "Slug",
+			title: "Slug (required)",
 			type: "slug",
 			options: {
 				source: "name",
 				maxLength: 96,
 			},
+			validation: (Rule: Rule) => Rule.required().error("Slug is required"),
 		},
 		{
 			name: "description",
@@ -25,13 +27,21 @@ const artistSchema = {
 			type: "string",
 		},
 		{
-			name: "subtitle",
-			title: "Subtitle",
+			name: "category",
+			title: "Categories (required)",
+			type: "array",
+			description: "Select the categories associated with this artist.",
+			of: [{ type: "reference", to: [{ type: "categories" }] }],
+			validation: (Rule: Rule) => Rule.required().error("Category is required"),
+		},
+		{
+			name: "artistInfo",
+			title: "Artist Info",
 			type: "text",
 		},
 		{
 			name: "scrapbookImages",
-			title: "Scrapbook Images",
+			title: "Scrapbook Images (required)",
 			type: "array",
 			description: "These images are served from Cloudinary or Vimeo",
 			of: [
@@ -57,27 +67,37 @@ const artistSchema = {
 					],
 				},
 			],
+			validation: (Rule: Rule) =>
+				Rule.required().error("Scrapbook images are required"),
 		},
 		{
-			name: "category",
-			title: "Categories",
-			description: "Select the categories associated with this artist.",
-			type: "array",
-			of: [{ type: "reference", to: [{ type: "categories" }] }],
-		},
-		{ name: "artistWebsite", title: "Artist website", type: "url" },
-		{
-			name: "copy1",
-			title: "Copy 1",
-			type: "array",
-			of: [{ type: "block" }],
+			name: "startView",
+			title: "Start With Gallery View",
+			type: "boolean",
+			description:
+				"Check if you want to start in Gallery View. Default is Thumbnail View.",
+			options: {
+				layout: "checkbox", // This creates a toggle button in the Sanity studio
+			},
+			initialValue: false, // Optional: Set an initial value if needed
 		},
 		{
-			name: "copy2",
-			title: "Copy 2",
+			name: "projects",
+			title: "Projects",
 			type: "array",
-			of: [{ type: "block" }],
+			of: [
+				{
+					type: "reference",
+					to: [{ type: "project" }],
+				},
+			],
+			options: {
+				sortable: true,
+			},
 		},
+		{ name: "artistWebsite", title: "Artist Website", type: "url" },
+		{ name: "artistInstagram", title: "Artist Instagram", type: "url" },
+		{ name: "agentEmail", title: "Agent email", type: "string" },
 	],
 }
 

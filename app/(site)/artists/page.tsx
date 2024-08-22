@@ -1,8 +1,9 @@
 import { ArtistsPage } from "@/components/pages"
-import { getArtists, getPage } from "@/sanity/sanity-queries"
+import { getArtists, getCategories, getPage } from "@/sanity/sanity-queries"
 import { notFound } from "next/navigation"
 
 import { metadataFallback } from "@/utils"
+import { Suspense } from "react"
 
 export async function generateMetadata() {
 	const pageData = getPage("artists")
@@ -25,8 +26,13 @@ export const dynamic = "force-dynamic"
 
 export default async function Page() {
 	const artists = await getArtists()
+	const categories = await getCategories()
 
-	if (!artists) return notFound()
+	if (!artists || !categories) return notFound()
 
-	return <ArtistsPage artists={artists} />
+	return (
+		<Suspense fallback={null}>
+			<ArtistsPage artists={artists} categories={categories} />
+		</Suspense>
+	)
 }

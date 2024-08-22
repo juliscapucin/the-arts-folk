@@ -1,6 +1,14 @@
 import { createClient, groq } from "next-sanity"
 import clientConfig from "@/sanity/config/client-config"
-import type { Artist, InfoPage, NavLink, Project, Page } from "@/types"
+import type {
+	Artist,
+	Category,
+	InfoPage,
+	NavLink,
+	Project,
+	Page,
+	ArtistSection,
+} from "@/types"
 
 const client = createClient(clientConfig)
 
@@ -22,18 +30,83 @@ export async function getArtists(): Promise<Artist[]> {
 	)
 }
 
+export async function getArtist(slug: string): Promise<Artist> {
+	return client.fetch(
+		groq`*[_type == "artist" && slug.current == $slug][0]{
+      _id,
+      name,
+      "slug": slug.current,
+      description,
+      artistInfo,
+      coverImage{
+         fileName,
+         alt,
+       },
+      url,
+      "category": categories[]->title,
+      artistInstagram,
+      agentEmail,
+      projects,
+      startView
+   }`,
+		{ slug }
+	)
+}
+
+export async function getCategories(): Promise<Category[]> {
+	return client.fetch(
+		groq`*[_type == "categories"] | order(order asc){
+      title,
+      order,
+      _id
+   }`
+	)
+}
+
+export async function getArtistSections(): Promise<ArtistSection[]> {
+	return client.fetch(
+		groq`*[_type == "artistSection"] | order(order asc) {
+      title,
+      order,
+      _id
+   }`
+	)
+}
+
 export async function getProjects(): Promise<Project[]> {
 	return client.fetch(
-		groq`*[_type == "project" | order(releaseDate desc){
+		groq`*[_type == "project"] | order(releaseDate desc){
       _id,
       "slug": slug.current,
+      artist,
+      artistSection,
       title,
-      "artistName": artist[]->name,
       projectInfo,
       releaseDate,
       images,
       isNews,
+      newsPageSize,
+      addSpaceBefore,
+      addSpaceAfter
    }`
+	)
+}
+
+export async function getProjectsByArtist(
+	artistId: string
+): Promise<Project[]> {
+	return client.fetch(
+		groq`*[_type == "project" && artist._ref == $artistId] | order(releaseDate desc){
+       _id,
+       "slug": slug.current,
+       artist,
+       artistSection,
+       title,
+       projectInfo,
+       releaseDate,
+       images,
+     }`,
+		{ artistId }
 	)
 }
 
@@ -43,41 +116,11 @@ export async function getProject(slug: string): Promise<Project> {
       _id,
       "slug": slug.current,
       title,
-      "artistName": artist[]->name,
+      artist,
       projectInfo,
       releaseDate,
       images,
-      isNews,
-   }`,
-		{ slug }
-	)
-}
-
-export async function getArtist(slug: string): Promise<Artist> {
-	return client.fetch(
-		groq`*[_type == "artist" && slug.current == $slug][0]{
-      _id,
-      name,
-      "slug": slug.current,
-      description,
-      coverImage{
-         fileName,
-         alt,
-       },
-      url,
-      "category": categories[]->title,
-      "copy1": copy1[]{
-         children[0]{
-           text,
-           _key
-         }
-       },
-       "copy2": copy2[]{
-         children[0]{
-           text,
-           _key
-         }
-       },
+      isNews
    }`,
 		{ slug }
 	)

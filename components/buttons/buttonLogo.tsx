@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Logo } from "@/components/svgs"
@@ -15,13 +16,18 @@ export default function ButtonLogo({ handleClick }: ButtonLogoProps) {
 			{pathname === "/" ? (
 				<div className='min-w-[50%]'></div>
 			) : (
-				<button
-					className='scale-50 lg:scale-75 origin-left min-w-[50%] z-80'
-					onClick={pathname === "/" ? undefined : handleClick}
-					aria-label='Home'
-				>
-					{pathname !== "/" && <Logo />}
-				</button>
+				<Link href='/' passHref legacyBehavior>
+					<button
+						className='scale-50 lg:scale-[60%] origin-left min-w-[50%] z-80'
+						onClick={(e) => {
+							e.preventDefault()
+							pathname === "/" ? undefined : handleClick()
+						}}
+						aria-label='Home'
+					>
+						{pathname !== "/" && <Logo />}
+					</button>
+				</Link>
 			)}
 		</>
 	)

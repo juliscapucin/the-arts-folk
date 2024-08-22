@@ -1,16 +1,12 @@
 import { Rule } from "sanity"
-import {
-	FaAlignLeft,
-	FaAlignCenter,
-	FaAlignRight,
-	FaAlignJustify,
-} from "react-icons/fa"
-
-import CustomSelect from "../components/CustomSelect"
 
 interface ProjectDocument {
 	isNews?: boolean
-	// Add other fields as necessary
+}
+
+interface PreviewSelection {
+	title: string
+	artistName: string
 }
 
 const projectSchema = {
@@ -20,8 +16,9 @@ const projectSchema = {
 	fields: [
 		{
 			name: "title",
-			title: "Title",
+			title: "Title (required)",
 			type: "string",
+			validation: (Rule: Rule) => Rule.required().error("Title is required"),
 		},
 		{
 			name: "artist",
@@ -31,18 +28,27 @@ const projectSchema = {
 			to: [{ type: "artist" }], // Ensure this type matches the name of your artistSchema
 		},
 		{
+			name: "artistSection",
+			title: "Artist Section",
+			description:
+				"Select artist page section(s) / link(s) to associate with this project.",
+			type: "array",
+			of: [{ type: "reference", to: [{ type: "artistSection" }] }],
+		},
+		{
 			name: "releaseDate",
 			title: "Release Date",
 			type: "date",
 		},
 		{
 			name: "slug",
-			title: "Slug",
+			title: "Slug (required)",
 			type: "slug",
 			options: {
 				source: "title",
 				maxLength: 96,
 			},
+			validation: (Rule: Rule) => Rule.required().error("Slug is required"),
 		},
 		{
 			name: "projectInfo",
@@ -51,7 +57,7 @@ const projectSchema = {
 		},
 		{
 			name: "images",
-			title: "Images",
+			title: "Images (required)",
 			type: "array",
 			description: "Served from Cloudinary or Vimeo",
 			of: [
@@ -77,6 +83,7 @@ const projectSchema = {
 					],
 				},
 			],
+			validation: (Rule: Rule) => Rule.required().error("Images are required"),
 		},
 		{ name: "isNews", title: "Show In News Page", type: "boolean" },
 		{
@@ -93,41 +100,16 @@ const projectSchema = {
 				!document?.isNews,
 		},
 		{
-			name: "newsPageAlignment",
-			title: "News Page Image Alignment",
-			type: "string",
-			options: {
-				list: [
-					{ title: "Top, Left", value: "top-left", icon: "FaAlignLeft" },
-					{ title: "Top, Center", value: "top-center", icon: "FaAlignCenter" },
-					{ title: "Top, Right", value: "top-right", icon: "FaAlignRight" },
-					{ title: "Center, Left", value: "center-left", icon: "FaAlignLeft" },
-					{
-						title: "Center, Center",
-						value: "center-center",
-						icon: "FaAlignJustify",
-					},
-					{
-						title: "Center, Right",
-						value: "center-right",
-						icon: "FaAlignRight",
-					},
-					{ title: "Bottom, Left", value: "bottom-left", icon: "FaAlignLeft" },
-					{
-						title: "Bottom, Center",
-						value: "bottom-center",
-						icon: "FaAlignCenter",
-					},
-					{
-						title: "Bottom, Right",
-						value: "bottom-right",
-						icon: "FaAlignRight",
-					},
-				],
-				layout: "dropdown",
-			},
-			//TODO: Make icons work
-			inputComponent: CustomSelect,
+			name: "addSpaceBefore",
+			title: "Add Space Before",
+			type: "boolean",
+			hidden: ({ document }: { document: ProjectDocument }) =>
+				!document?.isNews,
+		},
+		{
+			name: "addSpaceAfter",
+			title: "Add Space After",
+			type: "boolean",
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
 		},
@@ -139,6 +121,18 @@ const projectSchema = {
 			by: [{ field: "releaseDate", direction: "desc" }],
 		},
 	],
+	preview: {
+		select: {
+			title: "title",
+			artistName: "artist.name",
+		},
+		prepare(selection: PreviewSelection) {
+			const { title, artistName } = selection
+			return {
+				title: `${artistName} - ${title}`,
+			}
+		},
+	},
 }
 
 export default projectSchema
