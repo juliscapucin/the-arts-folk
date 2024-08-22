@@ -31,7 +31,7 @@ export default function ButtonClose({
 	}
 	return (
 		<button
-			className={`relative hover:opacity-50 transition-all duration-500 ${classes}`}
+			className={`hover:opacity-50 transition-all duration-500 ${classes}`}
 			onClick={action}
 			aria-label='close cookie window'
 		>

@@ -3,6 +3,7 @@ import type { CloudinaryImage, Artist, Reference } from "@/types"
 export type Project = {
 	_id: string
 	title: string
+	artistName: string
 	slug: string
 	projectInfo?: string
 	images?: CloudinaryImage[]

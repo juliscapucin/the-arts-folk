@@ -11,7 +11,7 @@ interface PreviewSelection {
 
 const projectSchema = {
 	name: "project",
-	title: "Projects / News",
+	title: "Project",
 	type: "document",
 	fields: [
 		{

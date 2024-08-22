@@ -2,12 +2,10 @@
 
 import { PortableText } from "@portabletext/react"
 
-import gsap from "gsap"
-
 import { Container, Heading } from "@/components/ui"
 
 import type { Page } from "@/types"
-import { Copyright, PageTransition } from "@/components"
+import { Copyright } from "@/components"
 
 type PageProps = {
 	children?: React.ReactNode

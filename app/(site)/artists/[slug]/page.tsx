@@ -31,10 +31,7 @@ export async function generateMetadata({
 	}
 }
 
-// Opt out of caching for all data requests in the route segment
-export const dynamic = "force-dynamic"
-
-export default async function page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
 	const { slug } = params
 	const artist = await getArtist(slug)
 	const projects = await getProjectsByArtist(artist._id)
