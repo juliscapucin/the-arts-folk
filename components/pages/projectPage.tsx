@@ -144,7 +144,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				<div className='relative max-w-desktop mx-auto'>
 					<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
 						{/* BUTTON CLOSE */}
-						<div className='relative w-full h-40 pt-40 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-150'>
+						<div className='relative w-full h-40 pt-40 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-600'>
 							<ButtonClose
 								classes='w-12 h-12 absolute top-4 right-0'
 								color='secondary'
@@ -153,6 +153,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										? () => transitionOnClick("news")
 										: () => transitionOnClick("back")
 								}
+								mixBlend={false}
 							/>
 						</div>
 						{images && images.length > 1 && (

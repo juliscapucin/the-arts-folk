@@ -70,6 +70,7 @@ const config: Config = {
 				cookiesOverlay: "455",
 				intro: "475",
 				mobileMenu: "500",
+				600: "600",
 			},
 			letterSpacing: { tightest: "-.075em" },
 			leading: { tightest: "0.75" },
