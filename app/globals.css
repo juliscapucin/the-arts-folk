@@ -196,6 +196,16 @@ button {
 
 .active.underlined-link::after {
 	transform: translateX(0%);
+	animation: slide-in 0.5s ease forwards;
+}
+
+@keyframes slide-in {
+	0% {
+		transform: translateX(-105%);
+	}
+	100% {
+		transform: translateX(0%);
+	}
 }
 
 .custom-video-container iframe {

@@ -36,7 +36,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 					setIsScrolled(true)
 				},
 				onLeaveBack: () => {
-					console.log("onLeaveBack")
+					setIsScrolled(false)
 				},
 			})
 		})
@@ -62,9 +62,8 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 										key={link.slug}
 										link={link}
 										isActive={
-											pathname === `/${link.slug}`
-												? true
-												: pathname === "/" && link.slug === "news" && isScrolled // highlight News link
+											pathname === `/${link.slug}` ||
+											(pathname === "/" && link.slug === "news" && isScrolled)
 												? true
 												: false
 										}
