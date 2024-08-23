@@ -214,9 +214,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					{/* MOBILE – BACK BUTTON */}
 					<ButtonBack
 						classes='md:hidden absolute top-8'
-						href={
-							pathname.includes("news") ? "/news" : `/artists/${artist.slug}`
-						}
+						href={pathname.includes("news") ? "/news" : "back"}
 						label={pathname.includes("news") ? "News" : "Artist"}
 					/>
 
