@@ -1,9 +1,7 @@
-import { getProjects, getPage } from "@/sanity/sanity-queries"
-import { notFound } from "next/navigation"
+import { getPage } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
 import { NewsServer } from "@/components/server"
-import { Suspense } from "react"
 
 export async function generateMetadata() {
 	const pageData = getPage("news")
@@ -25,16 +23,9 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic"
 
 export default async function Page() {
-	const projects = await getProjects()
-	const news = projects.filter((project) => !project.isNews)
-
-	if (!news) return notFound()
-
 	return (
 		<main>
-			<Suspense fallback={null}>
-				<NewsServer />
-			</Suspense>
+			<NewsServer />
 		</main>
 	)
 }

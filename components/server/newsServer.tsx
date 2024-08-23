@@ -1,30 +1,31 @@
-import { getArtists, getProjects } from "@/sanity/sanity-queries"
+import { getArtists, getNews } from "@/sanity/sanity-queries"
 import News from "@/components/news"
 import { Suspense } from "react"
-// export const revalidate = 3600
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
 
 export default async function NewsServer() {
-	const artists = await getArtists()
-	const projects = await getProjects()
-	//TODO: implement query for news
-	const news = projects.filter((project) => project.isNews)
+	// Fetch artists and news in parallel
+	const [artists, news] = await Promise.all([getArtists(), getNews()])
 
-	news.forEach((project) => {
-		const artist = artists.find((artist) => {
-			if (!project.artist) return null
-			return artist._id === project.artist._ref
-		})
-		if (artist) {
-			project.artistInfo = artist
+	if (!news) return null
+
+	// Create a Map for fast lookup of artists by _id
+	const artistMap = new Map(artists.map((artist) => [artist._id, artist]))
+
+	// Combine news with artist information
+	const newsWithArtistInfo = news.map((project) => {
+		if (project.artist) {
+			const artistInfo = artistMap.get(project.artist._ref)
+			return { ...project, artistInfo }
 		}
+		return project
 	})
 
 	return (
 		<Suspense fallback={null}>
-			<News news={news} />
+			<News news={newsWithArtistInfo} />
 		</Suspense>
 	)
 }

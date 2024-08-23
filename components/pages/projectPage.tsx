@@ -171,7 +171,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									{images.map((image, index) => (
 										<button
 											onClick={() => handlePanelSlide(index, null)}
-											className={`relative w-full bg-faded-5`}
+											className={`relative w-full`}
 											key={`project-thumbnail-${index}`}
 										>
 											{image.url.includes("vimeo") ? (
@@ -335,7 +335,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									key={`project-image-${index}`}
 								>
 									{image.url.includes("vimeo") ? (
-										<div className='relative w-full aspect-video bg-faded-5'>
+										<div className='relative w-full aspect-video'>
 											<ReactPlayer
 												url={image.url}
 												playing
@@ -363,7 +363,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							) : (
 								<div className='relative w-full' key={`project-image-${index}`}>
 									{image.url.includes("vimeo") ? (
-										<div className='relative w-full aspect-video bg-faded-5'>
+										<div className='relative w-full aspect-video'>
 											<ReactPlayer
 												url={image.url}
 												playing
