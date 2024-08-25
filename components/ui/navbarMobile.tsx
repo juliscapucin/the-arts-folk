@@ -21,7 +21,7 @@ export default function NavbarMobile({
 	const router = useRouter()
 
 	const transitionOnClick = (link: NavLink) => {
-		link.slug && router.push(link.slug)
+		link.slug && router.push(`/${link.slug}`)
 		toggleMobileMenu()
 	}
 
