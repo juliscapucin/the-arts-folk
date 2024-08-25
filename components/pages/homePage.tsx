@@ -1,6 +1,6 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef } from "react"
 
 import { Showreel } from "@/components"
 import { IconScrollDown } from "@/components/icons"

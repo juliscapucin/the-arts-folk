@@ -10,7 +10,6 @@ import Flip from "gsap/Flip"
 import { Logo } from "@/components/svgs"
 
 import type { CloudinaryImage } from "@/types"
-import { useMobileMenuContext } from "@/context"
 
 type ShowreelProps = {
 	showreelImages: CloudinaryImage[]
