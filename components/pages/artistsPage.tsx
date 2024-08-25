@@ -75,6 +75,8 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 		const items = gsap.utils.toArray(".gsap-scroll-item") as HTMLElement[]
 
+		if (items.length === 0) return
+
 		// Create an infinite vertical loop
 		const loop = infiniteVerticalLoop(items, {
 			repeat: -1,
@@ -137,7 +139,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				})
 
 				// If there are less than 4 artists, animate entry without scroll loop
-				if (filteredArtists.length === 1) {
+				if (filteredArtists.length === 1 && items.length > 0) {
 					setIsScrollTipVisible(false)
 					gsap.fromTo(
 						items,
@@ -160,25 +162,25 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 				if (!isScrollTipVisible) setIsScrollTipVisible(true)
 
-				if (!items) return
-
-				// Artist names entrance animation + scroll loop
-				gsap.fromTo(
-					items,
-					{
-						yPercent: -200,
-						opacity: 0,
-					},
-					{
-						yPercent: 0,
-						opacity: 1,
-						stagger: 0.07,
-						duration: 0.6,
-						onComplete: () => {
-							createScrollLoop(isMobile)
+				if (items.length > 0) {
+					// Artist names entrance animation + scroll loop
+					gsap.fromTo(
+						items,
+						{
+							yPercent: -200,
+							opacity: 0,
 						},
-					}
-				)
+						{
+							yPercent: 0,
+							opacity: 1,
+							stagger: 0.07,
+							duration: 0.6,
+							onComplete: () => {
+								createScrollLoop(isMobile)
+							},
+						}
+					)
+				}
 			},
 			containerRef.current
 		)
