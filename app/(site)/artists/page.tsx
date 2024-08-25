@@ -25,13 +25,15 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic"
 
 export default async function Page() {
-	const artists = await getArtists()
-	const categories = await getCategories()
+	const [artists, categories] = await Promise.all([
+		getArtists(),
+		getCategories(),
+	])
 
 	if (!artists || !categories) return notFound()
 
 	return (
-		<Suspense fallback={null}>
+		<Suspense fallback={<div>...</div>}>
 			<ArtistsPage artists={artists} categories={categories} />
 		</Suspense>
 	)

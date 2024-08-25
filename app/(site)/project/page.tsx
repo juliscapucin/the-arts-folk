@@ -24,8 +24,5 @@ export async function generateMetadata() {
 export const dynamic = "force-dynamic"
 
 export default async function Page() {
-	const projects = await getProjects()
-	const news = projects.filter((project) => !project.isNews)
-
 	return notFound()
 }
