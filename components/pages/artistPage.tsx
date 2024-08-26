@@ -165,6 +165,7 @@ export default function ArtistPage({
 											}`}
 											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
+											isVideo={isVideo}
 										>
 											<div
 												className={`relative overflow-hidden ${

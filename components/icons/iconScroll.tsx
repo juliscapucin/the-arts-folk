@@ -6,9 +6,11 @@ export default function IconScroll() {
 			className='flex flex-col items-center gap-8'
 			aria-label='scroll up and down'
 		>
-			<IconArrow classes='rotate-180' />
-			<span className='font-text -rotate-90'>Scroll</span>
-			<IconArrow />
+			<IconArrow classes='scale-[90%] lg:scale-[100%] rotate-180' />
+			<span className='font-text -rotate-90 text-labelMedium md:text-labelLarge'>
+				Scroll
+			</span>
+			<IconArrow classes='scale-[90%] lg:scale-[100%]' />
 		</div>
 	)
 }

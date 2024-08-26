@@ -37,7 +37,9 @@ export default function HomePage({ showreelImages, children }: HomePageProps) {
 				ref={scrollTipRef}
 				className={`fixed mx-auto top-0 right-1 lg:right-6 h-screen pb-24 flex flex-col items-center justify-end gap-8 transition-opacity duration-500 delay-300 z-100`}
 			>
-				<span className='font-text -rotate-90'>Scroll</span>
+				<span className='font-text -rotate-90 text-labelMedium md:text-labelLarge'>
+					Scroll
+				</span>
 				<IconScrollDown />
 			</div>
 			<Showreel {...{ showreelImages }} />

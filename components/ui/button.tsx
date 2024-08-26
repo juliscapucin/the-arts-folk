@@ -10,11 +10,12 @@ type MyButtonProps = {
 	classes?: string
 	children?: React.ReactNode
 	transitionZIndex?: string
+	isVideo?: boolean
 }
 
 // Create MyButton component using forwardRef
 const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
-	({ href, classes, children, transitionZIndex }, ref) => {
+	({ href, classes, children, transitionZIndex, isVideo }, ref) => {
 		const { transitionOnClick, setTransitionIndex } = usePageContext()
 		const slug =
 			href && href.length > 0
@@ -23,7 +24,22 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 					: href
 				: "/"
 
-		return (
+		return isVideo ? (
+			<a
+				className={classes}
+				href={href}
+				onClick={(e) => {
+					e.preventDefault()
+					transitionZIndex
+						? setTransitionIndex(transitionZIndex)
+						: setTransitionIndex("z-transitionHigh")
+					transitionOnClick(slug)
+				}}
+				ref={ref}
+			>
+				{children}
+			</a>
+		) : (
 			<Link href={href} passHref legacyBehavior>
 				<a
 					className={classes}
