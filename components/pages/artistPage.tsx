@@ -35,8 +35,6 @@ export default function ArtistPage({
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
 	const buttonRefs = useRef<(HTMLAnchorElement | null)[]>([])
 
-	console.log(view)
-
 	const { width } = useWindowDimensions()
 
 	const sortedProjects = artist.projects?.map((project) => {
@@ -147,7 +145,10 @@ export default function ArtistPage({
 								{view === "thumbnail" ? <IconThumbnails /> : <IconGallery />}
 							</button>
 						</header>
-						<div ref={imagesSectionRef} className='flex flex-wrap'>
+						<div
+							ref={imagesSectionRef}
+							className='flex flex-wrap justify-start items-start'
+						>
 							{sortedProjects &&
 								sortedProjects.map((project, index) => {
 									if (!project || !project.images) return null
@@ -159,58 +160,53 @@ export default function ArtistPage({
 											ref={(el) => {
 												buttonRefs.current[index] = el
 											}}
-											classes={`group relative cursor-pointer ${
-												view === "gallery" ? "w-full" : ""
+											classes={`group relative cursor-pointer overflow-hidden ml-4 ${
+												view === "gallery" ? "w-full" : "mb-4"
 											}`}
 											href={`artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 										>
 											<div
-												className={`relative pl-4 overflow-hidden ${
+												className={`relative overflow-hidden ${
 													view === "thumbnail"
-														? `h-36 md:h-72 pb-4 ${
-																isVideo ? "aspect-[15.5/9]" : ""
-														  }`
+														? `h-36 md:h-72 ${isVideo ? "aspect-[15.5/9]" : ""}`
 														: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
 												}`}
 											>
-												<div className='relative w-full h-full overflow-hidden'>
-													{isVideo ? (
-														<ReactPlayer
-															className='object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
-															url={firstImage.url}
-															playing={
-																isHovering &&
-																project.slug === activeProject?.slug
-															}
-															playsinline
-															width='100%'
-															height='100%'
-															controls={false}
-															muted={true}
-															loop={true}
-														/>
-													) : (
-														<ImageWithSpinner
-															classes={`w-full h-full object-contain group-hover:scale-105 transition-transform duration-300`}
-															src={firstImage.url}
-															alt={`Photo by ${artist.name}`}
-															sizes={
-																view === "thumbnail"
-																	? "20vw"
-																	: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
-															}
-															quality={70}
-															width={firstImage.width}
-															height={firstImage.height}
-															priority={index < 8}
-														/>
-													)}
-												</div>
-												{/* <label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
+												{isVideo ? (
+													<ReactPlayer
+														className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
+														url={firstImage.url}
+														playing={
+															isHovering && project.slug === activeProject?.slug
+														}
+														playsinline
+														width='100%'
+														height='100%'
+														controls={false}
+														muted={true}
+														loop={true}
+													/>
+												) : (
+													<ImageWithSpinner
+														classes='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
+														src={firstImage.url}
+														alt={`Photo by ${artist.name}`}
+														sizes={
+															view === "thumbnail"
+																? "20vw"
+																: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
+														}
+														quality={70}
+														width={firstImage.width}
+														height={firstImage.height}
+														priority={index < 8}
+													/>
+												)}
+											</div>
+											{/* <label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
 											{project.title}
 										</label> */}
-											</div>
 										</Button>
 									)
 								})}

@@ -38,12 +38,12 @@ export default function News({ news }: NewsProps) {
 							>
 								<Button
 									href={`/news/${project.slug}`}
-									classes='relative overflow-clip flex flex-col group w-full'
+									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
 								>
 									{/* Project Image */}
 									<div className='bg-faded-5 overflow-clip'>
 										{isVideo ? (
-											<div className='w-full aspect-video group-hover:scale-110 transition-transform duration-200 ease-in-out'>
+											<div className='w-full aspect-video group-hover:scale-110 transition-transform duration-200 ease-in-out before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'>
 												<ReactPlayer
 													url={project.images[0].url}
 													playing
