@@ -163,7 +163,7 @@ export default function ArtistPage({
 											classes={`group relative cursor-pointer overflow-hidden ml-4 ${
 												view === "gallery" ? "w-full" : "mb-4"
 											}`}
-											href={`artists/${artist.slug}/projects/${project.slug}`}
+											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 										>
 											<div

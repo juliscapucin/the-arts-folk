@@ -140,9 +140,9 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				</div>
 			)}
 			{/* THUMBNAILS CONTAINER */}
-			<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block bg-primary'>
+			<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block z-150'>
 				<div className='relative max-w-desktop mx-auto'>
-					<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-80'>
+					<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-150'>
 						{/* BUTTON CLOSE */}
 						<div className='relative w-full h-40 pt-40 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-600'>
 							<ButtonClose
@@ -287,7 +287,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 
 			{/* MAIN IMAGES CONTAINER */}
 			<section
-				className='relative w-full mt-4 pt-4 pb-16 bg-primary' // Needs mt & pt because it's overlay reference
+				className='relative w-full mt-4 pt-4 pr-4 pb-16 bg-primary' // Needs mt & pt because it's overlay reference
 			>
 				{/* MORE INFO OVERLAY */}
 				<div
