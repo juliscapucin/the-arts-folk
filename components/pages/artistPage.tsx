@@ -177,7 +177,7 @@ export default function ArtistPage({
 												<div className='relative w-full h-full overflow-hidden'>
 													{isVideo ? (
 														<ReactPlayer
-															className='bg-faded-5 object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
+															className='object-fill w-full h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
 															url={firstImage.url}
 															playing={
 																isHovering &&
@@ -192,7 +192,7 @@ export default function ArtistPage({
 														/>
 													) : (
 														<ImageWithSpinner
-															classes={`w-full h-full object-contain bg-faded-5 group-hover:scale-105 transition-transform duration-300`}
+															classes={`w-full h-full object-contain group-hover:scale-105 transition-transform duration-300`}
 															src={firstImage.url}
 															alt={`Photo by ${artist.name}`}
 															sizes={
