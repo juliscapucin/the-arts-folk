@@ -4,7 +4,6 @@ import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
 import { Artist } from "@/types"
-import { Suspense } from "react"
 
 type ProjectsProps = {
 	artists: Artist[]
@@ -58,18 +57,16 @@ const ProjectsImage = ({ url, artistName }: ProjectsImageProps) => {
 	return (
 		<div className=''>
 			{url.includes("vimeo") ? (
-				<Suspense fallback={null}>
-					<ReactPlayer
-						url={url}
-						playing
-						playsinline
-						width='100%'
-						height='100%'
-						controls={false}
-						muted={true}
-						loop={true}
-					/>
-				</Suspense>
+				<ReactPlayer
+					url={url}
+					playing
+					playsinline
+					width='100%'
+					height='100%'
+					controls={false}
+					muted={true}
+					loop={true}
+				/>
 			) : (
 				<CldImage
 					className={`object-contain`}

@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { notFound } from "next/navigation"
 
 import { getArtists, getNews } from "@/sanity/sanity-queries"
@@ -25,9 +24,5 @@ export default async function NewsServer() {
 		return project
 	})
 
-	return (
-		<Suspense fallback={<div>...</div>}>
-			<News news={newsWithArtistInfo} />
-		</Suspense>
-	)
+	return <News news={newsWithArtistInfo} />
 }

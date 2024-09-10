@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useLayoutEffect, Suspense } from "react"
+import { useRef, useState, useLayoutEffect } from "react"
 import { usePathname } from "next/navigation"
 import ReactPlayer from "react-player/vimeo"
 

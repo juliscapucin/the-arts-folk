@@ -5,9 +5,8 @@ const ContentSecurityPolicy = `
   img-src 'self' data: blob: *.vimeocdn.com *.vimeo.com *.cloudinary.com res.cloudinary.com;
   media-src 'self' blob: *.vimeocdn.com *.vimeo.com *.cloudinary.com res.cloudinary.com;
   frame-src 'self' player.vimeo.com *.vimeo.com;
-  connect-src 'self' vimeo.com *.vimeo.com *.vimeocdn.com *.cloudinary.com res.cloudinary.com;
+  connect-src 'self' vimeo.com *.vimeo.com *.vimeocdn.com fresnel.vimeocdn.com *.cloudinary.com res.cloudinary.com player.vimeo.com f.vimeocdn.com i.vimeocdn.com;
   font-src 'self' data: use.typekit.net;
-  object-src 'none';
 `
 	.replace(/\s{2,}/g, " ")
 	.trim()
