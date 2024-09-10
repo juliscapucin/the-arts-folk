@@ -5,7 +5,7 @@ const ContentSecurityPolicy = `
   img-src 'self' data: blob: *.vimeocdn.com *.vimeo.com *.cloudinary.com res.cloudinary.com;
   media-src 'self' blob: *.vimeocdn.com *.vimeo.com *.cloudinary.com res.cloudinary.com;
   frame-src 'self' player.vimeo.com *.vimeo.com;
-  connect-src 'self' vimeo.com *.vimeo.com *.vimeocdn.com *.cloudinary.com res.cloudinary.com;
+  connect-src 'self' vimeo.com *.vimeo.com *.vimeocdn.com *.cloudinary.com res.cloudinary.com fqgs6dmb.api.sanity.io;
   font-src 'self' data: use.typekit.net;
   object-src 'none';
 `
