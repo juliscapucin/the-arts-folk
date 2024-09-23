@@ -11,7 +11,7 @@ interface PreviewSelection {
 
 const projectSchema = {
 	name: "project",
-	title: "Project",
+	title: "Projects",
 	type: "document",
 	fields: [
 		{
@@ -37,8 +37,10 @@ const projectSchema = {
 		},
 		{
 			name: "releaseDate",
-			title: "Release Date",
+			title: "Release Date (required, used for News page ordering)",
 			type: "date",
+			validation: (Rule: Rule) =>
+				Rule.required().error("Release Date is required"),
 		},
 		{
 			name: "slug",
