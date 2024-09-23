@@ -1,6 +1,6 @@
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' player.vimeo.com f.vimeocdn.com i.vimeocdn.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' player.vimeo.com f.vimeocdn.com i.vimeocdn.com https://media-library.cloudinary.com;
   style-src 'self' 'unsafe-inline' use.typekit.net p.typekit.net;
   img-src 'self' data: blob: *.vimeocdn.com *.vimeo.com *.cloudinary.com res.cloudinary.com;
   media-src 'self' blob: *.vimeocdn.com *.vimeo.com *.cloudinary.com res.cloudinary.com;
