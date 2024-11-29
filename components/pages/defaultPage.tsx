@@ -41,7 +41,7 @@ export default function DefaultPage({
 					{pageData.title && (
 						<Heading
 							tag='h1'
-							classes={`mb-8 ${!pageData.showTitle && "sr-only"}`}
+							classes={`mb-8 ${pageData.showTitle ? "mt-16" : "sr-only"}`}
 						>
 							{pageData.title}
 						</Heading>

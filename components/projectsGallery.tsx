@@ -24,9 +24,10 @@ export default function ProjectsGallery({
 	console.log(projectsGallery)
 
 	return (
-		<Container
-			isSection
-			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 lg:mt-32`}
+		<section
+			className={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 mt-24 lg:mt-32 ${
+				pathname !== "/production" && "gap-y-24"
+			}`}
 		>
 			{projectsGallery.map((project) => {
 				if (project.images && project.images[0]) {
@@ -35,10 +36,10 @@ export default function ProjectsGallery({
 					return (
 						<Fragment key={project.slug}>
 							{project.addSpaceBeforeGallery && (
-								<article className='hidden md:block w-full h-full'></article>
+								<article className='hidden md:block w-fit h-full'></article>
 							)}
 							<article
-								className={`relative h-fit w-full ${
+								className={`relative mb-24 md:mb-32 lg:mb-40 w-full ${
 									project.projectsGallerySize === "small" ? "" : "md:col-span-2"
 								}`}
 							>
@@ -87,6 +88,6 @@ export default function ProjectsGallery({
 					)
 				}
 			})}
-		</Container>
+		</section>
 	)
 }
