@@ -105,6 +105,7 @@ export async function getNews(): Promise<Project[]> {
       images,
       isNews,
       newsPageSize,
+      projectsGallerySize,
       addSpaceBefore,
       addSpaceAfter
    }`
@@ -149,10 +150,12 @@ export async function getPage(slug: string): Promise<Page> {
 	return client.fetch(
 		groq`*[_type == "pages" && (headerLink._ref in *[_type == "header" && slug.current == $slug]._id || slug.current == $slug)][0] {
            title,
+           showTitle,
            metadataTitle,
            metadataDescription,
            metadataKeywords,
            content,
+           allowsProjects
        }`,
 		{ slug }
 	)

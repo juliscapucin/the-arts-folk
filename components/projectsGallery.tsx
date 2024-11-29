@@ -13,25 +13,25 @@ import {
 
 import { Project } from "@/types"
 
-type NewsProps = {
-	news: Project[]
+type ProjectsGalleryProps = {
+	projectsGallery: Project[]
 }
 
-export default function News({ news }: NewsProps) {
+export default function ProjectsGallery({
+	projectsGallery,
+}: ProjectsGalleryProps) {
 	const pathname = usePathname()
 
 	return (
 		<Container
 			isSection
 			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
-				pathname.includes("news") ? "lg:mt-24" : "lg:mt-64"
+				pathname.includes("projectsGallery") ? "lg:mt-24" : "lg:mt-64"
 			}`}
 		>
-			{news.map((project, index) => {
+			{projectsGallery.map((project, index) => {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
-
-				
 
 					return (
 						<Fragment key={project.slug}>
@@ -44,7 +44,7 @@ export default function News({ news }: NewsProps) {
 								}`}
 							>
 								<Button
-									href={`/news/${project.slug}`}
+									href={`/projectsGallery/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
 								>
 									{/* Project Image */}

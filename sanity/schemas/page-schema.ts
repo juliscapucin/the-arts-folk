@@ -8,11 +8,19 @@ const pageSchema = {
 			title: "Title",
 			type: "string",
 		},
+		{
+			name: "showTitle",
+			title: "Show Title",
+			type: "boolean",
+			description:
+				"Check this box to display the title on the page. Default is hidden.",
+		},
 		{ name: "metadataTitle", title: "Metadata Title", type: "string" },
 		{
 			name: "metadataDescription",
 			title: "Metadata Description",
 			type: "string",
+			rows: 3,
 		},
 		{
 			name: "metadataKeywords",
@@ -41,6 +49,12 @@ const pageSchema = {
 			title: "Content",
 			type: "array",
 			of: [{ type: "block" }],
+		},
+		{
+			name: "allowsProjects",
+			title: "Allows Projects",
+			type: "boolean",
+			description: "Check this box to allow a projects gallery on this page.",
 		},
 	],
 }

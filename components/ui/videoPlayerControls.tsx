@@ -15,9 +15,6 @@ export default function videoPlayerControls({
 	const videoPlayerRef = useRef<HTMLDivElement>(null)
    const videoId = videoUrl.split("/").pop()
 
-	// console.log(videoPlayerRef.current?.childNodes[0])
-   console.log(videoUrl.split("/").pop())
-
    useEffect(() => {
       if (videoPlayerRef.current && videoId) {
         // Create a new Vimeo player instance

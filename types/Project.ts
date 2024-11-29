@@ -13,6 +13,7 @@ export type Project = {
 	releaseDate?: string
 	isNews?: boolean
 	newsPageSize?: string
+	projectsGallerySize?: string
 	addSpaceBefore?: boolean
 	addSpaceAfter?: boolean
 }
