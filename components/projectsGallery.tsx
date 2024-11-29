@@ -25,7 +25,7 @@ export default function ProjectsGallery({
 		<Container
 			isSection
 			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
-				pathname.includes("projectsGallery") ? "lg:mt-24" : "lg:mt-64"
+				pathname.includes("projectsGallery") ? "lg:mt-24" : "lg:mt-32"
 			}`}
 		>
 			{projectsGallery.map((project) => {
@@ -43,7 +43,7 @@ export default function ProjectsGallery({
 								}`}
 							>
 								<Button
-									href={`/projectsGallery/${project.slug}`}
+									href={`${pathname}/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
 								>
 									{/* Project Image */}
@@ -72,9 +72,11 @@ export default function ProjectsGallery({
 									<p className='block mt-3 text-bodyMedium lg:text-bodyLarge leading-tight'>
 										{project.title}
 									</p>
-									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
-										By {project.artistInfo?.name}
-									</p>
+									{pathname !== "/production" && (
+										<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
+											By {project.artistInfo?.name}
+										</p>
+									)}
 								</Button>
 							</article>
 							{project.addSpaceAfter && (
