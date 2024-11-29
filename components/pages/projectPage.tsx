@@ -11,7 +11,13 @@ import { usePageContext } from "@/context"
 import { useReloadOnResize, useWindowDimensions } from "@/hooks"
 import { handlePanelSlide } from "@/lib/animations"
 
-import { Button, Container, Heading, ImageWithSpinner } from "@/components/ui"
+import {
+	Button,
+	Container,
+	Heading,
+	ImageWithSpinner,
+	VideoPlayer,
+} from "@/components/ui"
 import { IconChevron } from "@/components/icons"
 import { ButtonBack, ButtonClose } from "@/components/buttons"
 import { Artist, Project } from "@/types"
@@ -176,7 +182,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										>
 											{image.url.includes("vimeo") ? (
 												<div className='relative w-full aspect-video'>
-													<ReactPlayer
+													{/* <ReactPlayer
 														url={image.url}
 														playing
 														playsinline
@@ -185,7 +191,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 														controls={false}
 														muted={true}
 														loop={true}
-													/>
+													/> */}
+													<VideoPlayer imageUrl={image.url} isMuted={false} />
 												</div>
 											) : (
 												<ImageWithSpinner
@@ -228,11 +235,13 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						{title}
 					</Heading>
 					{/* SUBTITLE */}
-					<Button href={`/artists/${artist.slug}`}>
-						<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
-							By {artist.name}
-						</h2>
-					</Button>
+					{artist.slug && artist.name && (
+						<Button href={`/artists/${artist.slug}`}>
+							<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
+								By {artist.name}
+							</h2>
+						</Button>
+					)}
 					{/* MOBILE – PROJECT INFO BUTTON */}
 					{projectInfo && (
 						<button
@@ -336,7 +345,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								>
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
-											<ReactPlayer
+											<VideoPlayer imageUrl={image.url} isMuted={false} />
+											{/* <ReactPlayer
 												url={image.url}
 												playing
 												playsinline
@@ -345,7 +355,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 												controls={false}
 												muted={false}
 												loop={true}
-											/>
+											/> */}
 										</div>
 									) : (
 										<ImageWithSpinner
@@ -364,7 +374,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								<div className='relative w-full' key={`project-image-${index}`}>
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
-											<ReactPlayer
+											<VideoPlayer imageUrl={image.url} isMuted={false} />
+											{/* <ReactPlayer
 												url={image.url}
 												playing
 												playsinline
@@ -373,7 +384,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 												controls={false}
 												muted={true}
 												loop={true}
-											/>
+											/> */}
 										</div>
 									) : (
 										<ImageWithSpinner

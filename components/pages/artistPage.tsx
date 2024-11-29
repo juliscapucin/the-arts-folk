@@ -8,7 +8,14 @@ import gsap from "gsap"
 import { useWindowDimensions } from "@/hooks"
 
 import { Artist, ArtistSection, Project } from "@/types"
-import { Button, Container, Heading, ImageWithSpinner } from "@/components/ui"
+import {
+	Button,
+	Container,
+	Heading,
+	ImageWithSpinner,
+	VideoPlayer,
+	VideoPlayerControls,
+} from "@/components/ui"
 import { ArtistAside } from "@/components"
 import { IconGallery, IconThumbnails } from "@/components/icons"
 import { ButtonBack } from "@/components/buttons"
@@ -175,20 +182,26 @@ export default function ArtistPage({
 												}`}
 											>
 												{isVideo ? (
-													<ReactPlayer
-														className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
-														url={firstImage.url}
-														playing={
-															isHovering && project.slug === activeProject?.slug
-														}
-														playsinline
-														width='100%'
-														height='100%'
-														controls={false}
-														muted={true}
-														loop={true}
-													/>
+													<VideoPlayerControls videoUrl={firstImage.url}>
+														<VideoPlayer
+															imageUrl={firstImage.url}
+															isMuted={true}
+														/>
+													</VideoPlayerControls>
 												) : (
+													// <ReactPlayer
+													// 	className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
+													// 	url={firstImage.url}
+													// 	playing={
+													// 		isHovering && project.slug === activeProject?.slug
+													// 	}
+													// 	playsinline
+													// 	width='100%'
+													// 	height='100%'
+													// 	controls={false}
+													// 	muted={true}
+													// 	loop={true}
+													// />
 													<ImageWithSpinner
 														classes='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
 														src={firstImage.url}

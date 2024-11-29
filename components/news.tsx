@@ -4,7 +4,12 @@ import { Fragment } from "react"
 import { usePathname } from "next/navigation"
 import ReactPlayer from "react-player/vimeo"
 
-import { Button, Container, ImageWithSpinner } from "@/components/ui"
+import {
+	Button,
+	Container,
+	ImageWithSpinner,
+	VideoPlayer,
+} from "@/components/ui"
 
 import { Project } from "@/types"
 
@@ -26,6 +31,8 @@ export default function News({ news }: NewsProps) {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
 
+					console.log(project.images[0].url)
+
 					return (
 						<Fragment key={project.slug}>
 							{project.addSpaceBefore && (
@@ -41,10 +48,15 @@ export default function News({ news }: NewsProps) {
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
 								>
 									{/* Project Image */}
-									<div className='bg-faded-5 overflow-clip'>
+									<div className='overflow-clip'>
 										{isVideo ? (
 											<div className='w-full aspect-video group-hover:scale-110 transition-transform duration-200 ease-in-out before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'>
-												<ReactPlayer
+												<VideoPlayer
+													imageUrl={project.images[0].url}
+													isMuted={true}
+												/>
+
+												{/* <ReactPlayer
 													url={project.images[0].url}
 													playing
 													playsinline
@@ -53,7 +65,7 @@ export default function News({ news }: NewsProps) {
 													controls={false}
 													muted={true}
 													loop={true}
-												/>
+												/> */}
 											</div>
 										) : (
 											<ImageWithSpinner
