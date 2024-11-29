@@ -21,12 +21,12 @@ export default function ProjectsGallery({
 }: ProjectsGalleryProps) {
 	const pathname = usePathname()
 
+	console.log(projectsGallery)
+
 	return (
 		<Container
 			isSection
-			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
-				pathname.includes("projectsGallery") ? "lg:mt-24" : "lg:mt-32"
-			}`}
+			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 lg:mt-32`}
 		>
 			{projectsGallery.map((project) => {
 				if (project.images && project.images[0]) {
@@ -34,12 +34,12 @@ export default function ProjectsGallery({
 
 					return (
 						<Fragment key={project.slug}>
-							{project.addSpaceBefore && (
+							{project.addSpaceBeforeGallery && (
 								<article className='hidden md:block w-full h-full'></article>
 							)}
 							<article
 								className={`relative h-fit w-full ${
-									project.newsPageSize === "small" ? "" : "md:col-span-2"
+									project.projectsGallerySize === "small" ? "" : "md:col-span-2"
 								}`}
 							>
 								<Button
@@ -80,7 +80,7 @@ export default function ProjectsGallery({
 									)}
 								</Button>
 							</article>
-							{project.addSpaceAfter && (
+							{project.addSpaceAfterGallery && (
 								<article className='hidden md:block md:basis-1/4 w-full h-full'></article>
 							)}
 						</Fragment>

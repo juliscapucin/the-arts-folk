@@ -3,7 +3,7 @@ import { Rule } from "sanity"
 interface ProjectDocument {
 	isNews?: boolean
 	showInProjectGallery?: boolean
-	linkedPages?: string[]
+	addToPage?: string[]
 }
 
 interface PreviewSelection {
@@ -143,21 +143,21 @@ const projectSchema = {
 				],
 			},
 			hidden: ({ document }: { document: ProjectDocument }) =>
-				!document?.linkedPages?.length,
+				!document?.addToPage?.length,
 		},
 		{
 			name: "addSpaceBeforeGallery",
 			title: "Add Space Before",
 			type: "boolean",
 			hidden: ({ document }: { document: ProjectDocument }) =>
-				!document?.linkedPages?.length,
+				!document?.addToPage?.length,
 		},
 		{
 			name: "addSpaceAfterGallery",
 			title: "Add Space After",
 			type: "boolean",
 			hidden: ({ document }: { document: ProjectDocument }) =>
-				!document?.linkedPages?.length,
+				!document?.addToPage?.length,
 		},
 	],
 	orderings: [
