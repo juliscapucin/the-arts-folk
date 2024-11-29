@@ -182,16 +182,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										>
 											{image.url.includes("vimeo") ? (
 												<div className='relative w-full aspect-video'>
-													{/* <ReactPlayer
-														url={image.url}
-														playing
-														playsinline
-														width='100%'
-														height='100%'
-														controls={false}
-														muted={true}
-														loop={true}
-													/> */}
 													<VideoPlayer imageUrl={image.url} isMuted={false} />
 												</div>
 											) : (
@@ -235,12 +225,17 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						{title}
 					</Heading>
 					{/* SUBTITLE */}
-					{artist.slug && artist.name && (
+					{artist.slug && artist.name && artist.name!=='The Arts Folk' && (
 						<Button href={`/artists/${artist.slug}`}>
 							<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
 								By {artist.name}
 							</h2>
 						</Button>
+					)}
+					{artist.name =='The Arts Folk' && (
+							<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
+								By The Arts Folk
+							</h2>
 					)}
 					{/* MOBILE – PROJECT INFO BUTTON */}
 					{projectInfo && (
@@ -346,16 +341,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
 											<VideoPlayer imageUrl={image.url} isMuted={false} />
-											{/* <ReactPlayer
-												url={image.url}
-												playing
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={false}
-												loop={true}
-											/> */}
 										</div>
 									) : (
 										<ImageWithSpinner
@@ -375,16 +360,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
 											<VideoPlayer imageUrl={image.url} isMuted={false} />
-											{/* <ReactPlayer
-												url={image.url}
-												playing
-												playsinline
-												width='100%'
-												height='100%'
-												controls={false}
-												muted={true}
-												loop={true}
-											/> */}
 										</div>
 									) : (
 										<ImageWithSpinner
