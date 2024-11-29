@@ -32,9 +32,13 @@ export default async function Page() {
 
 	if (!artists || !categories) return notFound()
 
+	const filteredArtists = artists.filter(
+		(artist) => artist.name !== "The Arts Folk"
+	)
+
 	return (
 		<Suspense fallback={<div>...</div>}>
-			<ArtistsPage artists={artists} categories={categories} />
+			<ArtistsPage artists={filteredArtists} categories={categories} />
 		</Suspense>
 	)
 }
