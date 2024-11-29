@@ -17,6 +17,7 @@ import {
 	Heading,
 	ImageWithSpinner,
 	VideoPlayer,
+	VideoPlayerControls,
 } from "@/components/ui"
 import { IconChevron } from "@/components/icons"
 import { ButtonBack, ButtonClose } from "@/components/buttons"
@@ -182,7 +183,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										>
 											{image.url.includes("vimeo") ? (
 												<div className='relative w-full aspect-video'>
-													<VideoPlayer imageUrl={image.url} isMuted={false} />
+													<VideoPlayer
+														imageUrl={image.url}
+														isMuted={false}
+														autoplay={true}
+													/>
 												</div>
 											) : (
 												<ImageWithSpinner
@@ -225,17 +230,17 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						{title}
 					</Heading>
 					{/* SUBTITLE */}
-					{artist.slug && artist.name && artist.name!=='The Arts Folk' && (
+					{artist.slug && artist.name && artist.name !== "The Arts Folk" && (
 						<Button href={`/artists/${artist.slug}`}>
 							<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
 								By {artist.name}
 							</h2>
 						</Button>
 					)}
-					{artist.name =='The Arts Folk' && (
-							<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
-								By The Arts Folk
-							</h2>
+					{artist.name == "The Arts Folk" && (
+						<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
+							By The Arts Folk
+						</h2>
 					)}
 					{/* MOBILE – PROJECT INFO BUTTON */}
 					{projectInfo && (
@@ -329,7 +334,9 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						images.map((image, index) =>
 							width > 640 ? (
 								<button
-									onClick={(e) => openFullscreen(e, index)}
+									onClick={(e) =>
+										!image.url.includes("vimeo") && openFullscreen(e, index)
+									}
 									data-id={`image-${index}`}
 									className={`relative ${
 										pathname.includes("news") && !isFullscreenOpen
@@ -340,7 +347,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								>
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
-											<VideoPlayer imageUrl={image.url} isMuted={false} />
+											<VideoPlayer
+												imageUrl={image.url}
+												isMuted={false}
+												autoplay={true}
+											/>
 										</div>
 									) : (
 										<ImageWithSpinner
@@ -359,7 +370,11 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								<div className='relative w-full' key={`project-image-${index}`}>
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
-											<VideoPlayer imageUrl={image.url} isMuted={false} />
+											<VideoPlayer
+												imageUrl={image.url}
+												isMuted={false}
+												autoplay={true}
+											/>
 										</div>
 									) : (
 										<ImageWithSpinner

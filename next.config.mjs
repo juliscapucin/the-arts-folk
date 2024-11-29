@@ -20,7 +20,7 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
-	reactStrictMode: true,
+	reactStrictMode: false,
 	swcMinify: true,
 	async headers() {
 		return [

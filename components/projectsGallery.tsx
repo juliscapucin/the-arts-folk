@@ -53,6 +53,7 @@ export default function ProjectsGallery({
 												<VideoPlayer
 													imageUrl={project.images[0].url}
 													isMuted={true}
+													autoplay={true}
 												/>
 											</div>
 										) : (

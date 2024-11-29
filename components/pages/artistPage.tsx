@@ -62,6 +62,7 @@ export default function ArtistPage({
 
 	const handleMouseLeave = useCallback(() => {
 		setIsHovering(false)
+		setActiveProject(null)
 	}, [])
 
 	useEffect(() => {
@@ -176,18 +177,22 @@ export default function ArtistPage({
 										>
 											<div
 												className={`relative overflow-hidden ${
-													view === "thumbnail"
-														? `h-36 md:h-72 ${isVideo ? "aspect-[15.5/9]" : ""}`
-														: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
+													view === "thumbnail" ? `h-36 md:h-72` : `w-full pb-8`
+												} ${
+													isVideo
+														? "aspect-[15.5/9] before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0 group-hover:scale-105 transition-transform duration-300"
+														: ""
 												}`}
 											>
 												{isVideo ? (
-													<VideoPlayerControls videoUrl={firstImage.url}>
-														<VideoPlayer
-															imageUrl={firstImage.url}
-															isMuted={true}
-														/>
-													</VideoPlayerControls>
+													<VideoPlayer
+														imageUrl={firstImage.url}
+														isMuted={true}
+														autoplay={false}
+														play={
+															isHovering && project.slug === activeProject?.slug
+														}
+													/>
 												) : (
 													// <ReactPlayer
 													// 	className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
@@ -218,9 +223,6 @@ export default function ArtistPage({
 													/>
 												)}
 											</div>
-											{/* <label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
-											{project.title}
-										</label> */}
 										</Button>
 									)
 								})}

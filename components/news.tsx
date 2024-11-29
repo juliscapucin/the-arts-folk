@@ -31,8 +31,6 @@ export default function News({ news }: NewsProps) {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
 
-				
-
 					return (
 						<Fragment key={project.slug}>
 							{project.addSpaceBefore && (
@@ -54,18 +52,8 @@ export default function News({ news }: NewsProps) {
 												<VideoPlayer
 													imageUrl={project.images[0].url}
 													isMuted={true}
+													autoplay={true}
 												/>
-
-												{/* <ReactPlayer
-													url={project.images[0].url}
-													playing
-													playsinline
-													width='100%'
-													height='100%'
-													controls={false}
-													muted={true}
-													loop={true}
-												/> */}
 											</div>
 										) : (
 											<ImageWithSpinner
