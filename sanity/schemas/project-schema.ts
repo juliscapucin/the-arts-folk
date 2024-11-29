@@ -120,8 +120,8 @@ const projectSchema = {
 				!document?.isNews,
 		},
 		{
-			name: "linkedPages",
-			title: "Linked Pages",
+			name: "addToPage",
+			title: "Add Project to Page(s)",
 			description:
 				"Select one or more pages where you'd like to show this project.",
 			type: "array",

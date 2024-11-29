@@ -51,8 +51,8 @@ const pageSchema = {
 			of: [{ type: "block" }],
 		},
 		{
-			name: "allowsProjects",
-			title: "Allows Projects",
+			name: "addProjectsGallery",
+			title: "Add Projects Gallery",
 			type: "boolean",
 			description: "Check this box to allow a projects gallery on this page.",
 		},

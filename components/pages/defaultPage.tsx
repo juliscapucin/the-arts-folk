@@ -48,10 +48,13 @@ export default function DefaultPage({
 					)}
 					{pageData.content && <PortableText value={pageData.content} />}
 				</div>
-				<div className='flex flex-col justify-center items-center self-center h-full w-full lg:w-1/2'>
-					{children}
-				</div>
+				{isCentered && (
+					<div className='flex flex-col justify-center items-center self-center h-full w-full lg:w-1/2'>
+						{children}
+					</div>
+				)}
 			</div>
+			{!isCentered && children}
 			{hasCopyright && <Copyright />}
 		</Container>
 	)

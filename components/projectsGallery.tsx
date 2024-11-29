@@ -2,7 +2,6 @@
 
 import { Fragment } from "react"
 import { usePathname } from "next/navigation"
-import ReactPlayer from "react-player/vimeo"
 
 import {
 	Button,
@@ -29,7 +28,7 @@ export default function ProjectsGallery({
 				pathname.includes("projectsGallery") ? "lg:mt-24" : "lg:mt-64"
 			}`}
 		>
-			{projectsGallery.map((project, index) => {
+			{projectsGallery.map((project) => {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
 
@@ -55,17 +54,6 @@ export default function ProjectsGallery({
 													imageUrl={project.images[0].url}
 													isMuted={true}
 												/>
-
-												{/* <ReactPlayer
-													url={project.images[0].url}
-													playing
-													playsinline
-													width='100%'
-													height='100%'
-													controls={false}
-													muted={true}
-													loop={true}
-												/> */}
 											</div>
 										) : (
 											<ImageWithSpinner
@@ -82,7 +70,6 @@ export default function ProjectsGallery({
 
 									{/* Project Info */}
 									<p className='block mt-3 text-bodyMedium lg:text-bodyLarge leading-tight'>
-										{/* <span>{index}. </span> */}
 										{project.title}
 									</p>
 									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>

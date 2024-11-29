@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { notFound } from "next/navigation"
 
 import { getArtists, getNews } from "@/sanity/sanity-queries"
-import News from "@/components/news"
+import { News } from "@/components"
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"

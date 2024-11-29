@@ -7,5 +7,5 @@ export type Page = {
 	metadataDescription: string
 	metadataKeywords: string[]
 	content: PortableTextBlock[]
-	allowsProjects: boolean
+	addProjectsGallery: boolean
 }

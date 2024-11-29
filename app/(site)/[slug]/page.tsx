@@ -5,6 +5,7 @@ import { getPage } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
 import { Suspense } from "react"
+import { ProjectsGalleryServer } from "@/components/server"
 
 export async function generateMetadata({
 	params,
@@ -38,7 +39,9 @@ export default async function page({ params }: { params: { slug: string } }) {
 
 	return (
 		<Suspense fallback={null}>
-			<DefaultPage {...{ pageData }} />
+			<DefaultPage {...{ pageData }}>
+				{pageData.addProjectsGallery && <ProjectsGalleryServer {...{ slug }} />}
+			</DefaultPage>
 		</Suspense>
 	)
 }
