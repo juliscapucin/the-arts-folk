@@ -1,7 +1,16 @@
+import React from "react"
 import { Rule } from "sanity"
+
+const Separator = () => {
+	return React.createElement("hr", {
+		style: { borderBottom: "1px solid #ccc", margin: "20px 0" },
+	})
+}
 
 interface ProjectDocument {
 	isNews?: boolean
+	showInProjectGallery?: boolean
+	addToPage?: string[]
 }
 
 interface PreviewSelection {
@@ -45,6 +54,8 @@ const projectSchema = {
 		{
 			name: "slug",
 			title: "Slug (required)",
+			description:
+				"This will be used to generate the URL for this project. Must be unique and not contain spaces or special characters. Click 'generate' to use full title. (Ex: my-project-slug)",
 			type: "slug",
 			options: {
 				source: "title",
@@ -114,6 +125,53 @@ const projectSchema = {
 			type: "boolean",
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
+		},
+		{
+			name: "separator",
+			title: "Separator",
+			type: "string",
+			inputComponent: Separator, // Custom component
+			hidden: true, // Optional: Hide it from the schema's saved data
+		},
+		{
+			name: "addToPage",
+			title: "Add Project to Page(s)",
+			description:
+				"Select one or more pages where you'd like to show this project.",
+			type: "array",
+			of: [
+				{
+					type: "reference",
+					to: [{ type: "pages" }],
+				},
+			],
+		},
+		{
+			name: "projectsGallerySize",
+			title: "Projects Gallery Image Size",
+			type: "string",
+			options: {
+				list: [
+					{ title: "Big", value: "big" },
+					{ title: "Small", value: "small" },
+				],
+			},
+			hidden: ({ document }: { document: ProjectDocument }) =>
+				!document?.addToPage?.length,
+		},
+		{
+			name: "addSpaceBeforeGallery",
+			title: "Add Space Before",
+			type: "boolean",
+			hidden: ({ document }: { document: ProjectDocument }) =>
+				!document?.addToPage?.length,
+		},
+		{
+			name: "addSpaceAfterGallery",
+			title: "Add Space After",
+			type: "boolean",
+			hidden: ({ document }: { document: ProjectDocument }) =>
+				!document?.addToPage?.length,
 		},
 	],
 	orderings: [
