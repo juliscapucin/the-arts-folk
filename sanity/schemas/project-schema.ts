@@ -1,4 +1,11 @@
+import React from "react"
 import { Rule } from "sanity"
+
+const Separator = () => {
+	return React.createElement("hr", {
+		style: { borderBottom: "1px solid #ccc", margin: "20px 0" },
+	})
+}
 
 interface ProjectDocument {
 	isNews?: boolean
@@ -118,6 +125,13 @@ const projectSchema = {
 			type: "boolean",
 			hidden: ({ document }: { document: ProjectDocument }) =>
 				!document?.isNews,
+		},
+		{
+			name: "separator",
+			title: "Separator",
+			type: "string",
+			inputComponent: Separator, // Custom component
+			hidden: true, // Optional: Hide it from the schema's saved data
 		},
 		{
 			name: "addToPage",
