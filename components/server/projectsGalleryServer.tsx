@@ -22,8 +22,6 @@ export default async function ProjectsGalleryServer({
 
 	if (!projectsGallery || !artists) return notFound()
 
-	console.log(projectsGallery)
-
 	// Create a Map for fast lookup of artists by _id
 	const artistMap = new Map(artists.map((artist) => [artist._id, artist]))
 

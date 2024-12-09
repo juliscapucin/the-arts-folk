@@ -21,8 +21,6 @@ export default function ProjectsGallery({
 }: ProjectsGalleryProps) {
 	const pathname = usePathname()
 
-	console.log(projectsGallery)
-
 	return (
 		<section
 			className={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 mt-24 lg:mt-32 ${
