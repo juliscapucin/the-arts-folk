@@ -38,15 +38,23 @@ export default function DefaultPage({
 			>
 				{/* Text */}
 				<div className='custom-rich-text custom-rich-text-page mt-16 lg:mt-0'>
-					<Heading tag='h1' classes='sr-only mb-8' variant='headline'>
-						{pageData.title}
-					</Heading>
-					<PortableText value={pageData.content} />
+					{pageData.title && (
+						<Heading
+							tag='h1'
+							classes={`mb-8 ${pageData.showTitle ? "mt-16" : "sr-only"}`}
+						>
+							{pageData.title}
+						</Heading>
+					)}
+					{pageData.content && <PortableText value={pageData.content} />}
 				</div>
-				<div className='flex flex-col justify-center items-center self-center h-full w-full lg:w-1/2'>
-					{children}
-				</div>
+				{isCentered && (
+					<div className='flex flex-col justify-center items-center self-center h-full w-full lg:w-1/2'>
+						{children}
+					</div>
+				)}
 			</div>
+			{!isCentered && children}
 			{hasCopyright && <Copyright />}
 		</Container>
 	)

@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation"
 
-import { DefaultPage } from "@/components/pages"
-import { getPage } from "@/sanity/sanity-queries"
+import { ProjectPage } from "@/components/pages"
+import { getArtists, getPage, getProject } from "@/sanity/sanity-queries"
 
 import { metadataFallback } from "@/utils"
 import { Suspense } from "react"
-import { ProjectsGalleryServer } from "@/components/server"
 
 export async function generateMetadata({
 	params,
@@ -30,19 +29,26 @@ export async function generateMetadata({
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
-export const fetchCache = "force-no-store"
 
-export default async function page({ params }: { params: { slug: string } }) {
-	const { slug } = params
-	const pageData = await getPage(slug)
+export default async function page({
+	params,
+}: {
+	params: { projectSlug: string }
+}) {
+	const { projectSlug } = params
+	const project = await getProject(projectSlug)
+	const artists = await getArtists()
 
-	if (!pageData) return notFound()
+	const artist = artists.find((artist) => {
+		if (!project.artist) return null
+		return artist._id === project.artist._ref
+	})
+
+	if (!project || !artist) return notFound()
 
 	return (
 		<Suspense fallback={null}>
-			<DefaultPage {...{ pageData }}>
-				{pageData.addProjectsGallery && <ProjectsGalleryServer {...{ slug }} />}
-			</DefaultPage>
+			<ProjectPage {...{ artist, project }} />
 		</Suspense>
 	)
 }

@@ -8,7 +8,14 @@ import gsap from "gsap"
 import { useWindowDimensions } from "@/hooks"
 
 import { Artist, ArtistSection, Project } from "@/types"
-import { Button, Container, Heading, ImageWithSpinner } from "@/components/ui"
+import {
+	Button,
+	Container,
+	Heading,
+	ImageWithSpinner,
+	VideoPlayer,
+	VideoPlayerControls,
+} from "@/components/ui"
 import { ArtistAside } from "@/components"
 import { IconGallery, IconThumbnails } from "@/components/icons"
 import { ButtonBack } from "@/components/buttons"
@@ -29,7 +36,6 @@ export default function ArtistPage({
 	startView,
 }: artistPageProps) {
 	const [view, setView] = useState(startView)
-	const [isHovering, setIsHovering] = useState(false)
 	const [activeProject, setActiveProject] = useState<Project | null>(null)
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
@@ -43,18 +49,20 @@ export default function ArtistPage({
 
 	const handleMouseEnter = useCallback(
 		(e: MouseEvent) => {
-			setIsHovering(true)
-			projects.forEach((project, index) => {
-				if (buttonRefs.current[index] === e.target) {
-					setActiveProject(project)
-				}
-			})
+			const target = e.currentTarget as HTMLAnchorElement
+
+			const project = sortedProjects.find(
+				(item) => item?.slug === target.href.split("/").pop()
+			)
+
+			if (!project) return
+			setActiveProject(project)
 		},
 		[projects]
 	)
 
 	const handleMouseLeave = useCallback(() => {
-		setIsHovering(false)
+		setActiveProject(null)
 	}, [])
 
 	useEffect(() => {
@@ -166,21 +174,31 @@ export default function ArtistPage({
 											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 											isVideo={isVideo}
+											onMouseEnter={(e: MouseEvent) => handleMouseEnter(e)}
+											onMouseLeave={handleMouseLeave}
 										>
 											<div
 												className={`relative overflow-hidden ${
-													view === "thumbnail"
-														? `h-36 md:h-72 ${isVideo ? "aspect-[15.5/9]" : ""}`
-														: `w-full pb-8 ${isVideo ? "aspect-[15.5/9]" : ""}`
+													view === "thumbnail" ? `h-36 md:h-72` : `w-full pb-8`
+												} ${
+													isVideo
+														? "aspect-[15.5/9] before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0 group-hover:scale-105 transition-transform duration-300"
+														: ""
 												}`}
 											>
 												{isVideo ? (
+													// <VideoPlayer
+													// 	imageUrl={firstImage.url}
+													// 	isMuted={true}
+													// 	autoplay={false}
+													// 	play={
+													// 		isHovering && project.slug === activeProject?.slug
+													// 	}
+													// />
 													<ReactPlayer
 														className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
 														url={firstImage.url}
-														playing={
-															isHovering && project.slug === activeProject?.slug
-														}
+														playing={project.slug === activeProject?.slug}
 														playsinline
 														width='100%'
 														height='100%'
@@ -205,9 +223,6 @@ export default function ArtistPage({
 													/>
 												)}
 											</div>
-											{/* <label className='bg-primary block pt-2 z-50 md:hidden leading-tight'>
-											{project.title}
-										</label> */}
 										</Button>
 									)
 								})}

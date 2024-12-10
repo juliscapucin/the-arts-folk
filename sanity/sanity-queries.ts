@@ -111,6 +111,43 @@ export async function getNews(): Promise<Project[]> {
 	)
 }
 
+export async function getProjectsGallery(slug: string): Promise<Project[]> {
+	try {
+		// Step 1: Get Page ID
+		const page = await client.fetch(
+			groq`*[_type == "pages" && slug.current == $slug][0]{ _id }`,
+			{ slug }
+		)
+
+		if (!page?._id) {
+			console.error("Page not found for the provided slug.")
+			return []
+		}
+
+		// Step 2: Get Projects Linked to the Page
+		return client.fetch(
+			groq`*[_type == "project" && $pageId in addToPage[]._ref] | order(releaseDate desc){
+         _id,
+         "slug": slug.current,
+         artist,
+         artistSection,
+         title,
+         projectInfo,
+         releaseDate,
+         images,
+         addToPage,
+         projectsGallerySize,
+         addSpaceBeforeGallery,
+         addSpaceAfterGallery
+       }`,
+			{ pageId: page._id }
+		)
+	} catch (error) {
+		console.error("Error fetching projects:", error)
+		return []
+	}
+}
+
 export async function getProjectsByArtist(
 	artistId: string
 ): Promise<Project[]> {
@@ -149,10 +186,12 @@ export async function getPage(slug: string): Promise<Page> {
 	return client.fetch(
 		groq`*[_type == "pages" && (headerLink._ref in *[_type == "header" && slug.current == $slug]._id || slug.current == $slug)][0] {
            title,
+           showTitle,
            metadataTitle,
            metadataDescription,
            metadataKeywords,
            content,
+           addProjectsGallery
        }`,
 		{ slug }
 	)

@@ -36,10 +36,6 @@ export const PageContextProvider = ({
 	let ctx = gsap.context(() => {})
 	const [transitionIndex, setTransitionIndex] = useState("z-transitionHigh")
 
-	const animateMobileMenu = (mobileMenuRef: HTMLDivElement) => {
-		console.log("animate mobile menu")
-	}
-
 	// On page Exit
 	const transitionOnClick = (link: any) => {
 		// TODO: Toggle mobile menu
