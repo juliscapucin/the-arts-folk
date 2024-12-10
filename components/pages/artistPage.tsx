@@ -36,7 +36,6 @@ export default function ArtistPage({
 	startView,
 }: artistPageProps) {
 	const [view, setView] = useState(startView)
-	const [isHovering, setIsHovering] = useState(false)
 	const [activeProject, setActiveProject] = useState<Project | null>(null)
 	const imagesSectionRef = useRef<HTMLDivElement>(null)
 	const changeViewButtonRef = useRef<HTMLButtonElement>(null)
@@ -50,18 +49,19 @@ export default function ArtistPage({
 
 	const handleMouseEnter = useCallback(
 		(e: MouseEvent) => {
-			setIsHovering(true)
-			projects.forEach((project, index) => {
-				if (buttonRefs.current[index] === e.target) {
-					setActiveProject(project)
-				}
-			})
+			const target = e.currentTarget as HTMLAnchorElement
+
+			const project = sortedProjects.find(
+				(item) => item?.slug === target.href.split("/").pop()
+			)
+
+			if (!project) return
+			setActiveProject(project)
 		},
 		[projects]
 	)
 
 	const handleMouseLeave = useCallback(() => {
-		setIsHovering(false)
 		setActiveProject(null)
 	}, [])
 
@@ -174,6 +174,8 @@ export default function ArtistPage({
 											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 											isVideo={isVideo}
+											onMouseEnter={(e: MouseEvent) => handleMouseEnter(e)}
+											onMouseLeave={handleMouseLeave}
 										>
 											<div
 												className={`relative overflow-hidden ${
@@ -185,28 +187,26 @@ export default function ArtistPage({
 												}`}
 											>
 												{isVideo ? (
-													<VideoPlayer
-														imageUrl={firstImage.url}
-														isMuted={true}
-														autoplay={false}
-														play={
-															isHovering && project.slug === activeProject?.slug
-														}
-													/>
-												) : (
-													// <ReactPlayer
-													// 	className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
-													// 	url={firstImage.url}
-													// 	playing={
+													// <VideoPlayer
+													// 	imageUrl={firstImage.url}
+													// 	isMuted={true}
+													// 	autoplay={false}
+													// 	play={
 													// 		isHovering && project.slug === activeProject?.slug
 													// 	}
-													// 	playsinline
-													// 	width='100%'
-													// 	height='100%'
-													// 	controls={false}
-													// 	muted={true}
-													// 	loop={true}
 													// />
+													<ReactPlayer
+														className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
+														url={firstImage.url}
+														playing={project.slug === activeProject?.slug}
+														playsinline
+														width='100%'
+														height='100%'
+														controls={false}
+														muted={true}
+														loop={true}
+													/>
+												) : (
 													<ImageWithSpinner
 														classes='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
 														src={firstImage.url}

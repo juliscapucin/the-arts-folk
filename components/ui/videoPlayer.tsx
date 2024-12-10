@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react"
 import VimeoPlayer from "@vimeo/player"
-import { set } from "sanity"
 
 type VideoPlayerProps = {
 	imageUrl: string
@@ -28,6 +27,8 @@ export default function VideoPlayer({
 
 	useEffect(() => {
 		if (!videoPlayerRef.current || !videoId) return
+
+		console.log(play)
 
 		const iFrame = videoPlayerRef.current.childNodes[0] as HTMLIFrameElement
 

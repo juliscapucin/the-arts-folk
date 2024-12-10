@@ -11,6 +11,8 @@ type MyButtonProps = {
 	children?: React.ReactNode
 	transitionZIndex?: string
 	isVideo?: boolean
+	onMouseEnter?: (e: MouseEvent) => void
+	onMouseLeave?: (e: MouseEvent) => void
 }
 
 // Create MyButton component using forwardRef
@@ -28,6 +30,8 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 			<a
 				className={classes}
 				href={href}
+				onMouseEnter={(e) => {}}
+				onMouseLeave={(e) => {}}
 				onClick={(e) => {
 					e.preventDefault()
 					transitionZIndex
