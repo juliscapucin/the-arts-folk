@@ -10,6 +10,8 @@ import NavbarMobile from "./navbarMobile"
 import NavbarLink from "./navbarLink"
 import NavbarSocials from "./navbarSocials"
 import Paragraph from "./paragraph"
+import VideoPlayer from "./videoPlayer"
+import VideoPlayerControls from "./videoPlayerControls"
 
 export {
 	Button,
@@ -24,4 +26,6 @@ export {
 	NavbarLink,
 	NavbarSocials,
 	Paragraph,
+	VideoPlayer,
+	VideoPlayerControls,
 }

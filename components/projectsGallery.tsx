@@ -2,7 +2,6 @@
 
 import { Fragment } from "react"
 import { usePathname } from "next/navigation"
-import ReactPlayer from "react-player/vimeo"
 
 import {
 	Button,
@@ -13,36 +12,37 @@ import {
 
 import { Project } from "@/types"
 
-type NewsProps = {
-	news: Project[]
+type ProjectsGalleryProps = {
+	projectsGallery: Project[]
 }
 
-export default function News({ news }: NewsProps) {
+export default function ProjectsGallery({
+	projectsGallery,
+}: ProjectsGalleryProps) {
 	const pathname = usePathname()
 
 	return (
-		<Container
-			isSection
-			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
-				pathname.includes("news") ? "lg:mt-24" : "lg:mt-64"
+		<section
+			className={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 mt-24 lg:mt-32 ${
+				pathname !== "/production" && "gap-y-24"
 			}`}
 		>
-			{news.map((project, index) => {
+			{projectsGallery.map((project) => {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
 
 					return (
 						<Fragment key={project.slug}>
-							{project.addSpaceBefore && (
-								<article className='hidden md:block w-full h-full'></article>
+							{project.addSpaceBeforeGallery && (
+								<article className='hidden md:block w-fit h-full'></article>
 							)}
 							<article
-								className={`relative h-fit w-full ${
-									project.newsPageSize === "small" ? "" : "md:col-span-2"
+								className={`relative mb-24 md:mb-32 lg:mb-40 w-full ${
+									project.projectsGallerySize === "small" ? "" : "md:col-span-2"
 								}`}
 							>
 								<Button
-									href={`/news/${project.slug}`}
+									href={`${pathname}/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
 								>
 									{/* Project Image */}
@@ -70,21 +70,22 @@ export default function News({ news }: NewsProps) {
 
 									{/* Project Info */}
 									<p className='block mt-3 text-bodyMedium lg:text-bodyLarge leading-tight'>
-										{/* <span>{index}. </span> */}
 										{project.title}
 									</p>
-									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
-										By {project.artistInfo?.name}
-									</p>
+									{pathname !== "/production" && (
+										<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
+											By {project.artistInfo?.name}
+										</p>
+									)}
 								</Button>
 							</article>
-							{project.addSpaceAfter && (
+							{project.addSpaceAfterGallery && (
 								<article className='hidden md:block md:basis-1/4 w-full h-full'></article>
 							)}
 						</Fragment>
 					)
 				}
 			})}
-		</Container>
+		</section>
 	)
 }

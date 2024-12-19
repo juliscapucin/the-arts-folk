@@ -15,4 +15,8 @@ export type Project = {
 	newsPageSize?: string
 	addSpaceBefore?: boolean
 	addSpaceAfter?: boolean
+	addToPage?: boolean
+	projectsGallerySize?: string
+	addSpaceBeforeGallery?: boolean
+	addSpaceAfterGallery?: boolean
 }
