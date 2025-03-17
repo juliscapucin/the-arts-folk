@@ -41,7 +41,7 @@ const artistSchema = {
 		},
 		{
 			name: "scrapbookImages",
-			title: "Scrapbook Images (required)",
+			title: "Scrapbook Images (minimum 5 required)",
 			type: "array",
 			description: "These images are served from Cloudinary or Vimeo",
 			of: [
@@ -68,7 +68,9 @@ const artistSchema = {
 				},
 			],
 			validation: (Rule: Rule) =>
-				Rule.required().error("Scrapbook images are required"),
+				Rule.required()
+					.min(5)
+					.error("You must add at least 5 scrapbook images or videos"),
 		},
 		{
 			name: "startView",

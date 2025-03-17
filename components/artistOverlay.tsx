@@ -104,21 +104,23 @@ export default function ArtistOverlay({
 						/>
 					</div>
 					{/* RIGHT */}
-					<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
-						<ArtistOverlayImage
-							url={images[3].url}
-							classes={`h-1/2 ${isVisible && "delay-200"}`}
-							isVisible={isVisible}
-							artistName={artistName}
-						/>
+					{images[3]?.url && images[4]?.url && (
+						<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
+							<ArtistOverlayImage
+								url={images[3].url}
+								classes={`h-1/2 ${isVisible && "delay-200"}`}
+								isVisible={isVisible}
+								artistName={artistName}
+							/>
 
-						<ArtistOverlayImage
-							url={images[4].url}
-							classes={`h-1/2 self-end ${isVisible && "delay-300"}`}
-							isVisible={isVisible}
-							artistName={artistName}
-						/>
-					</div>
+							<ArtistOverlayImage
+								url={images[4].url}
+								classes={`h-1/2 self-end ${isVisible && "delay-300"}`}
+								isVisible={isVisible}
+								artistName={artistName}
+							/>
+						</div>
+					)}
 				</>
 			)}
 		</div>
