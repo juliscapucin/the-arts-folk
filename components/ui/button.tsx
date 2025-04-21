@@ -1,6 +1,6 @@
 "use client"
 
-import React, { forwardRef, Ref } from "react"
+import React, { forwardRef, MouseEventHandler, Ref } from "react"
 import Link from "next/link"
 import { usePageContext } from "@/context"
 
@@ -11,13 +11,24 @@ type MyButtonProps = {
 	children?: React.ReactNode
 	transitionZIndex?: string
 	isVideo?: boolean
-	onMouseEnter?: (e: MouseEvent) => void
-	onMouseLeave?: (e: MouseEvent) => void
+	handleMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined
+	handleMouseLeave?: MouseEventHandler<HTMLAnchorElement> | undefined
 }
 
 // Create MyButton component using forwardRef
 const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
-	({ href, classes, children, transitionZIndex, isVideo }, ref) => {
+	(
+		{
+			href,
+			classes,
+			children,
+			transitionZIndex,
+			isVideo,
+			handleMouseEnter,
+			handleMouseLeave,
+		},
+		ref
+	) => {
 		const { transitionOnClick, setTransitionIndex } = usePageContext()
 		const slug =
 			href && href.length > 0
@@ -28,10 +39,10 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 
 		return isVideo ? (
 			<a
-				className={classes}
+				className={`${classes}`}
 				href={href}
-				onMouseEnter={(e) => {}}
-				onMouseLeave={(e) => {}}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
 				onClick={(e) => {
 					e.preventDefault()
 					transitionZIndex

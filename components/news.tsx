@@ -2,7 +2,6 @@
 
 import { Fragment } from "react"
 import { usePathname } from "next/navigation"
-import ReactPlayer from "react-player/vimeo"
 
 import {
 	Button,
@@ -27,7 +26,7 @@ export default function News({ news }: NewsProps) {
 				pathname.includes("news") ? "lg:mt-24" : "lg:mt-64"
 			}`}
 		>
-			{news.map((project, index) => {
+			{news.map((project) => {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
 
@@ -70,7 +69,6 @@ export default function News({ news }: NewsProps) {
 
 									{/* Project Info */}
 									<p className='block mt-3 text-bodyMedium lg:text-bodyLarge leading-tight'>
-										{/* <span>{index}. </span> */}
 										{project.title}
 									</p>
 									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
