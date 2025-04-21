@@ -196,7 +196,7 @@ export default function ArtistPage({
 													// 	}
 													// />
 													<ReactPlayer
-														className='object-fill w-fit h-full before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'
+														className='object-fill w-fit h-full pointer-events-none'
 														url={firstImage.url}
 														playing={project.slug === activeProject?.slug}
 														playsinline

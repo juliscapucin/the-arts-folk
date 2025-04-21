@@ -48,7 +48,7 @@ export default function News({ news }: NewsProps) {
 									{/* Project Image */}
 									<div className='overflow-clip'>
 										{isVideo ? (
-											<div className='w-full aspect-video group-hover:scale-110 transition-transform duration-200 ease-in-out before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0'>
+											<div className='w-full aspect-video group-hover:scale-110 transition-transform duration-200 ease-in-out pointer-events-none'>
 												<VideoPlayer
 													imageUrl={project.images[0].url}
 													isMuted={true}
