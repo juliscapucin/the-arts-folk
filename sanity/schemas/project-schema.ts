@@ -1,3 +1,4 @@
+import CloudflareImageInput from "@/components/sanity/CloudflareImageInput"
 import React from "react"
 import { Rule } from "sanity"
 
@@ -74,6 +75,21 @@ const projectSchema = {
 			type: "array",
 			description: "Served from Cloudinary or Vimeo",
 			of: [
+				{
+					name: "cloudflareImage",
+					type: "object",
+					title: "Cloudflare Image",
+					fields: [
+						{
+							name: "id",
+							type: "string",
+							title: "Cloudflare Image ID",
+						},
+					],
+					components: {
+						input: CloudflareImageInput,
+					},
+				},
 				{
 					type: "cloudinary.asset",
 				},
