@@ -146,7 +146,7 @@ const projectSchema = {
 			name: "separator",
 			title: "Separator",
 			type: "string",
-			inputComponent: Separator, // Custom component
+			"components.input": Separator, // Custom component
 			hidden: true, // Optional: Hide it from the schema's saved data
 		},
 		{
