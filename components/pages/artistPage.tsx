@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, MouseEvent } from "react"
 import ReactPlayer from "react-player/vimeo"
 
 import gsap from "gsap"
@@ -47,40 +47,20 @@ export default function ArtistPage({
 		return projects.find((item) => item._id === project._ref)
 	})
 
-	const handleMouseEnter = useCallback(
-		(e: MouseEvent) => {
-			const target = e.currentTarget as HTMLAnchorElement
+	const handleMouseEnter = (e: MouseEvent) => {
+		const target = e.currentTarget as HTMLAnchorElement
 
-			const project = sortedProjects.find(
-				(item) => item?.slug === target.href.split("/").pop()
-			)
+		const project = sortedProjects.find(
+			(item) => item?.slug === target.href.split("/").pop()
+		)
 
-			if (!project) return
-			setActiveProject(project)
-		},
-		[projects]
-	)
+		if (!project) return
+		setActiveProject(project)
+	}
 
-	const handleMouseLeave = useCallback(() => {
+	const handleMouseLeave = () => {
 		setActiveProject(null)
-	}, [])
-
-	useEffect(() => {
-		if (!buttonRefs.current) return
-		const buttons = buttonRefs.current
-
-		buttons.forEach((button) => {
-			button?.addEventListener("mouseenter", (e) => handleMouseEnter(e))
-			button?.addEventListener("mouseleave", handleMouseLeave)
-		})
-
-		return () => {
-			buttons.forEach((button) => {
-				button?.removeEventListener("mouseenter", handleMouseEnter)
-				button?.removeEventListener("mouseleave", handleMouseLeave)
-			})
-		}
-	}, [buttonRefs.current])
+	}
 
 	useEffect(() => {
 		if (width < 768) {
@@ -91,7 +71,7 @@ export default function ArtistPage({
 		}
 	}, [width])
 
-	const toggleView = useCallback(() => {
+	const toggleView = () => {
 		const tl = gsap.timeline({
 			onComplete: () => {
 				setView((prevView) =>
@@ -119,7 +99,7 @@ export default function ArtistPage({
 			},
 			"<"
 		)
-	}, [])
+	}
 
 	return (
 		<Container classes='pt-[--header-height-desktop]'>
@@ -174,15 +154,15 @@ export default function ArtistPage({
 											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 											isVideo={isVideo}
-											onMouseEnter={(e: MouseEvent) => handleMouseEnter(e)}
-											onMouseLeave={handleMouseLeave}
+											handleMouseEnter={(e) => handleMouseEnter(e)}
+											handleMouseLeave={handleMouseLeave}
 										>
 											<div
 												className={`relative overflow-hidden ${
 													view === "thumbnail" ? `h-36 md:h-72` : `w-full pb-8`
 												} ${
 													isVideo
-														? "aspect-[15.5/9] before:content-[attr(data-content)] before:absolute before:inset-0 before:z-10 before:bg-primary before:opacity-0 group-hover:scale-105 transition-transform duration-300"
+														? "aspect-[15.5/9] group-hover:scale-105 transition-transform duration-300"
 														: ""
 												}`}
 											>
@@ -191,9 +171,7 @@ export default function ArtistPage({
 													// 	imageUrl={firstImage.url}
 													// 	isMuted={true}
 													// 	autoplay={false}
-													// 	play={
-													// 		isHovering && project.slug === activeProject?.slug
-													// 	}
+													// 	play={project.slug === activeProject?.slug}
 													// />
 													<ReactPlayer
 														className='object-fill w-fit h-full pointer-events-none'

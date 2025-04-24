@@ -7,9 +7,9 @@ import { metadataFallback } from "@/utils"
 import { NewsServer } from "@/components/server"
 
 // Opt out of caching for all data requests in the route segment
-export const dynamic = "force-dynamic"
+// export const dynamic = "force-dynamic"
 
-// export const revalidate = 300
+// export const revalidate = 60
 
 export async function generateMetadata() {
 	const pageData = getPage("home")

@@ -69,12 +69,6 @@ export default async function RootLayout({
 
 	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
 
-	// TODO: Remove this when the production page is ready
-	navLinks.push({
-		title: "Production",
-		slug: "production",
-		order: 3,
-	})
 	navLinks.sort((a, b) => a.order - b.order)
 
 	return (
