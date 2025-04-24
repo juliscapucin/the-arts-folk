@@ -197,7 +197,7 @@ export default function ArtistPage({
 														quality={70}
 														width={firstImage.width}
 														height={firstImage.height}
-														priority={index < 8}
+														priority={false}
 													/>
 												)}
 											</div>

@@ -1,21 +1,20 @@
 "use client"
 
-import React, { forwardRef, MouseEventHandler, Ref } from "react"
+import React, { forwardRef, MouseEventHandler } from "react"
 import Link from "next/link"
 import { usePageContext } from "@/context"
 
-// Define the props type for MyButton
 type MyButtonProps = {
 	href: string
 	classes?: string
 	children?: React.ReactNode
 	transitionZIndex?: string
 	isVideo?: boolean
+	prefetch?: boolean
 	handleMouseEnter?: MouseEventHandler<HTMLAnchorElement> | undefined
 	handleMouseLeave?: MouseEventHandler<HTMLAnchorElement> | undefined
 }
 
-// Create MyButton component using forwardRef
 const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 	(
 		{
@@ -24,6 +23,7 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 			children,
 			transitionZIndex,
 			isVideo,
+			prefetch,
 			handleMouseEnter,
 			handleMouseLeave,
 		},
@@ -55,7 +55,7 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 				{children}
 			</a>
 		) : (
-			<Link href={href} passHref legacyBehavior>
+			<Link href={href} prefetch={prefetch} passHref legacyBehavior>
 				<a
 					className={classes}
 					href={href}

@@ -43,6 +43,7 @@ export default function News({ news }: NewsProps) {
 								<Button
 									href={`/news/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
+									prefetch={false}
 								>
 									{/* Project Image */}
 									<div className='overflow-clip'>
