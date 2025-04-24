@@ -3,6 +3,7 @@
 import { CldImage } from "next-cloudinary"
 
 import ReactPlayer from "react-player/vimeo"
+import Image from "next/image"
 
 import type { ScrapbookImage } from "@/types"
 import { useEffect, useState } from "react"
@@ -27,6 +28,7 @@ const ArtistOverlayImage = ({
 	classes,
 	artistName,
 }: ArtistOverlayImageProps) => {
+	console.log(url)
 	return (
 		<div
 			className={`relative w-[80%] lg:w-[50%] transition-opacity duration-700 ${classes} ${
@@ -45,7 +47,7 @@ const ArtistOverlayImage = ({
 					loop={true}
 				/>
 			) : (
-				<CldImage
+				<Image
 					className={`object-contain p-4`}
 					src={url}
 					alt={`Photo by ${artistName}`}

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { CldImage } from "next-cloudinary"
+import Image from "next/image"
 
 type ImageWithSpinnerProps = {
 	classes: string
@@ -36,7 +37,7 @@ export default function ImageWithSpinner({
 					</div>
 				</div>
 			)}
-			<CldImage
+			<Image
 				className={classes}
 				src={src}
 				alt={alt}
