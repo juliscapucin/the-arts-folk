@@ -6,7 +6,6 @@ import CustomCursor from "./customCursor"
 import Intro from "./intro"
 import News from "./news"
 import ProjectFullscreen from "./projectFullscreen"
-import Projects from "./projects"
 import ProjectsGallery from "./projectsGallery"
 import { PageTransition } from "./pageTransition"
 import Showreel from "./showreel"
@@ -20,7 +19,6 @@ export {
 	Intro,
 	News,
 	ProjectFullscreen,
-	Projects,
 	ProjectsGallery,
 	PageTransition,
 	Showreel,

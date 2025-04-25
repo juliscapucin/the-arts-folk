@@ -21,9 +21,6 @@ const typeToPath = (type: string, slug: string): string | null => {
 export async function POST(req: NextRequest) {
 	const secret = req.nextUrl.searchParams.get("secret")
 
-	console.log("Received secret:", secret)
-	console.log("Expected secret:", process.env.SANITY_REVALIDATE_SECRET)
-
 	if (secret !== process.env.SANITY_REVALIDATE_SECRET) {
 		return NextResponse.json({ message: "Invalid token" }, { status: 401 })
 	}

@@ -24,6 +24,7 @@ export default async function Footer() {
 								classes='underlined-link'
 								key={`${link.title}-footer`}
 								href={`/${link.slug}`}
+								prefetch={false}
 							>
 								{link.title}
 							</Button>

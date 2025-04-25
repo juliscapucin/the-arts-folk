@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import { CldImage } from "next-cloudinary"
+import Image from "next/image"
 
 import gsap from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
@@ -116,7 +116,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				{showreelImages.map((image, index) => {
 					return (
 						<div className={`absolute w-full h-full`} key={`showreel-${index}`}>
-							<CldImage
+							<Image
 								className={`object-cover md:object-contain transition-opacity duration-300 ${
 									slideIndex === index ? "opacity-100 z-5" : "opacity-10 z-0"
 								}`}

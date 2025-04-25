@@ -12,7 +12,6 @@ import { ButtonLogo } from "@/components/buttons"
 import { NavbarLink } from "@/components/ui"
 
 import type { NavLink } from "@/types"
-import path from "path"
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]

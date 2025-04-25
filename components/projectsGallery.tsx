@@ -44,6 +44,7 @@ export default function ProjectsGallery({
 								<Button
 									href={`${pathname}/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
+									prefetch={false}
 								>
 									{/* Project Image */}
 									<div className='overflow-clip'>
@@ -69,7 +70,7 @@ export default function ProjectsGallery({
 									</div>
 
 									{/* Project Info */}
-									<p className='block mt-3 text-bodyMedium lg:text-bodyLarge leading-tight'>
+									<p className='block mt-3 text-bodyMedium text-balance lg:text-bodyLarge leading-tight'>
 										{project.title}
 									</p>
 									{pathname !== "/production" && (

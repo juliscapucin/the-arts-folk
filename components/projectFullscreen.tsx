@@ -1,9 +1,9 @@
 "use client"
 
 import { Suspense, useLayoutEffect, useRef } from "react"
+import Image from "next/image"
 import gsap from "gsap"
 
-import { CldImage } from "next-cloudinary"
 import ReactPlayer from "react-player/vimeo"
 
 import { CloudinaryImage } from "@/types"
@@ -106,7 +106,7 @@ export default function ProjectFullscreen({
 							</Suspense>
 						</div>
 					) : (
-						<CldImage
+						<Image
 							className={`w-full object-contain`}
 							src={image.url}
 							alt={`Photo by ${artistName}`}

@@ -17,21 +17,23 @@ export default function Heading({
 	switch (variant) {
 		case "display":
 			headingStyles =
-				"text-displaySmall md:text-displayMedium lg:text-displayLarge font-normal"
+				"text-displaySmall text-balance md:text-displayMedium lg:text-displayLarge font-normal"
 			break
 		case "headline":
 			headingStyles =
-				"text-headlineSmall md:text-headlineMedium lg:text-headlineLarge"
+				"text-headlineSmall text-balance md:text-headlineMedium lg:text-headlineLarge"
 			break
 		case "title":
-			headingStyles = "text-titleSmall md:text-titleMedium lg:text-titleLarge"
+			headingStyles =
+				"text-titleSmall text-balance md:text-titleMedium lg:text-titleLarge"
 			break
 		case "body":
-			headingStyles = "text-bodySmall md:text-bodyMedium lg:text-bodyLarge"
+			headingStyles =
+				"text-bodySmall text-balance md:text-bodyMedium lg:text-bodyLarge"
 			break
 		default:
 			headingStyles =
-				"text-displaySmall md:text-displayMedium lg:text-displayLarge"
+				"text-displaySmall text-balance md:text-displayMedium lg:text-displayLarge"
 			break
 	}
 

@@ -13,12 +13,12 @@ export default function navbarLink({
 	transitionOnClick,
 	isActive,
 }: NavbarLinkProps) {
+	const classes =
+		"underlined-link uppercase font-text font-extralight text-bodyLarge tracking-wide select-none"
 	return (
 		<>
 			{isActive ? (
-				<span className='active underlined-link uppercase font-text font-extralight text-bodyLarge tracking-wider select-none'>
-					{link.title}
-				</span>
+				<span className={`active ${classes}`}>{link.title}</span>
 			) : (
 				<Link key={link.slug} href={`/${link.slug}`} passHref legacyBehavior>
 					<button
@@ -26,7 +26,7 @@ export default function navbarLink({
 							e.preventDefault()
 							transitionOnClick(link)
 						}}
-						className='underlined-link uppercase font-text font-extralight text-bodyLarge tracking-wider select-none'
+						className={classes}
 					>
 						{link.title}
 					</button>

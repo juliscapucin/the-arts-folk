@@ -22,6 +22,12 @@ const securityHeaders = [
 const nextConfig = {
 	reactStrictMode: false,
 	swcMinify: true,
+	images: {
+		loader: "custom",
+		loaderFile: "./lib/cloudinaryLoader.ts",
+		deviceSizes: [480, 768, 1024, 1920, 2560], // 5 responsive breakpoints
+		imageSizes: [], // don't need extra fixed sizes
+	},
 	async headers() {
 		return [
 			{

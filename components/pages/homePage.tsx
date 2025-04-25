@@ -32,7 +32,6 @@ export default function HomePage({ showreelImages, children }: HomePageProps) {
 
 	return (
 		<main>
-			{/* ICON SCROLL */}
 			<div
 				ref={scrollTipRef}
 				className={`fixed mx-auto top-0 right-1 lg:right-6 h-screen pb-24 flex flex-col items-center justify-end gap-8 transition-opacity duration-500 delay-300 z-100`}
