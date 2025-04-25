@@ -69,7 +69,7 @@ export default function News({ news }: NewsProps) {
 									</div>
 
 									{/* Project Info */}
-									<p className='block mt-3 text-bodyMedium lg:text-bodyLarge leading-tight'>
+									<p className='block mt-3 text-bodyMedium text-balance lg:text-bodyLarge leading-tight'>
 										{project.title}
 									</p>
 									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
