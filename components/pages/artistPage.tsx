@@ -154,6 +154,7 @@ export default function ArtistPage({
 											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 											isVideo={isVideo}
+											prefetch={false}
 											handleMouseEnter={(e) => handleMouseEnter(e)}
 											handleMouseLeave={handleMouseLeave}
 										>
