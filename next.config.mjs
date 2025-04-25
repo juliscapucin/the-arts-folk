@@ -25,7 +25,7 @@ const nextConfig = {
 	images: {
 		loader: "custom",
 		loaderFile: "./lib/cloudinaryLoader.ts",
-		deviceSizes: [480, 768, 1024, 1920, 3840], // 5 responsive breakpoints
+		deviceSizes: [480, 768, 1024, 1920, 2560], // 5 responsive breakpoints
 		imageSizes: [], // don't need extra fixed sizes
 	},
 	async headers() {

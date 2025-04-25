@@ -1,7 +1,5 @@
 "use client"
 
-import { CldImage } from "next-cloudinary"
-
 import ReactPlayer from "react-player/vimeo"
 import Image from "next/image"
 

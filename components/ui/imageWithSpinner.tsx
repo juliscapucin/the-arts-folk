@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { CldImage } from "next-cloudinary"
 import Image from "next/image"
 
 type ImageWithSpinnerProps = {
