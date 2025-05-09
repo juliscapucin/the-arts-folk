@@ -65,8 +65,6 @@ export const PageContextProvider = ({
 
 	// 	// gsap.set(pageTransitionRef, { yPercent: 0 })
 
-	// 	console.log("hi")
-
 	// 	ctx.add(() => {
 	// 		gsap.to(pageTransitionRef, {
 	// 			yPercent: 100,

@@ -26,7 +26,6 @@ const ArtistOverlayImage = ({
 	classes,
 	artistName,
 }: ArtistOverlayImageProps) => {
-	console.log(url)
 	return (
 		<div
 			className={`relative w-[80%] lg:w-[50%] transition-opacity duration-700 ${classes} ${

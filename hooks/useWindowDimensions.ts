@@ -29,7 +29,5 @@ export const useWindowDimensions = () => {
 		}
 	}, [handleResize])
 
-	// console.log(width, height)
-
 	return { width, height }
 }
