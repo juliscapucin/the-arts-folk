@@ -1,13 +1,7 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
-import {
-	createContext,
-	useContext,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react"
+import { useRouter } from "next/navigation"
+import { createContext, useContext, useRef, useState } from "react"
 
 import gsap from "gsap"
 
@@ -31,18 +25,11 @@ export const PageContextProvider = ({
 	children: React.ReactNode
 }) => {
 	const pageTransitionRef = useRef<HTMLDivElement | null>(null)
-	const pathname = usePathname()
 	const router = useRouter()
-	let ctx = gsap.context(() => {})
 	const [transitionIndex, setTransitionIndex] = useState("z-transitionHigh")
 
 	// On page Exit
 	const transitionOnClick = (link: any) => {
-		// TODO: Toggle mobile menu
-		// if (mobileMenuRef) {
-		// 	animateMobileMenu(mobileMenuRef)
-		// }
-
 		if (!pageTransitionRef.current) return
 
 		gsap.set(pageTransitionRef.current, { yPercent: -100 })
@@ -59,21 +46,6 @@ export const PageContextProvider = ({
 		})
 	}
 
-	// On page Enter
-	// useLayoutEffect(() => {
-	// 	if (!pageTransitionRef) return
-
-	// 	// gsap.set(pageTransitionRef, { yPercent: 0 })
-
-	// 	ctx.add(() => {
-	// 		gsap.to(pageTransitionRef, {
-	// 			yPercent: 100,
-	// 			duration: 0.4,
-	// 			ease: "linear",
-	// 		})
-	// 	})
-	// }, [pathname])
-
 	return (
 		<PageContext.Provider
 			value={{
@@ -81,8 +53,7 @@ export const PageContextProvider = ({
 				pageTransitionRef,
 				transitionIndex,
 				setTransitionIndex,
-			}}
-		>
+			}}>
 			{children}
 		</PageContext.Provider>
 	)
