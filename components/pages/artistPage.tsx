@@ -123,8 +123,7 @@ export default function ArtistPage({
 							<button
 								ref={changeViewButtonRef}
 								onClick={toggleView}
-								className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
-							>
+								className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'>
 								<span className='underlined-link block'>
 									{view === "thumbnail" ? "Gallery" : "Thumbnails"}
 								</span>
@@ -135,8 +134,7 @@ export default function ArtistPage({
 						</header>
 						<div
 							ref={imagesSectionRef}
-							className='flex flex-wrap justify-start items-start'
-						>
+							className='flex flex-wrap justify-start items-start'>
 							{sortedProjects &&
 								sortedProjects.map((project, index) => {
 									if (!project || !project.images) return null
@@ -156,8 +154,7 @@ export default function ArtistPage({
 											isVideo={isVideo}
 											prefetch={false}
 											handleMouseEnter={(e) => handleMouseEnter(e)}
-											handleMouseLeave={handleMouseLeave}
-										>
+											handleMouseLeave={handleMouseLeave}>
 											<div
 												className={`relative overflow-hidden ${
 													view === "thumbnail" ? `h-36 md:h-72` : `w-full pb-8`
@@ -165,8 +162,7 @@ export default function ArtistPage({
 													isVideo
 														? "aspect-[15.5/9] group-hover:scale-105 transition-transform duration-300"
 														: ""
-												}`}
-											>
+												}`}>
 												{isVideo ? (
 													// <VideoPlayer
 													// 	imageUrl={firstImage.url}
@@ -188,7 +184,7 @@ export default function ArtistPage({
 												) : (
 													<ImageWithSpinner
 														classes='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
-														src={firstImage.url}
+														src={`/api/media?id=${firstImage.public_id}`}
 														alt={`Photo by ${artist.name}`}
 														sizes={
 															view === "thumbnail"

@@ -24,8 +24,7 @@ export default function News({ news }: NewsProps) {
 			isSection
 			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
 				pathname.includes("news") ? "lg:mt-24" : "lg:mt-64"
-			}`}
-		>
+			}`}>
 			{news.map((project) => {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
@@ -38,13 +37,11 @@ export default function News({ news }: NewsProps) {
 							<article
 								className={`relative h-fit w-full ${
 									project.newsPageSize === "small" ? "" : "md:col-span-2"
-								}`}
-							>
+								}`}>
 								<Button
 									href={`/news/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
-									prefetch={false}
-								>
+									prefetch={false}>
 									{/* Project Image */}
 									<div className='overflow-clip'>
 										{isVideo ? (
@@ -58,12 +55,12 @@ export default function News({ news }: NewsProps) {
 										) : (
 											<ImageWithSpinner
 												classes='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
-												src={project.images[0].url}
+												src={`/api/media?id=${project.images[0].public_id}`}
 												alt={`Photo by ${project.artistInfo?.name}`}
 												sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
 												quality={70}
-												width={project.images[0].width}
-												height={project.images[0].height}
+												width={project.images[0].width || 800}
+												height={project.images[0].height || 800}
 											/>
 										)}
 									</div>

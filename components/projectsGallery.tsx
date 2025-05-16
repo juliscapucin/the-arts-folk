@@ -25,8 +25,7 @@ export default function ProjectsGallery({
 		<section
 			className={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 mt-24 lg:mt-32 ${
 				pathname !== "/production" && "gap-y-24"
-			}`}
-		>
+			}`}>
 			{projectsGallery.map((project) => {
 				if (project.images && project.images[0]) {
 					const isVideo = project.images[0].url.includes("vimeo")
@@ -39,13 +38,11 @@ export default function ProjectsGallery({
 							<article
 								className={`relative mb-24 md:mb-32 lg:mb-40 w-full ${
 									project.projectsGallerySize === "small" ? "" : "md:col-span-2"
-								}`}
-							>
+								}`}>
 								<Button
 									href={`${pathname}/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
-									prefetch={false}
-								>
+									prefetch={false}>
 									{/* Project Image */}
 									<div className='overflow-clip'>
 										{isVideo ? (
@@ -59,7 +56,7 @@ export default function ProjectsGallery({
 										) : (
 											<ImageWithSpinner
 												classes='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
-												src={project.images[0].url}
+												src={`/api/media?id=${project.images[0].public_id}`}
 												alt={`Photo by ${project.artistInfo?.name}`}
 												sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
 												quality={70}

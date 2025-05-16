@@ -23,8 +23,7 @@ export default function ButtonLogo({ handleClick }: ButtonLogoProps) {
 							e.preventDefault()
 							pathname === "/" ? undefined : handleClick()
 						}}
-						aria-label='Home'
-					>
+						aria-label='Go to homepage'>
 						{pathname !== "/" && <Logo />}
 					</button>
 				</Link>

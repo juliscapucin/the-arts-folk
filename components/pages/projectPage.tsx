@@ -168,19 +168,16 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								{/* MINIMAP MARKER */}
 								<div
 									ref={minimapMarkerRef}
-									className='absolute top-[272px] w-[13vw] max-w-[176px] xl:-translate-x-[3px] h-[13.7svh] border border-secondary z-150'
-								></div>
+									className='absolute top-[272px] w-[13vw] max-w-[176px] xl:-translate-x-[3px] h-[13.7svh] border border-secondary z-150'></div>
 								{/* THUMBNAILS */}
 								<div
 									ref={thumbnailsRef}
-									className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'
-								>
+									className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'>
 									{images.map((image, index) => (
 										<button
 											onClick={() => handlePanelSlide(index, null)}
 											className={`relative w-full`}
-											key={`project-thumbnail-${index}`}
-										>
+											key={`project-thumbnail-${index}`}>
 											{image.url.includes("vimeo") ? (
 												<div className='relative w-full aspect-video'>
 													<VideoPlayer
@@ -192,7 +189,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 											) : (
 												<ImageWithSpinner
 													classes={`w-full object-contain`}
-													src={image.url}
+													src={`/api/media?id=${image.public_id}`}
 													alt={`Photo ${artist.name}`}
 													sizes='10vw'
 													quality={70}
@@ -246,14 +243,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					{projectInfo && (
 						<button
 							onClick={toggleProjectInfo}
-							className='sm:hidden mt-6 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-start'
-						>
+							className='sm:hidden mt-6 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-start'>
 							Project info
 							<span
 								className={`${
 									isProjectInfoOpen ? "rotate-180" : ""
-								} transition-transform duration-300 ease-in-out`}
-							>
+								} transition-transform duration-300 ease-in-out`}>
 								<IconChevron />
 							</span>
 						</button>
@@ -276,14 +271,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								<div className='h-8 mt-1 md:mt-4'>
 									<button
 										onClick={toggleProjectInfo}
-										className='mb-4 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-end'
-									>
+										className='mb-4 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-end'>
 										Project info
 										<span
 											className={`${
 												isProjectInfoOpen ? "rotate-180" : ""
-											} transition-transform duration-300 ease-in-out`}
-										>
+											} transition-transform duration-300 ease-in-out`}>
 											<IconChevron />
 										</span>
 									</button>
@@ -301,20 +294,17 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				{/* MORE INFO OVERLAY */}
 				<div
 					ref={projectInfoOuterRef}
-					className='absolute top-0 left-0 right-0 min-h-32 overflow-clip bg-primary pointer-events-none z-40'
-				>
+					className='absolute top-0 left-0 right-0 min-h-32 overflow-clip bg-primary pointer-events-none z-40'>
 					<div
 						ref={projectInfoInnerRef}
-						className='py-8 h-fit w-[95%] sm:w-3/4 bg-primary'
-					>
+						className='py-8 h-fit w-[95%] sm:w-3/4 bg-primary'>
 						<p className='font-text text-bodyMedium lg:text-bodyLarge lg:max-w-prose'>
 							{projectInfo}
 						</p>
 						{pathname.includes("news") && (
 							<Button
 								classes='underlined-link block w-full mt-8 font-text text-labelMedium font-medium text-center pointer-events-auto'
-								href={`artists/${artist.slug}`}
-							>
+								href={`artists/${artist.slug}`}>
 								Go to Artist page
 							</Button>
 						)}
@@ -328,8 +318,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						isFullscreenOpen
 							? "fixed inset-0 z-fullscreen overflow-y-scroll"
 							: ""
-					}`}
-				>
+					}`}>
 					{images &&
 						images.map((image, index) =>
 							width > 640 ? (
@@ -343,8 +332,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 											? "w-full sm:w-3/4"
 											: "w-full"
 									} ${index % 2 !== 0 ? "self-end" : "self-start"}`}
-									key={`project-image-${index}`}
-								>
+									key={`project-image-${index}`}>
 									{image.url.includes("vimeo") ? (
 										<div className='relative w-full aspect-video'>
 											<VideoPlayer
@@ -356,7 +344,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									) : (
 										<ImageWithSpinner
 											classes={`w-full h-full object-contain`}
-											src={image.url}
+											src={`/api/media?id=${image.public_id}`}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
 											quality={70}
@@ -379,7 +367,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									) : (
 										<ImageWithSpinner
 											classes={`w-full h-full object-contain`}
-											src={image.url}
+											src={`/api/media?id=${image.public_id}`}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
 											quality={70}

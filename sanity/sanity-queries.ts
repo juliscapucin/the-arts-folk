@@ -83,7 +83,10 @@ export async function getProjects(): Promise<Project[]> {
       title,
       projectInfo,
       releaseDate,
-      images,
+      images[]{
+        public_id,
+        url,
+      },
       isNews,
       newsPageSize,
       addSpaceBefore,
@@ -102,7 +105,10 @@ export async function getNews(): Promise<Project[]> {
       title,
       projectInfo,
       releaseDate,
-      images,
+      images[]{
+        public_id,
+        url,
+      },
       isNews,
       newsPageSize,
       addSpaceBefore,
@@ -134,7 +140,10 @@ export async function getProjectsGallery(slug: string): Promise<Project[]> {
          title,
          projectInfo,
          releaseDate,
-         images,
+         images[]{
+         public_id,
+         url,
+         },
          addToPage,
          projectsGallerySize,
          addSpaceBeforeGallery,
@@ -160,7 +169,10 @@ export async function getProjectsByArtist(
        title,
        projectInfo,
        releaseDate,
-       images,
+       images[]{
+        public_id,
+        url,
+      },
      }`,
 		{ artistId }
 	)
@@ -175,7 +187,10 @@ export async function getProject(slug: string): Promise<Project> {
       artist,
       projectInfo,
       releaseDate,
-      images,
+      images[]{
+        public_id,
+        url,
+      },
       isNews
    }`,
 		{ slug }
