@@ -2,17 +2,13 @@ import { NextRequest, NextResponse } from "next/server"
 
 const BLOCKED_BOTS = ["AhrefsBot", "GPTBot", "ClaudeBot", "archive.org_bot"]
 
-export function middleware(request: NextRequest) {
-	const userAgent = request.headers.get("user-agent") || ""
+export async function GET(req: NextRequest) {
+	const userAgent = req.headers.get("user-agent") || ""
 
 	if (BLOCKED_BOTS.some((bot) => userAgent.includes(bot))) {
-		return new NextResponse("Blocked", { status: 403 })
+		return new NextResponse("Blocked bot", { status: 403 })
 	}
 
-	return NextResponse.next()
-}
-
-export async function GET(req: NextRequest) {
 	const url = new URL(req.url)
 	const publicId = url.searchParams.get("id")
 
