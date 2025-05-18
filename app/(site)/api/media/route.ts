@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 	}
 
 	// Build your Cloudinary URL (could be signed)
-	const cloudinaryUrl = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.jpg`
+	const cloudinaryUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.jpg`
 
 	// Redirect to Cloudinary
 	return NextResponse.redirect(cloudinaryUrl)
