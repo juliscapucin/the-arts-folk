@@ -56,12 +56,12 @@ export default function ProjectsGallery({
 										) : (
 											<ImageWithSpinner
 												classes='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
-												src={`/api/media?id=${project.images[0].public_id}`}
+												src={project.images[0].url}
 												alt={`Photo by ${project.artistInfo?.name}`}
 												sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
 												quality={70}
-												width={project.images[0].width}
-												height={project.images[0].height}
+												width={project.images[0].width || 800}
+												height={project.images[0].height || 800}
 											/>
 										)}
 									</div>

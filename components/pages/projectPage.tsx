@@ -189,12 +189,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 											) : (
 												<ImageWithSpinner
 													classes={`w-full object-contain`}
-													src={`/api/media?id=${image.public_id}`}
+													src={image.url}
 													alt={`Photo ${artist.name}`}
 													sizes='10vw'
 													quality={70}
-													width={image.width}
-													height={image.height}
+													width={image.width || 800}
+													height={image.height || 800}
 												/>
 											)}
 										</button>
@@ -344,12 +344,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									) : (
 										<ImageWithSpinner
 											classes={`w-full h-full object-contain`}
-											src={`/api/media?id=${image.public_id}`}
+											src={image.url}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
 											quality={70}
-											width={image.width}
-											height={image.height}
+											width={image.width || 800}
+											height={image.height || 800}
 											priority={index === 0}
 										/>
 									)}
@@ -367,12 +367,12 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									) : (
 										<ImageWithSpinner
 											classes={`w-full h-full object-contain`}
-											src={`/api/media?id=${image.public_id}`}
+											src={image.url}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
 											quality={70}
-											width={image.width}
-											height={image.height}
+											width={image.width || 800}
+											height={image.height || 800}
 											priority={index === 0}
 										/>
 									)}

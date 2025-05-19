@@ -184,7 +184,7 @@ export default function ArtistPage({
 												) : (
 													<ImageWithSpinner
 														classes='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
-														src={`/api/media?id=${firstImage.public_id}`}
+														src={firstImage.url}
 														alt={`Photo by ${artist.name}`}
 														sizes={
 															view === "thumbnail"
@@ -192,8 +192,8 @@ export default function ArtistPage({
 																: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
 														}
 														quality={70}
-														width={firstImage.width}
-														height={firstImage.height}
+														width={firstImage.width || 800}
+														height={firstImage.height || 800}
 														priority={false}
 													/>
 												)}

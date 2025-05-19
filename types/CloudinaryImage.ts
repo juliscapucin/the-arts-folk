@@ -5,5 +5,5 @@ export type CloudinaryImage = {
 	width: number
 	height: number
 	_key: string
-	bytes?: number
+	_ref: string
 }
