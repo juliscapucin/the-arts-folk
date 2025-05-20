@@ -24,7 +24,7 @@ export default function robots(): MetadataRoute.Robots {
 				allow: "/",
 			},
 		],
-		// Optional: include your sitemap if you have one
-		//  sitemap: 'https://yourdomain.com/sitemap.xml',
+		// Optional: sitemap
+		// sitemap: "https://theartsfolk.com/sitemap.xml",
 	}
 }

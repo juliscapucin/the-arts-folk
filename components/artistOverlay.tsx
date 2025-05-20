@@ -4,7 +4,6 @@ import ReactPlayer from "react-player/vimeo"
 import Image from "next/image"
 
 import type { ScrapbookImage } from "@/types"
-import { useEffect, useState } from "react"
 
 type ArtistOverlayProps = {
 	images: ScrapbookImage[]
@@ -30,8 +29,7 @@ const ArtistOverlayImage = ({
 		<div
 			className={`relative w-[80%] lg:w-[50%] transition-opacity duration-700 ${classes} ${
 				isVisible ? "" : "opacity-0"
-			}`}
-		>
+			}`}>
 			{url.includes("vimeo") ? (
 				<ReactPlayer
 					url={url}
@@ -63,65 +61,56 @@ export default function ArtistOverlay({
 	index,
 	artistName,
 }: ArtistOverlayProps) {
-	const [isClient, setIsClient] = useState(false)
-
-	useEffect(() => {
-		setIsClient(true)
-	}, [])
-
 	return (
 		<div
 			className={`flex ${
 				index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-			} fixed top-[--header-height-desktop] left-auto w-full py-16 pr-8 lg:pr-20 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 z-80 mix-blend-multiply`}
-		>
-			{isClient && (
-				<>
-					{/* LEFT */}
-					<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-2 md:gap-4'>
-						<div className='relative flex flex-col lg:flex-row w-full h-full lg:h-1/2 gap-4'>
-							<ArtistOverlayImage
-								url={images[0].url}
-								classes={`h-full self-end ${isVisible && "delay-200"}`}
-								isVisible={isVisible}
-								artistName={artistName}
-							/>
-
-							<ArtistOverlayImage
-								url={images[1].url}
-								classes={`h-full lg:top-32 ${isVisible && "delay-300"}`}
-								isVisible={isVisible}
-								artistName={artistName}
-							/>
-						</div>
+			} fixed top-[--header-height-desktop] left-auto w-full py-16 pr-8 lg:pr-20 max-w-desktop h-[--container-height-mobile] lg:h-[--container-height-desktop] justify-between pointer-events-none transition-opacity duration-500 z-80 mix-blend-multiply`}>
+			<>
+				{/* LEFT */}
+				<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col gap-2 md:gap-4'>
+					<div className='relative flex flex-col lg:flex-row w-full h-full lg:h-1/2 gap-4'>
+						<ArtistOverlayImage
+							url={images[0].url}
+							classes={`h-full self-end ${isVisible ? "delay-200" : ""}`}
+							isVisible={isVisible}
+							artistName={artistName}
+						/>
 
 						<ArtistOverlayImage
-							url={images[2].url}
-							classes={`h-1/2 ${isVisible && "delay-500"}`}
+							url={images[1].url}
+							classes={`h-full lg:top-32 ${isVisible && "delay-300"}`}
 							isVisible={isVisible}
 							artistName={artistName}
 						/>
 					</div>
-					{/* RIGHT */}
-					{images[3]?.url && images[4]?.url && (
-						<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
-							<ArtistOverlayImage
-								url={images[3].url}
-								classes={`h-1/2 ${isVisible && "delay-200"}`}
-								isVisible={isVisible}
-								artistName={artistName}
-							/>
 
-							<ArtistOverlayImage
-								url={images[4].url}
-								classes={`h-1/2 self-end ${isVisible && "delay-300"}`}
-								isVisible={isVisible}
-								artistName={artistName}
-							/>
-						</div>
-					)}
-				</>
-			)}
+					<ArtistOverlayImage
+						url={images[2].url}
+						classes={`h-1/2 ${isVisible && "delay-500"}`}
+						isVisible={isVisible}
+						artistName={artistName}
+					/>
+				</div>
+				{/* RIGHT */}
+				{images[3] && images[4] && images[3]?.url && images[4]?.url && (
+					<div className='relative w-[45%] lg:w-[40%] h-full flex flex-col lg:flex-row gap-4'>
+						<ArtistOverlayImage
+							url={images[3].url}
+							classes={`h-1/2 ${isVisible && "delay-200"}`}
+							isVisible={isVisible}
+							artistName={artistName}
+						/>
+
+						<ArtistOverlayImage
+							url={images[4].url}
+							classes={`h-1/2 self-end ${isVisible && "delay-300"}`}
+							isVisible={isVisible}
+							artistName={artistName}
+						/>
+					</div>
+				)}
+			</>
 		</div>
 	)
 }
