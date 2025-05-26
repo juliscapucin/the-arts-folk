@@ -1,30 +1,44 @@
-import { MetadataRoute } from "next"
+import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
 	return {
 		rules: [
 			{
-				userAgent: "GPTBot",
-				disallow: "/",
+				userAgent: 'GPTBot',
+				disallow: '/',
 			},
 			{
-				userAgent: "ClaudeBot",
-				disallow: "/",
+				userAgent: 'ClaudeBot',
+				disallow: '/',
 			},
 			{
-				userAgent: "AhrefsBot",
-				disallow: "/",
+				userAgent: 'AhrefsBot',
+				disallow: '/',
 			},
 			{
-				userAgent: "archive.org_bot",
-				disallow: "/",
+				userAgent: 'archive.org_bot',
+				disallow: '/',
 			},
 			{
-				userAgent: "*",
-				allow: "/",
+				userAgent: 'ImagesiftBot',
+				disallow: '/',
+			},
+			{
+				userAgent: 'Bytespider',
+				disallow: '/',
+			},
+			{
+				userAgent: 'OAI-SearchBot',
+				disallow: '/',
+			},
+			{
+				userAgent: 'crawler',
+				disallow: '/',
+			},
+			{
+				userAgent: '*',
+				allow: '/',
 			},
 		],
-		// Optional: sitemap
-		// sitemap: "https://theartsfolk.com/sitemap.xml",
 	}
 }
