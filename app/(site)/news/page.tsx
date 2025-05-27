@@ -1,10 +1,10 @@
-import { getPage } from "@/sanity/sanity-queries"
+import { getPage } from '@/sanity/sanity-queries'
 
-import { metadataFallback } from "@/utils"
-import { NewsServer } from "@/components/server"
+import { NewsServer } from '@/components/server'
+import { metadataFallback } from '@/utils'
 
 export async function generateMetadata() {
-	const pageData = getPage("news")
+	const pageData = getPage('news')
 	const page = await pageData
 
 	if (!page) {
@@ -18,10 +18,6 @@ export async function generateMetadata() {
 		keywords: page.metadataKeywords || metadataFallback.keywords,
 	}
 }
-
-// Opt out of caching for all data requests in the route segment
-// export const dynamic = "force-dynamic"
-// export const fetchCache = "force-no-store"
 
 export default async function Page() {
 	return (

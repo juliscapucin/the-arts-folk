@@ -69,7 +69,7 @@ export default async function RootLayout({
 		<html lang='en' className='gutter-stable relative overflow-x-clip'>
 			<PageContextProvider>
 				<body
-					className={`${displayFont.className} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}>
+					className={`${displayFont.variable} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}>
 					<Intro />
 					<PageTransition />
 					<Header navLinks={navLinks} />
