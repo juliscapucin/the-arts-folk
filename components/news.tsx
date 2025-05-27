@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { Fragment } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname } from 'next/navigation'
+import { Fragment } from 'react'
 
 import {
 	Button,
 	Container,
 	ImageWithSpinner,
 	VideoPlayer,
-} from "@/components/ui"
+} from '@/components/ui'
 
-import { Project } from "@/types"
+import { Project } from '@/types'
 
 type NewsProps = {
 	news: Project[]
@@ -23,12 +23,11 @@ export default function News({ news }: NewsProps) {
 		<Container
 			isSection
 			classes={`relative mb-12 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-24 mt-40 ${
-				pathname.includes("news") ? "lg:mt-24" : "lg:mt-64"
-			}`}
-		>
+				pathname.includes('news') ? 'lg:mt-24' : 'lg:mt-64'
+			}`}>
 			{news.map((project) => {
 				if (project.images && project.images[0]) {
-					const isVideo = project.images[0].url.includes("vimeo")
+					const isVideo = project.images[0].url.includes('vimeo')
 
 					return (
 						<Fragment key={project.slug}>
@@ -37,14 +36,12 @@ export default function News({ news }: NewsProps) {
 							)}
 							<article
 								className={`relative h-fit w-full ${
-									project.newsPageSize === "small" ? "" : "md:col-span-2"
-								}`}
-							>
+									project.newsPageSize === 'small' ? '' : 'md:col-span-2'
+								}`}>
 								<Button
 									href={`/news/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
-									prefetch={false}
-								>
+									prefetch={false}>
 									{/* Project Image */}
 									<div className='overflow-clip'>
 										{isVideo ? (
@@ -69,7 +66,7 @@ export default function News({ news }: NewsProps) {
 									</div>
 
 									{/* Project Info */}
-									<p className='block mt-3 text-bodyMedium text-balance lg:text-bodyLarge leading-tight'>
+									<p className='block font-heading mt-3 text-bodyMedium text-balance lg:text-bodyLarge leading-tight'>
 										{project.title}
 									</p>
 									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { MouseEventHandler } from 'react'
 
 type MyButtonProps = {
-	ref: React.Ref<HTMLAnchorElement> | undefined
+	ref?: React.Ref<HTMLAnchorElement> | undefined
 	href: string
 	classes?: string
 	children?: React.ReactNode
