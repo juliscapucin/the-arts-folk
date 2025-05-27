@@ -6,20 +6,21 @@ import { getArtists, getPage, getProject } from "@/sanity/sanity-queries"
 import { metadataFallback } from "@/utils"
 import { Suspense } from "react"
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { slug: string }
-}) {
-	const { slug } = params
-	const pageData = getPage(slug)
-	const page = await pageData
+export async function generateMetadata(
+    props: {
+        params: Promise<{ slug: string }>
+    }
+) {
+    const params = await props.params;
+    const { slug } = params
+    const pageData = getPage(slug)
+    const page = await pageData
 
-	if (!page) {
+    if (!page) {
 		return metadataFallback
 	}
 
-	return {
+    return {
 		metadataBase: metadataFallback.metadataBase,
 		title: page.metadataTitle || metadataFallback.title,
 		description: page.metadataDescription || metadataFallback.description,
@@ -30,23 +31,24 @@ export async function generateMetadata({
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic"
 
-export default async function page({
-	params,
-}: {
-	params: { projectSlug: string }
-}) {
-	const { projectSlug } = params
-	const project = await getProject(projectSlug)
-	const artists = await getArtists()
+export default async function page(
+    props: {
+        params: Promise<{ projectSlug: string }>
+    }
+) {
+    const params = await props.params;
+    const { projectSlug } = params
+    const project = await getProject(projectSlug)
+    const artists = await getArtists()
 
-	const artist = artists.find((artist) => {
+    const artist = artists.find((artist) => {
 		if (!project.artist) return null
 		return artist._id === project.artist._ref
 	})
 
-	if (!project || !artist) return notFound()
+    if (!project || !artist) return notFound()
 
-	return (
+    return (
 		<Suspense fallback={null}>
 			<ProjectPage {...{ artist, project }} />
 		</Suspense>

@@ -5,6 +5,8 @@ import {
 	FaAlignJustify,
 } from "react-icons/fa"
 
+import type { JSX } from "react";
+
 const iconMap: { [key: string]: JSX.Element } = {
 	FaAlignLeft: <FaAlignLeft />,
 	FaAlignCenter: <FaAlignCenter />,

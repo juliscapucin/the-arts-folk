@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 type HeadingProps = {
 	tag: string
 	classes?: string

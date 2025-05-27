@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
-import Link from "next/link"
-import { PortableText } from "@portabletext/react"
+import { PortableText } from '@portabletext/react'
+import Link from 'next/link'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import gsap from "gsap"
+import gsap from 'gsap'
 
-import { ButtonClose } from "@/components/buttons"
-import { Container, Heading } from "@/components/ui"
-import { useCookieStorage } from "@/hooks"
+import { ButtonClose } from '@/components/buttons'
+import { Container, Heading } from '@/components/ui'
+import { useCookieStorage } from '@/hooks'
 
-import { Page } from "@/types"
+import { Page } from '@/types'
 
 type CookiesProps = {
 	cookieData: Page
@@ -24,12 +24,12 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 	// Cookie button
 	useLayoutEffect(() => {
-		if (!cookieRef.current || cookie === "true") return
+		if (!cookieRef.current || cookie === 'true') return
 		gsap.set(overlayRef.current, { yPercent: 120 })
 		gsap.to(cookieRef.current, {
 			xPercent: -100,
 			duration: 0.2,
-			ease: "power4.out",
+			ease: 'power4.out',
 			delay: 2.7,
 		})
 	}, [])
@@ -46,7 +46,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 			gsap.to(overlayRef.current, {
 				yPercent: isOpen ? 0 : 120,
 				duration: 0.4,
-				ease: "power2.out",
+				ease: 'power2.out',
 				// onComplete: () => setIsOverlayOpen(isOpen),
 			})
 		}, overlayRef)
@@ -58,19 +58,19 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape" && isOverlayOpen) {
+			if (e.key === 'Escape' && isOverlayOpen) {
 				toggleOverlay()
 			}
 		}
 
-		window.addEventListener("keydown", handleKeyDown)
+		window.addEventListener('keydown', handleKeyDown)
 
 		return () => {
-			window.removeEventListener("keydown", handleKeyDown)
+			window.removeEventListener('keydown', handleKeyDown)
 		}
 	}, [toggleOverlay])
 
-	if (cookie === "true") return null
+	if (cookie === 'true') return null
 
 	const okButtonHandler = (cookie: string) => {
 		updateCookie(cookie)
@@ -79,7 +79,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		gsap.to(cookieRef.current, {
 			xPercent: 100,
 			duration: 0.2,
-			ease: "power4.in",
+			ease: 'power4.in',
 			onComplete: () => {
 				setCookie(cookie)
 			},
@@ -89,34 +89,30 @@ export default function Cookies({ cookieData }: CookiesProps) {
 	{
 		return (
 			cookieData &&
-			cookie !== "true" && (
+			cookie !== 'true' && (
 				<>
 					{/* White overlay */}
 					<div
 						className={`background-white fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] max-w-desktop mx-auto left-0 right-0 bottom-0 flex items-end justify-end z-cookies overflow-clip pointer-events-none transition-colors duration-300 ${
-							isOverlayOpen ? "md:bg-primary/80" : ""
-						}`}
-					>
+							isOverlayOpen ? 'md:bg-primary/80' : ''
+						}`}>
 						{/* Cookie button */}
 						<div
 							ref={cookieRef}
-							className='translate-x-full space-x-4 bg-secondary text-primary px-3 py-2 pointer-events-auto'
-						>
-							<Link href='/' passHref legacyBehavior>
+							className='translate-x-full space-x-4 bg-secondary text-primary px-3 py-2 pointer-events-auto'>
+							<Link href='/' passHref>
 								<button
 									onClick={(e) => {
 										e.preventDefault()
 										toggleOverlay()
 									}}
-									className='underlined-link uppercase font-text font-extralight text-bodySmall tracking-wider text-primary select-none'
-								>
+									className='underlined-link uppercase font-text font-extralight text-bodySmall tracking-wider text-primary select-none'>
 									This site uses cookies
 								</button>
 							</Link>
 							<button
 								className='text-bodySmall'
-								onClick={() => okButtonHandler("true")}
-							>
+								onClick={() => okButtonHandler('true')}>
 								OK
 							</button>
 						</div>
@@ -125,40 +121,35 @@ export default function Cookies({ cookieData }: CookiesProps) {
 					{/* Cookie Policy overlay */}
 					<div
 						className={`fixed w-full top-0 left-0 right-0 bottom-8 pr-0 max-w-desktop mx-auto overflow-clip z-cookiesOverlay ${
-							isOverlayOpen ? "pointer-events-auto" : "pointer-events-none"
-						}`}
-					>
+							isOverlayOpen ? 'pointer-events-auto' : 'pointer-events-none'
+						}`}>
 						<ButtonClose
 							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-4 max-w-desktop mt-4 flex justify-end z-100`}
 							action={toggleOverlay}
-							color={isOverlayOpen ? "primary" : "transparent"}
+							color={isOverlayOpen ? 'primary' : 'transparent'}
 						/>
 
 						{/* Gradients */}
 						<div
 							className={`absolute top-[--header-height-mobile] right-10 w-[98%] md:w-[70%] lg:w-[35%] h-16 ml-auto bg-gradient-to-b from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
 								isOverlayOpen
-									? "transition-opacity duration-300 delay-300"
-									: "opacity-0"
-							}`}
-						></div>
+									? 'transition-opacity duration-300 delay-300'
+									: 'opacity-0'
+							}`}></div>
 						<div
 							className={`absolute bottom-0 right-10 w-[98%] md:w-[70%] lg:w-[35%] h-16 ml-auto bg-gradient-to-t from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
-								isOverlayOpen ? "" : "opacity-0"
-							}`}
-						></div>
+								isOverlayOpen ? '' : 'opacity-0'
+							}`}></div>
 
 						{/* Overlay Content */}
 						<div
 							ref={overlayRef}
-							className='cookies-overlay gutter-stable relative w-full md:w-3/4 lg:w-2/5 ml-auto mr-0 bg-secondary text-primary h-full pb-8 overflow-y-scroll'
-						>
+							className='cookies-overlay gutter-stable relative w-full md:w-3/4 lg:w-2/5 ml-auto mr-0 bg-secondary text-primary h-full pb-8 overflow-y-scroll'>
 							<div className='custom-rich-text w-full px-4 lg:px-12 pb-12'>
 								<Heading
 									tag='h1'
 									variant='headline'
-									classes='mb-16 mt-24 lg:mt-16'
-								>
+									classes='mb-16 mt-24 lg:mt-16'>
 									{cookieData.title}
 								</Heading>
 								<PortableText value={cookieData.content} />

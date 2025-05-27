@@ -7,20 +7,21 @@ import { metadataFallback } from "@/utils"
 import { Suspense } from "react"
 import { ProjectsGalleryServer } from "@/components/server"
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { slug: string }
-}) {
-	const { slug } = params
-	const pageData = getPage(slug)
-	const page = await pageData
+export async function generateMetadata(
+    props: {
+        params: Promise<{ slug: string }>
+    }
+) {
+    const params = await props.params;
+    const { slug } = params
+    const pageData = getPage(slug)
+    const page = await pageData
 
-	if (!page) {
+    if (!page) {
 		return metadataFallback
 	}
 
-	return {
+    return {
 		metadataBase: metadataFallback.metadataBase,
 		title: page.metadataTitle || metadataFallback.title,
 		description: page.metadataDescription || metadataFallback.description,
@@ -32,13 +33,14 @@ export async function generateMetadata({
 export const dynamic = "force-dynamic"
 export const fetchCache = "force-no-store"
 
-export default async function page({ params }: { params: { slug: string } }) {
-	const { slug } = params
-	const pageData = await getPage(slug)
+export default async function page(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
+    const { slug } = params
+    const pageData = await getPage(slug)
 
-	if (!pageData) return notFound()
+    if (!pageData) return notFound()
 
-	return (
+    return (
 		<Suspense fallback={null}>
 			<DefaultPage {...{ pageData }}>
 				{pageData.addProjectsGallery && <ProjectsGalleryServer {...{ slug }} />}

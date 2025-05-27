@@ -10,20 +10,21 @@ import { metadataFallback } from "@/utils"
 import { Suspense } from "react"
 import { ArtistSection } from "@/types"
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { slug: string }
-}) {
-	const { slug } = params
-	const pageData = getPage(slug)
-	const page = await pageData
+export async function generateMetadata(
+    props: {
+        params: Promise<{ slug: string }>
+    }
+) {
+    const params = await props.params;
+    const { slug } = params
+    const pageData = getPage(slug)
+    const page = await pageData
 
-	if (!page) {
+    if (!page) {
 		return metadataFallback
 	}
 
-	return {
+    return {
 		metadataBase: metadataFallback.metadataBase,
 		title: page.metadataTitle || metadataFallback.title,
 		description: page.metadataDescription || metadataFallback.description,
@@ -31,23 +32,24 @@ export async function generateMetadata({
 	}
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-	const { slug } = params
-	const artist = await getArtist(slug)
-	const projects = await getProjectsByArtist(artist._id)
-	const artistSections = await getArtistSections()
-	const featuredSection = artistSections.find(
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+    const params = await props.params;
+    const { slug } = params
+    const artist = await getArtist(slug)
+    const projects = await getProjectsByArtist(artist._id)
+    const artistSections = await getArtistSections()
+    const featuredSection = artistSections.find(
 		(section) => section.title === "Featured"
 	)
 
-	const artistProjects = projects.filter((project) => {
+    const artistProjects = projects.filter((project) => {
 		if (!project.artist) return null
 		return artist._id === project.artist._ref
 	})
 
-	if (!artistProjects) return notFound()
+    if (!artistProjects) return notFound()
 
-	const artistLinks = artistProjects.reduce<ArtistSection[]>((acc, project) => {
+    const artistLinks = artistProjects.reduce<ArtistSection[]>((acc, project) => {
 		if (project.artistSection) {
 			project.artistSection.forEach((section) => {
 				artistSections.forEach((artistSection) => {
@@ -63,9 +65,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		return acc
 	}, [])
 
-	const orderedArtistLinks = artistLinks.sort((a, b) => a.order - b.order)
+    const orderedArtistLinks = artistLinks.sort((a, b) => a.order - b.order)
 
-	const featuredProjects = featuredSection
+    const featuredProjects = featuredSection
 		? artistProjects.filter((project) =>
 				project.artistSection?.some(
 					(section) => section._ref === featuredSection._id
@@ -73,10 +75,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		  )
 		: []
 
-	if (!featuredSection) return notFound()
-	// if (!artist || !featuredProjects || !featuredSection) return notFound()
+    if (!featuredSection) return notFound()
+    // if (!artist || !featuredProjects || !featuredSection) return notFound()
 
-	return (
+    return (
 		<Suspense fallback={null}>
 			<ArtistPage
 				{...{

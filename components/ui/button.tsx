@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import React, { forwardRef, MouseEventHandler } from "react"
-import Link from "next/link"
-import { usePageContext } from "@/context"
+import { usePageContext } from '@/context'
+import Link from 'next/link'
+import React, { forwardRef, MouseEventHandler } from 'react'
 
 type MyButtonProps = {
 	href: string
@@ -32,10 +32,10 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 		const { transitionOnClick, setTransitionIndex } = usePageContext()
 		const slug =
 			href && href.length > 0
-				? href.startsWith("/")
+				? href.startsWith('/')
 					? href.slice(1)
 					: href
-				: "/"
+				: '/'
 
 		return isVideo ? (
 			<a
@@ -47,35 +47,32 @@ const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
 					e.preventDefault()
 					transitionZIndex
 						? setTransitionIndex(transitionZIndex)
-						: setTransitionIndex("z-transitionHigh")
+						: setTransitionIndex('z-transitionHigh')
 					transitionOnClick(slug)
 				}}
-				ref={ref}
-			>
+				ref={ref}>
 				{children}
 			</a>
 		) : (
-			<Link href={href} prefetch={prefetch} passHref legacyBehavior>
-				<a
-					className={classes}
-					href={href}
-					onClick={(e) => {
-						e.preventDefault()
-						transitionZIndex
-							? setTransitionIndex(transitionZIndex)
-							: setTransitionIndex("z-transitionHigh")
-						transitionOnClick(slug)
-					}}
-					ref={ref}
-				>
-					{children}
-				</a>
+			<Link
+				className={classes}
+				href={href}
+				prefetch={prefetch}
+				onClick={(e) => {
+					e.preventDefault()
+					transitionZIndex
+						? setTransitionIndex(transitionZIndex)
+						: setTransitionIndex('z-transitionHigh')
+					transitionOnClick(slug)
+				}}
+				ref={ref}>
+				{children}
 			</Link>
 		)
 	}
 )
 
 // Set displayName for better debugging and error messages
-Button.displayName = "Button"
+Button.displayName = 'Button'
 
 export default Button
