@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { usePathname } from "next/navigation"
+import { usePathname } from 'next/navigation'
 
-import { Button } from "@/components/ui"
-import { Artist, ArtistSection } from "@/types"
+import { Button } from '@/components/ui'
+import { Artist, ArtistSection } from '@/types'
 
 type ArtistAsideProps = {
 	artist: Artist
 	artistSections: ArtistSection[]
 }
 
-export default function artistAside({
+export default function ArtistAside({
 	artist,
 	artistSections,
 }: ArtistAsideProps) {
@@ -25,7 +25,7 @@ export default function artistAside({
 					const isActive =
 						pathname.includes(linkLowerCase) ||
 						(pathname === `/artists/${artist.slug}` &&
-							link.title === "Featured")
+							link.title === 'Featured')
 
 					return isActive ? (
 						<span className='active underlined-link block' key={link.title}>
@@ -34,10 +34,9 @@ export default function artistAside({
 					) : (
 						<Button
 							key={link.title}
-							classes={"underlined-link block"}
+							classes={'underlined-link block'}
 							href={`/artists/${artist.slug}/${linkLowerCase}`}
-							transitionZIndex='z-transitionLow'
-						>
+							transitionZIndex='z-transitionLow'>
 							<span>{link.title}</span>
 						</Button>
 					)
@@ -55,16 +54,14 @@ export default function artistAside({
 					<a
 						href={`mailto:${artist.agentEmail}`}
 						className='underlined-link block uppercase mt-8 text-labelLarge font-medium'
-						rel='noopener noreferrer'
-					>
+						rel='noopener noreferrer'>
 						<span>Contact Agent</span>
 					</a>
 				)}
 				{artist.artistInstagram && (
 					<a
 						className='underlined-link block text-labelLarge font-medium'
-						href={artist.artistInstagram}
-					>
+						href={artist.artistInstagram}>
 						Instagram
 					</a>
 				)}
