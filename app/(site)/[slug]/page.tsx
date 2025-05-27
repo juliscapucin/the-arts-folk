@@ -1,27 +1,24 @@
-import { notFound } from "next/navigation"
+import { notFound } from 'next/navigation'
 
-import { DefaultPage } from "@/components/pages"
-import { getPage } from "@/sanity/sanity-queries"
+import { DefaultPage } from '@/components/pages'
+import { getPage } from '@/sanity/sanity-queries'
 
-import { metadataFallback } from "@/utils"
-import { Suspense } from "react"
-import { ProjectsGalleryServer } from "@/components/server"
+import { ProjectsGalleryServer } from '@/components/server'
+import { metadataFallback } from '@/utils'
 
-export async function generateMetadata(
-    props: {
-        params: Promise<{ slug: string }>
-    }
-) {
-    const params = await props.params;
-    const { slug } = params
-    const pageData = getPage(slug)
-    const page = await pageData
+export async function generateMetadata(props: {
+	params: Promise<{ slug: string }>
+}) {
+	const params = await props.params
+	const { slug } = params
+	const pageData = getPage(slug)
+	const page = await pageData
 
-    if (!page) {
+	if (!page) {
 		return metadataFallback
 	}
 
-    return {
+	return {
 		metadataBase: metadataFallback.metadataBase,
 		title: page.metadataTitle || metadataFallback.title,
 		description: page.metadataDescription || metadataFallback.description,
@@ -29,22 +26,18 @@ export async function generateMetadata(
 	}
 }
 
-// Opt out of caching for all data requests in the route segment
-export const dynamic = "force-dynamic"
-export const fetchCache = "force-no-store"
+export default async function page(props: {
+	params: Promise<{ slug: string }>
+}) {
+	const params = await props.params
+	const { slug } = params
+	const pageData = await getPage(slug)
 
-export default async function page(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const { slug } = params
-    const pageData = await getPage(slug)
+	if (!pageData) return notFound()
 
-    if (!pageData) return notFound()
-
-    return (
-		<Suspense fallback={null}>
-			<DefaultPage {...{ pageData }}>
-				{pageData.addProjectsGallery && <ProjectsGalleryServer {...{ slug }} />}
-			</DefaultPage>
-		</Suspense>
+	return (
+		<DefaultPage {...{ pageData }}>
+			{pageData.addProjectsGallery && <ProjectsGalleryServer {...{ slug }} />}
+		</DefaultPage>
 	)
 }

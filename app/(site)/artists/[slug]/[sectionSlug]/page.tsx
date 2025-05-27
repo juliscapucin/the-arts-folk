@@ -74,7 +74,6 @@ export default async function page(props: {
 			)
 		: []
 
-	// if (!activeSection) return notFound()
 	if (!artist || !activeProjects || !activeSection) return notFound()
 
 	return (
