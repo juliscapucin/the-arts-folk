@@ -6,12 +6,14 @@ import {
 	getProjectsByArtist,
 } from '@/sanity/sanity-queries'
 import { metadataFallback } from '@/utils'
+import { Params } from 'next/dist/server/request/params'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 
-type Params = { slug: string }
-
-export async function generateMetadata({ params }: { params: Params }) {
+export async function generateMetadata(props: {
+	params: Promise<{ slug: string }>
+}) {
+	const params = await props.params
 	const { slug } = params
 	const page = await getPage(slug)
 	if (!page) return metadataFallback
@@ -24,9 +26,12 @@ export async function generateMetadata({ params }: { params: Params }) {
 	}
 }
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page(props: {
+	params: Promise<{ slug: string }>
+}) {
+	const params = await props.params
 	const { slug } = params
-	const artist = await getArtist(slug)
+	const artist = await getArtist(slug.toString())
 	if (!artist) return notFound()
 
 	const projects = await getProjectsByArtist(artist._id)
