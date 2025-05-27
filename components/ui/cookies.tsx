@@ -32,7 +32,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 			ease: 'power4.out',
 			delay: 2.7,
 		})
-	}, [])
+	}, [cookie])
 
 	// Cookie Policy overlay
 	const toggleOverlay = () => {
@@ -68,6 +68,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [toggleOverlay])
 
 	if (cookie === 'true') return null

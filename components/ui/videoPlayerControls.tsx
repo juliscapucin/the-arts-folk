@@ -48,7 +48,7 @@ export default function VideoPlayerControls({
 				player.destroy()
 			}
 		}
-	}, [])
+	}, [autoplay, videoId])
 
 	return <div ref={videoPlayerRef}></div>
 }

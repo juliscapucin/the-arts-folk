@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useEffect, useRef, useState } from "react"
-import VimeoPlayer from "@vimeo/player"
+import VimeoPlayer from '@vimeo/player'
+import { useEffect, useRef, useState } from 'react'
 
 type VideoPlayerProps = {
 	imageUrl: string
@@ -16,10 +16,10 @@ export default function VideoPlayer({
 	autoplay,
 	play,
 }: VideoPlayerProps) {
-	const videoId = imageUrl.split("/").pop()
+	const videoId = imageUrl.split('/').pop()
 	const videoPlayerRef = useRef<HTMLDivElement>(null)
 	const [isClient, setIsClient] = useState(false)
-	let player: VimeoPlayer | null = null
+	const playerRef = useRef<VimeoPlayer | null>(null)
 
 	useEffect(() => {
 		setIsClient(true)
@@ -28,11 +28,9 @@ export default function VideoPlayer({
 	useEffect(() => {
 		if (!videoPlayerRef.current || !videoId) return
 
-		console.log(play)
-
 		const iFrame = videoPlayerRef.current.childNodes[0] as HTMLIFrameElement
 
-		player = new VimeoPlayer(iFrame, {
+		playerRef.current = new VimeoPlayer(iFrame, {
 			id: +videoId, // Vimeo video ID as a number
 			autoplay: autoplay,
 			loop: true,
@@ -41,9 +39,9 @@ export default function VideoPlayer({
 		})
 
 		if (play) {
-			player?.play()
+			playerRef.current?.play()
 		} else {
-			player?.pause()
+			playerRef.current?.pause()
 		}
 	}, [play, videoPlayerRef, videoId, autoplay])
 
@@ -54,7 +52,7 @@ export default function VideoPlayer({
 					isMuted ? 1 : 0
 				}&autoplay=${autoplay ? 1 : 0}&controls=0&loop=1&dnt=1`}
 				allow='autoplay; fullscreen'
-				style={{ width: "100%", aspectRatio: "16/9", border: "none" }}
+				style={{ width: '100%', aspectRatio: '16/9', border: 'none' }}
 			/>
 		</div>
 	) : (

@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import gsap from "gsap"
+import gsap from 'gsap'
 
-import { usePathname } from "next/navigation"
-import { usePageContext } from "@/context"
-import { useLayoutEffect } from "react"
+import { usePageContext } from '@/context'
+import { usePathname } from 'next/navigation'
+import { useLayoutEffect } from 'react'
 
 export const PageTransition = () => {
 	const pathname = usePathname()
@@ -15,23 +15,18 @@ export const PageTransition = () => {
 	useLayoutEffect(() => {
 		if (!pageTransitionRef.current) return
 
-		// gsap.set(pageTransitionRef, { yPercent: 0 })
-
 		ctx.add(() => {
 			gsap.to(pageTransitionRef.current, {
 				yPercent: 100,
 				duration: 0.8,
-				ease: "linear",
+				ease: 'linear',
 			})
 		})
-
-		// return () => ctx.revert()
-	}, [pathname])
+	}, [pathname, ctx, pageTransitionRef])
 
 	return (
 		<div
 			ref={pageTransitionRef}
-			className={`fixed top-0 left-0 w-screen h-screen min-h-svh pointer-events-none bg-primary ${transitionIndex}`}
-		></div>
+			className={`fixed top-0 left-0 w-screen h-screen min-h-svh pointer-events-none bg-primary ${transitionIndex}`}></div>
 	)
 }

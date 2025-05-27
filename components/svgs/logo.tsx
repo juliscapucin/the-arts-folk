@@ -1,7 +1,7 @@
 'use client'
 
 type LogoProps = {
-	ref: React.RefObject<SVGSVGElement | null>
+	ref?: React.RefObject<SVGSVGElement | null>
 	classes?: string
 	animate?: boolean
 }

@@ -50,22 +50,19 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		setIsHovered('')
 	}
 
-	const getViewportPosition = useCallback(
-		(element: HTMLElement) => {
-			const rect = element.getBoundingClientRect()
-			const viewportHeight =
-				window.innerHeight || document.documentElement.clientHeight
-			const elementTop = rect.top
-			const elementBottom = rect.bottom
-			const screenMiddle = viewportHeight / 2
-			return {
-				isMiddle:
-					Math.abs(elementTop) < screenMiddle &&
-					Math.abs(elementBottom) > screenMiddle,
-			}
-		},
-		[filteredArtists]
-	)
+	const getViewportPosition = useCallback((element: HTMLElement) => {
+		const rect = element.getBoundingClientRect()
+		const viewportHeight =
+			window.innerHeight || document.documentElement.clientHeight
+		const elementTop = rect.top
+		const elementBottom = rect.bottom
+		const screenMiddle = viewportHeight / 2
+		return {
+			isMiddle:
+				Math.abs(elementTop) < screenMiddle &&
+				Math.abs(elementBottom) > screenMiddle,
+		}
+	}, [])
 
 	// SCROLL LOOP
 	const createScrollLoop = (isMobile: boolean) => {
@@ -188,6 +185,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		return () => {
 			mm.revert()
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filteredArtists])
 
 	useEffect(() => {
@@ -219,7 +217,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		return () => {
 			ctx.revert()
 		}
-	}, [activeCategory])
+	}, [activeCategory, artists])
 
 	return (
 		<div className='artists-page relative'>
