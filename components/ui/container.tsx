@@ -1,5 +1,5 @@
 type ContainerProps = {
-	ref: React.Ref<HTMLDivElement> | undefined
+	ref?: React.Ref<HTMLDivElement> | undefined
 	children: React.ReactNode
 	classes?: string
 	bgColor?: string
