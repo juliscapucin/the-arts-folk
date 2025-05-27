@@ -1,30 +1,24 @@
-import localFont from "next/font/local"
+import localFont from 'next/font/local'
 
-import { getHeaderNavLinks } from "@/sanity/sanity-queries"
+import { getHeaderNavLinks } from '@/sanity/sanity-queries'
 
-// Opt out of caching for all data requests in the route segment
-export const dynamic = "force-dynamic"
-export const fetchCache = "force-no-store"
+import { PageContextProvider } from '@/context'
+import '../globals.css'
 
-// export const revalidate = 300
+import { Intro, PageTransition } from '@/components'
+import { CookiesServer } from '@/components/server'
+import { Footer, Header } from '@/components/ui'
 
-import "../globals.css"
-import { PageContextProvider } from "@/context"
-
-import { Header, Footer } from "@/components/ui"
-import { CookiesServer } from "@/components/server"
-import { Intro, PageTransition } from "@/components"
-
-import { getPage } from "@/sanity/sanity-queries"
-import { metadataFallback } from "@/utils"
+import { getPage } from '@/sanity/sanity-queries'
+import { metadataFallback } from '@/utils'
 
 const fallbackNavLinks = [
-	{ title: "Artists", slug: "artists", order: 1 },
-	{ title: "Info", slug: "info", order: 2 },
+	{ title: 'Artists', slug: 'artists', order: 1 },
+	{ title: 'Info', slug: 'info', order: 2 },
 ]
 
 export async function generateMetadata() {
-	const pageData = getPage("home")
+	const pageData = getPage('home')
 	const page = await pageData
 
 	if (!page) {
@@ -41,23 +35,23 @@ export async function generateMetadata() {
 
 // Load custom fonts //
 const displayFont = localFont({
-	variable: "--font-primary",
+	variable: '--font-primary',
 	src: [
 		{
-			path: "../../public/fonts/geometos-neue-extrabold.otf",
+			path: '../../lib/fonts/geometos-neue-extrabold.otf',
 		},
 	],
-	display: "swap",
+	display: 'swap',
 })
 
 const scriptFont = localFont({
-	variable: "--font-script",
+	variable: '--font-script',
 	src: [
 		{
-			path: "../../public/fonts/hammock.woff",
+			path: '../../lib/fonts/hammock.woff',
 		},
 	],
-	display: "swap",
+	display: 'swap',
 })
 
 export default async function RootLayout({
@@ -75,8 +69,7 @@ export default async function RootLayout({
 		<html lang='en' className='gutter-stable relative overflow-x-clip'>
 			<PageContextProvider>
 				<body
-					className={`${displayFont.className} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}
-				>
+					className={`${displayFont.className} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}>
 					<Intro />
 					<PageTransition />
 					<Header navLinks={navLinks} />
