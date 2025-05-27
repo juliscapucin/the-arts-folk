@@ -33,9 +33,5 @@ export default async function Page() {
 		(artist) => artist.name !== 'The Arts Folk'
 	)
 
-	return (
-		<Suspense fallback={<div>...</div>}>
-			<ArtistsPage artists={filteredArtists} categories={categories} />
-		</Suspense>
-	)
+	return <ArtistsPage artists={filteredArtists} categories={categories} />
 }
