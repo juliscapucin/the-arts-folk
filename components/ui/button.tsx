@@ -45,7 +45,7 @@ export default function Button({
 				e.preventDefault()
 				transitionZIndex
 					? setTransitionIndex(transitionZIndex)
-					: setTransitionIndex('z-transitionHigh')
+					: setTransitionIndex('z-transition-high')
 				handleTransitionOnClick(slug)
 			}}
 			ref={ref}>

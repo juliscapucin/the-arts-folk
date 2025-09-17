@@ -116,7 +116,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 					{/* Cookie Policy overlay */}
 					<div
-						className={`fixed w-full top-0 left-0 right-0 bottom-8 pr-0 max-w-desktop mx-auto overflow-clip z-cookiesOverlay ${
+						className={`fixed w-full top-0 left-0 right-0 bottom-8 pr-0 max-w-desktop mx-auto overflow-clip z-cookies-overlay ${
 							isOverlayOpen ? 'pointer-events-auto' : 'pointer-events-none'
 						}`}>
 						<ButtonClose

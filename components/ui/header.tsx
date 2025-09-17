@@ -20,7 +20,7 @@ export default function Header({ navLinks }: HeaderProps) {
 
 	useEffect(() => {
 		isMobileMenuOpen
-			? delayLogoClass('z-mobileMenu', 100)
+			? delayLogoClass('z-mobile-menu', 100)
 			: delayLogoClass('z-header', 300)
 	}, [isMobileMenuOpen])
 

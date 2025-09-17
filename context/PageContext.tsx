@@ -24,7 +24,7 @@ export const PageContextProvider = ({
 }: {
 	children: React.ReactNode
 }) => {
-	const [transitionIndex, setTransitionIndex] = useState('z-transitionHigh')
+	const [transitionIndex, setTransitionIndex] = useState('z-transition-high')
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [link, setLink] = useState<NavLink | string | (() => void) | null>(null)
 

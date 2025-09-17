@@ -104,6 +104,10 @@
 		@apply mb-8;
 	}
 
+	button {
+		@apply cursor-pointer;
+	}
+
 	/* MAX WIDTH WRAPPER */
 
 	.max-width-wrapper {

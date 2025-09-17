@@ -36,7 +36,7 @@ export default function ArtistAside({
 							key={link.title}
 							classes={'underlined-link block'}
 							href={`/artists/${artist.slug}/${linkLowerCase}`}
-							transitionZIndex='z-transitionLow'>
+							transitionZIndex='z-transition-low'>
 							<span>{link.title}</span>
 						</Button>
 					)

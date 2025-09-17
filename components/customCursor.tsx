@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import React, { useLayoutEffect, useRef } from "react"
-import { gsap } from "gsap"
+import React, { useLayoutEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 
 type Props = {
 	isHovering: boolean
@@ -24,25 +24,25 @@ const CustomCursor = ({
 
 		gsap.set(cursorDiv, { xPercent: -50, yPercent: -50 })
 
-		let xTo = gsap.quickTo(cursorDiv, "x", { duration: 0.6, ease: "power3" }),
-			yTo = gsap.quickTo(cursorDiv, "y", { duration: 0.6, ease: "power3" })
+		let xTo = gsap.quickTo(cursorDiv, 'x', { duration: 0.6, ease: 'power3' }),
+			yTo = gsap.quickTo(cursorDiv, 'y', { duration: 0.6, ease: 'power3' })
 
-		window.addEventListener("mousemove", (e) => {
+		window.addEventListener('mousemove', (e) => {
 			xTo(e.clientX)
 			yTo(e.clientY)
 		})
 
 		return () => {
-			window.removeEventListener("mousemove", (e) => {
+			window.removeEventListener('mousemove', (e) => {
 				gsap.set(cursorDiv, { xPercent: -50, yPercent: -50 })
 
-				let xTo = gsap.quickTo(cursorDiv, "x", {
+				let xTo = gsap.quickTo(cursorDiv, 'x', {
 						duration: 0.6,
-						ease: "power3",
+						ease: 'power3',
 					}),
-					yTo = gsap.quickTo(cursorDiv, "y", { duration: 0.6, ease: "power3" })
+					yTo = gsap.quickTo(cursorDiv, 'y', { duration: 0.6, ease: 'power3' })
 
-				window.addEventListener("mousemove", (e) => {
+				window.addEventListener('mousemove', (e) => {
 					xTo(e.clientX)
 					yTo(e.clientY)
 				})
@@ -53,10 +53,9 @@ const CustomCursor = ({
 	return (
 		<div
 			className={`${
-				isActive && isHovering ? "opacity-100" : "opacity-0"
-			} fixed top-0 left-0 z-artistAside pointer-events-none cursor-pointer transition-opacity duration-300`}
-			ref={refCursor}
-		>
+				isActive && isHovering ? 'opacity-100' : 'opacity-0'
+			} fixed top-0 left-0 z-artist-aside pointer-events-none cursor-pointer transition-opacity duration-300`}
+			ref={refCursor}>
 			<span className='block py-1 px-2 w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>
 				{projectTitle}
 			</span>

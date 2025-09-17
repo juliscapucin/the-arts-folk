@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -20,8 +20,7 @@ type NavbarDesktopProps = {
 
 export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 	const pathname = usePathname()
-	const router = useRouter()
-	// const { handleTransitionOnClick } = usePageContext()
+	const { handleTransitionOnClick } = usePageContext()
 	const [isScrolled, setIsScrolled] = useState(false)
 
 	useGSAP(() => {
@@ -45,8 +44,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 		<div className='w-full h-full max-w-desktop mx-auto px-[var(--margin-mobile)] lg:px-[var(--margin-desktop)] flex justify-between items-end'>
 			<ButtonLogo
 				handleClick={() =>
-					// handleTransitionOnClick({ slug: '/', title: 'Home', order: 1 })
-					router.push('/')
+					handleTransitionOnClick({ slug: '/', title: 'Home', order: 1 })
 				}
 			/>
 			{navLinks && (
@@ -65,8 +63,7 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 												? true
 												: false
 										}
-										transitionOnClick={() => router.push(`/${link.slug}`)}
-										// transitionOnClick={handleTransitionOnClick}
+										transitionOnClick={handleTransitionOnClick}
 									/>
 								)
 							)

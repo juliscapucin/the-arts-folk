@@ -1,9 +1,10 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useLayoutEffect, useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { Flip } from 'gsap/Flip'
 gsap.registerPlugin(Flip)
 
@@ -12,10 +13,11 @@ import { GSAPQueries } from '@/utils'
 
 export default function Intro() {
 	const pathname = usePathname()
-	const containerRef = useRef<HTMLDivElement | null>(null)
+	const introRef = useRef<HTMLDivElement | null>(null)
+	const [isVisible, setIsVisible] = useState(true)
 
-	useLayoutEffect(() => {
-		const containerElement = containerRef.current
+	useGSAP(() => {
+		const containerElement = introRef.current
 		if (!containerElement) return
 
 		let mm = gsap.matchMedia()
@@ -50,21 +52,19 @@ export default function Intro() {
 					delay: 0.5,
 					ease: 'power4.inOut',
 					onComplete: () => {
-						containerElement.remove()
+						setIsVisible(false)
 					},
 				})
 			},
 			containerElement
 		)
+	}, [])
 
-		return () => {
-			mm.revert()
-		}
-	}, [pathname])
+	if (!isVisible) return null
 
 	return (
 		<div
-			ref={containerRef}
+			ref={introRef}
 			className='fixed w-screen h-svh z-intro pointer-events-none'>
 			<div className='gsap-bg fixed w-screen h-svh z-intro bg-white'></div>
 			<div className='gsap-logo-container fixed top-0 left-0 w-screen h-svh flex justify-center items-center z-intro'>
