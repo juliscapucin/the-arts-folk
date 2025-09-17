@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react"
-import { useThrottle } from "./useThrottle"
+import { useState, useEffect, useCallback } from 'react'
+import { useThrottle } from './useThrottle'
 
 export const useWindowDimensions = () => {
 	const [width, setWidth] = useState(0)
@@ -16,20 +16,18 @@ export const useWindowDimensions = () => {
 	}, [throttledListener])
 
 	useEffect(() => {
-		if (typeof window !== "undefined") {
+		if (typeof window !== 'undefined') {
 			// Set initial dimensions
 			setWidth(window.innerWidth)
 			setHeight(window.innerHeight)
 
-			window.addEventListener("resize", handleResize)
+			window.addEventListener('resize', handleResize)
 
 			return () => {
-				window.removeEventListener("resize", handleResize)
+				window.removeEventListener('resize', handleResize)
 			}
 		}
 	}, [handleResize])
-
-	// console.log(width, height)
 
 	return { width, height }
 }

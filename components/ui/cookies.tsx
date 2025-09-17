@@ -2,9 +2,10 @@
 
 import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 import { ButtonClose } from '@/components/buttons'
 import { Container, Heading } from '@/components/ui'
@@ -23,7 +24,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 	const overlayRef = useRef<HTMLDivElement>(null)
 
 	// Cookie button
-	useLayoutEffect(() => {
+	useGSAP(() => {
 		if (!cookieRef.current || cookie === 'true') return
 		gsap.set(overlayRef.current, { yPercent: 120 })
 		gsap.to(cookieRef.current, {
@@ -42,18 +43,12 @@ export default function Cookies({ cookieData }: CookiesProps) {
 
 		setIsOverlayOpen(isOpen)
 
-		let ctx = gsap.context(() => {
-			gsap.to(overlayRef.current, {
-				yPercent: isOpen ? 0 : 120,
-				duration: 0.4,
-				ease: 'power2.out',
-				// onComplete: () => setIsOverlayOpen(isOpen),
-			})
-		}, overlayRef)
-
-		return () => {
-			ctx.revert()
-		}
+		gsap.to(overlayRef.current, {
+			yPercent: isOpen ? 0 : 120,
+			duration: 0.4,
+			ease: 'power2.out',
+			// onComplete: () => setIsOverlayOpen(isOpen),
+		})
 	}
 
 	useEffect(() => {
@@ -94,7 +89,7 @@ export default function Cookies({ cookieData }: CookiesProps) {
 				<>
 					{/* White overlay */}
 					<div
-						className={`background-white fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] max-w-desktop mx-auto left-0 right-0 bottom-0 flex items-end justify-end z-cookies overflow-clip pointer-events-none transition-colors duration-300 ${
+						className={`background-white fixed top-[var(--header-height-mobile)] lg:top-[var(--header-height-desktop)] max-w-desktop mx-auto left-0 right-0 bottom-0 flex items-end justify-end z-cookies overflow-clip pointer-events-none transition-colors duration-300 ${
 							isOverlayOpen ? 'md:bg-primary/80' : ''
 						}`}>
 						{/* Cookie button */}
@@ -107,12 +102,12 @@ export default function Cookies({ cookieData }: CookiesProps) {
 										e.preventDefault()
 										toggleOverlay()
 									}}
-									className='underlined-link uppercase font-text font-extralight text-bodySmall tracking-wider text-primary select-none'>
+									className='underlined-link uppercase font-text font-extralight text-body-small tracking-wider text-primary select-none'>
 									This site uses cookies
 								</button>
 							</Link>
 							<button
-								className='text-bodySmall'
+								className='text-body-small'
 								onClick={() => okButtonHandler('true')}>
 								OK
 							</button>
@@ -125,14 +120,14 @@ export default function Cookies({ cookieData }: CookiesProps) {
 							isOverlayOpen ? 'pointer-events-auto' : 'pointer-events-none'
 						}`}>
 						<ButtonClose
-							classes={`fixed top-[--header-height-mobile] mx-auto w-full pr-4 max-w-desktop mt-4 flex justify-end z-100`}
+							classes={`fixed top-[var(--header-height-mobile)] mx-auto w-full pr-4 max-w-desktop mt-4 flex justify-end z-100`}
 							action={toggleOverlay}
 							color={isOverlayOpen ? 'primary' : 'transparent'}
 						/>
 
 						{/* Gradients */}
 						<div
-							className={`absolute top-[--header-height-mobile] right-10 w-[98%] md:w-[70%] lg:w-[35%] h-16 ml-auto bg-gradient-to-b from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
+							className={`absolute top-[var(--header-height-mobile)] right-10 w-[98%] md:w-[70%] lg:w-[35%] h-16 ml-auto bg-gradient-to-b from-20% bg-gradient-middle from-secondary to-transparent z-80 ${
 								isOverlayOpen
 									? 'transition-opacity duration-300 delay-300'
 									: 'opacity-0'

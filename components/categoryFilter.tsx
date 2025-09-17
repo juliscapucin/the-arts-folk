@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { Category } from "@/types"
-import { Fragment } from "react"
+import { Category } from '@/types'
+import { Fragment } from 'react'
 
 type CategoryFilterProps = {
 	categories: Category[]
@@ -15,13 +15,12 @@ export default function CategoryFilter({
 	setActiveCategory,
 }: CategoryFilterProps) {
 	return (
-		<div className='absolute top-[--header-height-desktop] left-0 right-0 h-16 z-100 flex items-center justify-center gap-1 md:gap-2 font-text'>
+		<div className='absolute top-[var(--header-height-desktop)] left-0 right-0 h-16 z-100 flex items-center justify-center gap-1 md:gap-2 font-text'>
 			<button
-				onClick={() => setActiveCategory("all")}
+				onClick={() => setActiveCategory('all')}
 				className={`uppercase text-labelMedium md:text-labelLarge font-medium ${
-					activeCategory === "all" ? "active underlined-link" : ""
-				}`}
-			>
+					activeCategory === 'all' ? 'active underlined-link' : ''
+				}`}>
 				All
 			</button>
 			<span>/</span>
@@ -32,9 +31,8 @@ export default function CategoryFilter({
 						<button
 							onClick={() => setActiveCategory(category._id)}
 							className={`underlined-link uppercase text-labelMedium md:text-labelLarge font-medium ${
-								activeCategory === category._id ? "active" : ""
-							}`}
-						>
+								activeCategory === category._id ? 'active' : ''
+							}`}>
 							{category.title}
 						</button>
 						{index < categories.length - 1 && <span>/</span>}

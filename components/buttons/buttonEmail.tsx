@@ -1,7 +1,7 @@
-import { useRef } from "react"
+import { useRef } from 'react'
 
-import { Heading } from "@/components/ui"
-import { IconEmail } from "@/components/icons"
+import { Heading } from '@/components/ui'
+import { IconEmail } from '@/components/icons'
 
 type ButtonEmailProps = {
 	name: string
@@ -18,15 +18,16 @@ export default function ButtonEmail({ name, email, phone }: ButtonEmailProps) {
 				<IconEmail />
 				<a
 					href={`mailto:${email}`}
-					className='text-titleLarge'
-					rel='noopener noreferrer'
-				>
+					className='text-title-large'
+					rel='noopener noreferrer'>
 					<Heading tag='h2' variant='body'>
 						{name}
 					</Heading>
 				</a>
 			</div>
-			<span className='font-text text-bodyMedium font-extralight'>{phone}</span>
+			<span className='font-text text-body-medium font-extralight'>
+				{phone}
+			</span>
 		</div>
 	)
 }

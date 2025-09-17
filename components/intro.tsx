@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from 'react'
 
 import gsap from 'gsap'
 import { Flip } from 'gsap/Flip'
+gsap.registerPlugin(Flip)
 
 import { Logo } from '@/components/svgs'
 import { GSAPQueries } from '@/utils'
@@ -16,8 +17,6 @@ export default function Intro() {
 	useLayoutEffect(() => {
 		const containerElement = containerRef.current
 		if (!containerElement) return
-
-		gsap.registerPlugin(Flip)
 
 		let mm = gsap.matchMedia()
 
@@ -71,7 +70,7 @@ export default function Intro() {
 			<div className='gsap-logo-container fixed top-0 left-0 w-screen h-svh flex justify-center items-center z-intro'>
 				<Logo classes='gsap-logo' animate={true} />
 			</div>
-			<div className='gsap-header fixed top-0 left-4 lg:left-8 pt-2 flex justify-start items-end w-screen max-w-desktop h-[--header-height-mobile] lg:h-[--header-height-desktop] z-intro'></div>
+			<div className='gsap-header fixed top-0 left-4 lg:left-8 pt-2 flex justify-start items-end w-screen max-w-desktop h-[var(--header-height-mobile)] lg:h-[var(--header-height-desktop)] z-intro'></div>
 		</div>
 	)
 }

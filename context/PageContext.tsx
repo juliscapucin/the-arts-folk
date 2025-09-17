@@ -1,24 +1,18 @@
-"use client"
+'use client'
 
-import { usePathname, useRouter } from "next/navigation"
-import {
-	createContext,
-	useContext,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react"
+import { createContext, useContext, useState } from 'react'
 
-import gsap from "gsap"
+import gsap from 'gsap'
 
-import { NavLink } from "@/types"
+import { NavLink } from '@/types'
 
-// TYPE
 interface ContextProps {
-	pageTransitionRef: React.MutableRefObject<HTMLDivElement | null>
-	transitionOnClick: (link: NavLink | string | (() => void)) => void
+	handleTransitionOnClick: (link: NavLink | string | (() => void)) => void
+	handleTransitionEnd: () => void
 	transitionIndex: string
 	setTransitionIndex: React.Dispatch<React.SetStateAction<string>>
+	isTransitioning: boolean
+	link: NavLink | string | (() => void) | null
 }
 
 // CREATE CONTEXT
@@ -30,61 +24,31 @@ export const PageContextProvider = ({
 }: {
 	children: React.ReactNode
 }) => {
-	const pageTransitionRef = useRef<HTMLDivElement | null>(null)
-	const pathname = usePathname()
-	const router = useRouter()
-	let ctx = gsap.context(() => {})
-	const [transitionIndex, setTransitionIndex] = useState("z-transitionHigh")
+	const [transitionIndex, setTransitionIndex] = useState('z-transitionHigh')
+	const [isTransitioning, setIsTransitioning] = useState(false)
+	const [link, setLink] = useState<NavLink | string | (() => void) | null>(null)
 
-	// On page Exit
-	const transitionOnClick = (link: any) => {
-		// TODO: Toggle mobile menu
-		// if (mobileMenuRef) {
-		// 	animateMobileMenu(mobileMenuRef)
-		// }
-
-		if (!pageTransitionRef.current) return
-
-		gsap.set(pageTransitionRef.current, { yPercent: -100 })
-
-		gsap.to(pageTransitionRef.current, {
-			yPercent: 0,
-			duration: 0.4,
-			ease: "linear",
-			onComplete: () => {
-				link === "back"
-					? router.back()
-					: router.push(link.slug ? `/${link.slug}` : `/${link}`)
-			},
-		})
+	const handleTransitionOnClick = (link: NavLink | string | (() => void)) => {
+		if (isTransitioning) return
+		setIsTransitioning(true)
+		setLink(link)
 	}
 
-	// On page Enter
-	// useLayoutEffect(() => {
-	// 	if (!pageTransitionRef) return
-
-	// 	// gsap.set(pageTransitionRef, { yPercent: 0 })
-
-	// 	console.log("hi")
-
-	// 	ctx.add(() => {
-	// 		gsap.to(pageTransitionRef, {
-	// 			yPercent: 100,
-	// 			duration: 0.4,
-	// 			ease: "linear",
-	// 		})
-	// 	})
-	// }, [pathname])
+	const handleTransitionEnd = () => {
+		setIsTransitioning(false)
+		setLink(null)
+	}
 
 	return (
 		<PageContext.Provider
 			value={{
-				transitionOnClick,
-				pageTransitionRef,
+				handleTransitionOnClick,
+				handleTransitionEnd,
 				transitionIndex,
 				setTransitionIndex,
-			}}
-		>
+				isTransitioning,
+				link,
+			}}>
 			{children}
 		</PageContext.Provider>
 	)
@@ -94,6 +58,6 @@ export const PageContextProvider = ({
 export const usePageContext = () => {
 	const context = useContext(PageContext)
 	if (!context)
-		throw new Error("usePageContext must be used within PageContextProvider")
+		throw new Error('usePageContext must be used within PageContextProvider')
 	return context
 }

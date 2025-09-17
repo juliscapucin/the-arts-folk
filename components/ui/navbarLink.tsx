@@ -14,7 +14,7 @@ export default function navbarLink({
 	isActive,
 }: NavbarLinkProps) {
 	const classes =
-		'underlined-link uppercase font-text font-extralight text-bodyLarge tracking-wide select-none'
+		'underlined-link uppercase font-text font-extralight text-body-large tracking-wide select-none'
 	return (
 		<>
 			{isActive ? (

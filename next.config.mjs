@@ -22,6 +22,7 @@ const securityHeaders = [
 const nextConfig = {
 	reactStrictMode: false,
 	images: {
+		qualities: [25, 50, 70],
 		loader: 'custom',
 		loaderFile: './lib/cloudinaryLoader.ts',
 		deviceSizes: [480, 768, 1024, 1920, 2560], // 5 responsive breakpoints

@@ -22,6 +22,7 @@ import {
 	VideoPlayerControls,
 } from '@/components/ui'
 import { Artist, Project } from '@/types'
+import { useGSAP } from '@gsap/react'
 
 type ProjectPageProps = {
 	project: Project
@@ -30,7 +31,7 @@ type ProjectPageProps = {
 
 export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	const { title, projectInfo, releaseDate, images } = project
-	const { transitionOnClick } = usePageContext()
+	const { handleTransitionOnClick } = usePageContext()
 	const pathname = usePathname()
 	const { width } = useWindowDimensions()
 
@@ -62,7 +63,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		setIsProjectInfoOpen(!isProjectInfoOpen)
 	}
 
-	useLayoutEffect(() => {
+	useGSAP(() => {
 		if (
 			!mainImagesRef.current ||
 			!thumbnailsRef.current ||
@@ -77,7 +78,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		const markerHeight = minimapMarkerRef.current.clientHeight
 		const yPercentAdjust = (markerHeight / thumbnailsHeight) * 100
 
-		//TODO: add gsap.ctx
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: mainImages,
@@ -139,7 +139,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	}, [])
 
 	return (
-		<Container classes='pt-[--header-height-desktop] md:pr-32 lg:pr-64'>
+		<Container classes='pt-[var(--header-height-desktop)] md:pr-32 lg:pr-64'>
 			{/* CLOSE FULLSCREEN */}
 			{isFullscreenOpen && (
 				<div className='fixed top-0 left-0 right-0 h-32 z-[401] flex justify-end mr-8'>
@@ -149,7 +149,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 			{/* THUMBNAILS CONTAINER */}
 			<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block z-150'>
 				<div className='relative max-w-desktop mx-auto'>
-					<aside className='absolute top-0 right-[--margin-mobile] lg:[--margin-desktop] w-[13vw] max-w-[170px] h-full z-150'>
+					<aside className='absolute top-0 right-[var(--margin-mobile)] lg:[var(--margin-desktop)] w-[13vw] max-w-[170px] h-full z-150'>
 						{/* BUTTON CLOSE */}
 						<div className='relative w-full h-40 pt-40 pb-16 flex justify-center items-center pointer-events-auto bg-primary z-600'>
 							<ButtonClose
@@ -157,8 +157,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								color='secondary'
 								action={
 									pathname.includes('news')
-										? () => transitionOnClick('news')
-										: () => transitionOnClick('back')
+										? () => handleTransitionOnClick('news')
+										: () => handleTransitionOnClick('back')
 								}
 								mixBlend={false}
 							/>
@@ -207,7 +207,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 			</div>
 
 			{/* HEADER */}
-			<header className='relative flex flex-row justify-between flex-nowrap gap-8 w-full h-fit pt-[--header-height-desktop] bg-primary'>
+			<header className='relative flex flex-row justify-between flex-nowrap gap-8 w-full h-fit pt-[var(--header-height-desktop)] bg-primary'>
 				{/* HEADER LEFT */}
 				<div className='flex-1 bg-primary z-80'>
 					{/* MOBILE – BACK BUTTON */}
@@ -293,7 +293,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					<div
 						ref={projectInfoInnerRef}
 						className='py-8 h-fit w-[95%] sm:w-3/4 bg-primary'>
-						<p className='font-text text-bodyMedium lg:text-bodyLarge lg:max-w-prose'>
+						<p className='font-text text-body-medium lg:text-body-large lg:max-w-prose'>
 							{projectInfo}
 						</p>
 						{pathname.includes('news') && (

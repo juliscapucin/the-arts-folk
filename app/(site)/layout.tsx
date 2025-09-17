@@ -54,30 +54,28 @@ const scriptFont = localFont({
 	display: 'swap',
 })
 
+let navLinks = await getHeaderNavLinks()
+if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
+navLinks.sort((a, b) => a.order - b.order)
+
 export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
 }>) {
-	let navLinks = await getHeaderNavLinks()
-
-	if (!navLinks || navLinks.length === 0) navLinks = fallbackNavLinks
-
-	navLinks.sort((a, b) => a.order - b.order)
-
 	return (
 		<html lang='en' className='gutter-stable relative overflow-x-clip'>
-			<PageContextProvider>
-				<body
-					className={`${displayFont.variable} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}>
+			<body
+				className={`${displayFont.variable} ${scriptFont.variable} gutter-stable w-screen overflow-x-clip bg-primary uppercase font-text font-thin`}>
+				<PageContextProvider>
 					<Intro />
 					<PageTransition />
 					<Header navLinks={navLinks} />
 					{children}
 					<Footer />
-					<CookiesServer />
-				</body>
-			</PageContextProvider>
+				</PageContextProvider>
+				<CookiesServer />
+			</body>
 		</html>
 	)
 }

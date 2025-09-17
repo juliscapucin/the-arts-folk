@@ -1,15 +1,12 @@
 'use client'
 
-import {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from 'react'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 
 import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { Observer } from 'gsap/Observer'
+
+let mm = gsap.matchMedia()
 
 import { usePageContext } from '@/context'
 import { useReloadOnResize } from '@/hooks'
@@ -37,10 +34,8 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 
-	const { transitionOnClick } = usePageContext()
+	const { handleTransitionOnClick } = usePageContext()
 	useReloadOnResize()
-
-	let mm = gsap.matchMedia()
 
 	const handleMouseEnter = (name: string) => {
 		setIsHovered(name)
@@ -121,7 +116,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 	}
 
 	// ENTRY ANIMATION
-	useLayoutEffect(() => {
+	useGSAP(() => {
 		if (!sectionRef.current || !containerRef.current || !filteredArtists) return
 
 		mm.add(
@@ -188,7 +183,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filteredArtists])
 
-	useEffect(() => {
+	useGSAP(() => {
 		if (!containerRef.current) return
 
 		setIsHovered('')
@@ -206,17 +201,11 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			}
 		}
 
-		const ctx = gsap.context(() => {
-			gsap.to(containerRef.current, {
-				opacity: 0,
-				duration: 0.3,
-				onComplete: () => filterArtists(),
-			})
+		gsap.to(containerRef.current, {
+			opacity: 0,
+			duration: 0.3,
+			onComplete: () => filterArtists(),
 		})
-
-		return () => {
-			ctx.revert()
-		}
 	}, [activeCategory, artists])
 
 	return (
@@ -236,7 +225,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			/>
 			<Container
 				ref={containerRef}
-				classes='artists-page relative max-h-[--container-height-mobile] lg:max-h-[--container-height-desktop] overflow-y-clip'>
+				classes='artists-page relative max-h-[var(--container-height-mobile)] lg:max-h-[var(--container-height-desktop)] overflow-y-clip'>
 				{/* ARTIST OVERLAY */}
 				{filteredArtists.map((artist, index) => {
 					return (
@@ -252,14 +241,14 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 				{/* GRADIENTS */}
 				<div
-					className={`fixed top-[--header-height-mobile] lg:top-[--header-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}></div>
+					className={`fixed top-[var(--header-height-mobile)] lg:top-[var(--header-height-desktop)] right-2 w-full h-32 ml-auto bg-gradient-to-b from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}></div>
 				<div
-					className={`fixed bottom-[--footer-height-mobile] lg:bottom-[--footer-height-desktop] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}></div>
+					className={`fixed bottom-[var(--footer-height-mobile)] lg:bottom-[var(--footer-height-desktop)] right-2 w-full h-32 ml-auto bg-gradient-to-t from-50% bg-gradient-middle from-primary to-transparent pointer-events-none z-50`}></div>
 
 				{/* ARTISTS MENU */}
 				<section
 					ref={sectionRef}
-					className={`w-full min-h-[--container-height-mobile] text-center ${
+					className={`w-full min-h-[var(--container-height-mobile)] text-center ${
 						filteredArtists.length < 4
 							? 'flex flex-col justify-center items-center gap-24'
 							: 'pt-10'
@@ -272,8 +261,10 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 								data-name={artist.name}>
 								{/* TODO: add Button component */}
 								<button
-									onClick={() => transitionOnClick(`artists/${artist.slug}`)}
-									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] font-heading text-center text-titleSmall md:text-titleMedium lg:text-titleLarge transition-opacity duration-500 ${
+									onClick={() =>
+										handleTransitionOnClick(`artists/${artist.slug}`)
+									}
+									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] font-heading text-center text-title-small md:text-title-medium lg:text-title-large transition-opacity duration-500 ${
 										isHovered === artist.name
 											? ''
 											: isHovered // If another artist is hovered at all

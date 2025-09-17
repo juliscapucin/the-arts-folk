@@ -20,7 +20,7 @@ export default function Container({
 	return (
 		<HtmlTag
 			ref={ref}
-			className={`gutter-stable min-h-[--container-height-mobile] lg:min-h-[--container-height-desktop] w-full max-w-desktop mx-auto px-[--margin-mobile] lg:px-[--margin-desktop] ${classes} ${
+			className={`gutter-stable min-h-[var(--container-height-mobile)] lg:min-h-[var(--container-height-desktop)] w-full max-w-desktop mx-auto px-[var(--margin-mobile)] lg:px-[var(--margin-desktop)] ${classes} ${
 				bgColor ? bgColor : 'bg-primary'
 			}`}>
 			{children}

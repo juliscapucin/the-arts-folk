@@ -66,10 +66,10 @@ export default function News({ news }: NewsProps) {
 									</div>
 
 									{/* Project Info */}
-									<p className='block font-heading mt-3 text-bodyMedium text-balance lg:text-bodyLarge leading-tight'>
+									<p className='block font-heading mt-3 text-body-medium text-balance lg:text-body-large leading-tight'>
 										{project.title}
 									</p>
-									<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
+									<p className='block font-script text-title-large md:text-headlineMedium capitalize tracking-tighter'>
 										By {project.artistInfo?.name}
 									</p>
 								</Button>

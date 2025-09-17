@@ -102,7 +102,7 @@ export default function ArtistPage({
 	}
 
 	return (
-		<Container classes='pt-[--header-height-desktop]'>
+		<Container classes='pt-[var(--header-height-desktop)]'>
 			<div className='relative w-full'>
 				{/* BACK BUTTON */}
 				<ButtonBack href='/artists' label='Artists' classes='pt-8' />

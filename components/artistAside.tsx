@@ -44,7 +44,7 @@ export default function ArtistAside({
 			</nav>
 
 			{/* Artist Info */}
-			<p className='hidden sm:block my-12 lg:pr-8 text-bodyMedium'>
+			<p className='hidden sm:block my-12 lg:pr-8 text-body-medium'>
 				{artist.artistInfo}
 			</p>
 

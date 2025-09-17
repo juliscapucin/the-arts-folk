@@ -67,11 +67,11 @@ export default function ProjectsGallery({
 									</div>
 
 									{/* Project Info */}
-									<p className='block font-heading mt-3 text-bodyMedium text-balance lg:text-bodyLarge leading-tight'>
+									<p className='block font-heading mt-3 text-body-medium text-balance lg:text-body-large leading-tight'>
 										{project.title}
 									</p>
 									{pathname !== '/production' && (
-										<p className='block font-script text-titleLarge md:text-headlineMedium capitalize tracking-tighter'>
+										<p className='block font-script text-title-large md:text-headlineMedium capitalize tracking-tighter'>
 											By {project.artistInfo?.name}
 										</p>
 									)}

@@ -27,7 +27,7 @@ export default function Button({
 	handleMouseEnter,
 	handleMouseLeave,
 }: MyButtonProps) {
-	const { transitionOnClick, setTransitionIndex } = usePageContext()
+	const { handleTransitionOnClick, setTransitionIndex } = usePageContext()
 	const slug =
 		href && href.length > 0
 			? href.startsWith('/')
@@ -46,7 +46,7 @@ export default function Button({
 				transitionZIndex
 					? setTransitionIndex(transitionZIndex)
 					: setTransitionIndex('z-transitionHigh')
-				transitionOnClick(slug)
+				handleTransitionOnClick(slug)
 			}}
 			ref={ref}>
 			{children}
@@ -61,7 +61,7 @@ export default function Button({
 				transitionZIndex
 					? setTransitionIndex(transitionZIndex)
 					: setTransitionIndex('z-transitionHigh')
-				transitionOnClick(slug)
+				handleTransitionOnClick(slug)
 			}}
 			ref={ref}>
 			{children}
