@@ -276,7 +276,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 									onMouseLeave={handleMouseLeave}>
 									{artist.name}
 									<span
-										className={`block mt-2 font-text uppercase text-labelLarge font-medium transition-opacity ${
+										className={`block mt-2 font-text uppercase text-label-large font-medium transition-opacity ${
 											isHovered === artist.name ? '' : 'opacity-0'
 										}`}>
 										{artist.description}

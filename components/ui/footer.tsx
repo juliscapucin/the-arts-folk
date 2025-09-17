@@ -6,7 +6,7 @@ export default async function Footer() {
 
 	return (
 		<footer className='block bg-primary w-full h-[var(--footer-height-mobile)] lg:h-[var(--footer-height-desktop)] z-100'>
-			<div className='w-full max-w-desktop mx-auto px-[var(--margin-mobile)] lg:px-[var(--margin-desktop)] flex justify-center lg:justify-start items-center gap-6 lg:gap-8 font-text font-extralight text-body-small lg:text-labelLarge tracking-wide'>
+			<div className='w-full max-w-desktop mx-auto px-[var(--margin-mobile)] lg:px-[var(--margin-desktop)] flex justify-center lg:justify-start items-center gap-6 lg:gap-8 font-text font-extralight text-body-small lg:text-label-large tracking-wide'>
 				{navLinks &&
 					navLinks.map((link) => {
 						return link.url ? (

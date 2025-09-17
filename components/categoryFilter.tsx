@@ -18,7 +18,7 @@ export default function CategoryFilter({
 		<div className='absolute top-[var(--header-height-desktop)] left-0 right-0 h-16 z-100 flex items-center justify-center gap-1 md:gap-2 font-text'>
 			<button
 				onClick={() => setActiveCategory('all')}
-				className={`uppercase text-labelMedium md:text-labelLarge font-medium ${
+				className={`uppercase text-label-medium md:text-label-large font-medium ${
 					activeCategory === 'all' ? 'active underlined-link' : ''
 				}`}>
 				All
@@ -30,7 +30,7 @@ export default function CategoryFilter({
 					<Fragment key={`${category.title}-category`}>
 						<button
 							onClick={() => setActiveCategory(category._id)}
-							className={`underlined-link uppercase text-labelMedium md:text-labelLarge font-medium ${
+							className={`underlined-link uppercase text-label-medium md:text-label-large font-medium ${
 								activeCategory === category._id ? 'active' : ''
 							}`}>
 							{category.title}

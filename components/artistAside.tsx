@@ -19,7 +19,7 @@ export default function ArtistAside({
 	return (
 		<aside className={`w-1/3 lg:w-1/4 pr-8 font-text z-artistAside`}>
 			{/* Artist Sections */}
-			<nav className='text-labelLarge font-medium mt-2 md:mt-16'>
+			<nav className='text-label-large font-medium mt-2 md:mt-16'>
 				{artistSections.map((link) => {
 					const linkLowerCase = link.title.toLowerCase()
 					const isActive =
@@ -53,14 +53,14 @@ export default function ArtistAside({
 				{artist.agentEmail && (
 					<a
 						href={`mailto:${artist.agentEmail}`}
-						className='underlined-link block uppercase mt-8 text-labelLarge font-medium'
+						className='underlined-link block uppercase mt-8 text-label-large font-medium'
 						rel='noopener noreferrer'>
 						<span>Contact Agent</span>
 					</a>
 				)}
 				{artist.artistInstagram && (
 					<a
-						className='underlined-link block text-labelLarge font-medium'
+						className='underlined-link block text-label-large font-medium'
 						href={artist.artistInstagram}>
 						Instagram
 					</a>

@@ -56,7 +56,7 @@ const CustomCursor = ({
 				isActive && isHovering ? 'opacity-100' : 'opacity-0'
 			} fixed top-0 left-0 z-artist-aside pointer-events-none cursor-pointer transition-opacity duration-300`}
 			ref={refCursor}>
-			<span className='block py-1 px-2 w-fit bg-secondary text-primary text-labelMedium font-medium text-nowrap font-text text-center leading-tightest z-30'>
+			<span className='block py-1 px-2 w-fit bg-secondary text-primary text-label-medium font-medium text-nowrap font-text text-center leading-tightest z-30'>
 				{projectTitle}
 			</span>
 		</div>

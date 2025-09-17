@@ -45,7 +45,7 @@ export default function NavbarMobile({
 					{/* Nav Links */}
 					<nav className='flex flex-col gap-24 h-svh items-center justify-center'>
 						<div
-							className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
+							className={`relative flex justify-center items-start font-text text-headline-large text-primary font-thin`}
 							key={'home-link'}>
 							{/* Inactive Link */}
 							{pathname === '/' ? (
@@ -64,7 +64,7 @@ export default function NavbarMobile({
 						{navLinks.map((link) => {
 							return (
 								<div
-									className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
+									className={`relative flex justify-center items-start font-text text-headline-large text-primary font-thin`}
 									key={link.title}>
 									{/* Inactive Link */}
 									{(pathname === '/' && link.slug === '/') ||

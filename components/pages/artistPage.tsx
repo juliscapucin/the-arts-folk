@@ -123,7 +123,7 @@ export default function ArtistPage({
 							<button
 								ref={changeViewButtonRef}
 								onClick={toggleView}
-								className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'>
+								className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-label-large font-medium uppercase flex items-center gap-2'>
 								<span className='underlined-link block'>
 									{view === 'thumbnail' ? 'Gallery' : 'Thumbnails'}
 								</span>

@@ -224,13 +224,13 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					{/* SUBTITLE */}
 					{artist.slug && artist.name && artist.name !== 'The Arts Folk' && (
 						<Button href={`/artists/${artist.slug}`}>
-							<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
+							<h2 className='font-script capitalize text-headline-medium md:text-display-small lg:mt-2'>
 								By {artist.name}
 							</h2>
 						</Button>
 					)}
 					{artist.name == 'The Arts Folk' && (
-						<h2 className='font-script capitalize text-headlineMedium md:text-displaySmall lg:mt-2'>
+						<h2 className='font-script capitalize text-headline-medium md:text-display-small lg:mt-2'>
 							By The Arts Folk
 						</h2>
 					)}
@@ -238,7 +238,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					{projectInfo && (
 						<button
 							onClick={toggleProjectInfo}
-							className='sm:hidden mt-6 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-start'>
+							className='sm:hidden mt-6 w-full text-right font-text uppercase text-label-medium font-medium flex gap-4 items-center justify-start'>
 							Project info
 							<span
 								className={`${
@@ -256,7 +256,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						<div className='absolute top-0 right-0 z-80'>
 							{/* RELEASE DATE */}
 							{pathname.includes('news') && (
-								<p className='text-right font-script text-displaySmall md:text-displayLarge'>
+								<p className='text-right font-script text-display-small md:text-display-large'>
 									{releaseDate}
 								</p>
 							)}
@@ -266,7 +266,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								<div className='h-8 mt-1 md:mt-4'>
 									<button
 										onClick={toggleProjectInfo}
-										className='mb-4 w-full text-right font-text uppercase text-labelMedium font-medium flex gap-4 items-center justify-end'>
+										className='mb-4 w-full text-right font-text uppercase text-label-medium font-medium flex gap-4 items-center justify-end'>
 										Project info
 										<span
 											className={`${
@@ -298,7 +298,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 						</p>
 						{pathname.includes('news') && (
 							<Button
-								classes='underlined-link block w-full mt-8 font-text text-labelMedium font-medium text-center pointer-events-auto'
+								classes='underlined-link block w-full mt-8 font-text text-label-medium font-medium text-center pointer-events-auto'
 								href={`artists/${artist.slug}`}>
 								Go to Artist page
 							</Button>

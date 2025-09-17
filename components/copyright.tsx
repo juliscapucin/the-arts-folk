@@ -4,7 +4,7 @@ export default function Copyright() {
 	const year = new Date().getFullYear()
 
 	return (
-		<div className='mb-8 lg:mb-0 lg:absolute right-[var(--margin-mobile)] lg:right-[var(--margin-desktop)] bottom-8 flex flex-col items-end text-labelSmall font-text'>
+		<div className='mb-8 lg:mb-0 lg:absolute right-[var(--margin-mobile)] lg:right-[var(--margin-desktop)] bottom-8 flex flex-col items-end text-label-small font-text'>
 			{/* <Button href={"impressum"} classes='underlined-link mb-4 uppercase'>
 				Impressum
 			</Button> */}

@@ -18,11 +18,11 @@ export default function Heading({
 	switch (variant) {
 		case 'display':
 			headingStyles =
-				'text-displaySmall text-balance md:text-displayMedium lg:text-displayLarge font-normal'
+				'text-display-small text-balance md:text-display-medium lg:text-display-large font-normal'
 			break
 		case 'headline':
 			headingStyles =
-				'text-headlineSmall text-balance md:text-headlineMedium lg:text-headlineLarge'
+				'text-headline-small text-balance md:text-headline-medium lg:text-headline-large'
 			break
 		case 'title':
 			headingStyles =
@@ -34,7 +34,7 @@ export default function Heading({
 			break
 		default:
 			headingStyles =
-				'text-displaySmall text-balance md:text-displayMedium lg:text-displayLarge'
+				'text-display-small text-balance md:text-display-medium lg:text-display-large'
 			break
 	}
 
