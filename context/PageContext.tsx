@@ -2,8 +2,6 @@
 
 import { createContext, useContext, useState } from 'react'
 
-import gsap from 'gsap'
-
 import { NavLink } from '@/types'
 
 interface ContextProps {
