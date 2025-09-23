@@ -1,17 +1,18 @@
-"use client"
+'use client'
 
-import { useLayoutEffect, useState } from "react"
-import { usePathname } from "next/navigation"
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
-import gsap from "gsap"
-import ScrollTrigger from "gsap/ScrollTrigger"
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
-import { usePageContext } from "@/context"
+import { usePageContext } from '@/context'
 
-import { ButtonLogo } from "@/components/buttons"
-import { NavbarLink } from "@/components/ui"
+import { ButtonLogo } from '@/components/buttons'
+import { NavbarLink } from '@/components/ui'
 
-import type { NavLink } from "@/types"
+import type { NavLink } from '@/types'
 
 type NavbarDesktopProps = {
 	navLinks: NavLink[]
@@ -19,35 +20,31 @@ type NavbarDesktopProps = {
 
 export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 	const pathname = usePathname()
-	const { transitionOnClick } = usePageContext()
+	const { handleTransitionOnClick } = usePageContext()
 	const [isScrolled, setIsScrolled] = useState(false)
 
-	useLayoutEffect(() => {
-		if (typeof window === "undefined") return
+	useGSAP(() => {
+		if (typeof window === 'undefined') return
 		gsap.registerPlugin(ScrollTrigger)
 
-		let ctx = gsap.context(() => {
-			ScrollTrigger.create({
-				trigger: "body",
-				start: () => "top top-=" + window.innerHeight,
-				end: "bottom bottom",
-				onEnter: () => {
-					setIsScrolled(true)
-				},
-				onLeaveBack: () => {
-					setIsScrolled(false)
-				},
-			})
+		ScrollTrigger.create({
+			trigger: 'body',
+			start: () => 'top top-=' + window.innerHeight,
+			end: 'bottom bottom',
+			onEnter: () => {
+				setIsScrolled(true)
+			},
+			onLeaveBack: () => {
+				setIsScrolled(false)
+			},
 		})
-
-		return () => ctx.revert()
 	}, [])
 
 	return (
-		<div className='w-full h-full max-w-desktop mx-auto px-[--margin-mobile] lg:px-[--margin-desktop] flex justify-between items-end'>
+		<div className='w-full h-full max-w-desktop mx-auto px-[var(--margin-mobile)] lg:px-[var(--margin-desktop)] flex justify-between items-end'>
 			<ButtonLogo
 				handleClick={() =>
-					transitionOnClick({ slug: "/", title: "Home", order: 1 })
+					handleTransitionOnClick({ slug: '/', title: 'Home', order: 1 })
 				}
 			/>
 			{navLinks && (
@@ -62,11 +59,11 @@ export default function NavbarDesktop({ navLinks }: NavbarDesktopProps) {
 										link={link}
 										isActive={
 											pathname === `/${link.slug}` ||
-											(pathname === "/" && link.slug === "news" && isScrolled)
+											(pathname === '/' && link.slug === 'news' && isScrolled)
 												? true
 												: false
 										}
-										transitionOnClick={transitionOnClick}
+										transitionOnClick={handleTransitionOnClick}
 									/>
 								)
 							)

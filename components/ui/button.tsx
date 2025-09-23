@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import React, { forwardRef, MouseEventHandler } from "react"
-import Link from "next/link"
-import { usePageContext } from "@/context"
+import { usePageContext } from '@/context'
+import Link from 'next/link'
+import { MouseEventHandler } from 'react'
 
 type MyButtonProps = {
+	ref?: React.Ref<HTMLAnchorElement> | undefined
 	href: string
 	classes?: string
 	children?: React.ReactNode
@@ -15,67 +16,55 @@ type MyButtonProps = {
 	handleMouseLeave?: MouseEventHandler<HTMLAnchorElement> | undefined
 }
 
-const Button = forwardRef<HTMLAnchorElement, MyButtonProps>(
-	(
-		{
-			href,
-			classes,
-			children,
-			transitionZIndex,
-			isVideo,
-			prefetch,
-			handleMouseEnter,
-			handleMouseLeave,
-		},
-		ref
-	) => {
-		const { transitionOnClick, setTransitionIndex } = usePageContext()
-		const slug =
-			href && href.length > 0
-				? href.startsWith("/")
-					? href.slice(1)
-					: href
-				: "/"
+export default function Button({
+	ref,
+	href,
+	classes,
+	children,
+	transitionZIndex,
+	isVideo,
+	prefetch,
+	handleMouseEnter,
+	handleMouseLeave,
+}: MyButtonProps) {
+	const { handleTransitionOnClick, setTransitionIndex } = usePageContext()
+	const slug =
+		href && href.length > 0
+			? href.startsWith('/')
+				? href.slice(1)
+				: href
+			: '/'
 
-		return isVideo ? (
-			<a
-				className={`${classes}`}
-				href={href}
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
-				onClick={(e) => {
-					e.preventDefault()
-					transitionZIndex
-						? setTransitionIndex(transitionZIndex)
-						: setTransitionIndex("z-transitionHigh")
-					transitionOnClick(slug)
-				}}
-				ref={ref}
-			>
-				{children}
-			</a>
-		) : (
-			<Link href={href} prefetch={prefetch} passHref legacyBehavior>
-				<a
-					className={classes}
-					href={href}
-					onClick={(e) => {
-						e.preventDefault()
-						transitionZIndex
-							? setTransitionIndex(transitionZIndex)
-							: setTransitionIndex("z-transitionHigh")
-						transitionOnClick(slug)
-					}}
-					ref={ref}
-				>
-					{children}
-				</a>
-			</Link>
-		)
-	}
-)
-
-// Set displayName for better debugging and error messages
-Button.displayName = "Button"
-
-export default Button
+	return isVideo ? (
+		<a
+			className={`${classes}`}
+			href={href}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			onClick={(e) => {
+				e.preventDefault()
+				transitionZIndex
+					? setTransitionIndex(transitionZIndex)
+					: setTransitionIndex('z-transition-high')
+				handleTransitionOnClick(slug)
+			}}
+			ref={ref}>
+			{children}
+		</a>
+	) : (
+		<Link
+			className={classes}
+			href={href}
+			prefetch={prefetch}
+			onClick={(e) => {
+				e.preventDefault()
+				transitionZIndex
+					? setTransitionIndex(transitionZIndex)
+					: setTransitionIndex('z-transition-high')
+				handleTransitionOnClick(slug)
+			}}
+			ref={ref}>
+			{children}
+		</Link>
+	)
+}

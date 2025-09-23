@@ -1,9 +1,11 @@
-"use client"
+'use client'
 
-import { DefaultPage } from "@/components/pages"
-import { ButtonEmail } from "@/components/buttons"
+import Link from 'next/link'
 
-import type { InfoPage } from "@/types"
+import { DefaultPage } from '@/components/pages'
+import { ButtonEmail } from '@/components/buttons'
+
+import type { InfoPage } from '@/types'
 
 type InfoPageProps = {
 	infoData: InfoPage
@@ -13,6 +15,7 @@ export default function InfoPage({ infoData }: InfoPageProps) {
 	return (
 		<DefaultPage hasCopyright={true} pageData={infoData} isCentered={true}>
 			{/* Email + Phone */}
+			<Link href={'/test'}>test</Link>
 			<div className='lg:w-2/5 flex flex-col justify-center items-center gap-16 my-16 lg:my-0 h-full w-full whitespace-nowrap'>
 				{infoData.contactInfo.map((contact) => (
 					<ButtonEmail

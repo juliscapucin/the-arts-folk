@@ -1,21 +1,34 @@
-"use client"
+'use client'
 
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import Image from "next/image"
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 
-import gsap from "gsap"
-import ScrollTrigger from "gsap/ScrollTrigger"
-import Flip from "gsap/Flip"
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import Flip from 'gsap/Flip'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
-import { Logo } from "@/components/svgs"
+import { Logo } from '@/components/svgs'
 
-import type { CloudinaryImage } from "@/types"
+import type { CloudinaryImage } from '@/types'
 
 type ShowreelProps = {
 	showreelImages: CloudinaryImage[]
 }
 
 const delay = 1000
+
+// LOGO ANIMATION
+const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
+	const state = Flip.getState(element)
+
+	targetDiv.appendChild(element)
+
+	Flip.from(state, {
+		duration: 0.5,
+		ease: 'power1.inOut',
+	})
+}
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
@@ -45,21 +58,9 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		return () => {
 			resetTimeout()
 		}
-	}, [slideIndex])
+	}, [slideIndex, showreelImages])
 
-	// LOGO ANIMATION
-	const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
-		const state = Flip.getState(element)
-
-		targetDiv.appendChild(element)
-
-		Flip.from(state, {
-			duration: 0.5,
-			ease: "power1.inOut",
-		})
-	}
-
-	useLayoutEffect(() => {
+	useGSAP(() => {
 		if (
 			!logoRef.current ||
 			!logoHeaderRef.current ||
@@ -77,28 +78,24 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 
 		// logoHeaderToCenter(element, logoShowreel)
 
-		let ctx = gsap.context(() => {
-			ScrollTrigger.create({
-				trigger: showreel,
-				start: "bottom center-=100",
-				end: "bottom top",
-				// markers: true,
-				onEnter: () => {
-					moveLogo(element, logoHeader)
-				},
-				onLeaveBack: () => {
-					moveLogo(element, logoShowreel)
-				},
-			})
+		ScrollTrigger.create({
+			trigger: showreel,
+			start: 'bottom center-=100',
+			end: 'bottom top',
+			// markers: true,
+			onEnter: () => {
+				moveLogo(element, logoHeader)
+			},
+			onLeaveBack: () => {
+				moveLogo(element, logoShowreel)
+			},
 		})
-
-		return () => ctx.revert()
-	}, [logoRef.current, showreelRef.current])
+	}, [])
 
 	return (
-		<section className='pt-[--header-height-desktop] mb-40'>
-			<div className='fixed top-0 left-0 right-0 h-[--header-height-mobile] lg:h-[--header-height-desktop] pt-2 z-logoHeader pointer-events-none'>
-				<div className='w-full max-w-desktop mx-auto px-[--margin-mobile] md:px-[--margin-desktop] flex justify-start items-end '>
+		<section className='pt-[var(--header-height-desktop)] mb-40'>
+			<div className='fixed top-0 left-0 right-0 h-[var(--header-height-mobile)] lg:h-[var(--header-height-desktop)] pt-2 z-logo-header pointer-events-none'>
+				<div className='w-full max-w-desktop mx-auto px-[var(--margin-mobile)] md:px-[var(--margin-desktop)] flex justify-start items-end '>
 					<div ref={logoHeaderRef} className='relative h-full w-[220px]'></div>
 				</div>
 			</div>
@@ -111,14 +108,13 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 			</div>
 			<div
 				ref={showreelRef}
-				className='relative w-full lg:w-1/2 h-[--showreel-height-mobile] lg:h-[--showreel-height-desktop] mx-auto overflow-clip'
-			>
+				className='relative w-full lg:w-1/2 h-[var(--showreel-height-mobile)] lg:h-[var(--showreel-height-desktop)] mx-auto overflow-clip'>
 				{showreelImages.map((image, index) => {
 					return (
 						<div className={`absolute w-full h-full`} key={`showreel-${index}`}>
 							<Image
 								className={`object-cover md:object-contain transition-opacity duration-300 ${
-									slideIndex === index ? "opacity-100 z-5" : "opacity-10 z-0"
+									slideIndex === index ? 'opacity-100 z-5' : 'opacity-10 z-0'
 								}`}
 								src={image.url}
 								alt='Showreel image'

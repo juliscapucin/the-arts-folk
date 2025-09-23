@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname, useRouter } from 'next/navigation'
 
-import { ButtonBurger } from "@/components/buttons"
+import { ButtonBurger } from '@/components/buttons'
 
-import type { NavLink } from "@/types"
+import type { NavLink } from '@/types'
 
 type NavbarMobileProps = {
 	navLinks: NavLink[]
@@ -39,27 +39,24 @@ export default function NavbarMobile({
 
 				{/* Mobile Menu */}
 				<aside
-					className={`absolute top-0 left-0 w-screen h-vh p-8 bg-secondary transition-transform duration-300 delay-200 z-mobileMenu overflow-clip ${
-						isMobileMenuOpen ? "" : "-translate-y-full"
-					}`}
-				>
+					className={`absolute top-0 left-0 w-screen h-vh p-8 bg-secondary transition-transform duration-300 delay-200 z-mobile-menu overflow-clip ${
+						isMobileMenuOpen ? '' : '-translate-y-full'
+					}`}>
 					{/* Nav Links */}
 					<nav className='flex flex-col gap-24 h-svh items-center justify-center'>
 						<div
-							className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
-							key={"home-link"}
-						>
+							className={`relative flex justify-center items-start font-text text-headline-large text-primary font-thin`}
+							key={'home-link'}>
 							{/* Inactive Link */}
-							{pathname === "/" ? (
+							{pathname === '/' ? (
 								<span className='uppercase opacity-50'>Home</span>
 							) : (
 								// Active Link
 								<button
 									className='block'
 									onClick={() =>
-										transitionOnClick({ slug: "/", title: "Home", order: 0 })
-									}
-								>
+										transitionOnClick({ slug: '/', title: 'Home', order: 0 })
+									}>
 									<span className='uppercase'>Home</span>
 								</button>
 							)}
@@ -67,19 +64,17 @@ export default function NavbarMobile({
 						{navLinks.map((link) => {
 							return (
 								<div
-									className={`relative flex justify-center items-start font-text text-headlineLarge text-primary font-thin`}
-									key={link.title}
-								>
+									className={`relative flex justify-center items-start font-text text-headline-large text-primary font-thin`}
+									key={link.title}>
 									{/* Inactive Link */}
-									{(pathname === "/" && link.slug === "/") ||
+									{(pathname === '/' && link.slug === '/') ||
 									pathname.includes(`/${link.slug}`) ? (
 										<span className='uppercase opacity-50'>{link.title}</span>
 									) : (
 										// Active Link
 										<button
 											className='block'
-											onClick={() => transitionOnClick(link)}
-										>
+											onClick={() => transitionOnClick(link)}>
 											<span className='uppercase'>{link.title}</span>
 										</button>
 									)}

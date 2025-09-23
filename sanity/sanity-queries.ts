@@ -1,5 +1,5 @@
-import { createClient, groq } from "next-sanity"
-import clientConfig from "@/sanity/config/client-config"
+import { createClient, groq } from 'next-sanity'
+import clientConfig from '@/sanity/config/client-config'
 import type {
 	Artist,
 	Category,
@@ -8,7 +8,7 @@ import type {
 	Project,
 	Page,
 	ArtistSection,
-} from "@/types"
+} from '@/types'
 
 const client = createClient(clientConfig)
 
@@ -94,19 +94,19 @@ export async function getProjects(): Promise<Project[]> {
 
 export async function getNews(): Promise<Project[]> {
 	return client.fetch(
-		groq`*[_type == "project" && isNews == true] | order(releaseDate desc){
-      _id,
-      "slug": slug.current,
-      artist,
-      artistSection,
-      title,
-      projectInfo,
-      releaseDate,
-      images,
-      isNews,
-      newsPageSize,
-      addSpaceBefore,
-      addSpaceAfter
+		groq`*[_type == "project" && isNews == true] | order(releaseDate desc)[0...30]{
+     _id,
+     "slug": slug.current,
+     artist,
+     artistSection,
+     title,
+     projectInfo,
+     releaseDate,
+     images,
+     isNews,
+     newsPageSize,
+     addSpaceBefore,
+     addSpaceAfter
    }`
 	)
 }
@@ -120,7 +120,7 @@ export async function getProjectsGallery(slug: string): Promise<Project[]> {
 		)
 
 		if (!page?._id) {
-			console.error("Page not found for the provided slug.")
+			console.error('Page not found for the provided slug.')
 			return []
 		}
 
@@ -143,7 +143,7 @@ export async function getProjectsGallery(slug: string): Promise<Project[]> {
 			{ pageId: page._id }
 		)
 	} catch (error) {
-		console.error("Error fetching projects:", error)
+		console.error('Error fetching projects:', error)
 		return []
 	}
 }

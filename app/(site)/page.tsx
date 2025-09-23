@@ -1,18 +1,13 @@
-import { notFound } from "next/navigation"
+import { notFound } from 'next/navigation'
 
-import { HomePage } from "@/components/pages"
-import { getPage, getShowreel } from "@/sanity/sanity-queries"
-import { metadataFallback } from "@/utils"
+import { HomePage } from '@/components/pages'
+import { getPage, getShowreel } from '@/sanity/sanity-queries'
+import { metadataFallback } from '@/utils'
 
-import { NewsServer } from "@/components/server"
-
-// Opt out of caching for all data requests in the route segment
-// export const dynamic = "force-dynamic"
-
-// export const revalidate = 60
+import { NewsServer } from '@/components/server'
 
 export async function generateMetadata() {
-	const pageData = getPage("home")
+	const pageData = getPage('home')
 	const page = await pageData
 
 	if (!page) {

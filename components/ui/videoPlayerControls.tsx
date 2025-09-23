@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useEffect, useRef } from "react"
-import VimeoPlayer from "@vimeo/player"
+import VimeoPlayer from '@vimeo/player'
+import { useEffect, useRef } from 'react'
 
 type VideoPlayerControlsProps = {
 	videoUrl: string
@@ -9,13 +9,13 @@ type VideoPlayerControlsProps = {
 	autoplay?: boolean
 }
 
-export default function videoPlayerControls({
+export default function VideoPlayerControls({
 	children,
 	videoUrl,
 	autoplay = false,
 }: VideoPlayerControlsProps) {
 	const videoPlayerRef = useRef<HTMLDivElement>(null)
-	const videoId = videoUrl.split("/").pop()
+	const videoId = videoUrl.split('/').pop()
 
 	useEffect(() => {
 		if (videoPlayerRef.current && videoId) {
@@ -31,16 +31,16 @@ export default function videoPlayerControls({
 			})
 
 			// Add event listeners or control the player
-			player.on("play", () => {
-				console.log("Video is playing!")
+			player.on('play', () => {
+				console.log('Video is playing!')
 			})
 
-			player.on("ended", () => {
-				console.log("Video has ended.")
+			player.on('ended', () => {
+				console.log('Video has ended.')
 			})
 
-			player.on("pause", () => {
-				console.log("Video has paused.")
+			player.on('pause', () => {
+				console.log('Video has paused.')
 			})
 
 			// Cleanup: Destroy the player on component unmount
@@ -48,7 +48,7 @@ export default function videoPlayerControls({
 				player.destroy()
 			}
 		}
-	}, [])
+	}, [autoplay, videoId])
 
 	return <div ref={videoPlayerRef}></div>
 }

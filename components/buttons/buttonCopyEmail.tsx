@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "react"
+import { useState, useRef, useLayoutEffect } from 'react'
 
 type ButtonCopyEmailProps = {
 	email: string
@@ -16,7 +16,7 @@ export default function ButtonCopyEmail({ email }: ButtonCopyEmailProps) {
 				setTimeout(() => setShowCopyFeedback(false), 2000)
 			})
 			.catch((err) => {
-				console.error("Failed to copy email address: ", err)
+				console.error('Failed to copy email address: ', err)
 			})
 	}
 
@@ -25,15 +25,14 @@ export default function ButtonCopyEmail({ email }: ButtonCopyEmailProps) {
 			{showCopyFeedback && (
 				<div
 					ref={labelRef}
-					className='absolute -top-8 w-full flex justify-center'
-				>
-					<span className='bg-secondary px-2 text-primary text-labelSmall uppercase whitespace-nowrap'>
+					className='absolute -top-8 w-full flex justify-center'>
+					<span className='bg-secondary px-2 text-primary text-label-small uppercase whitespace-nowrap'>
 						Copied to clipboard!
 					</span>
 				</div>
 			)}
 			<button className='overflow-hidden h-8' onClick={copyToClipboard}>
-				<div className='flex flex-col text-labelSmall'>
+				<div className='flex flex-col text-label-small'>
 					<span>Copy email address</span>
 				</div>
 			</button>

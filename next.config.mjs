@@ -9,29 +9,29 @@ const ContentSecurityPolicy = `
 	  font-src 'self' data: use.typekit.net;
 	  object-src 'none';
 	`
-	.replace(/\s{2,}/g, " ")
+	.replace(/\s{2,}/g, ' ')
 	.trim()
 
 const securityHeaders = [
 	{
-		key: "Content-Security-Policy",
+		key: 'Content-Security-Policy',
 		value: ContentSecurityPolicy,
 	},
 ]
 
 const nextConfig = {
 	reactStrictMode: false,
-	swcMinify: true,
 	images: {
-		loader: "custom",
-		loaderFile: "./lib/cloudinaryLoader.ts",
+		qualities: [25, 50, 70],
+		loader: 'custom',
+		loaderFile: './lib/cloudinaryLoader.ts',
 		deviceSizes: [480, 768, 1024, 1920, 2560], // 5 responsive breakpoints
 		imageSizes: [], // don't need extra fixed sizes
 	},
 	async headers() {
 		return [
 			{
-				source: "/(.*)",
+				source: '/(.*)',
 				headers: securityHeaders,
 			},
 		]

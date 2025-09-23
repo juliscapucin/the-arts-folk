@@ -1,19 +1,18 @@
-import { notFound } from "next/navigation"
-import { ArtistPage } from "@/components/pages"
+import { ArtistPage } from '@/components/pages'
 import {
 	getArtist,
 	getArtistSections,
 	getPage,
 	getProjects,
-} from "@/sanity/sanity-queries"
-import { metadataFallback } from "@/utils"
-import { ArtistSection } from "@/types"
+} from '@/sanity/sanity-queries'
+import { ArtistSection } from '@/types'
+import { metadataFallback } from '@/utils'
+import { notFound } from 'next/navigation'
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { sectionSlug: string; slug: string }
+export async function generateMetadata(props: {
+	params: Promise<{ sectionSlug: string; slug: string }>
 }) {
+	const params = await props.params
 	const { slug } = params
 	const pageData = getPage(slug)
 	const page = await pageData
@@ -30,14 +29,10 @@ export async function generateMetadata({
 	}
 }
 
-// Opt out of caching for all data requests in the route segment
-// export const dynamic = "force-dynamic"
-
-export default async function page({
-	params,
-}: {
-	params: { sectionSlug: string; slug: string }
+export default async function page(props: {
+	params: Promise<{ sectionSlug: string; slug: string }>
 }) {
+	const params = await props.params
 	const { sectionSlug, slug } = params
 	const projects = await getProjects()
 	const artistSections = await getArtistSections()
@@ -79,7 +74,6 @@ export default async function page({
 			)
 		: []
 
-	// if (!activeSection) return notFound()
 	if (!artist || !activeProjects || !activeSection) return notFound()
 
 	return (
@@ -90,9 +84,9 @@ export default async function page({
 				sectionSlug: sectionSlug,
 				artistSections: orderedArtistLinks,
 				startView:
-					sectionSlug === "featured" && artist.startView
-						? "gallery"
-						: "thumbnail",
+					sectionSlug === 'featured' && artist.startView
+						? 'gallery'
+						: 'thumbnail',
 			}}
 		/>
 	)

@@ -1,13 +1,15 @@
-"use client"
+'use client'
 
-import { useEffect, useRef, useState, MouseEvent } from "react"
-import ReactPlayer from "react-player/vimeo"
+import { MouseEvent, useEffect, useRef, useState } from 'react'
+import ReactPlayer from 'react-player/vimeo'
 
-import gsap from "gsap"
+import gsap from 'gsap'
 
-import { useWindowDimensions } from "@/hooks"
+import { useWindowDimensions } from '@/hooks'
 
-import { Artist, ArtistSection, Project } from "@/types"
+import { ArtistAside } from '@/components'
+import { ButtonBack } from '@/components/buttons'
+import { IconGallery, IconThumbnails } from '@/components/icons'
 import {
 	Button,
 	Container,
@@ -15,10 +17,8 @@ import {
 	ImageWithSpinner,
 	VideoPlayer,
 	VideoPlayerControls,
-} from "@/components/ui"
-import { ArtistAside } from "@/components"
-import { IconGallery, IconThumbnails } from "@/components/icons"
-import { ButtonBack } from "@/components/buttons"
+} from '@/components/ui'
+import { Artist, ArtistSection, Project } from '@/types'
 
 type artistPageProps = {
 	artist: Artist
@@ -51,7 +51,7 @@ export default function ArtistPage({
 		const target = e.currentTarget as HTMLAnchorElement
 
 		const project = sortedProjects.find(
-			(item) => item?.slug === target.href.split("/").pop()
+			(item) => item?.slug === target.href.split('/').pop()
 		)
 
 		if (!project) return
@@ -64,18 +64,18 @@ export default function ArtistPage({
 
 	useEffect(() => {
 		if (width < 768) {
-			setView("gallery")
+			setView('gallery')
 			return
 		} else {
 			setView(startView)
 		}
-	}, [width])
+	}, [width, startView])
 
 	const toggleView = () => {
 		const tl = gsap.timeline({
 			onComplete: () => {
 				setView((prevView) =>
-					prevView === "gallery" ? "thumbnail" : "gallery"
+					prevView === 'gallery' ? 'thumbnail' : 'gallery'
 				)
 				gsap.to(imagesSectionRef.current, {
 					opacity: 1,
@@ -97,12 +97,12 @@ export default function ArtistPage({
 				opacity: 0,
 				duration: 0.4,
 			},
-			"<"
+			'<'
 		)
 	}
 
 	return (
-		<Container classes='pt-[--header-height-desktop]'>
+		<Container classes='pt-[var(--header-height-desktop)]'>
 			<div className='relative w-full'>
 				{/* BACK BUTTON */}
 				<ButtonBack href='/artists' label='Artists' classes='pt-8' />
@@ -123,25 +123,23 @@ export default function ArtistPage({
 							<button
 								ref={changeViewButtonRef}
 								onClick={toggleView}
-								className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-labelLarge font-medium uppercase flex items-center gap-2'
-							>
+								className='pl-4 md:pl-0 mt-2 md:mt-0 font-text text-label-large font-medium uppercase flex items-center gap-2'>
 								<span className='underlined-link block'>
-									{view === "thumbnail" ? "Gallery" : "Thumbnails"}
+									{view === 'thumbnail' ? 'Gallery' : 'Thumbnails'}
 								</span>
 
 								{/* VIEW ICONS */}
-								{view === "thumbnail" ? <IconThumbnails /> : <IconGallery />}
+								{view === 'thumbnail' ? <IconThumbnails /> : <IconGallery />}
 							</button>
 						</header>
 						<div
 							ref={imagesSectionRef}
-							className='flex flex-wrap justify-start items-start'
-						>
+							className='flex flex-wrap justify-start items-start'>
 							{sortedProjects &&
 								sortedProjects.map((project, index) => {
 									if (!project || !project.images) return null
 									const firstImage = project.images[0]
-									const isVideo = firstImage.url.includes("vimeo")
+									const isVideo = firstImage.url.includes('vimeo')
 
 									return (
 										<Button
@@ -149,24 +147,22 @@ export default function ArtistPage({
 												buttonRefs.current[index] = el
 											}}
 											classes={`group relative cursor-pointer overflow-hidden ml-4 ${
-												view === "gallery" ? "w-full" : "mb-4"
+												view === 'gallery' ? 'w-full' : 'mb-4'
 											}`}
 											href={`/artists/${artist.slug}/projects/${project.slug}`}
 											key={`project.slug-${index}`}
 											isVideo={isVideo}
 											prefetch={false}
 											handleMouseEnter={(e) => handleMouseEnter(e)}
-											handleMouseLeave={handleMouseLeave}
-										>
+											handleMouseLeave={handleMouseLeave}>
 											<div
 												className={`relative overflow-hidden ${
-													view === "thumbnail" ? `h-36 md:h-72` : `w-full pb-8`
+													view === 'thumbnail' ? `h-36 md:h-72` : `w-full pb-8`
 												} ${
 													isVideo
-														? "aspect-[15.5/9] group-hover:scale-105 transition-transform duration-300"
-														: ""
-												}`}
-											>
+														? 'aspect-[15.5/9] group-hover:scale-105 transition-transform duration-300'
+														: ''
+												}`}>
 												{isVideo ? (
 													// <VideoPlayer
 													// 	imageUrl={firstImage.url}
@@ -191,9 +187,9 @@ export default function ArtistPage({
 														src={firstImage.url}
 														alt={`Photo by ${artist.name}`}
 														sizes={
-															view === "thumbnail"
-																? "20vw"
-																: "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw"
+															view === 'thumbnail'
+																? '20vw'
+																: '(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 80vw'
 														}
 														quality={70}
 														width={firstImage.width}

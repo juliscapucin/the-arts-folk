@@ -1,4 +1,4 @@
 {
-  "extends": ["next/core-web-vitals", "@sanity/eslint-config-studio"]
+  "extends": ["next/core-web-vitals"]
 }
 

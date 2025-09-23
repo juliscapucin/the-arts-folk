@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { Suspense, useLayoutEffect, useRef } from "react"
-import Image from "next/image"
-import gsap from "gsap"
+import gsap from 'gsap'
+import Image from 'next/image'
+import { Suspense, useLayoutEffect, useRef } from 'react'
 
-import ReactPlayer from "react-player/vimeo"
+import ReactPlayer from 'react-player/vimeo'
 
-import { CloudinaryImage } from "@/types"
-import { ButtonClose } from "@/components/buttons"
+import { ButtonClose } from '@/components/buttons'
+import { CloudinaryImage } from '@/types'
 
 type ProjectFullscreenProps = {
 	artistName: string
@@ -28,34 +28,34 @@ export default function ProjectFullscreen({
 	useLayoutEffect(() => {
 		if (!projectFullscreenRef.current || !closeButtonRef.current) return
 
-		const htmlElement = document.querySelector("html")
+		const htmlElement = document.querySelector('html')
 
 		if (isFullscreenOpen) {
-			if (htmlElement && !htmlElement.classList.contains("overflow-clip"))
-				document.documentElement.classList.add("overflow-clip")
+			if (htmlElement && !htmlElement.classList.contains('overflow-clip'))
+				document.documentElement.classList.add('overflow-clip')
 
-			projectFullscreenRef.current.classList.remove("hidden")
-			closeButtonRef.current.classList.remove("hidden")
-			closeButtonRef.current!.classList.add("flex")
+			projectFullscreenRef.current.classList.remove('hidden')
+			closeButtonRef.current.classList.remove('hidden')
+			closeButtonRef.current!.classList.add('flex')
 
 			gsap.to(projectFullscreenRef.current, {
 				yPercent: 0,
 				duration: 0.3,
-				ease: "power2.out",
+				ease: 'power2.out',
 			})
 			gsap.to(closeButtonRef.current, { opacity: 1, delay: 0.5 })
 		} else {
-			if (htmlElement && htmlElement.classList.contains("overflow-clip"))
-				document.documentElement.classList.remove("overflow-clip")
+			if (htmlElement && htmlElement.classList.contains('overflow-clip'))
+				document.documentElement.classList.remove('overflow-clip')
 
 			gsap.to(projectFullscreenRef.current, {
 				yPercent: 100,
 				duration: 0.3,
-				ease: "power2.in",
+				ease: 'power2.in',
 				onComplete: () => {
-					projectFullscreenRef.current!.classList.add("hidden")
-					closeButtonRef.current!.classList.remove("flex")
-					closeButtonRef.current!.classList.add("hidden")
+					projectFullscreenRef.current!.classList.add('hidden')
+					closeButtonRef.current!.classList.remove('flex')
+					closeButtonRef.current!.classList.add('hidden')
 				},
 			})
 			gsap.to(closeButtonRef.current, { opacity: 0 })
@@ -67,7 +67,7 @@ export default function ProjectFullscreen({
 			gsap.set(projectFullscreenRef.current, { yPercent: 100 })
 			gsap.set(closeButtonRef.current, { opacity: 0 })
 		}
-	}, [])
+	}, [isFullscreenOpen])
 
 	function closeFullscreen() {
 		setIsFullscreenOpen(false)
@@ -77,8 +77,7 @@ export default function ProjectFullscreen({
 		<>
 			<div
 				ref={closeButtonRef}
-				className='fixed hidden left-0 right-0 top-[--header-height-mobile] md:top-[--header-height-desktop] justify-end z-[401]'
-			>
+				className='fixed hidden left-0 right-0 top-[var(--header-height-mobile)] md:top-[var(--header-height-desktop)] justify-end z-[401]'>
 				<ButtonClose
 					color='primary'
 					action={closeFullscreen}
@@ -87,10 +86,9 @@ export default function ProjectFullscreen({
 			</div>
 			<div
 				ref={projectFullscreenRef}
-				className='fixed hidden top-0 left-0 right-0 w-screen h-screen overflow-y-auto space-y-8 bg-primary z-fullscreen'
-			>
+				className='fixed hidden top-0 left-0 right-0 w-screen h-screen overflow-y-auto space-y-8 bg-primary z-fullscreen'>
 				{images.map((image, index) =>
-					image.url.includes("vimeo") ? (
+					image.url.includes('vimeo') ? (
 						<div key={`project-fullscreen-${index}`}>
 							<Suspense fallback={null}>
 								<ReactPlayer

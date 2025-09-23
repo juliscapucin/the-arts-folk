@@ -1,16 +1,15 @@
-import { notFound } from "next/navigation"
+import { notFound } from 'next/navigation'
 
-import { ProjectPage } from "@/components/pages"
-import { getArtists, getPage, getProject } from "@/sanity/sanity-queries"
+import { ProjectPage } from '@/components/pages'
+import { getArtists, getPage, getProject } from '@/sanity/sanity-queries'
 
-import { metadataFallback } from "@/utils"
-import { Suspense } from "react"
+import { metadataFallback } from '@/utils'
+import { Suspense } from 'react'
 
-export async function generateMetadata({
-	params,
-}: {
-	params: { slug: string }
+export async function generateMetadata(props: {
+	params: Promise<{ slug: string }>
 }) {
+	const params = await props.params
 	const { slug } = params
 	const pageData = getPage(slug)
 	const page = await pageData
@@ -27,10 +26,10 @@ export async function generateMetadata({
 	}
 }
 
-// Opt out of caching for all data requests in the route segment
-// export const dynamic = "force-dynamic"
-
-export default async function page({ params }: { params: { slug: string } }) {
+export default async function page(props: {
+	params: Promise<{ slug: string }>
+}) {
+	const params = await props.params
 	const { slug } = params
 	const project = await getProject(slug)
 	const artists = await getArtists()

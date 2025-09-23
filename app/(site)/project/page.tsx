@@ -1,11 +1,10 @@
-import { getProjects, getPage } from "@/sanity/sanity-queries"
-import { notFound } from "next/navigation"
+import { getPage } from '@/sanity/sanity-queries'
+import { redirect } from 'next/navigation'
 
-import { metadataFallback } from "@/utils"
-import { NewsServer } from "@/components/server"
+import { metadataFallback } from '@/utils'
 
 export async function generateMetadata() {
-	const pageData = getPage("news")
+	const pageData = getPage('news')
 	const page = await pageData
 
 	if (!page) {
@@ -20,9 +19,6 @@ export async function generateMetadata() {
 	}
 }
 
-// Opt out of caching for all data requests in the route segment
-// export const dynamic = "force-dynamic"
-
 export default async function Page() {
-	return notFound()
+	redirect('/artists')
 }
