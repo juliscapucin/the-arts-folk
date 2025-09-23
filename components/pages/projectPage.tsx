@@ -74,21 +74,24 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		gsap.registerPlugin(ScrollTrigger)
 		const thumbnails = thumbnailsRef.current
 		const mainImages = mainImagesRef.current
+		const mainImagesHeight = mainImages.clientHeight
 		const thumbnailsHeight = thumbnails.clientHeight
-		const markerHeight = minimapMarkerRef.current.clientHeight
-		const yPercentAdjust = (markerHeight / thumbnailsHeight) * 100
+		const markerHeight =
+			(window.innerHeight * thumbnailsHeight) / mainImagesHeight
+
+		gsap.set(minimapMarkerRef.current, { height: markerHeight })
 
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: mainImages,
-				start: 'top top+=100',
-				end: 'bottom bottom-=20',
+				start: 'top top',
+				end: 'bottom bottom',
 				scrub: 0.5,
 			},
 		})
 
 		tl.to(thumbnails, {
-			yPercent: -100 + yPercentAdjust,
+			y: (thumbnailsHeight - markerHeight) * -1,
 			duration: 1,
 			ease: 'linear',
 		})
@@ -146,7 +149,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 					<ButtonClose color='primary' action={closeFullscreen} mixBlend />
 				</div>
 			)}
-			{/* THUMBNAILS CONTAINER */}
+			{/* THUMBNAILS MINIMAP */}
 			<div className='fixed top-0 right-0 bottom-0 left-0 pointer-events-none hidden md:block z-150'>
 				<div className='relative max-w-desktop mx-auto'>
 					<aside className='absolute top-0 right-[var(--margin-mobile)] lg:[var(--margin-desktop)] w-[13vw] max-w-[170px] h-full z-150'>
@@ -168,7 +171,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 								{/* MINIMAP MARKER */}
 								<div
 									ref={minimapMarkerRef}
-									className='absolute top-[272px] w-[13vw] max-w-[176px] xl:-translate-x-[3px] h-[13.7svh] border border-secondary z-150'></div>
+									className='absolute top-[272px] w-[13vw] max-w-[176px] xl:-translate-x-[3px] border border-secondary z-150'></div>
 								{/* THUMBNAILS */}
 								<div
 									ref={thumbnailsRef}
@@ -176,8 +179,8 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									{images.map((image, index) => (
 										<button
 											onClick={() => handlePanelSlide(index, null)}
-											className={`relative w-full`}
-											key={`project-thumbnail-${index}`}>
+											className='relative w-full'
+											key={`project-thumbnail-${image.url}`}>
 											{image.url.includes('vimeo') ? (
 												<div className='relative w-full aspect-video'>
 													<VideoPlayer
