@@ -1,15 +1,15 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Suspense, useLayoutEffect, useRef, useState } from 'react'
-import ReactPlayer from 'react-player/vimeo'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 import { gsap } from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 import { usePageContext } from '@/context'
 import { useReloadOnResize, useWindowDimensions } from '@/hooks'
-import { handlePanelSlide } from '@/lib/animations'
+import { handleImageSlide } from '@/lib/animations'
 
 import { ButtonBack, ButtonClose } from '@/components/buttons'
 import { IconChevron } from '@/components/icons'
@@ -19,7 +19,6 @@ import {
 	Heading,
 	ImageWithSpinner,
 	VideoPlayer,
-	VideoPlayerControls,
 } from '@/components/ui'
 import { Artist, Project } from '@/types'
 import { useGSAP } from '@gsap/react'
@@ -51,7 +50,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 	) {
 		setIsFullscreenOpen(true)
 		setTimeout(() => {
-			handlePanelSlide(index, mainImagesRef.current)
+			handleImageSlide(index, mainImagesRef.current)
 		}, 500)
 	}
 
@@ -63,6 +62,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		setIsProjectInfoOpen(!isProjectInfoOpen)
 	}
 
+	// Minimap Animation
 	useGSAP(() => {
 		if (
 			!mainImagesRef.current ||
@@ -71,7 +71,6 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		)
 			return
 
-		gsap.registerPlugin(ScrollTrigger)
 		const thumbnails = thumbnailsRef.current
 		const mainImages = mainImagesRef.current
 		const mainImagesHeight = mainImages.clientHeight
@@ -97,6 +96,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		})
 	}, [thumbnailsRef, mainImagesRef])
 
+	// Project Info Animation
 	useLayoutEffect(() => {
 		if (!projectInfoOuterRef.current || !projectInfoInnerRef.current) return
 
@@ -128,17 +128,24 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		}
 	}, [isProjectInfoOpen])
 
+	// Initial Setup + Close Fullscreen mode on ESC
 	useLayoutEffect(() => {
 		if (!projectInfoInnerRef.current || !projectInfoOuterRef.current) return
 
 		gsap.set(projectInfoOuterRef.current, { yPercent: -150 })
 		gsap.set(projectInfoInnerRef.current, { yPercent: 150 })
 
-		window.addEventListener('keydown', (e) => {
+		function handleKeyDown(e: KeyboardEvent) {
 			if (e.key === 'Escape') {
 				setIsFullscreenOpen(false)
 			}
-		})
+		}
+
+		window.addEventListener('keydown', handleKeyDown)
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown)
+		}
 	}, [])
 
 	return (
@@ -178,7 +185,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 									className='relative w-[10vw] max-w-[160px] mx-auto mt-12 pointer-events-auto space-y-2'>
 									{images.map((image, index) => (
 										<button
-											onClick={() => handlePanelSlide(index, null)}
+											onClick={() => handleImageSlide(index, null)}
 											className='relative w-full'
 											key={`project-thumbnail-${image.url}`}>
 											{image.url.includes('vimeo') ? (

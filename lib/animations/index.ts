@@ -1,3 +1,3 @@
-import { handleImageSlide } from "./handleImageSlide"
+import { handleImageSlide } from './handleImageSlide'
 
-export { handleImageSlide as handlePanelSlide }
+export { handleImageSlide }

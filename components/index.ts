@@ -4,7 +4,6 @@ import CategoryFilter from './categoryFilter'
 import Copyright from './copyright'
 import CustomCursor from './customCursor'
 import Intro from './intro'
-import Minimap from './minimap'
 import News from './news'
 import ProjectFullscreen from './projectFullscreen'
 import ProjectsGallery from './projectsGallery'
@@ -18,7 +17,6 @@ export {
 	Copyright,
 	CustomCursor,
 	Intro,
-	Minimap,
 	News,
 	ProjectFullscreen,
 	ProjectsGallery,
