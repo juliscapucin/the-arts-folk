@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation"
+import { notFound } from 'next/navigation'
 
-import { InfoPage } from "@/components/pages"
-import { getInfoPage } from "@/sanity/sanity-queries"
+import { InfoPage } from '@/components/pages'
+import { getInfoPage } from '@/sanity/sanity-queries'
 
-import { metadataFallback } from "@/utils"
-import { Suspense } from "react"
+import { metadataFallback } from '@/utils'
+import { Suspense } from 'react'
 
 export async function generateMetadata() {
 	const pageData = getInfoPage()
@@ -21,9 +21,6 @@ export async function generateMetadata() {
 		keywords: page.metadataKeywords || metadataFallback.keywords,
 	}
 }
-
-// Opt out of caching for all data requests in the route segment
-// export const dynamic = "force-dynamic"
 
 export default async function Page() {
 	const infoData = await getInfoPage()
