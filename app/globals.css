@@ -9,7 +9,8 @@
 
 @layer base {
 	:root {
-		--font-secondary: 'canada-type-gibson', sans-serif;
+		--font-secondary: 'Open Sans', sans-serif;
+		/* --font-secondary: 'canada-type-gibson', sans-serif; */
 		--color-primary: 255 255 255;
 		--color-primary-rgb: 255, 255, 255;
 		--color-secondary: 18 12 15;

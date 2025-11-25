@@ -1,3 +1,4 @@
+// import { Open_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 
 import { getHeaderNavLinks } from '@/sanity/sanity-queries'
@@ -43,6 +44,12 @@ const displayFont = localFont({
 	],
 	display: 'swap',
 })
+
+// Google Fonts //
+// const secondary = Open_Sans({
+// 	variable: '--font-secondary',
+// 	subsets: ['latin'],
+// })
 
 const scriptFont = localFont({
 	variable: '--font-script',
