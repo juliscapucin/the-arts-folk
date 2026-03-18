@@ -11,7 +11,7 @@ const BLOCKED_BOTS = [
 	'archive.org_bot',
 ]
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
 	const userAgent = request.headers.get('user-agent') || ''
 
 	const isBlocked = BLOCKED_BOTS.some((bot) =>
