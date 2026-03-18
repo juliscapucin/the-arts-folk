@@ -94,7 +94,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 			duration: 1,
 			ease: 'linear',
 		})
-	}, [thumbnailsRef, mainImagesRef])
+	}, [])
 
 	// Project Info Animation
 	useLayoutEffect(() => {
@@ -174,7 +174,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 							/>
 						</div>
 						{images && images.length > 1 && (
-							<>
+							<aside>
 								{/* MINIMAP MARKER */}
 								<div
 									ref={minimapMarkerRef}
@@ -210,7 +210,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										</button>
 									))}
 								</div>
-							</>
+							</aside>
 						)}
 					</aside>
 				</div>
