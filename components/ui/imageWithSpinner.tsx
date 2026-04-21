@@ -1,29 +1,9 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import Image from "next/image"
+import { useState } from 'react'
+import Image, { type ImageProps } from 'next/image'
 
-type ImageWithSpinnerProps = {
-	classes: string
-	src: string
-	alt: string
-	sizes: string
-	quality: number
-	width: number
-	height: number
-	priority?: boolean
-}
-
-export default function ImageWithSpinner({
-	classes,
-	src,
-	alt,
-	sizes,
-	quality,
-	width,
-	height,
-	priority = false,
-}: ImageWithSpinnerProps) {
+export default function ImageWithSpinner(props: Omit<ImageProps, 'onLoad'>) {
 	const [isLoading, setIsLoading] = useState(true)
 
 	return (
@@ -37,17 +17,10 @@ export default function ImageWithSpinner({
 				</div>
 			)}
 			<Image
-				className={classes}
-				src={src}
-				alt={alt}
-				sizes={sizes}
-				quality={quality}
-				width={width}
-				height={height}
+				{...props}
 				onLoad={() => {
 					setIsLoading(false)
 				}}
-				priority={priority}
 			/>
 		</>
 	)

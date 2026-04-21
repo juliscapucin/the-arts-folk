@@ -51,7 +51,7 @@ export default function ArtistPage({
 		const target = e.currentTarget as HTMLAnchorElement
 
 		const project = sortedProjects.find(
-			(item) => item?.slug === target.href.split('/').pop()
+			(item) => item?.slug === target.href.split('/').pop(),
 		)
 
 		if (!project) return
@@ -75,7 +75,7 @@ export default function ArtistPage({
 		const tl = gsap.timeline({
 			onComplete: () => {
 				setView((prevView) =>
-					prevView === 'gallery' ? 'thumbnail' : 'gallery'
+					prevView === 'gallery' ? 'thumbnail' : 'gallery',
 				)
 				gsap.to(imagesSectionRef.current, {
 					opacity: 1,
@@ -97,7 +97,7 @@ export default function ArtistPage({
 				opacity: 0,
 				duration: 0.4,
 			},
-			'<'
+			'<',
 		)
 	}
 
@@ -183,7 +183,7 @@ export default function ArtistPage({
 													/>
 												) : (
 													<ImageWithSpinner
-														classes='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
+														className='h-full w-auto overflow-hidden object-contain group-hover:scale-105 transition-transform duration-300'
 														src={firstImage.url}
 														alt={`Photo by ${artist.name}`}
 														sizes={

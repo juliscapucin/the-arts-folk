@@ -54,7 +54,7 @@ export default function News({ news }: NewsProps) {
 											</div>
 										) : (
 											<ImageWithSpinner
-												classes='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
+												className='object-contain group-hover:scale-110 transition-transform duration-300 ease-in-out'
 												src={project.images[0].url}
 												alt={`Photo by ${project.artistInfo?.name}`}
 												sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'

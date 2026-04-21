@@ -46,7 +46,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 
 	function openFullscreen(
 		e: React.MouseEvent<HTMLButtonElement>,
-		index: number
+		index: number,
 	) {
 		setIsFullscreenOpen(true)
 		setTimeout(() => {
@@ -198,7 +198,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 												</div>
 											) : (
 												<ImageWithSpinner
-													classes={`w-full object-contain`}
+													className={`w-full object-contain`}
 													src={image.url}
 													alt={`Photo ${artist.name}`}
 													sizes='10vw'
@@ -348,7 +348,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										</div>
 									) : (
 										<ImageWithSpinner
-											classes={`w-full h-full object-contain`}
+											className={`w-full h-full object-contain`}
 											src={image.url}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
@@ -371,7 +371,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										</div>
 									) : (
 										<ImageWithSpinner
-											classes={`w-full h-full object-contain`}
+											className={`w-full h-full object-contain`}
 											src={image.url}
 											alt={`Photo by ${artist.name}`}
 											sizes='(max-width: 768px) 90vw, (max-width: 1200px) 100vw, 100vw'
@@ -382,7 +382,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 										/>
 									)}
 								</div>
-							)
+							),
 						)}
 				</div>
 			</section>
