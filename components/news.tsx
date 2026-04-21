@@ -32,7 +32,9 @@ export default function News({ news }: NewsProps) {
 					return (
 						<Fragment key={project.slug}>
 							{project.addSpaceBefore && (
-								<article className='hidden md:block w-full h-full'></article>
+								<article
+									aria-hidden='true'
+									className='hidden md:block w-full h-full'></article>
 							)}
 							<article
 								className={`relative h-fit w-full ${
@@ -41,6 +43,7 @@ export default function News({ news }: NewsProps) {
 								<Button
 									href={`/news/${project.slug}`}
 									classes='relative overflow-clip flex flex-col group w-full cursor-pointer'
+									aria-label={`View ${project.title} project by ${project.artistInfo?.name}`}
 									prefetch={false}>
 									{/* Project Image */}
 									<div className='overflow-clip'>
@@ -75,7 +78,9 @@ export default function News({ news }: NewsProps) {
 								</Button>
 							</article>
 							{project.addSpaceAfter && (
-								<article className='hidden md:block md:basis-1/4 w-full h-full'></article>
+								<article
+									aria-hidden='true'
+									className='hidden md:block md:basis-1/4 w-full h-full'></article>
 							)}
 						</Fragment>
 					)

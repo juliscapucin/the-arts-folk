@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -143,7 +143,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 							yPercent: 0,
 							opacity: 1,
 							duration: 0.6,
-						}
+						},
 					)
 
 					if (filteredArtists.length === 1 && isMobile) {
@@ -170,11 +170,11 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 							onComplete: () => {
 								createScrollLoop(isMobile)
 							},
-						}
+						},
 					)
 				}
 			},
-			containerRef.current
+			containerRef.current,
 		)
 
 		return () => {

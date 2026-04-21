@@ -7,6 +7,7 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Flip from 'gsap/Flip'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger, Flip)
 
 import { Logo } from '@/components/svgs'
 
@@ -33,8 +34,8 @@ const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
 export default function Showreel({ showreelImages }: ShowreelProps) {
 	const [slideIndex, setSlideIndex] = useState(1)
 	const logoRef = useRef<HTMLDivElement | null>(null)
-	const logoHeaderRef = useRef<HTMLDivElement | null>(null)
-	const logoShowreelRef = useRef<HTMLDivElement | null>(null)
+	const headerDivRef = useRef<HTMLDivElement | null>(null)
+	const showreelDivRef = useRef<HTMLDivElement | null>(null)
 	const showreelRef = useRef<HTMLDivElement | null>(null)
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -50,9 +51,9 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		timeoutRef.current = setTimeout(
 			() =>
 				setSlideIndex((prevIndex) =>
-					prevIndex === showreelImages.length - 1 ? 0 : prevIndex + 1
+					prevIndex === showreelImages.length - 1 ? 0 : prevIndex + 1,
 				),
-			delay
+			delay,
 		)
 
 		return () => {
@@ -63,20 +64,16 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	useGSAP(() => {
 		if (
 			!logoRef.current ||
-			!logoHeaderRef.current ||
-			!logoShowreelRef.current ||
+			!headerDivRef.current ||
+			!showreelDivRef.current ||
 			!showreelRef.current
 		)
 			return
 
-		gsap.registerPlugin(ScrollTrigger, Flip)
-
-		const element = logoRef.current
-		const logoHeader = logoHeaderRef.current
-		const logoShowreel = logoShowreelRef.current
+		const logo = logoRef.current
+		const headerDiv = headerDivRef.current
+		const showreelDiv = showreelDivRef.current
 		const showreel = showreelRef.current
-
-		// logoHeaderToCenter(element, logoShowreel)
 
 		ScrollTrigger.create({
 			trigger: showreel,
@@ -84,10 +81,10 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 			end: 'bottom top',
 			// markers: true,
 			onEnter: () => {
-				moveLogo(element, logoHeader)
+				moveLogo(logo, headerDiv)
 			},
 			onLeaveBack: () => {
-				moveLogo(element, logoShowreel)
+				moveLogo(logo, showreelDiv)
 			},
 		})
 	}, [])
@@ -96,11 +93,11 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 		<section className='pt-[var(--header-height-desktop)] mb-40'>
 			<div className='fixed top-0 left-0 right-0 h-[var(--header-height-mobile)] lg:h-[var(--header-height-desktop)] pt-2 z-logo-header pointer-events-none'>
 				<div className='w-full max-w-desktop mx-auto px-[var(--margin-mobile)] md:px-[var(--margin-desktop)] flex justify-start items-end '>
-					<div ref={logoHeaderRef} className='relative h-full w-[220px]'></div>
+					<div ref={headerDivRef} className='relative h-full w-[220px]'></div>
 				</div>
 			</div>
 			<div className='fixed left-0 -top-1 w-screen h-svh flex justify-center items-center z-header pointer-events-none'>
-				<div className='relative w-[369px] md:w-[738px]' ref={logoShowreelRef}>
+				<div className='relative w-[369px] md:w-[738px]' ref={showreelDivRef}>
 					<div ref={logoRef} className='mt-2'>
 						<Logo classes='w-full h-auto' />
 					</div>
@@ -111,7 +108,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 				className='relative w-full lg:w-1/2 h-[var(--showreel-height-mobile)] lg:h-[var(--showreel-height-desktop)] mx-auto overflow-clip'>
 				{showreelImages.map((image, index) => {
 					return (
-						<div className={`absolute w-full h-full`} key={`showreel-${index}`}>
+						<div className='absolute w-full h-full' key={`showreel-${index}`}>
 							<Image
 								className={`object-cover md:object-contain transition-opacity duration-300 ${
 									slideIndex === index ? 'opacity-100 z-5' : 'opacity-10 z-0'
