@@ -98,6 +98,15 @@ export async function getNews(): Promise<Project[]> {
      _id,
      "slug": slug.current,
      artist,
+     "artistInfo": artist->{
+       _id,
+       name,
+       "slug": slug.current,
+       description,
+       scrapbookImages,
+       category,
+       artistWebsite
+     },
      artistSection,
      title,
      projectInfo,
@@ -163,6 +172,48 @@ export async function getProjectsByArtist(
        images,
      }`,
 		{ artistId }
+	)
+}
+
+export async function getArtistSectionData(
+	artistId: string,
+	sectionSlug: string
+): Promise<{
+	activeSection: ArtistSection | null
+	artistSections: ArtistSection[]
+	activeProjects: Project[]
+}> {
+	return client.fetch(
+		groq`{
+      "activeSection": *[_type == "artistSection" && lower(title) == $sectionSlug][0]{
+        title,
+        order,
+        _id
+      },
+      "artistSections": *[
+        _type == "artistSection" &&
+        _id in *[_type == "project" && artist._ref == $artistId].artistSection[]._ref
+      ] | order(order asc) {
+        title,
+        order,
+        _id
+      },
+      "activeProjects": *[
+        _type == "project" &&
+        artist._ref == $artistId &&
+        references(*[_type == "artistSection" && lower(title) == $sectionSlug][0]._id)
+      ] | order(releaseDate desc){
+        _id,
+        "slug": slug.current,
+        artist,
+        artistSection,
+        title,
+        projectInfo,
+        releaseDate,
+        images
+      }
+    }`,
+		{ artistId, sectionSlug }
 	)
 }
 

@@ -3,7 +3,6 @@ import { getArtists, getCategories, getPage } from '@/sanity/sanity-queries'
 import { notFound } from 'next/navigation'
 
 import { metadataFallback } from '@/utils'
-import { Suspense } from 'react'
 
 export async function generateMetadata() {
 	const pageData = getPage('artists')
@@ -29,8 +28,9 @@ export default async function Page() {
 
 	if (!artists || !categories) return notFound()
 
+	// Remove The Arts Folk from the list
 	const filteredArtists = artists.filter(
-		(artist) => artist.name !== 'The Arts Folk'
+		(artist) => artist.name !== 'The Arts Folk',
 	)
 
 	return <ArtistsPage artists={filteredArtists} categories={categories} />
