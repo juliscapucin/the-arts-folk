@@ -19,7 +19,7 @@ type ShowreelProps = {
 
 const delay = 1000
 
-// LOGO ANIMATION
+// LOGO FLIP ANIMATION
 const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
 	const state = Flip.getState(element)
 

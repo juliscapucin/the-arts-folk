@@ -8,6 +8,7 @@ import News from './news'
 import ProjectFullscreen from './projectFullscreen'
 import ProjectsGallery from './projectsGallery'
 import { PageTransition } from './pageTransition'
+import ScrollTip from './scrollTip'
 import Showreel from './showreel'
 
 export {
@@ -21,5 +22,6 @@ export {
 	ProjectFullscreen,
 	ProjectsGallery,
 	PageTransition,
+	ScrollTip,
 	Showreel,
 }
