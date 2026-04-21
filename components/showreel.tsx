@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -17,8 +17,6 @@ type ShowreelProps = {
 	showreelImages: CloudinaryImage[]
 }
 
-const delay = 1000
-
 // LOGO FLIP ANIMATION
 const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
 	const state = Flip.getState(element)
@@ -32,35 +30,39 @@ const moveLogo = (element: HTMLElement, targetDiv: HTMLElement) => {
 }
 
 export default function Showreel({ showreelImages }: ShowreelProps) {
-	const [slideIndex, setSlideIndex] = useState(1)
 	const logoRef = useRef<HTMLDivElement | null>(null)
 	const headerDivRef = useRef<HTMLDivElement | null>(null)
 	const showreelDivRef = useRef<HTMLDivElement | null>(null)
 	const showreelRef = useRef<HTMLDivElement | null>(null)
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-	// SLIDE ANIMATION
-	const resetTimeout = () => {
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current)
-		}
-	}
+	// SLIDESHOW ANIMATION
+	useGSAP(
+		() => {
+			if (!showreelRef.current || showreelImages.length < 2) return
 
-	useEffect(() => {
-		resetTimeout()
-		timeoutRef.current = setTimeout(
-			() =>
-				setSlideIndex((prevIndex) =>
-					prevIndex === showreelImages.length - 1 ? 0 : prevIndex + 1,
-				),
-			delay,
-		)
+			const slides = gsap.utils.toArray(
+				showreelRef.current.children,
+			) as HTMLElement[]
 
-		return () => {
-			resetTimeout()
-		}
-	}, [slideIndex, showreelImages])
+			// Initial visibility
+			gsap.set(slides, { autoAlpha: 0 })
+			gsap.set(slides[0], { autoAlpha: 1 })
 
+			const tl = gsap.timeline({ repeat: -1 })
+
+			slides.forEach((slide, i) => {
+				const next = slides[(i + 1) % slides.length]
+				tl.to({}, { duration: 1 }) // hold
+					.set(slide, { autoAlpha: 0 }, '<')
+					.to(next, { autoAlpha: 1, duration: 0.1, ease: 'power1.inOut' }, '<')
+			})
+
+			return () => tl.kill()
+		},
+		{ dependencies: [showreelImages.length] },
+	)
+
+	// LOGO FLIP TRIGGER
 	useGSAP(() => {
 		if (
 			!logoRef.current ||
@@ -110,9 +112,7 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 					return (
 						<div className='absolute w-full h-full' key={`showreel-${index}`}>
 							<Image
-								className={`object-cover md:object-contain transition-opacity duration-300 ${
-									slideIndex === index ? 'opacity-100 z-5' : 'opacity-10 z-0'
-								}`}
+								className={`object-cover md:object-contain`}
 								src={image.url}
 								alt='Showreel image'
 								sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw'
@@ -120,8 +120,6 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 								fill
 								priority={index <= 4 ? true : false}
 							/>
-							{/* This was needed for LCP performance optimization */}
-							<div className={`absolute w-screen h-full bg-primary z-0`}></div>
 						</div>
 					)
 				})}

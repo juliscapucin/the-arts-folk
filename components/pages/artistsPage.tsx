@@ -65,7 +65,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 
 		gsap.registerPlugin(Observer)
 
-		const items = gsap.utils.toArray('.gsap-scroll-item') as HTMLElement[]
+		const items = Array.from(sectionRef.current.children) as HTMLElement[]
 
 		if (items.length === 0) return
 
