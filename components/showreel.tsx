@@ -94,10 +94,12 @@ export default function Showreel({ showreelImages }: ShowreelProps) {
 	return (
 		<section className='pt-[var(--header-height-desktop)] mb-40'>
 			<div className='fixed top-0 left-0 right-0 h-[var(--header-height-mobile)] lg:h-[var(--header-height-desktop)] pt-2 z-logo-header pointer-events-none'>
+				{/* HEADER DIV */}
 				<div className='w-full max-w-desktop mx-auto px-[var(--margin-mobile)] md:px-[var(--margin-desktop)] flex justify-start items-end '>
 					<div ref={headerDivRef} className='relative h-full w-[220px]'></div>
 				</div>
 			</div>
+			{/* SHOWREEL DIV */}
 			<div className='fixed left-0 -top-1 w-screen h-svh flex justify-center items-center z-header pointer-events-none'>
 				<div className='relative w-[369px] md:w-[738px]' ref={showreelDivRef}>
 					<div ref={logoRef} className='mt-2'>

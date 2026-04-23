@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useRef, useState } from 'react'
+import { SetStateAction, useCallback, useMemo, useRef, useState } from 'react'
 
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -26,24 +26,62 @@ type ArtistsPageProps = {
 }
 
 export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
-	const [isHovered, setIsHovered] = useState('')
-	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
+	const [hoveredArtist, setHoveredArtist] = useState('')
 	const [isScrolling, setIsScrolling] = useState(false)
+	const [isScrollTipVisible, setIsScrollTipVisible] = useState(true)
 	const [activeCategory, setActiveCategory] = useState('all')
-	const [filteredArtists, setFilteredArtists] = useState<Artist[]>([])
 	const sectionRef = useRef<HTMLDivElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
+
+	const filteredArtists = useMemo(() => {
+		if (activeCategory === 'all') return artists
+
+		return artists.filter((artist) => {
+			return (
+				Array.isArray(artist.category) &&
+				artist.category.some((category) => category._ref === activeCategory)
+			)
+		})
+	}, [activeCategory, artists])
 
 	const { handleTransitionOnClick } = usePageContext()
 	useReloadOnResize()
 
 	const handleMouseEnter = (name: string) => {
-		setIsHovered(name)
+		setHoveredArtist(name)
 	}
 
 	const handleMouseLeave = () => {
-		setIsHovered('')
+		setHoveredArtist('')
 	}
+
+	const handleCategoryChange = useCallback(
+		(nextCategoryValue: SetStateAction<string>) => {
+			const nextCategory =
+				typeof nextCategoryValue === 'function'
+					? nextCategoryValue(activeCategory)
+					: nextCategoryValue
+
+			if (nextCategory === activeCategory) return
+
+			setIsScrollTipVisible(true)
+			setHoveredArtist('')
+			setIsScrolling(false)
+
+			if (!containerRef.current) {
+				setActiveCategory(nextCategory)
+				return
+			}
+
+			gsap.killTweensOf(containerRef.current)
+			gsap.to(containerRef.current, {
+				opacity: 0,
+				duration: 0.3,
+				onComplete: () => setActiveCategory(nextCategory),
+			})
+		},
+		[activeCategory],
+	)
 
 	const getViewportPosition = useCallback((element: HTMLElement) => {
 		const rect = element.getBoundingClientRect()
@@ -91,6 +129,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 				let calculatedTimeScale = -self.deltaY
 
 				setIsScrolling(true)
+				setIsScrollTipVisible((prev) => (prev ? false : prev))
 
 				// Set the loop's timeScale to the desired value
 				loop.timeScale(calculatedTimeScale)
@@ -102,15 +141,13 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 							const position = getViewportPosition(item)
 							position.isMiddle &&
 								item.dataset.name &&
-								setIsHovered(item.dataset.name)
+								setHoveredArtist(item.dataset.name)
 						})
 					})
 				}
 
 				// Decelerate
 				slow.invalidate().restart()
-
-				isScrollTipVisible && setIsScrollTipVisible(false)
 			},
 		})
 	}
@@ -130,9 +167,8 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					duration: 0.3,
 				})
 
-				// If there are less than 4 artists, animate entry without scroll loop
+				// If there is only one artist, animate entry without scroll loop
 				if (filteredArtists.length === 1 && items.length > 0) {
-					setIsScrollTipVisible(false)
 					gsap.fromTo(
 						items,
 						{
@@ -147,12 +183,12 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 					)
 
 					if (filteredArtists.length === 1 && isMobile) {
-						setIsHovered(filteredArtists[0].name)
+						setHoveredArtist(filteredArtists[0].name)
 					}
 					return
 				}
 
-				if (!isScrollTipVisible) setIsScrollTipVisible(true)
+				setIsScrollTipVisible((prev) => (prev ? prev : true))
 
 				if (items.length > 0) {
 					// Artist names entrance animation + scroll loop
@@ -183,36 +219,10 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filteredArtists])
 
-	useGSAP(() => {
-		if (!containerRef.current) return
-
-		setIsHovered('')
-		const filterArtists = () => {
-			if (activeCategory === 'all') {
-				setFilteredArtists(artists)
-			} else {
-				const filteredArtists = artists.filter((artist) => {
-					return (
-						Array.isArray(artist.category) &&
-						artist.category.find((category) => category._ref === activeCategory)
-					)
-				})
-				setFilteredArtists(filteredArtists)
-			}
-		}
-
-		gsap.to(containerRef.current, {
-			opacity: 0,
-			duration: 0.3,
-			onComplete: () => filterArtists(),
-		})
-	}, [activeCategory, artists])
-
 	return (
 		<div className='artists-page relative'>
-			{/* ICON SCROLL */}
 			<div
-				className={`absolute mx-auto top-0 right-2 h-screen flex items-center transition-opacity duration-500 delay-300 z-100 ${
+				className={`absolute mx-auto top-0 right-2 bottom-0 flex items-center transition-opacity duration-500 delay-300 z-100 ${
 					isScrollTipVisible ? '' : 'opacity-0'
 				}`}>
 				<IconScroll />
@@ -221,7 +231,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 			<CategoryFilter
 				categories={categories}
 				activeCategory={activeCategory}
-				setActiveCategory={setActiveCategory}
+				setActiveCategory={handleCategoryChange}
 			/>
 			<Container
 				ref={containerRef}
@@ -232,7 +242,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 						<ArtistOverlay
 							key={`${artist.name}-overlay`}
 							images={artist.scrapbookImages}
-							isVisible={isHovered === artist.name && !isScrolling}
+							isVisible={hoveredArtist === artist.name && !isScrolling}
 							index={index}
 							artistName={artist.name}
 						/>
@@ -265,9 +275,9 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 										handleTransitionOnClick(`artists/${artist.slug}`)
 									}
 									className={`gsap-scroll-button w-fit inline-block p-8 h-28 lg:h-16 min-w-[300px] font-heading text-center text-title-small md:text-title-medium lg:text-title-large transition-opacity duration-500 ${
-										isHovered === artist.name
+										hoveredArtist === artist.name
 											? ''
-											: isHovered // If another artist is hovered at all
+											: hoveredArtist // If another artist is hovered at all
 												? 'opacity-10 -z-5 pointer-events-none lg:pointer-events-auto'
 												: ''
 									}`}
@@ -277,7 +287,7 @@ export default function ArtistsPage({ artists, categories }: ArtistsPageProps) {
 									{artist.name}
 									<span
 										className={`block mt-2 font-text uppercase text-label-large font-medium transition-opacity ${
-											isHovered === artist.name ? '' : 'opacity-0'
+											hoveredArtist === artist.name ? '' : 'opacity-0'
 										}`}>
 										{artist.description}
 									</span>
