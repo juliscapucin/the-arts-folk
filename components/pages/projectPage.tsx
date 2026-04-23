@@ -62,7 +62,7 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 		setIsProjectInfoOpen(!isProjectInfoOpen)
 	}
 
-	// Minimap Animation
+	// MINIMAP ANIMATION
 	useGSAP(() => {
 		if (
 			!mainImagesRef.current ||
@@ -73,12 +73,34 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 
 		const thumbnails = thumbnailsRef.current
 		const mainImages = mainImagesRef.current
-		const mainImagesHeight = mainImages.clientHeight
-		const thumbnailsHeight = thumbnails.clientHeight
-		const markerHeight =
-			(window.innerHeight * thumbnailsHeight) / mainImagesHeight
+		const minimapMarker = minimapMarkerRef.current
 
-		gsap.set(minimapMarkerRef.current, { height: markerHeight })
+		gsap.set(minimapMarker, { autoAlpha: 0 })
+
+		const updateMarker = () => {
+			const mainImagesHeight = mainImages.clientHeight
+			const thumbnailsHeight = thumbnails.clientHeight
+			const markerHeight =
+				mainImagesHeight > 0
+					? (window.innerHeight * thumbnailsHeight) / mainImagesHeight
+					: 0
+
+			gsap.set(minimapMarker, { height: markerHeight })
+
+			if (
+				markerHeight > 0 &&
+				Number(gsap.getProperty(minimapMarker, 'autoAlpha')) === 0
+			) {
+				gsap.to(minimapMarker, {
+					autoAlpha: 1,
+					duration: 0.3,
+					ease: 'power2.out',
+					overwrite: 'auto',
+				})
+			}
+
+			return (thumbnailsHeight - markerHeight) * -1
+		}
 
 		const tl = gsap.timeline({
 			scrollTrigger: {
@@ -86,15 +108,27 @@ export default function ProjectPage({ project, artist }: ProjectPageProps) {
 				start: 'top top',
 				end: 'bottom bottom',
 				scrub: 0.5,
+				invalidateOnRefresh: true,
 			},
 		})
 
 		tl.to(thumbnails, {
-			y: (thumbnailsHeight - markerHeight) * -1,
+			y: updateMarker,
 			duration: 1,
 			ease: 'linear',
 		})
-	}, [])
+
+		const refreshMinimap = () => ScrollTrigger.refresh()
+		window.addEventListener('load', refreshMinimap)
+		window.addEventListener('resize', refreshMinimap)
+		updateMarker()
+		requestAnimationFrame(refreshMinimap)
+
+		return () => {
+			window.removeEventListener('load', refreshMinimap)
+			window.removeEventListener('resize', refreshMinimap)
+		}
+	}, [width, images?.length, isFullscreenOpen])
 
 	// Project Info Animation
 	useLayoutEffect(() => {

@@ -10,14 +10,7 @@ import { useWindowDimensions } from '@/hooks'
 import { ArtistAside } from '@/components'
 import { ButtonBack } from '@/components/buttons'
 import { IconGallery, IconThumbnails } from '@/components/icons'
-import {
-	Button,
-	Container,
-	Heading,
-	ImageWithSpinner,
-	VideoPlayer,
-	VideoPlayerControls,
-} from '@/components/ui'
+import { Button, Container, Heading, ImageWithSpinner } from '@/components/ui'
 import { Artist, ArtistSection, Project } from '@/types'
 
 type artistPageProps = {
@@ -164,12 +157,6 @@ export default function ArtistPage({
 														: ''
 												}`}>
 												{isVideo ? (
-													// <VideoPlayer
-													// 	imageUrl={firstImage.url}
-													// 	isMuted={true}
-													// 	autoplay={false}
-													// 	play={project.slug === activeProject?.slug}
-													// />
 													<ReactPlayer
 														className='object-fill w-fit h-full pointer-events-none'
 														url={firstImage.url}
@@ -194,7 +181,6 @@ export default function ArtistPage({
 														quality={70}
 														width={firstImage.width}
 														height={firstImage.height}
-														priority={false}
 													/>
 												)}
 											</div>
