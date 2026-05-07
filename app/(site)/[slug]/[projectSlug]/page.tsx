@@ -34,12 +34,14 @@ export default async function page(props: {
 	const project = await getProject(projectSlug)
 	const artists = await getArtists()
 
+	if (!project || !project.artist?._ref || !artists) return notFound()
+
 	const artist = artists.find((artist) => {
 		if (!project.artist) return null
 		return artist._id === project.artist._ref
 	})
 
-	if (!project || !artist) return notFound()
+	if (!artist) return notFound()
 
 	return (
 		<Suspense fallback={null}>

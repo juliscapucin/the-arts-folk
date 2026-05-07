@@ -38,7 +38,7 @@ const displayFont = localFont({
 	variable: '--font-primary',
 	src: [
 		{
-			path: '../../lib/fonts/geometos-neue-extrabold.otf',
+			path: '../../public/fonts/geometos-neue-extrabold.otf',
 		},
 	],
 	display: 'swap',
@@ -48,7 +48,7 @@ const scriptFont = localFont({
 	variable: '--font-script',
 	src: [
 		{
-			path: '../../lib/fonts/hammock.woff',
+			path: '../../public/fonts/hammock.woff',
 		},
 	],
 	display: 'swap',
