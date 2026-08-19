@@ -20,7 +20,8 @@
     "react-dom": "^19.2.8",
     "react-player": "^2.16.0",
     "sanity": "^5.14.1",
-    "sanity-plugin-cloudinary": "^2.1.2"
+    "sanity-plugin-cloudinary": "^2.1.2",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
